@@ -1,10 +1,10 @@
 <template>
   <div class="default_app">
     <LoginPage v-if="!isLoggedIn" />
-    <div class="flex">
+    <!-- <div class="flex"> -->
       <router-view v-if="isLoggedIn" class="test123"/>
       <NavBarVue v-if="isLoggedIn"/>
-    </div>
+    <!-- </div> -->
 
   </div>
 </template>

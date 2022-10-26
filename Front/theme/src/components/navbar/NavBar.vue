@@ -3,7 +3,7 @@
 
   <!-- <button type="button" class="btn btn-light">1</button> -->
   <!-- <button type="button" class="btn btn-light create-button">2</button> -->
-  <nav class="navbar navbar-expand-lg bg-light sticky-bottom">
+  <nav class="navbar navbar-expand-lg bg-light navbar">
     <div class="container-fluid">
       <router-link :to="{ name: 'Main' }">
         <button type="button" class="btn btn-light">메인</button>
@@ -43,5 +43,11 @@ export default {
     position: absolute;
     top: 90vh;
     left: 195px;
+  }
+  .navbar {
+    position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
   }
 </style>
