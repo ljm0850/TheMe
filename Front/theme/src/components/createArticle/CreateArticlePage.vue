@@ -1,13 +1,17 @@
 <template>
+  <div>
     <div>게시글 등록</div>
+
+  </div>
 </template>
 
-<script>
+<script lang="ts">
 // import { useStore } from "vuex";
 export default {
-    setup() {
-
-    }
+  components: {
+  },
+  setup (){
+  }
 }
 </script>
 

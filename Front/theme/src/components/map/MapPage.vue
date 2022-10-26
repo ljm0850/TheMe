@@ -1,13 +1,17 @@
 <template>
+  <!-- <div> -->
     <div>지도</div>
+    <div>지도</div>
+  <!-- </div> -->
 </template>
 
-<script>
+<script lang="ts">
 // import { useStore } from "vuex";
 export default {
-    setup() {
-
-    }
+  components: {
+  },
+  setup (){
+  }
 }
 </script>
 

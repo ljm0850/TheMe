@@ -2,12 +2,13 @@
     <div>검색</div>
 </template>
 
-<script>
+<script lang="ts">
 // import { useStore } from "vuex";
 export default {
-    setup() {
-
-    }
+  components: {
+  },
+  setup (){
+  }
 }
 </script>
 

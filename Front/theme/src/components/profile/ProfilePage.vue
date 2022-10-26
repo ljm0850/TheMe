@@ -1,14 +1,23 @@
 <template>
-    <div>프로필</div>
+  <div>
+    <div>프로필: {{nickname}}</div>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
 // import { useStore } from "vuex";
-export default {
-    setup() {
+import { useRoute } from 'vue-router'
 
-    }
-}
+export default {
+  components: {
+  },
+  setup (){
+    const route = useRoute();
+    let nickname:string|string[] = route.params.nickname
+    
+    return {nickname}
+  },
+};
 </script>
 
 <style lang="scss`">

@@ -1,14 +1,55 @@
 <template>
+  <div>
     <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+    <div>메인</div>
+  </div>
+    
 </template>
 
-<script>
-import { useStore } from "vuex";
+<script lang="ts">
+// import { useStore } from "vuex";
 export default {
-    setup() {
-        const store = useStore();
-        console.log(store.getters.isLoggedIn)
-    }
+  components: {
+  },
+  setup (){
+  }
 }
 </script>
 

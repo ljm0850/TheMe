@@ -1,7 +1,11 @@
 <template>
   <div class="default_app">
     <LoginPage v-if="!isLoggedIn" />
-    <router-view v-if="isLoggedIn"/>
+    <div class="flex">
+      <router-view v-if="isLoggedIn" class="test123"/>
+      <NavBarVue v-if="isLoggedIn"/>
+    </div>
+
   </div>
 </template>
 
@@ -9,14 +13,15 @@
 import { computed, defineComponent } from 'vue';
 import { useStore } from "vuex";
 import LoginPage from '@/components/login/LoginPage.vue';
+import NavBarVue from '@/components/navbar/NavBar.vue';
 export default defineComponent({
   name: 'App',
   components: {
     LoginPage,
+    NavBarVue,
   },
   setup() {
         const store = useStore();
-        console.log(store.getters.isLoggedIn)
         const isLoggedIn = computed(()=> store.getters.isLoggedIn)
 
         return {isLoggedIn}
@@ -25,15 +30,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "./App.scss"
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-} */
-
+.test123 {
+  // 추후에 100vh - 네브바 높이로 하자
+  min-height: 95vh;
+}
 
 </style>
