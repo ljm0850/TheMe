@@ -1,21 +1,24 @@
 <template>
   <div id="default_app">
-    <LoginPage v-if="!isLoggedIn" />
+    <LoginPageVue v-if="!isLoggedIn" />
+    <TopNavBarVue v-if="isLoggedIn"/>
     <router-view v-if="isLoggedIn" class="router-view-setting"/>
-    <NavBarVue v-if="isLoggedIn" style="max-width 390px"/>
+    <BottomNavBarVue v-if="isLoggedIn"/>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import { useStore } from "vuex";
-import LoginPage from '@/components/login/LoginPage.vue';
-import NavBarVue from '@/components/navbar/NavBar.vue';
+import LoginPageVue from '@/components/login/LoginPage.vue';
+import BottomNavBarVue from '@/components/navbar/BottomNavBar.vue';
+import TopNavBarVue from './components/navbar/TopNavBar.vue';
 export default defineComponent({
   name: 'App',
   components: {
-    LoginPage,
-    NavBarVue,
+    LoginPageVue,
+    BottomNavBarVue,
+    TopNavBarVue,
   },
   setup() {
         const store = useStore();
