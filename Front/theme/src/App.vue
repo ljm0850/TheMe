@@ -1,7 +1,7 @@
 <template>
   <div id="default_app">
+    <TopNavBarVue />
     <LoginPageVue v-if="!isLoggedIn" />
-    <TopNavBarVue v-if="isLoggedIn"/>
     <router-view v-if="isLoggedIn" class="router-view-setting"/>
     <BottomNavBarVue v-if="isLoggedIn"/>
   </div>
