@@ -17,8 +17,8 @@
         </button>
       </router-link>  
       
-      <router-link :to="{ name: 'Map' }">
-        <button type="button" class="button-size">지도</button>
+      <router-link :to="{ name: 'ThemeList' }">
+        <button type="button" class="button-size">지도(테마)</button>
       </router-link>
     
       <button type="button" @click.prevent="togglePlusButton()" class="btn btn-primary button-size">+</button>
@@ -27,7 +27,7 @@
         <button type="button" class="btn btn-primary button-size">검색</button>
       </router-link>
     
-      <router-link  ter-link :to="{ name: 'Profile', params: { nickname: 'test'} }">
+      <router-link  ter-link :to="{ name: 'Profile', params: { nickname: 'BottomNavBar에서 바꾸자'} }">
         <button type="button" class="btn btn-primary button-size">프로필</button>
       </router-link>
     </div>
@@ -53,14 +53,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .create-button{
-    position: absolute;
-    // top: 90vh;
-    left: 195px;
-  }
   .navbar-position {
     position: fixed;
     bottom: 0;
+    z-index: 50;
   }
   .button-size {
     // width: 20vw; (뷰포트 대비 화면비율)

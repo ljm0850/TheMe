@@ -3,6 +3,8 @@
     <TopNavBarVue />
     <LoginPageVue v-if="!isLoggedIn" />
     <router-view v-if="isLoggedIn" class="router-view-setting"/>
+    <br>
+    <br>
     <BottomNavBarVue v-if="isLoggedIn"/>
   </div>
 </template>
@@ -32,7 +34,7 @@ export default defineComponent({
 <style lang="scss">
 .router-view-setting {
   // 추후에 100vh - 네브바 높이로 하자
-  min-height: 95vh;
+  min-height: 90vh;
 }
 #default_app {
   max-height: 844px;

@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="d-flex justify-content-between">
     <div>
       <button>전체 테마</button>
@@ -13,11 +14,12 @@
     <ThemeTextCardVue />
     <ThemeTextCardVue />
   </div>
+</div>
 
 </template>
 
 <script lang="ts">
-import ThemeTextCardVue from '../theme/ThemeTextCard.vue';
+import ThemeTextCardVue from './ThemeTextCard.vue';
 // import { useStore } from "vuex";
 export default {
   components: {

@@ -5,7 +5,7 @@ import rest from '@/API/rest'
 export default {
     state: {
         // token: localStorage.getItem('token') || '', 
-        token : "",
+        token : "test",
         loginUser: {},
     },
     getters: {

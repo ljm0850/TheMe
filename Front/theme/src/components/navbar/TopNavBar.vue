@@ -1,5 +1,5 @@
 <template>
-    <img src="@/assets/image/logo.png" alt="TheMe">
+    <img src="@/assets/image/logo.png" alt="TheMe" class="img-size">
 </template>
 
 <script lang="ts">
@@ -12,7 +12,10 @@ export default {
 }
 </script>
 
-<style lang="scss`">
+<style scoped lang="scss">
+.img-size {
+  width: 390px;
+}
 
 
 </style>

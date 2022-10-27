@@ -1,170 +1,26 @@
 <template>
   <div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
-    <div>메인</div>
+    <RecommandThemeVue />
+    <NewFeedVue />
   </div>
     
 </template>
 
 <script lang="ts">
+import RecommandThemeVue from './mainPageComponents/RecommendTheme.vue';
+import NewFeedVue from './mainPageComponents/NewFeed.vue' 
 // import { useStore } from "vuex";
 export default {
   components: {
+    RecommandThemeVue,
+    NewFeedVue,
   },
   setup (){
   }
 }
 </script>
 
-<style lang="scss`">
+<style scoped lang="scss`">
 
 
 </style>
