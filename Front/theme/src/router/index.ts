@@ -4,7 +4,7 @@ import ThemeListPage from "@/components/theme/ThemeList.vue";
 import ProfilePage from "@/components/profile/ProfilePage.vue"
 import SearchPage from "@/components/search/SearchPage.vue"
 import CreateArticlePage from "@/components/articles/CreateArticlePage.vue"
-import CreateThemePage from "@/components/theme/createTheme/CreateThemePage.vue"
+import CreateThemePage from "@/components/theme/CreateThemePage.vue"
 import ThemeDetail from "@/components/theme/ThemeDetail.vue"
 
 const routes = [
