@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="671211c3-fe0d-4ce4-999d-b97cf8ac31fe" name="Changes" comment="" />
+    <list default="true" id="671211c3-fe0d-4ce4-999d-b97cf8ac31fe" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/config/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/controller/FeedController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/dto/FeedRecommendDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Alert.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Board.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Comment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Follow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Like.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Picture.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Scrap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Theme.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/UserTheme.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/AlertRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/BoardRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/CommentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/FollowRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/LikeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/PictureRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/ScrapRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/ThemeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/UserThemeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/service/EtcService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/service/impl/EtcServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/etc/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Back/etc/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/etc/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Back/etc/src/main/resources/application.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -26,6 +60,11 @@
     "last_opened_file_path": "C:/SSAFY/S07P31C203/Back/theme"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\SSAFY\c203\Back\etc\src\main\java\com\ssafy\etc" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -41,5 +80,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
