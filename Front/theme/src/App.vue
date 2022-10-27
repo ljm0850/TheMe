@@ -1,24 +1,24 @@
 <template>
-  <div class="default_app">
-    <LoginPage v-if="!isLoggedIn" />
-    <!-- <div class="flex"> -->
-      <router-view v-if="isLoggedIn" class="test123"/>
-      <NavBarVue v-if="isLoggedIn"/>
-    <!-- </div> -->
-
+  <div id="default_app">
+    <LoginPageVue v-if="!isLoggedIn" />
+    <TopNavBarVue v-if="isLoggedIn"/>
+    <router-view v-if="isLoggedIn" class="router-view-setting"/>
+    <BottomNavBarVue v-if="isLoggedIn"/>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import { useStore } from "vuex";
-import LoginPage from '@/components/login/LoginPage.vue';
-import NavBarVue from '@/components/navbar/NavBar.vue';
+import LoginPageVue from '@/components/login/LoginPage.vue';
+import BottomNavBarVue from '@/components/navbar/BottomNavBar.vue';
+import TopNavBarVue from './components/navbar/TopNavBar.vue';
 export default defineComponent({
   name: 'App',
   components: {
-    LoginPage,
-    NavBarVue,
+    LoginPageVue,
+    BottomNavBarVue,
+    TopNavBarVue,
   },
   setup() {
         const store = useStore();
@@ -30,9 +30,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.test123 {
+.router-view-setting {
   // 추후에 100vh - 네브바 높이로 하자
   min-height: 95vh;
 }
-
+#default_app {
+  max-height: 844px;
+  max-width: 390px;
+    // justify-content: center;
+}
 </style>

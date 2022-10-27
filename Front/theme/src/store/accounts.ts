@@ -5,7 +5,7 @@
 export default {
     state: {
         // token: localStorage.getItem('token') || '', 
-        token : "testToken",
+        token : "",
         loginUser: {},
     },
     getters: {
