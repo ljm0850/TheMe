@@ -1,11 +1,8 @@
 <template>
-  <div class="default_app">
+  <div id="default_app">
     <LoginPage v-if="!isLoggedIn" />
-    <!-- <div class="flex"> -->
-      <router-view v-if="isLoggedIn" class="test123"/>
-      <NavBarVue v-if="isLoggedIn"/>
-    <!-- </div> -->
-
+    <router-view v-if="isLoggedIn" class="router-view-setting"/>
+    <NavBarVue v-if="isLoggedIn" style="max-width 390px"/>
   </div>
 </template>
 
@@ -30,9 +27,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.test123 {
+.router-view-setting {
   // 추후에 100vh - 네브바 높이로 하자
   min-height: 95vh;
 }
-
+#default_app {
+  max-height: 844px;
+  max-width: 390px;
+    // justify-content: center;
+}
 </style>

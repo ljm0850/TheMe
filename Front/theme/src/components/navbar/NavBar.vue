@@ -1,9 +1,15 @@
 <template>
 <div>
-
-  <!-- <button type="button" class="btn btn-light">1</button> -->
-  <!-- <button type="button" class="btn btn-light create-button">2</button> -->
   <nav class="navbar-position bg-light">
+    <div class="d-flex justify-content-around" v-if="state.plusButton">
+      <router-link :to="{ name: 'CreateTheme' }">
+        <button type="button" class="btn btn-light">테마</button>
+      </router-link>
+      <router-link :to="{ name: 'CreateArticle' }">
+        <button type="button" class="btn btn-light">게시글</button>
+      </router-link>
+    </div>
+    
     <div class="d-flex flex-row">
       <router-link :to="{ name: 'Main' }">
         <button type="button" class="btn btn-primary button-size">
@@ -15,7 +21,7 @@
         <button type="button" class="button-size">지도</button>
       </router-link>
     
-      <button type="button" class="btn btn-primary button-size">+</button>
+      <button type="button" @click.prevent="togglePlusButton()" class="btn btn-primary button-size">+</button>
     
       <router-link :to="{ name: 'Search' }">
         <button type="button" class="btn btn-primary button-size">검색</button>
@@ -30,12 +36,18 @@
 </template>
 
 <script lang="ts">
+import { reactive } from '@vue/reactivity'
 export default {
   components: {
   },
   setup (){
-
-    return {}
+    const state = reactive({
+      plusButton : false
+    })
+    const togglePlusButton = ()=>{
+      state.plusButton = !state.plusButton
+    }
+    return {state,togglePlusButton}
   }
 }
 </script>
@@ -43,17 +55,16 @@ export default {
 <style scoped lang="scss">
   .create-button{
     position: absolute;
-    top: 90vh;
+    // top: 90vh;
     left: 195px;
   }
   .navbar-position {
     position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
+    bottom: 0;
   }
   .button-size {
-    width: 20vw;
+    // width: 20vw; (뷰포트 대비 화면비율)
+    width: 78px; // (390 / 5 = 78)
     height: 5vh;
     margin: 0;
     border: 0;
