@@ -3,18 +3,16 @@
     <TopNavBarVue />
     <LoginPageVue v-if="!isLoggedIn" />
     <router-view v-if="isLoggedIn" class="router-view-setting"/>
-    <br>
-    <br>
     <BottomNavBarVue v-if="isLoggedIn"/>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
-import { useStore } from "vuex";
 import LoginPageVue from '@/components/login/LoginPage.vue';
 import BottomNavBarVue from '@/components/navbar/BottomNavBar.vue';
 import TopNavBarVue from './components/navbar/TopNavBar.vue';
+import { computed, defineComponent } from 'vue';
+import { useStore } from "vuex";
 export default defineComponent({
   name: 'App',
   components: {
@@ -23,8 +21,8 @@ export default defineComponent({
     TopNavBarVue,
   },
   setup() {
-        const store = useStore();
-        const isLoggedIn = computed(()=> store.getters.isLoggedIn)
+    const store = useStore();
+    const isLoggedIn = computed(()=> store.getters.isLoggedIn)
 
         return {isLoggedIn}
     }

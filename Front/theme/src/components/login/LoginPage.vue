@@ -1,26 +1,37 @@
 <template>
   <div class="container position-center row">
     <div class="row align-items-center">
-      <a href="https://kauth.kakao.com/oauth/authorize?client_id=bab0a08f8b68900521759c285635e38a&redirect_uri=http://localhost:8080&response_type=code">
+      <a :href="kakaoLogin">
         <img src="@/assets/image/kakao_login_large_wide.png" alt="kakao Login" class="img-size">
       </a>
-
+      <button @click="test()">asdf</button>
     </div>
   </div>
+  
 </template>
 
 <script lang="ts">
-import { useStore } from "vuex";
+import rest from '@/API/rest';
+import { LocationQuery, useRoute } from 'vue-router'
+import { onMounted, } from '@vue/runtime-core';
+// import { useStore } from "vuex";
 export default {
   components: {
   },
   setup (){
-    const store = useStore();
-    const kakao_auth = ()=>{
-      store.dispatch("kakaoLogin")
-    } 
-    return {kakao_auth}
+    const kakaoLogin = rest.kakao.getAuth()
+    const route = useRoute();
+    console.log(window.location.search);
+    onMounted(() => {
+      let code: LocationQuery|undefined = route.query
+      console.log(code)
+    })
+    const test = () => {
+      let testaet = route.query
+      console.log(testaet)
+    }
 
+    return {kakaoLogin,test}
   }
 }
 </script>
