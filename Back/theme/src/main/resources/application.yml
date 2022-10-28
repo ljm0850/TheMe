@@ -17,8 +17,17 @@ spring:
   mvc: # emoji
     pathmatch:
       matching-strategy: ant_path_matcher
+  application: #MSA 아키텍처 등록
+    name: theme
 #logging:
 #  level:
 #    root: debug
 server:
   port: 8020
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-uri :
+      defaultZone : http://127.0.0.1:8761/eureka
