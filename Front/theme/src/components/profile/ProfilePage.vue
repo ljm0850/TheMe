@@ -1,26 +1,34 @@
 <template>
-  <div>
-    <div>프로필: {{nickname}}</div>
-  </div>
+<div>
+  <IntroduceUserVue />
+  <ProfileThemeFollowingVue />
+</div>
 </template>
 
 <script lang="ts">
+import IntroduceUserVue from './profilePageComponents/IntroduceUser.vue';
+import ProfileThemeFollowingVue from './profilePageComponents/ProfileThemeFollowing.vue'
 // import { useStore } from "vuex";
-import { useRoute } from 'vue-router'
 
 export default {
   components: {
+    IntroduceUserVue,
+    ProfileThemeFollowingVue
   },
   setup (){
-    const route = useRoute();
-    let nickname:string|string[] = route.params.nickname
-    
-    return {nickname}
+
   },
 };
 </script>
 
-<style lang="scss`">
+<style lang="scss">
+.test{
+  width: 200px;
+  height: 200px;
+}
+.inroduce-margin{
+  margin: 10px;
 
+}
 
 </style>

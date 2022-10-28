@@ -11,19 +11,19 @@
     </div>
   </div>
   <div class="d-flex">
-    <ThemeTextCardVue />
-    <ThemeTextCardVue />
+    <ThemeMiniCardVue />
+    <ThemeMiniCardVue />
   </div>
 </div>
 
 </template>
 
 <script lang="ts">
-import ThemeTextCardVue from './ThemeTextCard.vue';
+import ThemeMiniCardVue from './ThemeMiniCard.vue';
 // import { useStore } from "vuex";
 export default {
   components: {
-    ThemeTextCardVue
+    ThemeMiniCardVue
   },
   setup (){
   }

@@ -1,6 +1,7 @@
 <template>
 <div class="card">
   <div class="card-body">
+    <div>테마텍스트카드</div>
     <img src="@/assets/image/recommandTheme.png" alt="" style="max-width:170px" @click="clickTheme()">
     <!-- <h5 class="card-title">Card title</h5>
     <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>

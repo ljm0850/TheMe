@@ -2,7 +2,7 @@
 <div>
   <nav class="navbar-position bg-light">
     <div class="d-flex justify-content-around" v-if="state.plusButton">
-      <router-link :to="{ name: 'CreateTheme' }">
+      <router-link :to="{ name: 'PlusTheme' }">
         <button type="button" class="btn btn-light">테마</button>
       </router-link>
       <router-link :to="{ name: 'CreateArticle' }">

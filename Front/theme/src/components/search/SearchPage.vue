@@ -1,23 +1,32 @@
 <template>
-<div>
-  <SearchDefaultVue />
-</div>
-
+  <div>
+    <div>
+      <router-link :to="{ name: 'SearchProfile' }">
+        <button>인물</button>
+      </router-link>
+      <router-link :to="{ name: 'SearchTheme' }">
+        <button>테마</button>
+      </router-link>
+    </div>
+    <div>
+      현재인기있는 사람들
+    </div>
+    <SearchProfileCardVue />
+  </div>
 </template>
 
 <script lang="ts">
-import SearchDefaultVue from "./SearchDefault.vue"
+import SearchProfileCardVue from "@/components/profile/SearchProfileCard.vue"
 // import { useStore } from "vuex";
 export default {
   components: {
-    SearchDefaultVue,
+    SearchProfileCardVue
   },
-  setup (){
+  setup() {
   }
 }
 </script>
 
-<style lang="scss`">
-
+<style lang="scss">
 
 </style>

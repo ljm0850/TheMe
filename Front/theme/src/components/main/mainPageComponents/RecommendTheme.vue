@@ -3,20 +3,20 @@
   <div class="carousel-inner">
     <div class="carousel-item active">
         <div class="d-flex">
-            <ThemeTextCardVue />
-            <ThemeTextCardVue />
+            <ThemeMiniCardVue />
+            <ThemeMiniCardVue />
         </div>
     </div>
     <div class="carousel-item">
         <div class="d-flex">
-            <ThemeTextCardVue />
-            <ThemeTextCardVue />
+          <ThemeMiniCardVue />
+          <ThemeMiniCardVue />
         </div>
     </div>
     <div class="carousel-item">
         <div class="d-flex">
-            <ThemeTextCardVue />
-            <ThemeTextCardVue />
+          <ThemeMiniCardVue />
+          <ThemeMiniCardVue />
         </div>
     </div>
   </div>
@@ -32,11 +32,11 @@
 </template>
   
 <script lang="ts">
-import ThemeTextCardVue from '@/components/theme/ThemeTextCard.vue';
+import ThemeMiniCardVue from '@/components/theme/ThemeMiniCard.vue';
 // import { useStore } from "vuex";
 export default {
 components: {
-    ThemeTextCardVue,
+    ThemeMiniCardVue,
 },
 setup (){
 }

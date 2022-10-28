@@ -5,7 +5,7 @@ import rest from '@/API/rest'
 export default {
     state: {
         // token: localStorage.getItem('token') || '', 
-        token : "test",
+        token : "",
         loginUser: {},
     },
     getters: {
@@ -16,16 +16,19 @@ export default {
     },
     actions: {
         kakaoLogin(){
-            axios({
-                url: rest.kakao.get_auth(),
-                method: "get",
-            })
-            .then((res)=>{
-                console.log(res)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
+            // axios({
+            //     // url: rest.kakao.get_auth(),
+            //     url: "https://kauth.kakao.com/oauth/authorize?client_id=bab0a08f8b68900521759c285635e38a&redirect_uri=http://localhost:8080&response_type=code",
+            //     method: "get",
+            // })
+            // .then((res)=>{
+            //     console.log(res)
+            // })
+            // .catch((err)=>{
+            //     console.log("에러발생")
+            //     console.log(err)
+            // })
+            // Kakao.Auth.authorize()
 
             }
         }
