@@ -1,9 +1,6 @@
 package com.ssafy.theme.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +9,7 @@ import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
+@NoArgsConstructor
 @ToString
 @Entity
 public class Theme {
@@ -23,4 +20,12 @@ public class Theme {
     private String name;
     private LocalDateTime createTime;
     private String emoticon;
+
+    @Builder
+    public Theme(int idx, String name, LocalDateTime createTime, String emoticon) {
+        this.idx = idx;
+        this.name = name;
+        this.createTime = createTime;
+        this.emoticon = emoticon;
     }
+}

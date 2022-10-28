@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
+@NoArgsConstructor
 @ToString
 @Entity
 public class User {
@@ -24,4 +24,16 @@ public class User {
     private LocalDateTime createTime; // 회원가입 시간
     private String description; // 자기소개
     private int alertCount; // 누적신고횟수
+
+    @Builder
+    public User(int idx, String email, String id, String nickname, String picture, LocalDateTime createTime, String description, int alertCount) {
+        this.idx = idx;
+        this.email = email;
+        this.id = id;
+        this.nickname = nickname;
+        this.picture = picture;
+        this.createTime = createTime;
+        this.description = description;
+        this.alertCount = alertCount;
+    }
 }

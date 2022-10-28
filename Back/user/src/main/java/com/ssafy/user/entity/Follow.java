@@ -1,13 +1,11 @@
 package com.ssafy.user.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
-@Setter
+@NoArgsConstructor
 @ToString
 @Entity
 public class Follow {
@@ -18,11 +16,18 @@ public class Follow {
     @ManyToOne
     @JoinColumn(name = "following_user_id")
     private User followingUser; // 팔로잉 하는 사용자
+
     @ManyToOne
     @JoinColumn(name = "follow_user_id")
     private User followUser; // 팔로우 할 사용자
-    @ManyToOne
-    @JoinColumn(name = "follow_theme_idx")
-    private Theme theme; // 팔로우 할 테마
 
+    private int themeIdx; // 팔로우 할 테마
+
+    @Builder
+    public Follow(int idx, User followingUser, User followUser, int themeIdx) {
+        this.idx = idx;
+        this.followingUser = followingUser;
+        this.followUser = followUser;
+        this.themeIdx = themeIdx;
+    }
 }

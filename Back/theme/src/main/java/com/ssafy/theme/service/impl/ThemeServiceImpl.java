@@ -19,10 +19,14 @@ public class ThemeServiceImpl implements ThemeService {
     }
     @Override
     public void registTheme(ThemeRegistDto themeRegistDto) {
-        Theme theme = new Theme();
-        theme.setName(themeRegistDto.getName());
-        theme.setEmoticon(themeRegistDto.getEmoticon());
-        theme.setCreateTime(LocalDateTime.now());
+
+        //builder 사용법
+        Theme theme = Theme.builder()
+                .name(themeRegistDto.getName())
+                .emoticon(themeRegistDto.getEmoticon())
+                .createTime(LocalDateTime.now())
+                .build();
+
         themeRepository.save(theme);
     }
 }
