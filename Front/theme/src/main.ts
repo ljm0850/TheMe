@@ -9,4 +9,5 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 const app = createApp(App);
 app.use(router);
 app.use(store);
+app.use(_)
 app.mount('#app');

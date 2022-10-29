@@ -4,7 +4,7 @@
       <a :href="kakaoLogin">
         <img src="@/assets/image/kakao_login_large_wide.png" alt="kakao Login" class="img-size">
       </a>
-      <button @click="test()">asdf</button>
+      <!-- <button @click="test()">asdf</button> -->
     </div>
   </div>
   
@@ -12,26 +12,28 @@
 
 <script lang="ts">
 import rest from '@/API/rest';
-import { LocationQuery, useRoute } from 'vue-router'
-import { onMounted, } from '@vue/runtime-core';
+// import { LocationQuery, useRoute } from 'vue-router'
+// import { onMounted, } from '@vue/runtime-core';
 // import { useStore } from "vuex";
 export default {
   components: {
   },
   setup (){
+    // const route = useRoute();
     const kakaoLogin = rest.kakao.getAuth()
-    const route = useRoute();
-    console.log(window.location.search);
-    onMounted(() => {
-      let code: LocationQuery|undefined = route.query
-      console.log(code)
-    })
-    const test = () => {
-      let testaet = route.query
-      console.log(testaet)
+    let kakao_token = ""
+    if (window.location.search){
+      kakao_token = window.location.search.slice(6)
+      console.log(kakao_token)
     }
+    // let code: LocationQuery|undefined = route.query
+    // console.log(code)
+    // const test = () => {
+    //   let testaet = route.query
+    //   console.log(testaet)
+    // }
 
-    return {kakaoLogin,test}
+    return {kakaoLogin}
   }
 }
 </script>

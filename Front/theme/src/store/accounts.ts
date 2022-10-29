@@ -1,35 +1,34 @@
 // import router from '@/router'
 import axios from 'axios'
 import rest from '@/API/rest'
+import _, { method } from "lodash"
 
 export default {
     state: {
         // token: localStorage.getItem('token') || '', 
-        token : "",
+        token :"",
         loginUser: {},
     },
     getters: {
-        isLoggedIn: (state: { token: string; }) => !!state.token,
+        isLoggedIn: (state: { loginUser: Object; }) => !_.isEmpty(state.loginUser),
     },
     mutations: {
-        SET_TOKEN: (state: { token: string; }, token:string) => state.token = token,
+        SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,
+        SET_LOGIN_USER: (state:{ loginUser:Object},_user:Object) => state.loginUser = _user
     },
     actions: {
-        kakaoLogin(){
-            // axios({
-            //     // url: rest.kakao.get_auth(),
-            //     url: "https://kauth.kakao.com/oauth/authorize?client_id=bab0a08f8b68900521759c285635e38a&redirect_uri=http://localhost:8080&response_type=code",
-            //     method: "get",
-            // })
-            // .then((res)=>{
-            //     console.log(res)
-            // })
-            // .catch((err)=>{
-            //     console.log("에러발생")
-            //     console.log(err)
-            // })
-            // Kakao.Auth.authorize()
-
-            }
+        // login({commit,dispatch},_kakaoToken:string){
+        // login(_kakaoToken:string){
+        //     axios({
+        //         url:rest.accounts.login(),
+        //         method: 'post',
+        //         data: _kakaoToken
+        //     })
+        //     .then(res=>{
+        //         // const token = res.data.
+        //         // dispatch('saveToken',token)
+        //     })
+        // }
+        
         }
     }

@@ -1,4 +1,5 @@
-const HOST = ""
+const HOST = "http://localhost:8080"
+const ACCOUNT = "/"
 
 
 // 카카오
@@ -14,6 +15,6 @@ export default {
     },
 
     accounts: {
-        
+        login:()=> HOST + ACCOUNT
     }
 }
