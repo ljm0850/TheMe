@@ -1,4 +1,5 @@
-package com.ssafy.etc.config;
+package com.ssafy.user.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -27,7 +28,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("The Me. THEME API SERVER")
                 .version("1.0.0")
-                .description("테마 API 서버입니다. 포트번호 : 8020")
+                .description("테마 API 서버입니다. 포트번호 : 8010")
                 .build();
     }
 }

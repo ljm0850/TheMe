@@ -8,10 +8,8 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 public class UserLoginDto {
-    String name;
-    String emoticon;
-    public UserLoginDto(String n, String e){
-        this.name = n;
-        this.emoticon = e;
+    String kakaoId;
+    public UserLoginDto(String kakaoId){
+        this.kakaoId = kakaoId;
     }
 }
