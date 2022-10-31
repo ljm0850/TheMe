@@ -98,10 +98,17 @@ class UserApplicationTests {
 	}
 
 	@Test
-	void 탈퇴하기() {
-		String nickname = "joe";
+	void remove() {
+		String nickname = "sezin";
 
 		User user = userRepository.findByNickname(nickname);
+
+		List<Follow> followList = followRepository.findByFollowUserOrFollowingUser(user, user);
+
+		for(int i=0; i<followList.size(); i++){
+			followRepository.delete(followList.get(i));
+		}
+
 		userRepository.delete(user);
 	}
 

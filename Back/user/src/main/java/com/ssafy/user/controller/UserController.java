@@ -127,7 +127,7 @@ public class UserController {
         return new ResponseEntity<>(result, status);
     }
 
-    @DeleteMapping("/{user_id}")
+    @DeleteMapping("/{nickname}")
     ResponseEntity<?> deleteUser(@PathVariable(name = "nickname") String nickname) {
         Map<String, Object> result = new HashMap<>();
 

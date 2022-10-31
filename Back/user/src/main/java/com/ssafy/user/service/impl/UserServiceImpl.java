@@ -3,6 +3,7 @@ package com.ssafy.user.service.impl;
 import com.ssafy.user.dto.UserInfoDto;
 import com.ssafy.user.dto.UserLoginDto;
 import com.ssafy.user.dto.UserUpdateDto;
+import com.ssafy.user.entity.Follow;
 import com.ssafy.user.entity.User;
 import com.ssafy.user.repository.FollowRepository;
 import com.ssafy.user.repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -89,6 +91,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String nickname) { // 회원탈퇴
         User user = userRepository.findByNickname(nickname);
+
+        List<Follow> followList = followRepository.findByFollowUserOrFollowingUser(user, user);
+
+        for(int i=0; i<followList.size(); i++){
+            followRepository.delete(followList.get(i));
+        }
+
         userRepository.delete(user);
     }
 }
