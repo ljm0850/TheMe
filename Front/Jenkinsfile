@@ -21,7 +21,6 @@ pipeline {
                      sh 'echo unit 테스트 실패'
                  }
              }
-            }
-        }    
+        }
     }    
 }
