@@ -10,7 +10,7 @@ pipeline {
                          sh 'echo "fail remove test-images"'
                      }
                  }
-                 sh 'docker build -t front-unit -f ./Front/Dockerfile.e2e ./Front'
+                 sh 'docker build -t front-unit -f ./Front/DockerFile.e2e ./Front'
                  // sh 'docker run front-test npm run test'
              }
              post {
