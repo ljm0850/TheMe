@@ -1,6 +1,8 @@
 FROM node as build-stage
+RUN npm install
 WORKDIR /app
 ADD . .
+
 RUN npm run build
 
 # production stage
