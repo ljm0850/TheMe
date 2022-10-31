@@ -15,7 +15,7 @@ pipeline {
              }
              post {
                  success{
-                     sh 'echo unit 테스트 성공!!'
+                     sh 'echo unit 테스트 성공'
                  }
                  failure{
                      sh 'echo unit 테스트 실패'
