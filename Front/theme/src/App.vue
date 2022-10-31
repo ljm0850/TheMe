@@ -1,9 +1,12 @@
 <template>
-  <div id="default_app">
-    <TopNavBarVue />
-    <LoginPageVue v-if="!isLoggedIn" />
-    <router-view v-if="isLoggedIn" class="router-view-setting"/>
-    <BottomNavBarVue v-if="isLoggedIn"/>
+  <div id="App">
+    <div id="default_app">
+      <TopNavBarVue />
+      <LoginPageVue v-if="!isLoggedIn" />
+      <router-view v-if="isLoggedIn" class="router-view-setting"/>
+      <BottomNavBarVue v-if="isLoggedIn"/>
+    </div>
+
   </div>
 </template>
 
@@ -22,7 +25,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const isLoggedIn = computed(()=> store.getters.isLoggedIn)
+    const isLoggedIn = computed(() => store.getters.isLoggedIn)
 
         return {isLoggedIn}
     }

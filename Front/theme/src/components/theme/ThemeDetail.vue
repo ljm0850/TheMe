@@ -7,7 +7,7 @@
                 <button>최신순</button>
             </div>
         </div>
-        <img src="@/assets/image/themedetail.png" alt="" style="max-width:390px">
+        <KakaoMapVue />
         <button>+</button>
         <ArticleListVue />
     </div>
@@ -15,11 +15,13 @@
 
 <script lang="ts">
 import ArticleListVue from "@/components/articles/ArticleList.vue"
+import KakaoMapVue from "../map/KakaoMap.vue"
 import { useRoute } from 'vue-router'
 // import { useStore } from "vuex";
 export default {
     components: {
         ArticleListVue,
+        KakaoMapVue,
     },
     setup() {
         const route = useRoute()
