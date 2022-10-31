@@ -7,15 +7,18 @@ import { Commit, Dispatch } from 'vuex';
 export default {
     state: {
         feedTheme: [],
-        feedRecommendTheme: []
+        feedRecommendThemeList1: [{title:"임시"},{title:"임시2"}],
+        feedRecommendThemeList2: [{title:"테스트"},{title:"테스트2"}],
     },
     getters: {
         getFeedTheme: (state: { feedTheme: Array<object>; }) => state.feedTheme,
-        getFeedRecommendTheme: (state: { feedRecommendTheme : Array<object>}) => state.feedRecommendTheme
+        getFeedRecommendThemeList1: (state: { feedRecommendThemeList1 : Array<object>}) => state.feedRecommendThemeList1,
+        getFeedRecommendThemeList2: (state: { feedRecommendThemeList2 : Array<object>}) => state.feedRecommendThemeList2,
     },
     mutations: {
         SET_FEED_THEME: (state: { feedTheme: Array<object>; }, _feedTheme: Array<object>) => state.feedTheme = _feedTheme,
-        SET_FEED_RECOMMEND_THEME: (state: { feedRecommendTheme: Array<object>}, _feedRecommendTheme: Array<object>) => state.feedRecommendTheme = _feedRecommendTheme
+        SET_FEED_RECOMMEND_THEME_List1: (state: { feedRecommendThemeList1: Array<object>}, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList1 = _feedRecommendThemeList,
+        SET_FEED_RECOMMEND_THEME_List2: (state: { feedRecommendThemeList2: Array<object>}, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList2 = _feedRecommendThemeList,
     },
     actions: {
         getFeedTheme({ commit,getters }: { commit: Commit, getters: any }, _region:number) {
@@ -36,7 +39,8 @@ export default {
                 headers: getters.authHeader,
             })
                 .then((res) => {
-                commit("SET_FEED_RECOMMEND_THEME",res.data)
+                commit("SET_FEED_RECOMMEND_THEME_List1",res.data)
+                commit("SET_FEED_RECOMMEND_THEME_List2",res.data)
             })
         },
 
