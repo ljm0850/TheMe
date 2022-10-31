@@ -60,7 +60,7 @@ public class UserController {
         return new ResponseEntity<>(result,status);
     }
 
-    @PostMapping("/follow/{follow_id}")
+    @DeleteMapping("/follow/{follow_id}")
     public ResponseEntity<?> cancelFollow(@PathVariable int follow_id) {
         Map<String, Object> result = new HashMap<>();
 
@@ -194,13 +194,14 @@ public class UserController {
         return new ResponseEntity<>(result, status);
     }
 
-    @DeleteMapping("/unfollow/{user_id}")
-    ResponseEntity<?> unfollowUser(@PathVariable(name = "user_id") int user_id) {
+    @DeleteMapping("/unfollow/{target_user_id}/{user_id}")
+    ResponseEntity<?> unfollowUser(@PathVariable(name = "user_id") int user_id,
+                                   @PathVariable(name = "target_user_id") int target_user_id) {
         Map<String, Object> result = new HashMap<>();
 
         HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            followService.cancelUserFollow(user_id);
+            followService.cancelUserFollow(target_user_id, user_id);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {

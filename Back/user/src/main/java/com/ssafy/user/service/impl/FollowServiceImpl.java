@@ -91,15 +91,13 @@ public class FollowServiceImpl implements FollowService
     }
 
     @Override
-    public void cancelUserFollow(int user_id) {
-        User targetUser = userRepository.findById(user_id).orElseThrow(IllegalAccessError::new);
+    public void cancelUserFollow(int target_user_id, int user_id) {
+        User followerUser = userRepository.findById(target_user_id).orElseThrow(IllegalAccessError::new);
+        User followingUser = userRepository.findById(user_id).orElseThrow(IllegalAccessError::new);
 
-        List<Integer> followingByUser = followRepository.findFollowingByUser(targetUser);
+        List<Follow> followingByUser = followRepository.findByFollowUserAndFollowingUser(followerUser, followingUser);
         for(int i=0;i<followingByUser.size();i++) {
-            int followIdx = followingByUser.get(i);
-            Follow targetFollow = followRepository.findById(followIdx).orElseThrow(IllegalAccessError::new);
-
-            followRepository.delete(targetFollow);
+            followRepository.delete(followingByUser.get(i));
         }
     }
 }

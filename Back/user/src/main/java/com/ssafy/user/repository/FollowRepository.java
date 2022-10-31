@@ -18,4 +18,6 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
 
     @Query("Select distinct (F.followUser.idx) From Follow F where F.followingUser=:user")
     List<Integer> findFollowingByUser(@Param("user") User user);
+
+    List<Follow> findByFollowUserAndFollowingUser(User FollowerUser, User FollowingUser);
 }

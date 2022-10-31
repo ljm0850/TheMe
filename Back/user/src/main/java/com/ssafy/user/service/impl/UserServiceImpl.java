@@ -6,6 +6,7 @@ import com.ssafy.user.dto.UserUpdateDto;
 import com.ssafy.user.entity.User;
 import com.ssafy.user.repository.FollowRepository;
 import com.ssafy.user.repository.UserRepository;
+import com.ssafy.user.service.FollowService;
 import com.ssafy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,13 @@ import java.time.LocalDateTime;
 public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     FollowRepository followRepository;
+    FollowService followService;
+
     @Autowired
-    UserServiceImpl(UserRepository userRepository, FollowRepository followRepository) {
+    UserServiceImpl(UserRepository userRepository, FollowRepository followRepository, FollowService followService) {
         this.userRepository = userRepository;
         this.followRepository = followRepository;
+        this.followService = followService;
     }
 
     @Override
@@ -52,10 +56,12 @@ public class UserServiceImpl implements UserService {
                 .nickname(user.getNickname())
                 .description(user.getDescription())
                 .picture(user.getPicture())
+                .follower(followService.getFollowerList(user.getIdx()).size())
+                .following(followService.getFollowingList(user.getIdx()).size())
                 .build();
 
         // 내가 쓴 테마 리스트
-
+        // 내가 쓴 게시글 수
         // 내가 팔로우한 테마 리스트
 
 
@@ -76,6 +82,8 @@ public class UserServiceImpl implements UserService {
         user.updateNickname(userUpdate.getNickname());
         user.updateDescription(userUpdate.getDescription());
         user.updatePicture(userUpdate.getPicture());
+
+        userRepository.save(user);
     }
 
     @Override
@@ -83,6 +91,4 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByNickname(nickname);
         userRepository.delete(user);
     }
-
-
 }

@@ -10,5 +10,5 @@ public interface FollowService {
     List<Integer> getFollowingThemeList(int user_id);
     List<String> getFollowingList(int user_id);
     List<String> getFollowerList(int user_id);
-    void cancelUserFollow(int user_id);
+    void cancelUserFollow(int target_user_id, int user_id);
 }

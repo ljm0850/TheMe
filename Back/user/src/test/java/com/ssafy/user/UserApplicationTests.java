@@ -80,7 +80,7 @@ class UserApplicationTests {
 	@Test
 	void 회원정보수정(){
 
-		int userId = 1;
+		int userId = 2;
 		String updateNickname = "updateJoe";
 		String updateDescription = "updateDescription";
 		String updatePicture = "updatePicture";
@@ -91,6 +91,8 @@ class UserApplicationTests {
 		user.updateNickname(updateNickname);
 		user.updateDescription(updateDescription);
 		user.updatePicture(updatePicture);
+
+		userRepository.save(user);
 
 		System.out.println(user.toString());
 	}
