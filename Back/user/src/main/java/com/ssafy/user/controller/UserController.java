@@ -16,7 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController("/user")
+@RestController()
+@RequestMapping("/user")
 public class UserController {
     private final static String OK = "success";
     private final static String FAIL = "fail";
