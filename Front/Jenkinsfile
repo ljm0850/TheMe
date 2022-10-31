@@ -5,12 +5,12 @@ pipeline {
             steps{
                  script{
                      try {
-                         //sh 'docker rmi front-unit'
+                         sh 'docker rmi front-unit'
                      } catch (e) {
-                         //sh 'echo "fail remove test-images"'
+                         sh 'echo "fail remove test-images"'
                      }
                  }
-                 //sh 'docker build -t front-unit -f ./front/Dockerfile.e2e ./front'
+                 sh 'docker build -t front-unit -f ./Front/Dockerfile.e2e ./Front'
                  // sh 'docker run front-test npm run test'
              }
              post {
