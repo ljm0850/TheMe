@@ -1,5 +1,7 @@
 package com.ssafy.user.service.impl;
 
+import com.ssafy.user.client.ThemeClient;
+import com.ssafy.user.dto.ThemeDto;
 import com.ssafy.user.dto.UserInfoDto;
 import com.ssafy.user.dto.UserLoginDto;
 import com.ssafy.user.dto.UserUpdateDto;
@@ -20,12 +22,15 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     FollowRepository followRepository;
     FollowService followService;
+    ThemeClient themeClient;
 
     @Autowired
-    UserServiceImpl(UserRepository userRepository, FollowRepository followRepository, FollowService followService) {
+    UserServiceImpl(UserRepository userRepository, FollowRepository followRepository,
+                    FollowService followService, ThemeClient themeClient) {
         this.userRepository = userRepository;
         this.followRepository = followRepository;
         this.followService = followService;
+        this.themeClient = themeClient;
     }
 
     @Override
@@ -63,6 +68,13 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         // 내가 쓴 테마 리스트
+        /* FeignClient 적용 부분
+
+        List<ThemeDto> themeDto = themeClient.getThemeList(user.getId());
+        userInfoDto.setThemeDtoList(themeDto);
+
+         */
+
         // 내가 쓴 게시글 수
         // 내가 팔로우한 테마 리스트
 
