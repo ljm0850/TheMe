@@ -2,10 +2,7 @@ package com.ssafy.user.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,7 +16,10 @@ public class User {
 
     private String email; // 이메일
     private String id; // 아이디
+
+    @Column(unique = true)
     private String nickname; // 닉네임
+
     private String picture; // 프로필 사진
     private LocalDateTime createTime; // 회원가입 시간
     private String description; // 자기소개
@@ -35,5 +35,17 @@ public class User {
         this.createTime = createTime;
         this.description = description;
         this.alertCount = alertCount;
+    }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateDescription(String description) {
+        this.description = description;
+    }
+
+    public void updatePicture(String picture) {
+        this.picture = picture;
     }
 }
