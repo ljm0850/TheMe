@@ -84,4 +84,12 @@ class BoardApplicationTests {
         System.out.println(likes.getBoard().getPlace());
         System.out.println(likes.getUserIdx());
     }
+    @Test
+    void 게시글좋아요취소(){
+        int userIdx = 1;
+        int boardIdx = 1;
+        Optional<Board> board = boardRepository.findById(boardIdx);
+        Likes likes = likeRepository.findByUserIdxAndBoard(userIdx, board.get());
+        likeRepository.deleteById(likes.getIdx());
+    }
 }
