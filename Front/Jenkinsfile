@@ -10,7 +10,8 @@ pipeline {
                          sh 'echo "fail remove test-images"'
                      }
                  }
-                 sh 'sudo docker exec -it jenkins bash'
+                 //sh 'sudo docker exec -it jenkins bash'
+                 sh 'ls -al'
                  sh 'docker build -t front-unit -f Front/DockerFile.e2e ./Front'
                  // sh 'docker run front-test npm run test'
              }
