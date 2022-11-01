@@ -19,7 +19,7 @@ class BoardApplicationTests {
     LikeRepository likeRepository;
     AlertRepository alertRepository;
     @Autowired
-    void contextLoads(BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository) {
+    void BoardApplicationTests(BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository) {
         this.boardRepository = boardRepository;
         this.likeRepository = likeRepository;
         this.alertRepository = alertRepository;

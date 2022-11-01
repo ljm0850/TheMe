@@ -5,4 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CommentServiceImpl implements CommentService {
+    @Override
+    public boolean registComment(int userIdx, String content) {
+
+        return true;
+    }
 }
