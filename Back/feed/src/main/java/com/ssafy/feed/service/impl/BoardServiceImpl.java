@@ -72,4 +72,10 @@ public class BoardServiceImpl implements BoardService {
         Likes likes = likeRepository.findByUserIdxAndBoard(userIdx, board.get());
         likeRepository.deleteById(likes.getIdx());
     }
+
+    @Override
+    public boolean alertBoard(int userIdx, int boardIdx) {
+
+        return true;
+    }
 }

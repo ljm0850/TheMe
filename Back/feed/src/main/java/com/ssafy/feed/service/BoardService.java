@@ -13,4 +13,6 @@ public interface BoardService {
     void likesBoard(int userIdx, int boardIdx);
 
     void deleteLikes(int userIdx, int boardIdx);
+
+    boolean alertBoard(int userIdx, int boardIdx);
 }

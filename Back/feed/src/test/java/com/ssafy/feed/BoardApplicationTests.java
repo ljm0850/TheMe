@@ -1,7 +1,9 @@
 package com.ssafy.feed;
 
+import com.ssafy.feed.entity.Alert;
 import com.ssafy.feed.entity.Board;
 import com.ssafy.feed.entity.Likes;
+import com.ssafy.feed.repository.AlertRepository;
 import com.ssafy.feed.repository.BoardRepository;
 import com.ssafy.feed.repository.LikeRepository;
 import org.junit.jupiter.api.Test;
@@ -15,10 +17,12 @@ import java.util.Optional;
 class BoardApplicationTests {
     BoardRepository boardRepository;
     LikeRepository likeRepository;
+    AlertRepository alertRepository;
     @Autowired
-    void contextLoads(BoardRepository boardRepository,LikeRepository likeRepository) {
+    void contextLoads(BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository) {
         this.boardRepository = boardRepository;
         this.likeRepository = likeRepository;
+        this.alertRepository = alertRepository;
     }
     @Test
     void 게시물등록() {
@@ -91,5 +95,30 @@ class BoardApplicationTests {
         Optional<Board> board = boardRepository.findById(boardIdx);
         Likes likes = likeRepository.findByUserIdxAndBoard(userIdx, board.get());
         likeRepository.deleteById(likes.getIdx());
+    }
+    @Test
+    void 게시글신고(){
+        int targetIdx = 0;
+        int boardIdx = 1;
+        int reportIdx = 2; // 신고자
+        String content = "광고성 글이에요";
+
+        // 같은 신고자가 같은 게시물 두번 이상 신고 불가능
+        Optional<Alert> isAlert = alertRepository.findByReferenceIdxAndTypeAndReportUserIdx(boardIdx,0,reportIdx);
+        if(isAlert.isPresent()) System.out.println("false");
+        else {
+            Optional<Board> board = boardRepository.findById(boardIdx);
+            targetIdx = board.get().getUserIdx(); // 신고대상
+            Alert alert = Alert.builder()
+                    .content(content)
+                    .createTime(LocalDateTime.now())
+                    .type(0) // 게시글 0번
+                    .reportUserIdx(reportIdx)
+                    .targetUserIdx(targetIdx)
+                    .referenceIdx(boardIdx)
+                    .build();
+            alertRepository.save(alert);
+            System.out.println("true");
+        }
     }
 }

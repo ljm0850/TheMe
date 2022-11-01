@@ -111,4 +111,23 @@ public class BoardController {
         }
         return new ResponseEntity<>(result, status);
     }
+
+    @PostMapping("/board/alert/{board_idx}")
+    @ApiOperation(value = "게시글 신고")
+    public ResponseEntity<?> alertBoard(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        //int userIdx = (int) request.getAttribute("userIdx");
+        int userIdx = 1;
+        try {
+            boolean is = boardService.alertBoard(userIdx,boardIdx);
+            result.put("message", is);
+            result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            result.put("message", FAIL);
+        }
+        return new ResponseEntity<>(result, status);
+    }
 }
