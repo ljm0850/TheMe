@@ -81,7 +81,8 @@ public class BoardController {
     public ResponseEntity<?> likesBoard(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        int userIdx = (int) request.getAttribute("userIdx");
+        //int userIdx = (int) request.getAttribute("userIdx");
+        int userIdx = 1;
         try {
             boardService.likesBoard(userIdx,boardIdx);
             result.put("message", OK);
@@ -92,5 +93,22 @@ public class BoardController {
         }
         return new ResponseEntity<>(result, status);
     }
-
+    @DeleteMapping("/board/like/{board_idx}")
+    @ApiOperation(value = "게시글 좋아요 취소")
+    public ResponseEntity<?> deleteLikes(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        //int userIdx = (int) request.getAttribute("userIdx");
+        int userIdx = 1;
+        try {
+            boardService.deleteLikes(userIdx, boardIdx);
+            result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            System.out.println(e);
+            result.put("message", FAIL);
+        }
+        return new ResponseEntity<>(result, status);
+    }
 }

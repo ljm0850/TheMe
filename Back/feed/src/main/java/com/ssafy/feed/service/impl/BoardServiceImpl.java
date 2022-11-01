@@ -65,4 +65,11 @@ public class BoardServiceImpl implements BoardService {
                 .build();
         likeRepository.save(likes);
     }
+
+    @Override
+    public void deleteLikes(int userIdx, int boardIdx) {
+        Optional<Board> board = boardRepository.findById(boardIdx);
+        Likes likes = likeRepository.findByUserIdxAndBoard(userIdx, board.get());
+        likeRepository.deleteById(likes.getIdx());
+    }
 }

@@ -11,4 +11,6 @@ public interface BoardService {
     boolean updateBoard(int boardIdx, BoardUpdateDto boardUpdateDto);
 
     void likesBoard(int userIdx, int boardIdx);
+
+    void deleteLikes(int userIdx, int boardIdx);
 }
