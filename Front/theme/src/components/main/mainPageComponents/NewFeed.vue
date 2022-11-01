@@ -1,10 +1,9 @@
 <template>
     <div>
-        <ArticleDetailVue />
-        <ArticleDetailVue />
-        <ArticleDetailVue />
-        <ArticleDetailVue />
-        <ArticleDetailVue />
+        <div v-for="Feed in FeedList" :key="Feed">
+            <ArticleDetailVue :article="Feed" />
+            <br>
+        </div>
         <!-- 피드가 없을시 보이는 내용 -->
         <div class="card">
             <div class="card-body">
@@ -19,13 +18,18 @@
 </template>
 
 <script lang="ts">
-// import { useStore } from "vuex";
+import { useStore } from "vuex";
 import ArticleDetailVue from '@/components/articles/ArticleDetail.vue';
+import { computed } from '@vue/runtime-core';
 export default {
     components: {
         ArticleDetailVue,
     },
     setup() {
+        const store = useStore();
+        const FeedList = computed(() => store.getters.getFeedArticleList)
+
+        return {FeedList}
     }
 }
 </script>

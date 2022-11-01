@@ -29,6 +29,7 @@
   
 <script lang="ts">
 import ThemeMiniCardVue from '@/components/theme/ThemeMiniCard.vue';
+import { computed } from '@vue/runtime-core';
 import { useStore } from "vuex";
 export default {
 components: {
@@ -36,10 +37,11 @@ components: {
 },
   setup() {
     const store = useStore();
-    const recommendThemeList1 = store.getters.getFeedRecommendThemeList1;
-    const recommendThemeList2 = store.getters.getFeedRecommendThemeList2;
+    const recommendThemeList1 = computed(()=>store.getters.getFeedRecommendThemeList1);
+    const recommendThemeList2 = computed(()=>store.getters.getFeedRecommendThemeList2);
     let listIdx = []
-    for (let i=1; i<recommendThemeList1.length; i++){
+    // 이부분 바꿔야 할 가능성 높은듯
+    for (let i = 1; i < store.getters.getFeedRecommendThemeList2.length; i++){
       listIdx.push(i)
     }
 

@@ -30,7 +30,7 @@ export default {
 }
 </script>
   
-<style lang="scss">
+<style scoped lang="scss">
 .card-custom{
   margin: 10px;
   width: 180px;
