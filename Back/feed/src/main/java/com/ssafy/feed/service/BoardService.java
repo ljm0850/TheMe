@@ -4,4 +4,6 @@ import com.ssafy.feed.dto.board.BoardRegistDto;
 
 public interface BoardService {
     void registBoard(String userId, BoardRegistDto boardRegistDto);
+
+    void deleteBoard(int boardIdx);
 }

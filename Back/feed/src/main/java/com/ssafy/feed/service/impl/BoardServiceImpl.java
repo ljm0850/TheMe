@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -18,7 +19,6 @@ public class BoardServiceImpl implements BoardService {
         this.boardRepository = boardRepository;
     }
     @Override
-    @ApiOperation(value = "게시글 등록")
     public void registBoard(String userId, BoardRegistDto boardRegistDto) {
 
         Board board = Board.builder()
@@ -34,5 +34,10 @@ public class BoardServiceImpl implements BoardService {
                 .build();
 
         boardRepository.save(board);
+    }
+
+    @Override
+    public void deleteBoard(int boardIdx) {
+        boardRepository.deleteById(boardIdx);
     }
 }
