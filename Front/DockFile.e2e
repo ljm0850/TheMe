@@ -2,9 +2,7 @@ FROM node as build-stage
 
 WORKDIR /app
 
-
-COPY package.json .
-ADD . .
+COPY /Front/theme/package.json /
 
 RUN npm install
 
