@@ -28,4 +28,5 @@ public class Comment {
         this.content = content;
         this.alertCount = alertCount;
     }
+    public void updateAlertCount(int alertCount) { this.alertCount = alertCount; }
 }
