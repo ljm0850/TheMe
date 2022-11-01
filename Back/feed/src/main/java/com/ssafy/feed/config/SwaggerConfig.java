@@ -27,7 +27,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("The Me. THEME API SERVER")
                 .version("1.0.0")
-                .description("테마 API 서버입니다. 포트번호 : 8020")
+                .description("테마 API 서버입니다. 포트번호 : 8030")
                 .build();
     }
 }
