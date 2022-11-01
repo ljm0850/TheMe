@@ -14,7 +14,7 @@ pipeline {
                  sh 'ls -al'
                  sh 'cd Front/theme'
                  sh 'pwd'
-                 sh 'docker build -t front-unit -f Front/DockFile.e2e ./Front'
+                 sh 'docker build -t front-unit -f Front/DockFile.e2e ./Front/theme'
                  // sh 'docker run front-test npm run test'
              }
              post {
