@@ -1,5 +1,6 @@
 package com.ssafy.user.controller;
 
+import com.ssafy.user.dto.UserInfoByIdDto;
 import com.ssafy.user.dto.UserInfoDto;
 import com.ssafy.user.dto.UserLoginDto;
 import com.ssafy.user.dto.UserUpdateDto;
@@ -33,7 +34,7 @@ public class UserController {
         Map<String,Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            userService.loginUser(userLoginDto); // 예시로 만들어 놓은거라 void로 할게요
+            userService.loginUser(userLoginDto.getKakaoToken()); // 예시로 만들어 놓은거라 void로 할게요
             result.put("message",OK);
             status = HttpStatus.OK;
         }catch (Exception e){
@@ -203,6 +204,23 @@ public class UserController {
         try {
             followService.cancelUserFollow(target_user_id, user_id);
             result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+        }
+
+        return new ResponseEntity<>(result, status);
+    }
+
+    @GetMapping("/info/id/{user_id}")
+    ResponseEntity<?> getUserInfoById(@PathVariable(name = "user_id") int user_id) {
+        Map<String, Object> result = new HashMap<>();
+
+        HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
+        try {
+            UserInfoByIdDto userInfoByIdDtoList = userService.getUserInfoById(user_id);
+            result.put("message", OK);
+            result.put("userInfoByIdDtoList", userInfoByIdDtoList);
             status = HttpStatus.OK;
         } catch (Exception e) {
             result.put("message", FAIL);
