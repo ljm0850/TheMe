@@ -1,6 +1,6 @@
 FROM node as build-stage
 
-WORKDIR /var/jenkins_home/workspace/front/Front/theme
+WORKDIR /app
 
 COPY package*.json ./
 
@@ -13,7 +13,7 @@ RUN npm run build
 
 # production stage
 FROM nginx:stable-alpine as production-stage
-COPY  ./nginx/nginx.conf /etc/nginx//sites-available/default.conf
+COPY  /etc/nginx/sites-available/default.conf /etc/nginx//sites-available/default.conf
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 8080
