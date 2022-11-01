@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @SpringBootTest
 class BoardApplicationTests {
@@ -39,5 +40,16 @@ class BoardApplicationTests {
                 .build();
 
         boardRepository.save(board);
+    }
+
+    @Test
+    void 게시글삭제(){
+        String userId = "joe5"; // 게시글 작성자
+        int boardIdx = 5;
+        // boardIdx로 작성자인지 확인
+        Optional<Board> board = boardRepository.findById(boardIdx);
+        if(board.get().getUserId().equals(userId)){
+            boardRepository.deleteById(boardIdx);
+        }
     }
 }
