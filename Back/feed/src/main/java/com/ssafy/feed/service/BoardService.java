@@ -8,5 +8,5 @@ public interface BoardService {
 
     void deleteBoard(int boardIdx);
 
-    void updateBoard(int boardIdx, BoardUpdateDto boardUpdateDto);
+    boolean updateBoard(int boardIdx, BoardUpdateDto boardUpdateDto);
 }

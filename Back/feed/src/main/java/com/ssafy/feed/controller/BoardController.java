@@ -66,7 +66,8 @@ public class BoardController {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            boardService.updateBoard(boardIdx,boardUpdateDto);
+            boolean data = boardService.updateBoard(boardIdx,boardUpdateDto);
+            result.put("data", data);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
@@ -75,4 +76,6 @@ public class BoardController {
         }
         return new ResponseEntity<>(result, status);
     }
+
+
 }

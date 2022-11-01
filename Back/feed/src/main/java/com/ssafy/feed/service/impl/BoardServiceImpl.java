@@ -5,7 +5,6 @@ import com.ssafy.feed.dto.board.BoardUpdateDto;
 import com.ssafy.feed.entity.Board;
 import com.ssafy.feed.repository.BoardRepository;
 import com.ssafy.feed.service.BoardService;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +40,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void updateBoard(int boardIdx, BoardUpdateDto boardUpdateDto) { // 게시글 수정
+    public boolean updateBoard(int boardIdx, BoardUpdateDto boardUpdateDto) { // 게시글 수정
         Optional<Board> board = boardRepository.findById(boardIdx);
         board.get().updateThemeIdx(boardUpdateDto.getThemeIdx());
         board.get().updateDescription(boardUpdateDto.getDescription());
@@ -50,5 +49,6 @@ public class BoardServiceImpl implements BoardService {
         board.get().updateCity(boardUpdateDto.getPlace().substring(0,2));
         board.get().updateTime(LocalDateTime.now());
         boardRepository.save(board.get());
+        return true;
     }
 }
