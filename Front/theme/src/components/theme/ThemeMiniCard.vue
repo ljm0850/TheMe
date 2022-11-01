@@ -1,8 +1,7 @@
 <template>
 <div class="card-custom card">
-  <div class="card-body">
+  <div class="card-body" @click="clickTheme()">
     <div>테마미니카드</div>
-    <!-- <img src="@/assets/image/recommandTheme.png" alt="" style="max-width:170px" @click="clickTheme()"> -->
     <div class="card-title">{{theme.title}}</div>
     <div>x명이 참여함</div>
   </div>

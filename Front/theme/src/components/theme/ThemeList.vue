@@ -11,8 +11,8 @@
     </div>
   </div>
   <div class="d-flex">
-    <ThemeMiniCardVue />
-    <ThemeMiniCardVue />
+    <ThemeMiniCardVue :theme="temp"/>
+    <ThemeMiniCardVue :theme="temp"/>
   </div>
 </div>
 
@@ -25,7 +25,9 @@ export default {
   components: {
     ThemeMiniCardVue
   },
-  setup (){
+  setup() {
+    const temp = { title: "하드코딩" }
+    return {temp}
   }
 }
 </script>
