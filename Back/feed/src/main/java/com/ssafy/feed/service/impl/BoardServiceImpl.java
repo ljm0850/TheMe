@@ -1,6 +1,7 @@
 package com.ssafy.feed.service.impl;
 
 import com.ssafy.feed.dto.board.BoardRegistDto;
+import com.ssafy.feed.dto.board.BoardUpdateDto;
 import com.ssafy.feed.entity.Board;
 import com.ssafy.feed.repository.BoardRepository;
 import com.ssafy.feed.service.BoardService;
@@ -19,8 +20,7 @@ public class BoardServiceImpl implements BoardService {
         this.boardRepository = boardRepository;
     }
     @Override
-    public void registBoard(String userId, BoardRegistDto boardRegistDto) {
-
+    public void registBoard(String userId, BoardRegistDto boardRegistDto) { // 게시글 등록
         Board board = Board.builder()
                 .alertCount(0)
                 .city(boardRegistDto.getPlace().substring(0,2))
@@ -32,12 +32,23 @@ public class BoardServiceImpl implements BoardService {
                 .description(boardRegistDto.getDescription())
                 .place(boardRegistDto.getPlace())
                 .build();
-
         boardRepository.save(board);
     }
 
     @Override
-    public void deleteBoard(int boardIdx) {
+    public void deleteBoard(int boardIdx) { // 게시글 삭제
         boardRepository.deleteById(boardIdx);
+    }
+
+    @Override
+    public void updateBoard(int boardIdx, BoardUpdateDto boardUpdateDto) { // 게시글 수정
+        Optional<Board> board = boardRepository.findById(boardIdx);
+        board.get().updateThemeIdx(boardUpdateDto.getThemeIdx());
+        board.get().updateDescription(boardUpdateDto.getDescription());
+        board.get().updateName(boardUpdateDto.getName());
+        board.get().updatePlace(boardUpdateDto.getPlace());
+        board.get().updateCity(boardUpdateDto.getPlace().substring(0,2));
+        board.get().updateTime(LocalDateTime.now());
+        boardRepository.save(board.get());
     }
 }

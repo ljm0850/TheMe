@@ -42,4 +42,6 @@ public class Board {
     public void updatePlace(String place) { this.place = place; }
     public void updateDescription(String description) { this.description = description; }
     public void updateThemeIdx(int themeIdx) { this.themeIdx = themeIdx; }
+    public void updateCity(String city) { this.city = city; }
+    public void updateTime(LocalDateTime modifyTime) { this.modifyTime = modifyTime; }
 }

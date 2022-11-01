@@ -1,6 +1,7 @@
 package com.ssafy.feed.controller;
 
 import com.ssafy.feed.dto.board.BoardRegistDto;
+import com.ssafy.feed.dto.board.BoardUpdateDto;
 import com.ssafy.feed.service.BoardService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,11 +62,11 @@ public class BoardController {
     }
     @PutMapping("/board/{board_idx}")
     @ApiOperation(value = "게시글 수정")
-    public ResponseEntity<?> updateBoard(@PathVariable(name = "board_idx") int boardIdx) {
+    public ResponseEntity<?> updateBoard(@PathVariable(name = "board_idx") int boardIdx, @RequestBody BoardUpdateDto boardUpdateDto) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-
+            boardService.updateBoard(boardIdx,boardUpdateDto);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
