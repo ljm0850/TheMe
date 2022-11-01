@@ -1,8 +1,9 @@
 FROM node as build-stage
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY /var/jenkins_home/workspace/front/Front/theme/package.json /
+COPY . .
+ENTRYPOINT ["cd", "Front/theme"]
 
 RUN npm install
 
