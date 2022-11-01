@@ -113,15 +113,15 @@ public class BoardController {
     }
 
     @PostMapping("/board/alert/{board_idx}")
-    @ApiOperation(value = "게시글 신고")
-    public ResponseEntity<?> alertBoard(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request) {
+    @ApiOperation(value = "게시글 신고" , notes = "param에 게시글 신고 내용")
+    public ResponseEntity<?> alertBoard(@PathVariable(name = "board_idx") int boardIdx, @RequestParam(name = "content") String content, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         //int userIdx = (int) request.getAttribute("userIdx");
         int userIdx = 1;
         try {
-            boolean is = boardService.alertBoard(userIdx,boardIdx);
-            result.put("message", is);
+            boolean is = boardService.alertBoard(userIdx,boardIdx,content);
+            result.put("data", is); // 같은 신고자가 같은 게시물을 한번만 신고가능
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {

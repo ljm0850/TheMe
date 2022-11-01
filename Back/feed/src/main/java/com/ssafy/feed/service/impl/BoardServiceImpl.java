@@ -2,8 +2,10 @@ package com.ssafy.feed.service.impl;
 
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
+import com.ssafy.feed.entity.Alert;
 import com.ssafy.feed.entity.Board;
 import com.ssafy.feed.entity.Likes;
+import com.ssafy.feed.repository.AlertRepository;
 import com.ssafy.feed.repository.BoardRepository;
 import com.ssafy.feed.repository.LikeRepository;
 import com.ssafy.feed.service.BoardService;
@@ -17,10 +19,12 @@ import java.util.Optional;
 public class BoardServiceImpl implements BoardService {
     BoardRepository boardRepository;
     LikeRepository likeRepository;
+    AlertRepository alertRepository;
     @Autowired
-    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository){
+    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository, AlertRepository alertRepository){
         this.boardRepository = boardRepository;
         this.likeRepository = likeRepository;
+        this.alertRepository = alertRepository;
     }
     @Override
     public void registBoard(int userIdx, BoardRegistDto boardRegistDto) { // 게시글 등록
@@ -74,8 +78,23 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean alertBoard(int userIdx, int boardIdx) {
-
-        return true;
+    public boolean alertBoard(int userIdx, int boardIdx, String content) {
+        // 같은 신고자가 같은 게시물 두번 이상 신고 불가능
+        Optional<Alert> isAlert = alertRepository.findByReferenceIdxAndTypeAndReportUserIdx(boardIdx,0,userIdx);
+        if(isAlert.isPresent()) return false;
+        else {
+            Optional<Board> board = boardRepository.findById(boardIdx);
+            int targetIdx = board.get().getUserIdx(); // 신고대상
+            Alert alert = Alert.builder()
+                    .content(content)
+                    .createTime(LocalDateTime.now())
+                    .type(0) // 게시글 0번
+                    .reportUserIdx(userIdx)
+                    .targetUserIdx(targetIdx)
+                    .referenceIdx(boardIdx)
+                    .build();
+            alertRepository.save(alert);
+            return true;
+        }
     }
 }
