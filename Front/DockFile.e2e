@@ -2,7 +2,7 @@ FROM node as build-stage
 
 WORKDIR /app
 
-COPY ./Front/theme/package.json /
+COPY /var/jenkins_home/workspace/front/Front/theme/package.json /
 
 RUN npm install
 
