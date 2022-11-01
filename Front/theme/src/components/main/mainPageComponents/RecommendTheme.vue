@@ -1,5 +1,5 @@
 <template>
-<div id="recommandTheme" class="carousel slide" data-bs-ride="carousel">
+<div id="recommandTheme" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
   <div class="carousel-inner">
     <div class="carousel-item active">
         <div class="d-flex justify-content-around">

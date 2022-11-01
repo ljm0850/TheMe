@@ -8,7 +8,7 @@ export default {
     state: {
         // token: localStorage.getItem('token') || '', 
         token :"",
-        loginUser: {},
+        loginUser: {t:"t"},
     },
     getters: {
         isLoggedIn: (state: { loginUser: Object; }) => !_.isEmpty(state.loginUser),
