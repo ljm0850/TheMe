@@ -118,6 +118,8 @@ class BoardApplicationTests {
                     .referenceIdx(boardIdx)
                     .build();
             alertRepository.save(alert);
+            board.get().updateAlertCount(board.get().getAlertCount()+1);
+            boardRepository.save(board.get());
             System.out.println("true");
         }
     }

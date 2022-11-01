@@ -44,4 +44,5 @@ public class Board {
     public void updateThemeIdx(int themeIdx) { this.themeIdx = themeIdx; }
     public void updateCity(String city) { this.city = city; }
     public void updateTime(LocalDateTime modifyTime) { this.modifyTime = modifyTime; }
+    public void updateAlertCount(int alertCount) { this.alertCount = alertCount; }
 }
