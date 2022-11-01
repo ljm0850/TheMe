@@ -51,4 +51,9 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.save(board.get());
         return true;
     }
+
+    @Override
+    public void likesBoard(String userId, int boardIdx) {
+
+    }
 }

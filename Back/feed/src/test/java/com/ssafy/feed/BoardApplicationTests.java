@@ -1,7 +1,9 @@
 package com.ssafy.feed;
 
 import com.ssafy.feed.entity.Board;
+import com.ssafy.feed.entity.Likes;
 import com.ssafy.feed.repository.BoardRepository;
+import com.ssafy.feed.repository.LikeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,12 +13,13 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @SpringBootTest
-@Transactional
 class BoardApplicationTests {
     BoardRepository boardRepository;
+    LikeRepository likeRepository;
     @Autowired
-    void contextLoads(BoardRepository boardRepository) {
+    void contextLoads(BoardRepository boardRepository,LikeRepository likeRepository) {
         this.boardRepository = boardRepository;
+        this.likeRepository = likeRepository;
     }
     @Test
     void 게시물등록() {
@@ -70,5 +73,20 @@ class BoardApplicationTests {
         boardRepository.save(board.get());
         System.out.println(board.get().getPlace());
         System.out.println(board.get().getThemeIdx());
+    }
+
+    @Test
+    void 게시글좋아요(){
+        String userId = "hi";
+        int boardIdx = 1;
+        Optional<Board> likeboard = boardRepository.findById(boardIdx);
+        System.out.println(likeboard.get().toString());
+        Likes likes = Likes.builder()
+                .userId(userId)
+                .board(likeboard.get())
+                .build();
+        likeRepository.save(likes);
+        System.out.println(likes.getBoard().getPlace());
+        System.out.println(likes.getUserId());
     }
 }

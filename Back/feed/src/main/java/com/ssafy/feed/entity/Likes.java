@@ -8,13 +8,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "Like")
 public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idx;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "board_idx")
     private Board board; // 좋아요 하는 게시글 번호
     @Column(name = "user_id")

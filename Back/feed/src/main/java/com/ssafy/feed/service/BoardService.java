@@ -9,4 +9,6 @@ public interface BoardService {
     void deleteBoard(int boardIdx);
 
     boolean updateBoard(int boardIdx, BoardUpdateDto boardUpdateDto);
+
+    void likesBoard(String userId, int boardIdx);
 }

@@ -76,6 +76,22 @@ public class BoardController {
         }
         return new ResponseEntity<>(result, status);
     }
-
+    @PostMapping("/board/like/{board_idx}")
+    @ApiOperation(value = "게시글 좋아요")
+    public ResponseEntity<?> likesBoard(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        // String userId = (String) request.getAttribute("userId");
+        String userId = "thememe";
+        try {
+            boardService.likesBoard(userId,boardIdx);
+            result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            result.put("message", FAIL);
+        }
+        return new ResponseEntity<>(result, status);
+    }
 
 }
