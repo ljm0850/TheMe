@@ -13,7 +13,7 @@ pipeline {
                  //sh 'sudo docker exec -it jenkins bash'
                  sh 'ls -al'
                  sh 'cd Front/theme'
-                 sh 'copy ginx/sites-available/defaul.conf ./Front/theme'
+                 sh 'copy /etc/nginx/sites-available/defaul.conf ./Front/theme'
                  sh 'docker build -t front-unit -f Front/DockFile.e2e ./Front/theme'
                  // sh 'docker run front-test npm run test'
              }
