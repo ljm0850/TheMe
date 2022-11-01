@@ -13,7 +13,7 @@ pipeline {
                  //sh 'sudo docker exec -it jenkins bash'
                  sh 'cp /etc/nginx/sites-available/default ./Front/theme'
                  sh 'docker build -t front-unit -f Front/DockFile.e2e ./Front/theme'
-                 sh 'docker run front-test npm run test'
+                 sh 'sudo docker run front-unit npm run test'
              }
              post {
                  success{
