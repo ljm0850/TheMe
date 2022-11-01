@@ -8,8 +8,8 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 public class UserLoginDto {
-    String kakaoId;
-    public UserLoginDto(String kakaoId){
-        this.kakaoId = kakaoId;
+    String kakaoToken;
+    public UserLoginDto(String kakaoToken){
+        this.kakaoToken = kakaoToken;
     }
 }

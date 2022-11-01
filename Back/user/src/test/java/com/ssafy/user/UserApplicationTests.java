@@ -1,5 +1,6 @@
 package com.ssafy.user;
 
+import com.ssafy.user.dto.UserInfoByIdDto;
 import com.ssafy.user.dto.UserInfoDto;
 import com.ssafy.user.entity.Follow;
 import com.ssafy.user.entity.User;
@@ -178,4 +179,25 @@ class UserApplicationTests {
 			System.out.println(following.getNickname());
 		}
 	}
+
+	@Test
+	void 아이디로회원정보조회(){
+
+		int userIdx = 5;
+		User user = userRepository.findById(userIdx)
+				.orElseThrow(IllegalAccessError::new);
+
+		UserInfoByIdDto userInfoByIdDto = UserInfoByIdDto.builder()
+				.createTime(user.getCreateTime())
+				.userIdx(user.getIdx())
+				.kakaoId(user.getId())
+				.email(user.getEmail())
+				.description(user.getDescription())
+				.picture(user.getPicture())
+				.nickname(user.getNickname())
+				.build();
+
+		System.out.println(userInfoByIdDto.toString());
+	}
+
 }

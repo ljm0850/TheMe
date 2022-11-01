@@ -11,5 +11,5 @@ import java.util.List;
 public interface ThemeClient {
 
     @GetMapping("/theme/list/{user_id}")
-    List<ThemeDto> getThemeList(@PathVariable String user_id);
+    List<ThemeDto> getThemeList(@PathVariable("user_id") String user_id);
 }
