@@ -60,4 +60,22 @@ public class CommentController {
         }
         return new ResponseEntity<>(result, status);
     }
+    @PostMapping("/comment/alert/{comment_idx}")
+    @ApiOperation(value = "댓글 신고" , notes = "param에 댓글 신고 내용")
+    public ResponseEntity<?> alertComment(@PathVariable(name = "comment_idx") int commentIdx, @RequestParam(name = "content") String content, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        //int userIdx = (int) request.getAttribute("userIdx");
+        int userIdx = 1;
+        try {
+            boolean is = commentService.alertComment(userIdx,commentIdx,content);
+            result.put("data", is); // 같은 신고자가 같은 댓글을 한번만 신고가능
+            result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            result.put("message", FAIL);
+        }
+        return new ResponseEntity<>(result, status);
+    }
 }
