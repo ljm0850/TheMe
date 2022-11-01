@@ -14,24 +14,22 @@
 import rest from '@/API/rest';
 // import { LocationQuery, useRoute } from 'vue-router'
 // import { onMounted, } from '@vue/runtime-core';
-// import { useStore } from "vuex";
+import { useStore } from "vuex";
 export default {
   components: {
   },
   setup (){
     // const route = useRoute();
+    const store = useStore();
     const kakaoLogin = rest.kakao.getAuth()
-    let kakao_token = ""
+    let kakao_code = ""
     if (window.location.search){
-      kakao_token = window.location.search.slice(6)
-      console.log(kakao_token)
+      kakao_code = window.location.search.slice(6)
+      console.log("여기까진 됨")
+      console.log(typeof(kakao_code))
+      store.dispatch('kakaoLogin',kakao_code)
     }
-    // let code: LocationQuery|undefined = route.query
-    // console.log(code)
-    // const test = () => {
-    //   let testaet = route.query
-    //   console.log(testaet)
-    // }
+    // const kakaoToken = store.dispatch()
 
     return {kakaoLogin}
   }

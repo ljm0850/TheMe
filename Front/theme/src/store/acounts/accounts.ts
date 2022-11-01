@@ -19,6 +19,28 @@ export default {
         SET_LOGIN_USER: (state:{ loginUser:Object},_user:Object) => state.loginUser = _user
     },
     actions: {
+        kakaoLogin({dispatch}:{dispatch:Dispatch},_code:string){
+            axios({
+                url: rest.kakao.login(),
+                method: 'post',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                data: {
+                    grant_type:'authorization_code',
+                    client_id: 'bab0a08f8b68900521759c285635e38a',
+                    redirect_uri: rest.kakao.redirect(),
+                    code:_code,
+                }
+            })
+            .then((res)=>{
+                console.log(res.data)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+
+        },
+
+
         login({ commit }: { commit: Commit },_kakaoCode:string) {
             axios({
                 url: rest.User.login(),
