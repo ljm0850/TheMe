@@ -2,28 +2,19 @@
 <div id="recommandTheme" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-        <div v-for="item1 in RecommendThemeList1" :key="item1.title" :theme="item1">
-          <div class="d-flex">
-            <ThemeMiniCardVue />
-            <ThemeMiniCardVue />
-          </div>
+        <div class="d-flex justify-content-around">
+          <ThemeMiniCardVue :theme="recommendThemeList1[0]" />
+          <ThemeMiniCardVue :theme="recommendThemeList2[0]" />
         </div>
-        <!-- <div v-for="item2 in RecommendThemeList2" :key="item2.title" :theme="item2" class="d-flex">
-        </div> -->
     </div>
 
-    <!-- <div class="carousel-item">
-        <div class="d-flex">
-          <ThemeMiniCardVue />
-          <ThemeMiniCardVue />
-        </div>
+    <div class="carousel-item" v-for="idx in listIdx" :key="idx">
+      <div class="d-flex justify-content-around">
+        <ThemeMiniCardVue :theme="recommendThemeList1[idx]"/>
+        <ThemeMiniCardVue :theme="recommendThemeList2[idx]"/>
+      </div>
     </div>
-    <div class="carousel-item">
-        <div class="d-flex">
-          <ThemeMiniCardVue />
-          <ThemeMiniCardVue />
-        </div>
-    </div> -->
+
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#recommandTheme" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -45,10 +36,14 @@ components: {
 },
   setup() {
     const store = useStore();
-    const RecommendThemeList1 = store.getters.getFeedRecommendThemeList1;
-    const RecommendThemeList2 = store.getters.getFeedRecommendThemeList2;
+    const recommendThemeList1 = store.getters.getFeedRecommendThemeList1;
+    const recommendThemeList2 = store.getters.getFeedRecommendThemeList2;
+    let listIdx = []
+    for (let i=1; i<recommendThemeList1.length; i++){
+      listIdx.push(i)
+    }
 
-    return { RecommendThemeList1, RecommendThemeList2 }
+    return { recommendThemeList1, recommendThemeList2,listIdx }
 
 
 }

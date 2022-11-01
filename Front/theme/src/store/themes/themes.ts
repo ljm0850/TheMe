@@ -7,8 +7,8 @@ import { Commit, Dispatch } from 'vuex';
 export default {
     state: {
         feedTheme: [],
-        feedRecommendThemeList1: [{title:"임시"},{title:"임시2"}],
-        feedRecommendThemeList2: [{title:"테스트"},{title:"테스트2"}],
+        feedRecommendThemeList1: [{title:"코딩하기 좋은 까페"},{title:"낮잠자기 좋은 까페"},{title:"짧"}],
+        feedRecommendThemeList2: [{title:"프로젝트 하기 좋은 싸피"},{title:"수완지구 분위기 있는 레스토랑"},{title:"다"}],
     },
     getters: {
         getFeedTheme: (state: { feedTheme: Array<object>; }) => state.feedTheme,
