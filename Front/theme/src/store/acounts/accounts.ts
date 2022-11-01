@@ -8,7 +8,7 @@ export default {
     state: {
         // token: localStorage.getItem('token') || '', 
         token :"",
-        loginUser: {t:"t"},
+        loginUser: {},
     },
     getters: {
         isLoggedIn: (state: { loginUser: Object; }) => !_.isEmpty(state.loginUser),
@@ -22,8 +22,8 @@ export default {
         login({ commit }: { commit: Commit },_kakaoCode:string) {
             axios({
                 url: rest.User.login(),
-                method: 'get',
-                headers: {code: _kakaoCode }
+                method: 'post',
+                data: {kakaoId: _kakaoCode }
             })
                 .then((res) => {
                 commit('SET_TOKEN',res.data)
