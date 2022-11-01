@@ -77,8 +77,8 @@ public class UserServiceImpl implements UserService {
         // 내가 쓴 테마 리스트
         /* FeignClient 적용 부분
 
-        List<ThemeDto> themeDto = themeClient.getThemeList(user.getId());
-        userInfoDto.setThemeDtoList(themeDto);
+        ResponseEntity<?> themeDto = themeClient.getThemeList(user.getId());
+        themeDto.get("themeList");
 
          */
 
