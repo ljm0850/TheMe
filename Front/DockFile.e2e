@@ -13,7 +13,7 @@ RUN npm run build
 
 # production stage
 FROM nginx:stable-alpine as production-stage
-COPY  /etc/nginx/sites-available/default.conf /etc/nginx//sites-available/default.conf
+COPY  /etc/nginx/sites-available/default /etc/nginx//sites-available/default.conf
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 8080
