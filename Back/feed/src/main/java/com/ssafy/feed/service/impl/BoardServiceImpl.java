@@ -23,14 +23,14 @@ public class BoardServiceImpl implements BoardService {
         this.likeRepository = likeRepository;
     }
     @Override
-    public void registBoard(String userId, BoardRegistDto boardRegistDto) { // 게시글 등록
+    public void registBoard(int userIdx, BoardRegistDto boardRegistDto) { // 게시글 등록
         Board board = Board.builder()
                 .alertCount(0)
                 .city(boardRegistDto.getPlace().substring(0,2))
                 .createTime(LocalDateTime.now())
                 .modifyTime(LocalDateTime.now())
                 .name(boardRegistDto.getName())
-                .userId(userId)
+                .userIdx(userIdx)
                 .themeIdx(boardRegistDto.getThemeIdx())
                 .description(boardRegistDto.getDescription())
                 .place(boardRegistDto.getPlace())
@@ -57,10 +57,10 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void likesBoard(String userId, int boardIdx) {
+    public void likesBoard(int userIdx, int boardIdx) {
         Optional<Board> likeboard = boardRepository.findById(boardIdx);
         Likes likes = Likes.builder()
-                .userId(userId)
+                .userIdx(userIdx)
                 .board(likeboard.get())
                 .build();
         likeRepository.save(likes);

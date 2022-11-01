@@ -7,7 +7,6 @@ import com.ssafy.feed.repository.LikeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -24,7 +23,7 @@ class BoardApplicationTests {
     @Test
     void 게시물등록() {
         int themeIdx = 1; // 게시글 해당 테마 번호
-        String userId = "joe5"; // 게시글 작성자
+        int userIdx = 1; // 게시글 작성자
         String name = "컴포즈"; // 게시글 장소 이름
         String place = "광주광역시 북구"; // 게시글 장소 주소
         String description = "설명이에요"; // 게시글 장소 설명
@@ -37,7 +36,7 @@ class BoardApplicationTests {
                 .createTime(LocalDateTime.now())
                 .modifyTime(LocalDateTime.now())
                 .name(name)
-                .userId(userId)
+                .userIdx(userIdx)
                 .themeIdx(themeIdx)
                 .description(description)
                 .place(place)
@@ -48,13 +47,9 @@ class BoardApplicationTests {
 
     @Test
     void 게시글삭제(){
-        String userId = "joe5"; // 게시글 작성자
         int boardIdx = 5;
-        // boardIdx로 작성자인지 확인 - 없어도 될듯
-        Optional<Board> board = boardRepository.findById(boardIdx);
-        if(board.get().getUserId().equals(userId)){
-            boardRepository.deleteById(boardIdx);
-        }
+
+        boardRepository.deleteById(boardIdx);
     }
 
     @Test
@@ -77,16 +72,16 @@ class BoardApplicationTests {
 
     @Test
     void 게시글좋아요(){
-        String userId = "hi";
+        int userIdx = 1;
         int boardIdx = 1;
         Optional<Board> likeboard = boardRepository.findById(boardIdx);
         System.out.println(likeboard.get().toString());
         Likes likes = Likes.builder()
-                .userId(userId)
+                .userIdx(userIdx)
                 .board(likeboard.get())
                 .build();
         likeRepository.save(likes);
         System.out.println(likes.getBoard().getPlace());
-        System.out.println(likes.getUserId());
+        System.out.println(likes.getUserIdx());
     }
 }

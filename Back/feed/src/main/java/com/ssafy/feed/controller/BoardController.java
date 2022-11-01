@@ -33,9 +33,9 @@ public class BoardController {
     public ResponseEntity<?> registBoard(HttpServletRequest request, @RequestBody BoardRegistDto boardRegistDto) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        String userId = (String) request.getAttribute("userId");
+        int userIdx = (int) request.getAttribute("userIdx");
         try {
-            boardService.registBoard(userId, boardRegistDto);
+            boardService.registBoard(userIdx, boardRegistDto);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
@@ -81,10 +81,9 @@ public class BoardController {
     public ResponseEntity<?> likesBoard(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        // String userId = (String) request.getAttribute("userId");
-        String userId = "thememe";
+        int userIdx = (int) request.getAttribute("userIdx");
         try {
-            boardService.likesBoard(userId,boardIdx);
+            boardService.likesBoard(userIdx,boardIdx);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {

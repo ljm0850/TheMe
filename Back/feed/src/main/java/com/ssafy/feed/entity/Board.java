@@ -15,8 +15,8 @@ public class Board {
     private int idx;
     @Column(name = "theme_idx")
     private int themeIdx; // 게시글 해당 테마 번호
-    @Column(name = "user_id")
-    private String userId; // 게시글 작성자
+    @Column(name = "user_idx")
+    private int userIdx; // 게시글 작성자
     private String name; // 게시글 장소 이름
     private String place; // 게시글 장소 주소
     private String description; // 게시글 장소 설명
@@ -26,10 +26,10 @@ public class Board {
     private int alertCount; // 게시글 신고 횟수
 
     @Builder
-    public Board(int idx, int themeIdx, String userId, String name, String place, String description, LocalDateTime createTime, LocalDateTime modifyTime, String city, int alertCount) {
+    public Board(int idx, int themeIdx, int userIdx, String name, String place, String description, LocalDateTime createTime, LocalDateTime modifyTime, String city, int alertCount) {
         this.idx = idx;
         this.themeIdx = themeIdx;
-        this.userId = userId;
+        this.userIdx = userIdx;
         this.name = name;
         this.place = place;
         this.description = description;
