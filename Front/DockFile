@@ -16,6 +16,7 @@ FROM nginx:stable-alpine as production-stage
 COPY  ./default /etc/nginx/sites-available/default
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
+FROM nginx
+
 EXPOSE 8080
-ENTRYPOINT ['/bin/bash']
 CMD ["nginx", "-g", "daemon off;"]
