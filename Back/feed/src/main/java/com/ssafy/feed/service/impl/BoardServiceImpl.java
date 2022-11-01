@@ -3,7 +3,9 @@ package com.ssafy.feed.service.impl;
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
 import com.ssafy.feed.entity.Board;
+import com.ssafy.feed.entity.Likes;
 import com.ssafy.feed.repository.BoardRepository;
+import com.ssafy.feed.repository.LikeRepository;
 import com.ssafy.feed.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,11 @@ import java.util.Optional;
 @Service
 public class BoardServiceImpl implements BoardService {
     BoardRepository boardRepository;
+    LikeRepository likeRepository;
     @Autowired
-    BoardServiceImpl(BoardRepository boardRepository){
+    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository){
         this.boardRepository = boardRepository;
+        this.likeRepository = likeRepository;
     }
     @Override
     public void registBoard(String userId, BoardRegistDto boardRegistDto) { // 게시글 등록
@@ -54,6 +58,11 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void likesBoard(String userId, int boardIdx) {
-
+        Optional<Board> likeboard = boardRepository.findById(boardIdx);
+        Likes likes = Likes.builder()
+                .userId(userId)
+                .board(likeboard.get())
+                .build();
+        likeRepository.save(likes);
     }
 }
