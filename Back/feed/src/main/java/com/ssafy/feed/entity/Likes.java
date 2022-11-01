@@ -8,6 +8,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Entity
+@Table(name = "Like")
 public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,12 +17,13 @@ public class Likes {
     @OneToOne
     @JoinColumn(name = "board_idx")
     private Board board; // 좋아요 하는 게시글 번호
-    private int userIdx; // 좋아요 누른 사용자
+    @Column(name = "user_id")
+    private String userId; // 좋아요 누른 사용자
 
     @Builder
-    public Likes(int idx, Board board, int userIdx) {
+    public Likes(int idx, Board board, String userId) {
         this.idx = idx;
         this.board = board;
-        this.userIdx = userIdx;
+        this.userId = userId;
     }
 }

@@ -12,7 +12,8 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idx;
-    private int userIdx; // 댓글 작성자
+    @Column(name = "user_id")
+    private String userId; // 댓글 작성자
     @ManyToOne
     @JoinColumn(name = "board_idx")
     private Board board; // 댓글의 게시물 번호
@@ -20,9 +21,9 @@ public class Comment {
     private int alertCount; // 댓글 신고 횟수
 
     @Builder
-    public Comment(int idx, int userIdx, Board board, String content, int alertCount) {
+    public Comment(int idx, String userId, Board board, String content, int alertCount) {
         this.idx = idx;
-        this.userIdx = userIdx;
+        this.userId = userId;
         this.board = board;
         this.content = content;
         this.alertCount = alertCount;
