@@ -33,7 +33,8 @@ public class BoardController {
     public ResponseEntity<?> registBoard(HttpServletRequest request, @RequestBody BoardRegistDto boardRegistDto) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        int userIdx = (int) request.getAttribute("userIdx");
+        //int userIdx = (int) request.getAttribute("userIdx");
+        int userIdx = 2;
         try {
             boardService.registBoard(userIdx, boardRegistDto);
             result.put("message", OK);

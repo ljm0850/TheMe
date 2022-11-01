@@ -5,9 +5,11 @@ import com.ssafy.feed.dto.board.BoardUpdateDto;
 import com.ssafy.feed.entity.Alert;
 import com.ssafy.feed.entity.Board;
 import com.ssafy.feed.entity.Likes;
+import com.ssafy.feed.entity.Picture;
 import com.ssafy.feed.repository.AlertRepository;
 import com.ssafy.feed.repository.BoardRepository;
 import com.ssafy.feed.repository.LikeRepository;
+import com.ssafy.feed.repository.PictureRepository;
 import com.ssafy.feed.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +22,17 @@ public class BoardServiceImpl implements BoardService {
     BoardRepository boardRepository;
     LikeRepository likeRepository;
     AlertRepository alertRepository;
+    PictureRepository pictureRepository;
     @Autowired
-    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository, AlertRepository alertRepository){
+    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository, AlertRepository alertRepository, PictureRepository pictureRepository){
         this.boardRepository = boardRepository;
         this.likeRepository = likeRepository;
         this.alertRepository = alertRepository;
+        this.pictureRepository = pictureRepository;
     }
     @Override
     public void registBoard(int userIdx, BoardRegistDto boardRegistDto) { // 게시글 등록
+        String[] pictures = boardRegistDto.getPictures(); // 등록할 사진목록
         Board board = Board.builder()
                 .alertCount(0)
                 .city(boardRegistDto.getPlace().substring(0,2))
@@ -40,6 +45,13 @@ public class BoardServiceImpl implements BoardService {
                 .place(boardRegistDto.getPlace())
                 .build();
         boardRepository.save(board);
+        for(int i = 0; i < pictures.length; i++){
+            Picture picture = Picture.builder()
+                    .picture(pictures[i])
+                    .board(board)
+                    .build();
+            pictureRepository.save(picture);
+        }
     }
 
     @Override

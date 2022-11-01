@@ -3,9 +3,11 @@ package com.ssafy.feed;
 import com.ssafy.feed.entity.Alert;
 import com.ssafy.feed.entity.Board;
 import com.ssafy.feed.entity.Likes;
+import com.ssafy.feed.entity.Picture;
 import com.ssafy.feed.repository.AlertRepository;
 import com.ssafy.feed.repository.BoardRepository;
 import com.ssafy.feed.repository.LikeRepository;
+import com.ssafy.feed.repository.PictureRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,11 +20,13 @@ class BoardApplicationTests {
     BoardRepository boardRepository;
     LikeRepository likeRepository;
     AlertRepository alertRepository;
+    PictureRepository pictureRepository;
     @Autowired
-    void BoardApplicationTests(BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository) {
+    void BoardApplicationTests(BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository,PictureRepository pictureRepository) {
         this.boardRepository = boardRepository;
         this.likeRepository = likeRepository;
         this.alertRepository = alertRepository;
+        this.pictureRepository = pictureRepository;
     }
     @Test
     void 게시물등록() {
@@ -31,6 +35,7 @@ class BoardApplicationTests {
         String name = "컴포즈"; // 게시글 장소 이름
         String place = "광주광역시 북구"; // 게시글 장소 주소
         String description = "설명이에요"; // 게시글 장소 설명
+        String[] pictures = {"사진1","사진2"};
 
         System.out.println(place.substring(0,2));
 
@@ -45,8 +50,14 @@ class BoardApplicationTests {
                 .description(description)
                 .place(place)
                 .build();
-
         boardRepository.save(board);
+        for(int i = 0; i < pictures.length; i++){
+            Picture picture = Picture.builder()
+                    .picture(pictures[i])
+                    .board(board)
+                    .build();
+            pictureRepository.save(picture);
+        }
     }
 
     @Test
