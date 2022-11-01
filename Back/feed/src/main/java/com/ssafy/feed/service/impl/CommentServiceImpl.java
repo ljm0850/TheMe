@@ -31,4 +31,10 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(comment);
         return true;
     }
+
+    @Override
+    public boolean deleteComment(int commentIdx) {
+        commentRepository.deleteById(commentIdx);
+        return true;
+    }
 }
