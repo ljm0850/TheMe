@@ -6,7 +6,7 @@ import axios from "axios"
 
 export default {
     state: {
-        feedArticleList: [{ themeName: "임시 테마 이름" }, { themeName: "임시2"}]
+        feedArticleList: [{ themeName: "tttasdgfa" }, { themeName: "임시2"}]
     },
     getters: {
         getFeedArticleList: (state: {feedArticleList : Array<object>}) => state.feedArticleList,

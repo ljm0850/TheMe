@@ -14,6 +14,9 @@
                 <button>검색하러 가기</button>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
     </div>
 </template>
 

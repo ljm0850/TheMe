@@ -9,7 +9,8 @@
                 </div>
                 <div>3년전</div>
             </div>
-            <ArticleImageVue />
+            <!-- 사진 -->
+            <ArticleImageVue :test="article.themeName"/>
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
                     <div>❤ 1111</div>
