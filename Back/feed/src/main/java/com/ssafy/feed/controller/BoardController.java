@@ -59,4 +59,19 @@ public class BoardController {
         }
         return new ResponseEntity<>(result, status);
     }
+    @PutMapping("/board/{board_idx}")
+    @ApiOperation(value = "게시글 수정")
+    public ResponseEntity<?> updateBoard(@PathVariable(name = "board_idx") int boardIdx) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        try {
+
+            result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            result.put("message", FAIL);
+        }
+        return new ResponseEntity<>(result, status);
+    }
 }

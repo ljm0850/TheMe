@@ -38,4 +38,8 @@ public class Board {
         this.city = city;
         this.alertCount = alertCount;
     }
+    public void updateName(String name){ this.name = name; }
+    public void updatePlace(String place) { this.place = place; }
+    public void updateDescription(String description) { this.description = description; }
+    public void updateThemeIdx(int themeIdx) { this.themeIdx = themeIdx; }
 }

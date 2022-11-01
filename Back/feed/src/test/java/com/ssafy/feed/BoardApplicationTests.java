@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @SpringBootTest
+@Transactional
 class BoardApplicationTests {
     BoardRepository boardRepository;
     @Autowired
@@ -46,10 +47,28 @@ class BoardApplicationTests {
     void 게시글삭제(){
         String userId = "joe5"; // 게시글 작성자
         int boardIdx = 5;
-        // boardIdx로 작성자인지 확인
+        // boardIdx로 작성자인지 확인 - 없어도 될듯
         Optional<Board> board = boardRepository.findById(boardIdx);
         if(board.get().getUserId().equals(userId)){
             boardRepository.deleteById(boardIdx);
         }
+    }
+
+    @Test
+    void 게시글수정(){
+        int boardIdx = 7;
+        int themeIdx = 4; // 게시글 해당 테마 번호
+        String name = "컴포즈 수정"; // 게시글 장소 이름
+        String place = "광주광역시 북구 수정동"; // 게시글 장소 주소
+        String description = "설명이에요 수정수정"; // 게시글 장소 설명
+        Optional<Board> board = boardRepository.findById(boardIdx);
+        System.out.println(board.get().getPlace());
+        board.get().updateThemeIdx(themeIdx);
+        board.get().updateDescription(description);
+        board.get().updateName(name);
+        board.get().updatePlace(place);
+        boardRepository.save(board.get());
+        System.out.println(board.get().getPlace());
+        System.out.println(board.get().getThemeIdx());
     }
 }
