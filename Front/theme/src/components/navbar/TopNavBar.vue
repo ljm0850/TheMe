@@ -14,7 +14,7 @@ export default {
 
 <style scoped lang="scss">
 .img-size {
-  width: 390px;
+  width: 380px;
 }
 
 
