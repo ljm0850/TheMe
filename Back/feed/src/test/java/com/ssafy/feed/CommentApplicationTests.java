@@ -35,6 +35,10 @@ class CommentApplicationTests {
                 .build();
         commentRepository.save(comment);
         System.out.println(comment.getContent());
-
+    }
+    @Test
+    void 댓글삭제(){
+        int commentIdx = 3;
+        commentRepository.deleteById(commentIdx);
     }
 }
