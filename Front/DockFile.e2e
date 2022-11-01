@@ -1,5 +1,5 @@
 FROM node as build-stage
-PWD
+CMD ["pwd"]
 RUN npm install
 WORKDIR /app
 ADD . .
