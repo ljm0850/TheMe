@@ -4,8 +4,10 @@ import com.ssafy.theme.client.UserClient;
 import com.ssafy.theme.dto.theme.ThemeDto;
 import com.ssafy.theme.dto.theme.UserThemeDto;
 import com.ssafy.theme.dto.theme.ThemeRegistDto;
+import com.ssafy.theme.entity.Scrap;
 import com.ssafy.theme.entity.Theme;
 import com.ssafy.theme.entity.UserTheme;
+import com.ssafy.theme.repository.ScrapRepository;
 import com.ssafy.theme.repository.ThemeRepository;
 import com.ssafy.theme.repository.UserThemeRepository;
 import com.ssafy.theme.service.ThemeService;
@@ -23,15 +25,17 @@ import java.util.List;
 public class ThemeServiceImpl implements ThemeService {
     ThemeRepository themeRepository;
     UserThemeRepository userThemeRepository;
+    ScrapRepository scrapRepository;
     UserClient userClient;
     @Autowired
     ThemeServiceImpl(ThemeRepository themeRepository,
                      UserThemeRepository userThemeRepository,
-                     UserClient userClient)
-    {
+                     UserClient userClient,
+                     ScrapRepository scrapRepository) {
         this.themeRepository = themeRepository;
         this.userThemeRepository = userThemeRepository;
         this.userClient = userClient;
+        this.scrapRepository = scrapRepository;
     }
     @Override
     public void registTheme(ThemeRegistDto themeRegistDto) {
@@ -110,5 +114,15 @@ public class ThemeServiceImpl implements ThemeService {
         }
 
         return result;
+    }
+
+    @Override
+    public void scrapTheme(int user_id, int theme_idx) {
+        Scrap scrap = Scrap.builder()
+                .themeIdx(theme_idx)
+                .userId(user_id)
+                .build();
+
+        scrapRepository.save(scrap);
     }
 }

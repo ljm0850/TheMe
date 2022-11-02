@@ -14,4 +14,6 @@ public interface ThemeService {
     ResponseEntity<?> getUserInfo(String nickname);
 
     List<ThemeDto> searchTheme(String target);
+
+    void scrapTheme(int user_id, int theme_idx);
 }
