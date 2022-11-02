@@ -141,14 +141,21 @@ public class ThemeController {
     }
 
     @GetMapping("/follow")
-    public ResponseEntity<?> followThemeList(HttpServletResponse response, @RequestBody UserThemeIdxDto userThemeIdxDto) {
+    public List<UserThemeDto> followThemeList(HttpServletResponse response, @RequestBody UserThemeIdxDto userThemeIdxDto) {
+        return themeService.followThemeList(userThemeIdxDto);
+    }
+
+    @GetMapping("/live/search")
+    public ResponseEntity<?> liveSearchTheme(HttpServletResponse response, @RequestParam(name = "value") String value) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        System.out.println(value);
 
         try {
-            List<UserThemeDto> userThemeDtos = themeService.followThemeList(userThemeIdxDto);
-            result.put("followThemeList",userThemeDtos);
-            result.put("message",OK);
+            List<String> themeList = themeService.liveSearchTheme(value);
+            System.out.println(themeList.size());
+            result.put("themeList", themeList);
+            result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
             result.put("message", FAIL);
@@ -157,5 +164,4 @@ public class ThemeController {
 
         return new ResponseEntity<>(result, status);
     }
-
 }
