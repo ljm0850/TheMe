@@ -8,16 +8,14 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString
-public class kakaoDto {
+public class KakaoDto {
     String id;
-    String email;
     String nickname;
     String picture;
 
     @Builder
-    public kakaoDto(String id, String email, String nickname, String picture) {
+    public KakaoDto(String id, String nickname, String picture) {
         this.id = id;
-        this.email = email;
         this.nickname = nickname;
         this.picture = picture;
     }

@@ -34,9 +34,12 @@ public class UserController {
         Map<String,Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            userService.loginUser(userLoginDto.getKakaoToken()); // 예시로 만들어 놓은거라 void로 할게요
+
+            UserInfoByIdDto userInfoDto = userService.loginUser(userLoginDto.getKakaoToken()); // 예시로 만들어 놓은거라 void로 할게요
             result.put("message",OK);
+            result.put("userInfo", userInfoDto);
             status = HttpStatus.OK;
+
         }catch (Exception e){
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             result.put("message",FAIL);
