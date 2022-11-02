@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,6 +40,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean deleteComment(int commentIdx) {
+        List<Alert> alertList = alertRepository.findByReferenceIdxAndType(commentIdx,1);
+        for(int i=0;i<alertList.size();i++){
+            alertRepository.deleteById(alertList.get(i).getIdx());
+        }
         commentRepository.deleteById(commentIdx);
         return true;
     }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -43,7 +44,11 @@ class CommentApplicationTests {
     }
     @Test
     void 댓글삭제(){
-        int commentIdx = 3;
+        int commentIdx = 2;
+        List<Alert> alertList = alertRepository.findByReferenceIdxAndType(commentIdx,1);
+        for(int i=0;i<alertList.size();i++){
+            alertRepository.deleteById(alertList.get(i).getIdx());
+        }
         commentRepository.deleteById(commentIdx);
     }
     @Test
