@@ -1,6 +1,8 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/storage";
+// import { getStorage, ref } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
@@ -14,10 +16,6 @@ const firebaseConfig = {
   measurementId: process.env.VUE_APP_FB_MEASUREMENT_ID
 };
 
-// Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-
 const app =firebase.initializeApp(firebaseConfig);
 
 const auth_obj = firebase.auth();
@@ -29,18 +27,31 @@ const profileStorageRef = storage_obj.ref("/profile");
 const articleImageUpload = (_imageName:string,_image:File) => {
   const articleImageRef = articleStorageRef.child(_imageName)
   articleImageRef.put(_image)
+  const url = `https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article/${_imageName}`
+  return url
 }
 const profileImageUpload = (_imageName:string,_image:File) =>{
   const profileImageRef = profileStorageRef.child(_imageName)
   profileImageRef.put(_image)
+  return `gs://theme-b8677.appspot.com`
 }
 
+// 참조 생성
+
+const storage = getStorage();
+const gsReference = ref(storage, 'gs://theme-b8677.appspot.com/article/')
+
+// gs://theme-b8677.appspot.com/article
 
 
-// export default firebase;
-// export const auth = auth_obj;
-// export const storage = storage_obj;
-// export const articleImageUpload = (_imageName:string,_image:File) => { article(_imageName,_image) };
-// export const  = storage_obj;
+const testUrl = ()=>{
+  getDownloadURL(ref(storage,'article/test'))
+    .then((url) => {
+      console.log(url)
+    })
+    .catch((error) => {
+      // Handle any errors
+    });
+  }
 
-export {articleImageUpload,profileImageUpload}
+export {articleImageUpload,profileImageUpload,testUrl}
