@@ -7,7 +7,6 @@
       <button @click="test()">asdf</button>
     </div>
   </div>
-  
 </template>
 
 <script lang="ts">
