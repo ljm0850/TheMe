@@ -195,4 +195,10 @@ public class ThemeServiceImpl implements ThemeService {
         }
         return strings;
     }
+
+    @Override
+    public String getThemeName(int theme_idx) {
+        Theme theme = themeRepository.findByIdx(theme_idx);
+        return theme.getName();
+    }
 }
