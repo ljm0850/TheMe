@@ -8,6 +8,7 @@ import PlusThemePage from "@/components/theme/PlusThemePage.vue"
 import ThemeDetail from "@/components/theme/ThemeDetail.vue"
 import SearchProfile from "@/components/search/SearchProfile.vue";
 import SearchTheme from "@/components/search/SearchTheme.vue";
+import FirebaseTestVue from "@/components/FirebaseTest.vue";
 const routes = [
   // 메인
   {
@@ -60,6 +61,11 @@ const routes = [
     name: "Profile",
     component: ProfilePage,
   },
+  {
+    path: "/test",
+    name: "Test",
+    component: FirebaseTestVue,
+  }
 ]
 
 const router = createRouter({

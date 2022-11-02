@@ -1,9 +1,8 @@
 // import router from '@/router'
-// import axios from 'axios'
 import rest from '@/API/rest'
+// import { storage } from '../firebase/firebase'
 
 import axios from "axios"
-
 export default {
     state: {
         feedArticleList: [{ themeName: "tttasdgfa" }, { themeName: "임시2"}]
@@ -24,7 +23,12 @@ export default {
                 headers: getters.authHeader,
                 params: { region: _region}  
             })
-        }
+        },
+        // articleImageUpload(_imageFile: File, _fileName: string) {
+        //     // const storageRef = storage.ref();
+        //     // const imagePath = storageRef.child(`article/${_fileName}`)
+        //     // imagePath.put(_imageFile)
+        // }
 
     }
 }

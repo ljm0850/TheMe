@@ -1,5 +1,5 @@
-const HOST = "http://localhost:8080"
-const HOST1 = "http://k7c203.p.ssafy.io:8010/v2/api-docs"
+// const HOST = "http://localhost:8080"
+const HOST = "http://k7c203.p.ssafy.io:8000"
 const USER = "/user"
 const THEME = '/theme'
 const BOARD = '/board'
@@ -12,11 +12,9 @@ const SEARCH = '/search'
 
 // 카카오
 const KAKAO_Host = "https://kauth.kakao.com"
-const REST_API_KEY = "bab0a08f8b68900521759c285635e38a"
 const REDIRECT_URI = "http://localhost:8080"
 // const REDIRECT_URI = "http://k7c2031.p.ssafy.io:8080"
-const KAKAO_GET_AUTHORIZATION = `/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
-// https://kauth.kakao.com/oauth/authorize?client_id=bab0a08f8b68900521759c285635e38a&redirect_uri=http://localhost:8080&response_type=code HTTP/1.1
+const KAKAO_GET_AUTHORIZATION = `/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
 const KAKAO_TOKEN = "/oauth/token"
 export default {
     kakao: {
@@ -27,16 +25,19 @@ export default {
 
     User: {
         login:() => HOST + USER + '/login',
-        userInfo:(_user_id:string) => HOST + USER + `/info/${_user_id}`,
+        userInfo: (_user_id: string) => HOST + USER + `/info/${_user_id}`,
+        userInfo2: (_user_idx:string) => HOST + USER + `info/id/${_user_idx}`,
         userTheme:(_user_id:string) => HOST + USER + THEME + `/${_user_id}`,
         userBoard:(_theme_id:string,_user_id:string) => HOST + USER + BOARD + `/${_theme_id}/${_user_id}`,
         signOut:(_user_id:string) => HOST + USER + `/${_user_id}`,
         themeFollow:(_theme_id:string, _user_id:string, _target_user_id:string) => HOST + USER + FOLLOW + `/${_theme_id}/${_user_id}/${_target_user_id}`,
         cancelThemeFollow:(_follow_id:string) => HOST + USER + FOLLOW + `/${_follow_id}`,
         themeFollowList:(_user_id:string) => HOST + USER + `/following/${_user_id}`,
-        followerList:() => HOST + USER + '/follower',
-        followingList:() => HOST + USER + '/following',
-        unfollow:() => HOST + USER + '/unfollow',
+        followerList: (_user_id: string) => HOST + USER + `/follower/${_user_id}`,
+        followingThemeIdxList: (_user_id:string) => HOST + USER + '/following' + THEME + `/${_user_id}`,
+        followingList:(_user_id:string) => HOST + USER + `/following/${_user_id}`,
+        unfollow: (_target_user_idx:string,_user_idx:string) => HOST + USER + `/unfollow/${_target_user_idx}/${_user_idx}`,
+        duplication: (_nickname:string) => HOST + USER + `/duplication/${_nickname}`,
     },
 
     Board: {
