@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -108,26 +109,28 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<PublicThemeDto> getPublicThemeList(int isMarked, int sort,int userIdx, int pageSize, int pageIdx) {
-        List<Theme> themeList;
+    public List<PublicThemeDto> getPublicThemeList(int sort, int pageSize, int pageIdx) {
+        List<PublicThemeDto> resultList = new ArrayList<>();
+        Slice<PublicThemeDto> themeList;
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
-
-        if (isMarked == 0) {//전체 조회
             if (sort == 0) { // 인기순
-                //themeList = themeRepository.getPopularAllThemeListWithJPA(pageable);
-            } else {//최신순
-//                themeRepository.getRecentAllThemeListWithJPA();
+                themeList = userThemeRepository.getPopularAllThemeListWithJPA( pageable);
+            } else if(sort == 1) {//최신순
+                themeList = userThemeRepository.getRecnetAllThemeListWithJPA( pageable);
+            }else{
+                return null;
             }
-        } else {//북마크 조회
-            if (sort == 0) { // 인기순
-//                themeRepository.getPopularBookmarkThemeListWithJPA();
-            } else {//최신순
-//                themeRepository.getPopularRecnetThemeListWithJPA();
-            }
+        for(PublicThemeDto publicThemeDto : themeList){
+            PublicThemeDto addPublicThemeDto = PublicThemeDto.builder()
+                    .idx(publicThemeDto.getIdx())
+                    .emoticon(publicThemeDto.getEmoticon())
+                    .title(publicThemeDto.getTitle())
+                    .userCount(publicThemeDto.getUserCount())
+                    .createTime(publicThemeDto.getCreateTime())
+                    .build();
+            resultList.add(addPublicThemeDto);
         }
-
-
-        return null;
+        return resultList;
     }
     public List<ThemeDto> searchTheme(String target) {
         List<ThemeDto> result = new ArrayList<>();
@@ -188,6 +191,22 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
+    public List<PublicThemeDto> getBookmarkThemeList(int userIdx) {
+        List<Scrap> scrapList = scrapRepository.findByUserIdx(userIdx);
+        List<PublicThemeDto> publicThemeDtoList = new ArrayList<>();
+        for(Scrap scrap : scrapList){
+            Long themeCount = userThemeRepository.getThemeCountWithJPA(scrap.getTheme().getIdx());
+            PublicThemeDto publicThemeDto = PublicThemeDto.builder()
+                    .idx(scrap.getIdx())
+                    .createTime(scrap.getTheme().getCreateTime())
+                    .emoticon(scrap.getTheme().getEmoticon())
+                    .title(scrap.getTheme().getName())
+                    .userCount(themeCount)
+                    .build();
+            publicThemeDtoList.add(publicThemeDto);
+        }
+        return publicThemeDtoList;
+    }
     public List<String> liveSearchTheme(String value) {
         List<String> strings = themeRepository.liveSearchByName(value);
         for(int i=0;i<strings.size();i++) {
@@ -195,7 +214,6 @@ public class ThemeServiceImpl implements ThemeService {
         }
         return strings;
     }
-
     @Override
     public String getThemeName(int theme_idx) {
         Theme theme = themeRepository.findByIdx(theme_idx);
