@@ -1,8 +1,10 @@
 package com.ssafy.theme;
 
 import com.ssafy.theme.dto.theme.UserThemeDto;
+import com.ssafy.theme.entity.Scrap;
 import com.ssafy.theme.entity.Theme;
 import com.ssafy.theme.entity.UserTheme;
+import com.ssafy.theme.repository.ScrapRepository;
 import com.ssafy.theme.repository.ThemeRepository;
 import com.ssafy.theme.repository.UserThemeRepository;
 import org.junit.jupiter.api.Test;
@@ -24,10 +26,13 @@ import java.util.Optional;
 class ThemeApplicationTests {
 	ThemeRepository themeRepository;
 	UserThemeRepository userThemeRepository;
+	ScrapRepository scrapRepository;
 	@Autowired
-	ThemeApplicationTests(ThemeRepository themeRepository, UserThemeRepository userThemeRepository){
+	ThemeApplicationTests(ThemeRepository themeRepository, UserThemeRepository userThemeRepository,
+						  ScrapRepository scrapRepository){
 		this.themeRepository = themeRepository;
 		this.userThemeRepository = userThemeRepository;
+		this.scrapRepository = scrapRepository;
 	}
 	@Test
 	void contextLoads() {
@@ -88,5 +93,28 @@ class ThemeApplicationTests {
 		}
 		for(int i=0;i<result.size();i++)
 			System.out.println(result.get(i).toString());
+	}
+
+	@Test
+	void 테마검색() {
+		String target = "test";
+
+		List<Theme> targetThemeList = themeRepository.searchByTarget(target);
+		for(int i=0;i<targetThemeList.size();i++) {
+			Theme targetTheme = targetThemeList.get(i);
+			System.out.println(targetTheme.toString());
+		}
+	}
+
+	@Test
+	void 즐겨찾기() {
+		int theme_idx = 1;
+		int user_id = 2;
+		Scrap scrap = Scrap.builder()
+				.themeIdx(theme_idx)
+				.userId(user_id)
+				.build();
+
+		scrapRepository.save(scrap);
 	}
 }
