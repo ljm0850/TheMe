@@ -2,8 +2,10 @@ package com.ssafy.theme.controller;
 
 import com.ssafy.theme.client.UserClient;
 import com.ssafy.theme.dto.theme.PublicThemeDto;
+import com.ssafy.theme.dto.theme.ThemeDto;
 import com.ssafy.theme.dto.theme.ThemeRegistDto;
 import com.ssafy.theme.dto.theme.UserThemeDto;
+import com.ssafy.theme.dto.theme.UserThemeIdxDto;
 import com.ssafy.theme.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,7 +61,7 @@ public class ThemeController {
     }
 
     @GetMapping("/{user_id}")
-    public ResponseEntity<?> getThemeList(HttpServletResponse response, @PathVariable(name = "user_id") int user_id) {
+    public ResponseEntity<?> getUserThemeList(HttpServletResponse response, @PathVariable(name = "user_id") int user_id) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
@@ -102,4 +104,61 @@ public class ThemeController {
         return result;
     }
 
+<<<<<<< Back/theme/src/main/java/com/ssafy/theme/controller/ThemeController.java
+=======
+    @GetMapping("/search/{target}")
+    public ResponseEntity<?> searchTheme(HttpServletResponse response, @PathVariable(name = "target") String target) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            List<ThemeDto> themeDtos = themeService.searchTheme(target);
+            result.put("themeDtos" , themeDtos);
+            result.put("message",OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(result, status);
+    }
+
+    @PostMapping("/bookmark/{user_id}/{theme_idx}")
+    public ResponseEntity<?> scrapTheme(HttpServletResponse response, @PathVariable("user_id") int user_id,
+                                        @PathVariable(name = "theme_idx") int theme_idx) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            themeService.scrapTheme(user_id, theme_idx);
+            result.put("message",OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(result, status);
+    }
+
+    @GetMapping("/follow")
+    public ResponseEntity<?> followThemeList(HttpServletResponse response, @RequestBody UserThemeIdxDto userThemeIdxDto) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            List<UserThemeDto> userThemeDtos = themeService.followThemeList(userThemeIdxDto);
+            result.put("followThemeList",userThemeDtos);
+            result.put("message",OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(result, status);
+    }
+
+>>>>>>> Back/theme/src/main/java/com/ssafy/theme/controller/ThemeController.java
 }

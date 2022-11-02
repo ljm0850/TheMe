@@ -1,16 +1,13 @@
 package com.ssafy.theme.dto.theme;
 
 import com.ssafy.theme.entity.Theme;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
+@Getter
 @ToString
+@NoArgsConstructor
 public class UserThemeDto {
     private int idx;
     private int userIdx; // 테마 작성자

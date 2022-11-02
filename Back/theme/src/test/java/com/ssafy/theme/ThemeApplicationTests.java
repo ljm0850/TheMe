@@ -125,5 +125,27 @@ class ThemeApplicationTests {
 		for(Scrap publicThemeDto : themeList){
 			System.out.println(publicThemeDto.getTheme().getName());
 		}
+
+	@Test
+	void 테마검색() {
+		String target = "test";
+
+		List<Theme> targetThemeList = themeRepository.searchByTarget(target);
+		for(int i=0;i<targetThemeList.size();i++) {
+			Theme targetTheme = targetThemeList.get(i);
+			System.out.println(targetTheme.toString());
+		}
+	}
+
+	@Test
+	void 즐겨찾기() {
+		int theme_idx = 1;
+		int user_id = 2;
+		Scrap scrap = Scrap.builder()
+				.themeIdx(theme_idx)
+				.userId(user_id)
+				.build();
+
+		scrapRepository.save(scrap);
 	}
 }
