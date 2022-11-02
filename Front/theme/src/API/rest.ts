@@ -1,5 +1,5 @@
-const HOST = "http://localhost:8080"
-const HOST1 = "http://k7c203.p.ssafy.io:8010/v2/api-docs"
+// const HOST = "http://localhost:8080"
+const HOST = "http://k7c203.p.ssafy.io:8000"
 const USER = "/user"
 const THEME = '/theme'
 const BOARD = '/board'
@@ -27,16 +27,19 @@ export default {
 
     User: {
         login:() => HOST + USER + '/login',
-        userInfo:(_user_id:string) => HOST + USER + `/info/${_user_id}`,
+        userInfo: (_user_id: string) => HOST + USER + `/info/${_user_id}`,
+        userInfo2: (_user_idx:string) => HOST + USER + `info/id/${_user_idx}`,
         userTheme:(_user_id:string) => HOST + USER + THEME + `/${_user_id}`,
         userBoard:(_theme_id:string,_user_id:string) => HOST + USER + BOARD + `/${_theme_id}/${_user_id}`,
         signOut:(_user_id:string) => HOST + USER + `/${_user_id}`,
         themeFollow:(_theme_id:string, _user_id:string, _target_user_id:string) => HOST + USER + FOLLOW + `/${_theme_id}/${_user_id}/${_target_user_id}`,
         cancelThemeFollow:(_follow_id:string) => HOST + USER + FOLLOW + `/${_follow_id}`,
         themeFollowList:(_user_id:string) => HOST + USER + `/following/${_user_id}`,
-        followerList:() => HOST + USER + '/follower',
-        followingList:() => HOST + USER + '/following',
-        unfollow:() => HOST + USER + '/unfollow',
+        followerList: (_user_id: string) => HOST + USER + `/follower/${_user_id}`,
+        followingThemeIdxList: (_user_id:string) => HOST + USER + '/following' + THEME + `/${_user_id}`,
+        followingList:(_user_id:string) => HOST + USER + `/following/${_user_id}`,
+        unfollow: (_target_user_idx:string,_user_idx:string) => HOST + USER + `/unfollow/${_target_user_idx}/${_user_idx}`,
+        duplication: (_nickname:string) => HOST + USER + `/duplication/${_nickname}`,
     },
 
     Board: {

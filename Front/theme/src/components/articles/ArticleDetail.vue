@@ -11,6 +11,7 @@
             </div>
             <!-- 사진 -->
             <ArticleImageVue :test="article.themeName"/>
+            <!-- 사진 끝 -->
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
                     <div>❤ 1111</div>
@@ -23,8 +24,9 @@
                 </div>
             </div>
             <span @click="displayComment()" v-if="!state.commentFlag">더보기</span>
+            <!-- 댓글 -->
             <CommentListVue v-if="state.commentFlag"/>
-
+            <!-- 댓글 끝 -->
         </div>
     </div>
 </template>
