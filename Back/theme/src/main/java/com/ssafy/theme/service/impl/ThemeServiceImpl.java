@@ -114,8 +114,10 @@ public class ThemeServiceImpl implements ThemeService {
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
             if (sort == 0) { // 인기순
                 themeList = userThemeRepository.getPopularAllThemeListWithJPA( pageable);
-            } else {//최신순
+            } else if(sort == 1) {//최신순
                 themeList = userThemeRepository.getRecnetAllThemeListWithJPA( pageable);
+            }else{
+                return null;
             }
         return themeList;
     }

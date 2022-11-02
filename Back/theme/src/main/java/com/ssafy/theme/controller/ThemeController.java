@@ -89,13 +89,15 @@ public class ThemeController {
             if(isMarked == 0){
                 Slice<PublicThemeDto> themeList = themeService.getPublicThemeList(sort,pageSize,pageIdx);
                 result.put("themeList",themeList);
-            }else{
+                result.put("message",OK);
+            }else if(isMarked == 1){
                 List<PublicThemeDto> themeList = themeService.getBookmarkThemeList(userIdx);
                 result.put("themeList",themeList);
+                result.put("message",OK);
+            }else{
+                result.put("message",FAIL);
             }
 
-
-            result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
             result.put("message", FAIL);
