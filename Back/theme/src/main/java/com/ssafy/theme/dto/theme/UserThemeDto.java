@@ -1,25 +1,19 @@
-package com.ssafy.theme.entity;
+package com.ssafy.theme.dto.theme;
 
+import com.ssafy.theme.entity.Theme;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
+@Data
 @NoArgsConstructor
 @ToString
-@Entity
-public class UserTheme {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class UserThemeDto {
     private int idx;
-
     private int userIdx; // 테마 작성자
-    @ManyToOne
-    @JoinColumn(name = "parent_theme_idx")
     private Theme theme; // 부모테마
     private int openType; // 공개여부 (0비공개,1친구공개,2검색허용)
     private LocalDateTime createTime; // 생성시간
@@ -28,7 +22,8 @@ public class UserTheme {
     private String description; // 테마 소개
 
     @Builder
-    public UserTheme(int idx, int userIdx, Theme theme, int openType, LocalDateTime createTime, LocalDateTime modifyTime, boolean challenge, String description) {
+    public UserThemeDto(int idx, int userIdx, Theme theme, int openType, LocalDateTime createTime,
+                        LocalDateTime modifyTime, boolean challenge, String description) {
         this.idx = idx;
         this.userIdx = userIdx;
         this.theme = theme;
