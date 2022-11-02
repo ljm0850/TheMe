@@ -33,5 +33,5 @@ eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
-    service-uri :
-      defaultZone : https://127.0.0.1:8761/eureka
+#    service-uri :
+#      defaultZone : https://127.0.0.1:8761/eureka
