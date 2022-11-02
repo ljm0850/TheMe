@@ -107,7 +107,7 @@ public class ThemeServiceImpl implements ThemeService {
 
         if(isMarked == 0){//전체 조회
             if(sort == 0){ // 인기순
-//                themeList = themeRepository.getPopularAllThemeListWithJPA(pageable);
+                //themeList = themeRepository.getPopularAllThemeListWithJPA(pageable);
             }else{//최신순
 //                themeRepository.getRecentAllThemeListWithJPA();
             }
