@@ -1,6 +1,7 @@
 package com.ssafy.theme.service.impl;
 
 import com.ssafy.theme.client.UserClient;
+import com.ssafy.theme.dto.theme.ThemeDto;
 import com.ssafy.theme.dto.theme.UserThemeDto;
 import com.ssafy.theme.dto.theme.ThemeRegistDto;
 import com.ssafy.theme.entity.Theme;
@@ -88,5 +89,26 @@ public class ThemeServiceImpl implements ThemeService {
         ResponseEntity<?> userInfo = userClient.getUserInfo(nickname);
 
         return userInfo;
+    }
+
+    @Override
+    public List<ThemeDto> searchTheme(String target) {
+        List<ThemeDto> result = new ArrayList<>();
+        List<Theme> targetThemeList = themeRepository.searchByTarget(target);
+
+        for(int i=0;i<targetThemeList.size();i++) {
+            Theme theme = targetThemeList.get(i);
+
+            ThemeDto themeDto = ThemeDto.builder()
+                    .idx(theme.getIdx())
+                    .createTime(theme.getCreateTime())
+                    .emoticon(theme.getEmoticon())
+                    .name(theme.getName())
+                    .build();
+
+            result.add(themeDto);
+        }
+
+        return result;
     }
 }

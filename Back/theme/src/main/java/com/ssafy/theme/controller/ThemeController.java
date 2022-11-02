@@ -81,4 +81,20 @@ public class ThemeController {
 
         return result;
     }
+
+    @GetMapping("/search/{target}")
+    public ResponseEntity<?> searchTheme(HttpServletResponse response, @PathVariable(name = "target") String target) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            themeService.searchTheme(target);
+
+        } catch (Exception e) {
+            result.put("message", FAIL);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(result, status);
+    }
 }

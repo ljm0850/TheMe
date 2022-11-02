@@ -3,7 +3,6 @@ package com.ssafy.theme.dto.theme;
 import lombok.*;
 
 @Getter
-@Setter
 @Builder
 @ToString
 @NoArgsConstructor

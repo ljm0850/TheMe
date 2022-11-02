@@ -89,4 +89,15 @@ class ThemeApplicationTests {
 		for(int i=0;i<result.size();i++)
 			System.out.println(result.get(i).toString());
 	}
+
+	@Test
+	void 테마검색() {
+		String target = "test";
+
+		List<Theme> targetThemeList = themeRepository.searchByTarget(target);
+		for(int i=0;i<targetThemeList.size();i++) {
+			Theme targetTheme = targetThemeList.get(i);
+			System.out.println(targetTheme.toString());
+		}
+	}
 }
