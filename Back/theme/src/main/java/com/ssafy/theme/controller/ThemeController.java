@@ -175,8 +175,8 @@ public class ThemeController {
         return new ResponseEntity<>(result, status);
     }
 
-    @GetMapping("/{theme_idx}/name")
-    public String getThemeName(HttpServletResponse response, @PathVariable(name = "theme_idx") int theme_idx) {
+    @GetMapping("/{name/theme_idx}")
+    public String getThemeName(@PathVariable(name = "theme_idx") int theme_idx) {
         return themeService.getThemeName(theme_idx);
     }
 }
