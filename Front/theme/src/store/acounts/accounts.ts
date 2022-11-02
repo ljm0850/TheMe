@@ -8,7 +8,7 @@ export default {
     state: {
         // token: localStorage.getItem('token') || '', 
         token :"",
-        loginUser: {t:"T"},
+        loginUser: {},
     },
     getters: {
         isLoggedIn: (state: { loginUser: Object; }) => !_.isEmpty(state.loginUser),
@@ -27,7 +27,7 @@ export default {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 data: {
                     grant_type: 'authorization_code',
-                    client_id: 'bab0a08f8b68900521759c285635e38a',
+                    client_id: process.env.VUE_APP_KAKAO_CLIENT_ID,
                     redirect_uri: rest.kakao.redirect(),
                     code: _code,
                 }

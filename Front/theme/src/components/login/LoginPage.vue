@@ -4,7 +4,7 @@
       <a :href="kakaoLogin">
         <img src="@/assets/image/kakao_login_large_wide.png" alt="kakao Login" class="img-size">
       </a>
-      <!-- <button @click="test()">asdf</button> -->
+      <button @click="test()">asdf</button>
     </div>
   </div>
   
@@ -25,13 +25,13 @@ export default {
     let kakao_code = ""
     if (window.location.search){
       kakao_code = window.location.search.slice(6)
-      console.log("여기까진 됨")
-      console.log(typeof(kakao_code))
       store.dispatch('kakaoLogin',kakao_code)
     }
     // const kakaoToken = store.dispatch()
-
-    return {kakaoLogin}
+    const test = () => {
+      console.log(process.env)
+    }
+    return {kakaoLogin,test}
   }
 }
 </script>

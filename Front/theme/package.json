@@ -12,6 +12,7 @@
     "bootstrap": "^5.2.2",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
+    "firebase": "^9.13.0",
     "lodash": "^4.17.21",
     "sass": "^1.55.0",
     "sass-loader": "^10.3.1",
