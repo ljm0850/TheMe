@@ -120,7 +120,7 @@ public class ThemeController {
         return new ResponseEntity<>(result, status);
     }
 
-    @GetMapping("/follow")
+    @PostMapping("/follow")
     public ResponseEntity<?> followThemeList(HttpServletResponse response, @RequestBody UserThemeIdxDto userThemeIdxDto) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;

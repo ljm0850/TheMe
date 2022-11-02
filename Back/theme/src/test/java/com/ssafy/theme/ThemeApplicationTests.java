@@ -112,9 +112,41 @@ class ThemeApplicationTests {
 		int user_id = 2;
 		Scrap scrap = Scrap.builder()
 				.themeIdx(theme_idx)
-				.userId(user_id)
+				.userIdx(user_id)
 				.build();
 
 		scrapRepository.save(scrap);
+	}
+
+	@Test
+	void 팔로우하는테마() {
+		List<UserThemeDto> result = new ArrayList<>();
+
+		List<Integer> userThemeList = new ArrayList<>();
+		userThemeList.add(1);
+		userThemeList.add(2);
+		for(int i=0; i<userThemeList.size();i++) {
+
+			int userThemeIdx = userThemeList.get(i);
+			System.out.println("userThemeIdx : " + userThemeIdx);
+			UserTheme userTheme = userThemeRepository.findById(userThemeIdx).orElseThrow(IllegalAccessError::new);
+
+			UserThemeDto userThemeDto = UserThemeDto.builder()
+					.theme(userTheme.getTheme())
+					.userIdx(userTheme.getUserIdx())
+					.createTime(userTheme.getCreateTime())
+					.challenge(userTheme.isChallenge())
+					.description(userTheme.getDescription())
+					.modifyTime(userTheme.getModifyTime())
+					.openType(userTheme.getOpenType())
+					.idx(userTheme.getIdx())
+					.build();
+
+			result.add(userThemeDto);
+		}
+
+		for(int i=0;i<result.size();i++) {
+			System.out.println(result.get(i).toString());
+		}
 	}
 }

@@ -17,7 +17,7 @@ public class UserTheme {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idx;
 
-    private int user_idx; // 테마 작성자
+    private int userIdx; // 테마 작성자
     @ManyToOne
     @JoinColumn(name = "parent_theme_idx")
     private Theme theme; // 부모테마
@@ -28,9 +28,9 @@ public class UserTheme {
     private String description; // 테마 소개
 
     @Builder
-    public UserTheme(int idx, int user_idx, Theme theme, int openType, LocalDateTime createTime, LocalDateTime modifyTime, boolean challenge, String description) {
+    public UserTheme(int idx, int userIdx, Theme theme, int openType, LocalDateTime createTime, LocalDateTime modifyTime, boolean challenge, String description) {
         this.idx = idx;
-        this.user_idx = user_idx;
+        this.userIdx = userIdx;
         this.theme = theme;
         this.openType = openType;
         this.createTime = createTime;

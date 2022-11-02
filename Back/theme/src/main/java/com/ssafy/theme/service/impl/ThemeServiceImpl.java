@@ -122,7 +122,7 @@ public class ThemeServiceImpl implements ThemeService {
     public void scrapTheme(int user_id, int theme_idx) {
         Scrap scrap = Scrap.builder()
                 .themeIdx(theme_idx)
-                .userId(user_id)
+                .userIdx(user_id)
                 .build();
 
         scrapRepository.save(scrap);
