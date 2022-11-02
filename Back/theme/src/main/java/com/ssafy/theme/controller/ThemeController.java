@@ -104,8 +104,6 @@ public class ThemeController {
         return result;
     }
 
-<<<<<<< Back/theme/src/main/java/com/ssafy/theme/controller/ThemeController.java
-=======
     @GetMapping("/search/{target}")
     public ResponseEntity<?> searchTheme(HttpServletResponse response, @PathVariable(name = "target") String target) {
         Map<String, Object> result = new HashMap<>();
@@ -160,5 +158,4 @@ public class ThemeController {
         return new ResponseEntity<>(result, status);
     }
 
->>>>>>> Back/theme/src/main/java/com/ssafy/theme/controller/ThemeController.java
 }
