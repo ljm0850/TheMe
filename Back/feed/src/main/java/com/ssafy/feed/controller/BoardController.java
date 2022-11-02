@@ -146,8 +146,8 @@ public class BoardController {
             BoardListDto boardData = boardService.infoBoard(boardIdx,userIdx);
             result.put("board",boardData);
             // 댓글 관련 정보들
-//            List<CommentListDto> commentData = boardService.infoComment(boardIdx,userIdx);
-//            result.put("comment",commentData);
+            List<CommentListDto> commentData = boardService.infoComment(boardIdx,userIdx);
+            result.put("comment",commentData);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {

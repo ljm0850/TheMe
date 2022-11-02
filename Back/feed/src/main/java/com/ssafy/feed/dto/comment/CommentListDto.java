@@ -13,15 +13,17 @@ public class CommentListDto {
     int userIdx; // 댓글 작성자
     int alertCount; // 신고 횟수
     String nickname; // 작성자 닉네임
+    String profile; // 작성자 프로필
     String content; // 댓글 내용
     boolean isWriter; // 작성자 여부
     @Builder
-    public CommentListDto(int commentIdx,int boardIdx,int userIdx,int alertCount,String nickname,String content,boolean isWriter){
+    public CommentListDto(int commentIdx,int boardIdx,int userIdx,int alertCount,String nickname,String profile,String content,boolean isWriter){
         this.commentIdx= commentIdx;
         this.boardIdx = boardIdx;
         this.userIdx = userIdx;
         this.alertCount = alertCount;
         this.nickname = nickname;
+        this.profile = profile;
         this.content = content;
         this.isWriter = isWriter;
     }

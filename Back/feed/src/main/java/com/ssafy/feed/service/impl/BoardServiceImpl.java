@@ -173,7 +173,27 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<CommentListDto> infoComment(int boardIdx, int userIdx) {
-        return null;
+        boolean isWriter = true;
+        Optional<Board> board = boardRepository.findById(boardIdx); // 해당 게시글
+        List<CommentListDto> commentListDtoList = new ArrayList<>();
+        List<Comment> commentList = commentRepository.findByBoard(board.get()); // 해당 게시글 댓글 리스트
+        for(int i=0;i<commentList.size();i++){
+            UserInfoByIdDto userInfoByIdDto = userClient.getUserInfo(commentList.get(i).getUserIdx());
+            if(commentList.get(i).getUserIdx()!=userIdx) isWriter = false;
+            else isWriter = true;
+            CommentListDto commentListDto = CommentListDto.builder()
+                    .commentIdx(commentList.get(i).getIdx())
+                    .alertCount(commentList.get(i).getAlertCount())
+                    .content(commentList.get(i).getContent())
+                    .userIdx(commentList.get(i).getUserIdx())
+                    .isWriter(isWriter)
+                    .profile(userInfoByIdDto.getPicture())
+                    .boardIdx(boardIdx)
+                    .nickname(userInfoByIdDto.getNickname())
+                    .build();
+            commentListDtoList.add(commentListDto);
+        }
+        return commentListDtoList;
     }
 
     @Override
