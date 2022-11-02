@@ -20,4 +20,7 @@ public interface ThemeRepository extends JpaRepository<Theme,Integer> {
     Optional<Theme> findTop1ByOrderByIdxDesc();
     @Query("Select T from Theme T  where T.name like CONCAT('%',:target,'%')")
     List<Theme> searchByTarget(@Param("target") String target);
+
+    @Query("Select T.name from Theme T where T.name like CONCAT(:value, '%')")
+    List<String> liveSearchByName(@Param("value") String value);
 }
