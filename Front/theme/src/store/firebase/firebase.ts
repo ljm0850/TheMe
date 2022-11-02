@@ -26,9 +26,13 @@ const storage_obj = firebase.storage();
 const articleStorageRef = storage_obj.ref("/article");
 const profileStorageRef = storage_obj.ref("/profile");
 
-const article = (_imageName:string,_image:File) => {
+const articleImageUpload = (_imageName:string,_image:File) => {
   const articleImageRef = articleStorageRef.child(_imageName)
   articleImageRef.put(_image)
+}
+const profileImageUpload = (_imageName:string,_image:File) =>{
+  const profileImageRef = profileStorageRef.child(_imageName)
+  profileImageRef.put(_image)
 }
 
 
@@ -39,3 +43,4 @@ const article = (_imageName:string,_image:File) => {
 // export const articleImageUpload = (_imageName:string,_image:File) => { article(_imageName,_image) };
 // export const  = storage_obj;
 
+export {articleImageUpload,profileImageUpload}
