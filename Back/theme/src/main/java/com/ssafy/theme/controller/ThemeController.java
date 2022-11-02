@@ -166,7 +166,29 @@ public class ThemeController {
     }
 
     @GetMapping("/{theme_idx}/name")
-    public String getThemeName(HttpServletResponse response, @PathVariable(name = "theme_idx") int theme_idx) {
+    public String getThemeName(@PathVariable(name = "theme_idx") int theme_idx) {
         return themeService.getThemeName(theme_idx);
+    }
+
+    @GetMapping("/search/theme/info")
+    public ResponseEntity<?> serachThemeInfo(@RequestParam(name = "value") String value) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            Map<String, Object> searchResult = themeService.searchThemeInfo(value);
+            result.put("isSame", searchResult.get("isSame"));
+            result.put("themeList", searchResult.get("result"));
+            result.put("sameIdx",searchResult.get("sameIdx"));
+            result.put("message",OK);
+//            result.put("themeList", themeList);
+//            result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(result, status);
     }
 }

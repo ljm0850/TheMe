@@ -21,8 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -200,5 +199,41 @@ public class ThemeServiceImpl implements ThemeService {
     public String getThemeName(int theme_idx) {
         Theme theme = themeRepository.findByIdx(theme_idx);
         return theme.getName();
+    }
+
+    @Override
+    public Map<String, Object> searchThemeInfo(String value) {
+        Map<String, Object> answer = new HashMap<>();
+        List<UserThemeDto> result = new ArrayList<>();
+
+        boolean same = false;
+        Optional<UserTheme> sameNameUserTheme = userThemeRepository.findByName(value);
+        int sameIdx = 0;
+        List<UserTheme> userThemeDtos = userThemeRepository.searchByName(value);
+
+
+        for(int i=0;i<userThemeDtos.size();i++) {
+            UserTheme userTheme = userThemeDtos.get(i);
+
+            if(userTheme.getTheme().getName().equals(value)) same = true;
+
+            UserThemeDto userThemeDto = UserThemeDto.builder()
+                    .idx(userTheme.getIdx())
+                    .userIdx(userTheme.getUserIdx())
+                    .modifyTime(userTheme.getModifyTime())
+                    .createTime(userTheme.getCreateTime())
+                    .openType(userTheme.getOpenType())
+                    .theme(userTheme.getTheme())
+                    .challenge(userTheme.isChallenge())
+                    .description(userTheme.getDescription())
+                    .build();
+
+            result.add(userThemeDto);
+        }
+
+        answer.put("result",result);
+        answer.put("isSame", same);
+
+        return answer;
     }
 }
