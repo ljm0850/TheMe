@@ -28,9 +28,9 @@ public class UserTheme {
     private String description; // 테마 소개
 
     @Builder
-    public UserTheme(int idx, int user_idx, Theme theme, int openType, LocalDateTime createTime, LocalDateTime modifyTime, boolean challenge, String description) {
+    public UserTheme(int idx, int userIdx, Theme theme, int openType, LocalDateTime createTime, LocalDateTime modifyTime, boolean challenge, String description) {
         this.idx = idx;
-        this.user_idx = user_idx;
+        this.userIdx = userIdx;
         this.theme = theme;
         this.openType = openType;
         this.createTime = createTime;
