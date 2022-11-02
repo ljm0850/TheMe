@@ -71,6 +71,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public boolean updateBoard(int boardIdx, BoardUpdateDto boardUpdateDto) { // 게시글 수정
+        String[] pictures = boardUpdateDto.getPictures();
         Optional<Board> board = boardRepository.findById(boardIdx);
         board.get().updateThemeIdx(boardUpdateDto.getThemeIdx());
         board.get().updateDescription(boardUpdateDto.getDescription());
@@ -79,6 +80,17 @@ public class BoardServiceImpl implements BoardService {
         board.get().updateCity(boardUpdateDto.getPlace().substring(0,2));
         board.get().updateTime(LocalDateTime.now());
         boardRepository.save(board.get());
+        List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 기존 사진 삭제
+        for(int i=0;i<pictureList.size();i++){
+            pictureRepository.deleteById(pictureList.get(i).getIdx());
+        }
+        for(int i = 0; i < pictures.length; i++){ // 수정된 사진 재등록
+            Picture picture = Picture.builder()
+                    .picture(pictures[i])
+                    .board(board.get())
+                    .build();
+            pictureRepository.save(picture);
+        }
         return true;
     }
 

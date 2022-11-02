@@ -78,11 +78,12 @@ class BoardApplicationTests {
 
     @Test
     void 게시글수정(){
-        int boardIdx = 7;
+        int boardIdx = 4;
         int themeIdx = 4; // 게시글 해당 테마 번호
-        String name = "컴포즈 수정"; // 게시글 장소 이름
+        String name = "먹자 수정"; // 게시글 장소 이름
         String place = "광주광역시 북구 수정동"; // 게시글 장소 주소
         String description = "설명이에요 수정수정"; // 게시글 장소 설명
+        String[] pictures = {"놉"};
         Optional<Board> board = boardRepository.findById(boardIdx);
         System.out.println(board.get().getPlace());
         board.get().updateThemeIdx(themeIdx);
@@ -90,6 +91,17 @@ class BoardApplicationTests {
         board.get().updateName(name);
         board.get().updatePlace(place);
         boardRepository.save(board.get());
+        List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 기존 사진 삭제
+        for(int i=0;i<pictureList.size();i++){
+            pictureRepository.deleteById(pictureList.get(i).getIdx());
+        }
+        for(int i = 0; i < pictures.length; i++){ // 수정된 사진 재등록
+            Picture picture = Picture.builder()
+                    .picture(pictures[i])
+                    .board(board.get())
+                    .build();
+            pictureRepository.save(picture);
+        }
         System.out.println(board.get().getPlace());
         System.out.println(board.get().getThemeIdx());
     }
