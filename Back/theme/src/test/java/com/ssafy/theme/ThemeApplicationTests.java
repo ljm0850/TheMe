@@ -119,13 +119,13 @@ class ThemeApplicationTests {
 		}
 	}
 	@Test
-	void 공용테마목록조회_북마크_전체조회(){
+	void 공용테마목록조회_북마크_전체조회() {
 		int userIdx = 2;
-		List<Scrap> themeList = scrapRepository.findByUserIdx( userIdx);
-		for(Scrap publicThemeDto : themeList){
+		List<Scrap> themeList = scrapRepository.findByUserIdx(userIdx);
+		for (Scrap publicThemeDto : themeList) {
 			System.out.println(publicThemeDto.getTheme().getName());
 		}
-
+	}
 	@Test
 	void 테마검색() {
 		String target = "test";
@@ -141,9 +141,10 @@ class ThemeApplicationTests {
 	void 즐겨찾기() {
 		int theme_idx = 1;
 		int user_id = 2;
+		Theme theme = themeRepository.findByIdx(theme_idx);
 		Scrap scrap = Scrap.builder()
-				.themeIdx(theme_idx)
-				.userId(user_id)
+				.theme(theme)
+				.userIdx(user_id)
 				.build();
 
 		scrapRepository.save(scrap);
