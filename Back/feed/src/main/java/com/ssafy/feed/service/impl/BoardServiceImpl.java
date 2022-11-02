@@ -1,5 +1,6 @@
 package com.ssafy.feed.service.impl;
 
+import com.ssafy.feed.client.ThemeClient;
 import com.ssafy.feed.client.UserClient;
 import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.board.BoardRegistDto;
@@ -25,14 +26,16 @@ public class BoardServiceImpl implements BoardService {
     PictureRepository pictureRepository;
     CommentRepository commentRepository;
     UserClient userClient;
+    ThemeClient themeClient;
     @Autowired
-    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository, AlertRepository alertRepository, PictureRepository pictureRepository, CommentRepository commentRepository,UserClient userClient){
+    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository, AlertRepository alertRepository, PictureRepository pictureRepository, CommentRepository commentRepository,UserClient userClient,ThemeClient themeClient){
         this.boardRepository = boardRepository;
         this.likeRepository = likeRepository;
         this.alertRepository = alertRepository;
         this.pictureRepository = pictureRepository;
         this.commentRepository = commentRepository;
         this.userClient = userClient;
+        this.themeClient = themeClient;
     }
     @Override
     public void registBoard(int userIdx, BoardRegistDto boardRegistDto) { // 게시글 등록
@@ -201,5 +204,9 @@ public class BoardServiceImpl implements BoardService {
         UserInfoByIdDto userInfo = userClient.getUserInfo(userIdx);
         return userInfo;
     }
-
+    @Override
+    public String getThemeName(int themeIdx) { // 테마 idx로 이름 받아오기
+        String themeInfo = themeClient.getThemeName(themeIdx);
+        return themeInfo;
+    }
 }

@@ -26,4 +26,6 @@ public interface BoardService {
     List<CommentListDto> infoComment(int boardIdx, int userIdx);
 
     UserInfoByIdDto getUserInfo(int userIdx);
+
+    String getThemeName(int themeIdx);
 }
