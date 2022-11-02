@@ -33,18 +33,24 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
 
             System.out.println(request.getPath().toString());
 
-            if(request.getPath().equals("/user/login")) {
+            if(request.getPath().toString().equals("/user/login")) {
+                System.out.println("로그인 하러 갔니?");
                 return chain.filter(exchange).then(Mono.fromRunnable(()->{
+
                     // 로그인 성공 시 token 발급
+                    System.out.println(response.getHeaders().get("userIdx"));
                     List<String> token = response.getHeaders().get("userIdx");
                     String userIdx = Objects.requireNonNull(token).get(0);
+
+                    System.out.println(userIdx);
+
                     if(userIdx != null){
                         // header에 accessToken 넘기기
                         String accessToken = jwtTokenProvider.createAccessToken(userIdx);
                         String refreshToken = jwtTokenProvider.createRefreshToken(userIdx);
                         exchange.getResponse().getHeaders().set("authorization", accessToken);
 
-                        jwtTokenProvider.delCookie(exchange.getRequest());
+//                        jwtTokenProvider.delCookie(exchange.getRequest());
 
                         // 리프레시토큰 쿠키에 저장
                         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
@@ -77,6 +83,7 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
                 String refreshToken = jwtTokenProvider.getCookie(request);
 
                 if(jwtTokenProvider.validateToken(refreshToken).equals("ACCESS")){
+
                     // accessToken 재발급 해주기
                     String userIdx = jwtTokenProvider.getUsername(tokenString);
                     String newToken = jwtTokenProvider.createAccessToken(userIdx);

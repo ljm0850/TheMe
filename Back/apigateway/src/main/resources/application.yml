@@ -35,7 +35,8 @@ spring :
           uri: lb://user/
           predicates :
             - Path=/user/**
-
+          filters:
+            - CustomAuthFilter
         - id: theme
           uri: lb://theme/
           predicates:
