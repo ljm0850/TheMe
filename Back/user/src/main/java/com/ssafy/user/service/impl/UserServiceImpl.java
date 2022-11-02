@@ -2,8 +2,6 @@ package com.ssafy.user.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.ssafy.user.client.ThemeClient;
 import com.ssafy.user.dto.*;
 import com.ssafy.user.entity.Follow;
@@ -13,6 +11,8 @@ import com.ssafy.user.repository.UserRepository;
 import com.ssafy.user.service.FollowService;
 import com.ssafy.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,25 +40,50 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void loginUser(String kakaoToken) { // 로그인
-        String kakaoAccessToken = getKakaoAccessToken(kakaoToken);
-        kakaoDto userRegister = null;
-        if(!kakaoAccessToken.equals("")) userRegister = kakaoUser(kakaoAccessToken);
-        else throw new IllegalArgumentException("accessToken 가져오기 실패");
+    public UserInfoByIdDto loginUser(String kakaoToken) { // 로그인
 
-        if(!userRepository.existsById(userRegister.getId()) && userRegister.getId() !=null){ // 없는 회원이면 회원가입
+        KakaoDto userRegister = kakaoUser(kakaoToken);
+
+        if(userRegister==null) throw new IllegalArgumentException("카카오 사용자 가져오기 실패");
+        UserInfoByIdDto userInfoByIdDto = null;
+        if(!userRepository.existsById(userRegister.getId())){ // 없는 회원이면 회원가입
             User user = User.builder()
                     .alertCount(0)
                     .createTime(LocalDateTime.now())
-                    .email(userRegister.getEmail())
                     .id(userRegister.getId())
-                    .nickname(userRegister.getNickname())
                     .picture(userRegister.getPicture())
                     .build();
 
+            // 랜덤 닉네임 생성
+            String randomNick = null;
+            try {
+                randomNick = makeRandomNickname();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            while(userRepository.existsByNickname(randomNick)){
+                log.info("중복 닉네임");
+                try {
+                    randomNick = makeRandomNickname();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            user.updateNickname(randomNick);
             userRepository.save(user);
+
+            userInfoByIdDto = UserInfoByIdDto.builder()
+                    .kakaoId(user.getId())
+                    .nickname(user.getNickname())
+                    .userIdx(user.getIdx())
+                    .createTime(user.getCreateTime())
+                    .description(user.getDescription())
+                    .picture(user.getPicture())
+                    .build();
         }
 
+        return userInfoByIdDto;
     }
 
     @Override
@@ -142,67 +167,8 @@ public class UserServiceImpl implements UserService {
         return userInfoByIdDto;
     }
 
-    public String getKakaoAccessToken (String code) {
-        String access_Token = "";
-        String refresh_Token = "";
-        String reqURL = "https://kauth.kakao.com/oauth/token";
-
-        try {
-            URL url = new URL(reqURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            //POST 요청을 위해 기본값이 false인 setDoOutput을 true로
-
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-
-            //POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-            StringBuilder sb = new StringBuilder();
-            sb.append("grant_type=authorization_code");
-            sb.append("&client_id=bab0a08f8b68900521759c285635e38a"); // TODO REST_API_KEY 입력
-            sb.append("&redirect_uri=http://k7c2031.p.ssafy.io:8080/"); // TODO 인가코드 받은 redirect_uri 입력
-            sb.append("&code=" + code);
-            bw.write(sb.toString());
-            bw.flush();
-
-            //결과 코드가 200이라면 성공
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
-
-            //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line = "";
-            String result = "";
-
-            while ((line = br.readLine()) != null) {
-                result += line;
-            }
-            System.out.println("response body : " + result);
-
-            //Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
-
-            access_Token = element.getAsJsonObject().get("access_token").getAsString();
-            refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
-
-            System.out.println("access_token : " + access_Token);
-            System.out.println("refresh_token : " + refresh_Token);
-
-            br.close();
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return access_Token;
-    }
-
-    public kakaoDto kakaoUser(String token){
-        String id = null;
-        String email = null;
-        String nickname =null;
+    public KakaoDto kakaoUser(String token){
+        KakaoDto kakaoDto = null;
         String reqURL = "https://kapi.kakao.com/v2/user/me";
 
         // access_token을 이용하여 사용자 정보 조회
@@ -229,22 +195,62 @@ public class UserServiceImpl implements UserService {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(result);
 
-            id = jsonNode.get("id").asText();
-            email = jsonNode.get("kakao_account").get("email").asText();
-            nickname = jsonNode.get("properties")
+            String id = jsonNode.get("id").asText();
+//            String email = jsonNode.get("kakao_account").get("email").asText();
+            String nickname = jsonNode.get("properties")
                     .get("nickname").asText();
+            String picture = jsonNode.get("properties")
+                    .get("profile_image").asText();
+
+            System.out.println(id+" "+nickname+" "+picture);
+
+            kakaoDto = KakaoDto.builder()
+                    .id(id)
+                    .nickname(nickname)
+                    .picture(picture)
+                    .build();
+            log.info(kakaoDto.toString());
+
             br.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        kakaoDto kakao = kakaoDto.builder()
-                .email(email)
-                .id(id)
-                .nickname(nickname)
-                .build();
-
-        return kakao;
+        return kakaoDto;
     }
+
+    public String makeRandomNickname() throws Exception {
+        // REST API 호출
+        URL url = new URL("https://nickname.hwanmoo.kr/?format=json&count=1&max_length=4");
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-Type", "application/json"); // Content-Type 지정
+        conn.setDoOutput(true); // 출력 가능 상태로 변경
+        conn.connect();
+
+        // 데이터  읽어오기
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        StringBuilder sb = new StringBuilder();
+        String line = "";
+        while((line = br.readLine()) != null) {
+            sb.append(line); // StringBuilder 사용시 객체를 계속 생성하지 않고 하나의 객체릂 수정하므로 더 빠름.
+        }
+        conn.disconnect();
+
+        // JSON Parsing
+        JSONObject jsonObj = (JSONObject) new JSONParser().parse(sb.toString());
+
+        // 이런 방식으로 데이터 꺼낼 수 있음.
+        System.out.println(jsonObj.get("words"));
+        String nickname = jsonObj.get("words").toString();
+
+        nickname=nickname.replaceAll("\\[", "");
+        nickname=nickname.replaceAll("\\]", "");
+        nickname=nickname.replaceAll("\"", "");
+
+        return nickname;
+    }
+
 }

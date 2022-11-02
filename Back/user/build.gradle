@@ -27,7 +27,7 @@ dependencies {
 	implementation 'mysql:mysql-connector-java' // mysql
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	dependencies { implementation 'com.google.code.gson:gson:2.8.7' } // Gson
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2' //swagger
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2' //swagger
 
