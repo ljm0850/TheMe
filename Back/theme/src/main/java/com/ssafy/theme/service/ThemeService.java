@@ -25,4 +25,6 @@ public interface ThemeService {
     List<UserThemeDto> followThemeList(UserThemeIdxDto userThemeIdxDto);
 
     List<String> liveSearchTheme(String value);
+
+    String getThemeName(int theme_idx);
 }
