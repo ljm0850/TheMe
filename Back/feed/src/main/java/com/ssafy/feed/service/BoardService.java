@@ -4,6 +4,7 @@ import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
 import com.ssafy.feed.dto.comment.CommentListDto;
+import com.ssafy.feed.dto.user.UserInfoByIdDto;
 
 import java.util.List;
 
@@ -20,7 +21,9 @@ public interface BoardService {
 
     boolean alertBoard(int userIdx, int boardIdx, String content);
 
-    List<BoardListDto> infoBoard(int boardIdx, int userIdx);
+    BoardListDto infoBoard(int boardIdx, int userIdx);
 
     List<CommentListDto> infoComment(int boardIdx, int userIdx);
+
+    UserInfoByIdDto getUserInfo(int userIdx);
 }

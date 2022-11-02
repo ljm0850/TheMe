@@ -1,5 +1,6 @@
 package com.ssafy.feed;
 
+import com.ssafy.feed.client.UserClient;
 import com.ssafy.feed.entity.*;
 import com.ssafy.feed.repository.*;
 import org.junit.jupiter.api.Test;
@@ -17,13 +18,15 @@ class BoardApplicationTests {
     AlertRepository alertRepository;
     PictureRepository pictureRepository;
     CommentRepository commentRepository;
+    UserClient userClient;
     @Autowired
-    void BoardApplicationTests(BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository,PictureRepository pictureRepository, CommentRepository commentRepository) {
+    void BoardApplicationTests(BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository,PictureRepository pictureRepository, CommentRepository commentRepository,UserClient userClient) {
         this.boardRepository = boardRepository;
         this.likeRepository = likeRepository;
         this.alertRepository = alertRepository;
         this.pictureRepository = pictureRepository;
         this.commentRepository = commentRepository;
+        this.userClient = userClient;
     }
     @Test
     void 게시물등록() {
@@ -164,5 +167,10 @@ class BoardApplicationTests {
         for(int i=0;i<commentList.size();i++){
             System.out.println(commentList.get(i).toString());
         }
+    }
+    @Test
+    void 게시글유저정보조회(){
+        int userIdx = 5;
+        System.out.println();
     }
 }

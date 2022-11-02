@@ -140,18 +140,19 @@ public class BoardController {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         //int userIdx = (int) request.getAttribute("userIdx");
-        int userIdx = 1;
+        int userIdx = 5;
         try {
             // 글 관련 정보들
-            List<BoardListDto> boardData = boardService.infoBoard(boardIdx,userIdx);
+            BoardListDto boardData = boardService.infoBoard(boardIdx,userIdx);
             result.put("board",boardData);
             // 댓글 관련 정보들
-            List<CommentListDto> commentData = boardService.infoComment(boardIdx,userIdx);
-            result.put("comment",commentData);
+//            List<CommentListDto> commentData = boardService.infoComment(boardIdx,userIdx);
+//            result.put("comment",commentData);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
+            System.out.println(e);
             result.put("message", FAIL);
         }
         return new ResponseEntity<>(result, status);

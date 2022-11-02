@@ -1,20 +1,22 @@
 package com.ssafy.feed.service.impl;
 
+import com.ssafy.feed.client.UserClient;
 import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
 import com.ssafy.feed.dto.comment.CommentListDto;
+import com.ssafy.feed.dto.user.UserInfoByIdDto;
 import com.ssafy.feed.entity.*;
 import com.ssafy.feed.repository.*;
 import com.ssafy.feed.service.BoardService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+@Slf4j
 @Service
 public class BoardServiceImpl implements BoardService {
     BoardRepository boardRepository;
@@ -22,13 +24,15 @@ public class BoardServiceImpl implements BoardService {
     AlertRepository alertRepository;
     PictureRepository pictureRepository;
     CommentRepository commentRepository;
+    UserClient userClient;
     @Autowired
-    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository, AlertRepository alertRepository, PictureRepository pictureRepository, CommentRepository commentRepository){
+    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository, AlertRepository alertRepository, PictureRepository pictureRepository, CommentRepository commentRepository,UserClient userClient){
         this.boardRepository = boardRepository;
         this.likeRepository = likeRepository;
         this.alertRepository = alertRepository;
         this.pictureRepository = pictureRepository;
         this.commentRepository = commentRepository;
+        this.userClient = userClient;
     }
     @Override
     public void registBoard(int userIdx, BoardRegistDto boardRegistDto) { // 게시글 등록
@@ -138,13 +142,44 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardListDto> infoBoard(int boardIdx, int userIdx) {
-
-        return null;
+    public BoardListDto infoBoard(int boardIdx, int userIdx) {
+        boolean isWriter = true;
+        Map<Object,Object> map = new HashMap<>();
+        Optional<Board> board = boardRepository.findById(boardIdx);
+        UserInfoByIdDto userInfoByIdDto = userClient.getUserInfo(userIdx);
+        List<Picture> pictureList = pictureRepository.findByBoard(board.get());
+        String[] pictures = new String[pictureList.size()];
+        for(int i=0;i<pictureList.size();i++){
+            pictures[i] = (pictureList.get(i).getPicture());
+        }
+        if(board.get().getUserIdx()!=userIdx) isWriter = false;
+        BoardListDto boardListDto = BoardListDto.builder()
+                .boardIdx(board.get().getIdx())
+                .alertCount(board.get().getAlertCount())
+                .city(board.get().getCity())
+                .description(board.get().getDescription())
+                .name(board.get().getName())
+                .isWriter(isWriter)
+                .modifyTime(board.get().getModifyTime())
+                .place(board.get().getPlace())
+                .profile(userInfoByIdDto.getPicture())
+                .nickname(userInfoByIdDto.getNickname())
+                .picture(pictures)
+                .themeIdx(board.get().getThemeIdx())
+                .userIdx(board.get().getUserIdx()) // 테마이름만 받아와서 추가하기
+                .build();
+        return boardListDto;
     }
 
     @Override
     public List<CommentListDto> infoComment(int boardIdx, int userIdx) {
         return null;
     }
+
+    @Override
+    public UserInfoByIdDto getUserInfo(int userIdx) { // 유저정보 받아오기
+        UserInfoByIdDto userInfo = userClient.getUserInfo(userIdx);
+        return userInfo;
+    }
+
 }

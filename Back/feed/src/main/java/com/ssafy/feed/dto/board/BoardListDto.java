@@ -2,6 +2,8 @@ package com.ssafy.feed.dto.board;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -17,13 +19,13 @@ public class BoardListDto {
     String name; // 장소 이름
     String place;
     String description;
-    String modifyTime;
+    LocalDateTime modifyTime;
     String profile; // 프로필 사진
     String city; // 지역
     String[] picture; // 게시글 사진
     boolean isWriter; // 작성자 여부
     @Builder
-    public BoardListDto(int boardIdx,int themeIdx,int userIdx,int alertCount,String themeName,String nickname,String name,String place,String description,String modifyTime,String city,String profile,String[] picture,boolean isWriter){
+    public BoardListDto(int boardIdx,int themeIdx,int userIdx,int alertCount,String themeName,String nickname,String name,String place,String description,LocalDateTime modifyTime,String city,String profile,String[] picture,boolean isWriter){
         this.boardIdx = boardIdx;
         this.themeIdx = themeIdx;
         this.userIdx = userIdx;
