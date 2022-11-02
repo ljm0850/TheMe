@@ -13,15 +13,16 @@ public class Scrap {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idx;
 
-    @Column(name = "theme_idx") // 다대다 연관관계 애매해서 컬럼으로만 두기
-    private int themeIdx; // 스크랩 할 테마 번호
+    @ManyToOne
+    @JoinColumn(name = "theme_idx")
+    private Theme theme; // 스크랩 할 테마 번호
     @Column(name = "user_idx") // 다대다 연관관계 애매해서 컬럼으로만 두기
-    private int user_idx; // 스크랩 하는 사용자
+    private int userIdx; // 스크랩 하는 사용자
 
     @Builder
-    public Scrap(int idx, int themeIdx, int userId) {
+    public Scrap(int idx, Theme theme, int userIdx) {
         this.idx = idx;
-        this.themeIdx = themeIdx;
-        this.userId = userId;
+        this.theme = theme;
+        this.userIdx = userIdx;
     }
 }
