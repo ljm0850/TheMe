@@ -179,10 +179,7 @@ public class ThemeController {
             Map<String, Object> searchResult = themeService.searchThemeInfo(value);
             result.put("isSame", searchResult.get("isSame"));
             result.put("themeList", searchResult.get("result"));
-            result.put("sameIdx",searchResult.get("sameIdx"));
             result.put("message",OK);
-//            result.put("themeList", themeList);
-//            result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
             result.put("message", FAIL);

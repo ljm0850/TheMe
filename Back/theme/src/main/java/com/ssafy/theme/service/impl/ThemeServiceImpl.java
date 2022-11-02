@@ -204,31 +204,48 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public Map<String, Object> searchThemeInfo(String value) {
         Map<String, Object> answer = new HashMap<>();
-        List<UserThemeDto> result = new ArrayList<>();
+        List<ThemeDto> result = new ArrayList<>();
 
-        boolean same = false;
-        Optional<UserTheme> sameNameUserTheme = userThemeRepository.findByName(value);
-        int sameIdx = 0;
-        List<UserTheme> userThemeDtos = userThemeRepository.searchByName(value);
+        boolean same = themeRepository.findByName(value).isPresent();
 
+        if(same) {
+            Theme theme = themeRepository.findByName(value).orElseThrow(IllegalAccessError::new);
 
-        for(int i=0;i<userThemeDtos.size();i++) {
-            UserTheme userTheme = userThemeDtos.get(i);
-
-            if(userTheme.getTheme().getName().equals(value)) same = true;
-
-            UserThemeDto userThemeDto = UserThemeDto.builder()
-                    .idx(userTheme.getIdx())
-                    .userIdx(userTheme.getUserIdx())
-                    .modifyTime(userTheme.getModifyTime())
-                    .createTime(userTheme.getCreateTime())
-                    .openType(userTheme.getOpenType())
-                    .theme(userTheme.getTheme())
-                    .challenge(userTheme.isChallenge())
-                    .description(userTheme.getDescription())
+            ThemeDto themeDto = ThemeDto.builder()
+                    .idx(theme.getIdx())
+                    .createTime(theme.getCreateTime())
+                    .emoticon(theme.getEmoticon())
+                    .name(theme.getName())
                     .build();
 
-            result.add(userThemeDto);
+            result.add(themeDto);
+        }
+
+        List<Theme> themes = themeRepository.searchByTarget(value);
+        if (same) {
+            for(int i=1;i<themes.size();i++) {
+                Theme target = themes.get(i);
+                ThemeDto themeDto = ThemeDto.builder()
+                        .idx(target.getIdx())
+                        .createTime(target.getCreateTime())
+                        .emoticon(target.getEmoticon())
+                        .name(target.getName())
+                        .build();
+
+                result.add(themeDto);
+            }
+        } else {
+            for(int i=0;i<themes.size();i++) {
+                Theme target = themes.get(i);
+                ThemeDto themeDto = ThemeDto.builder()
+                        .idx(target.getIdx())
+                        .createTime(target.getCreateTime())
+                        .emoticon(target.getEmoticon())
+                        .name(target.getName())
+                        .build();
+
+                result.add(themeDto);
+            }
         }
 
         answer.put("result",result);
