@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -108,26 +109,15 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<PublicThemeDto> getPublicThemeList(int isMarked, int sort,int userIdx, int pageSize, int pageIdx) {
-        List<Theme> themeList;
+    public Slice<PublicThemeDto> getPublicThemeList(int sort, int pageSize, int pageIdx) {
+        Slice<PublicThemeDto> themeList;
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
-
-        if (isMarked == 0) {//전체 조회
             if (sort == 0) { // 인기순
-                //themeList = themeRepository.getPopularAllThemeListWithJPA(pageable);
+                themeList = userThemeRepository.getPopularAllThemeListWithJPA( pageable);
             } else {//최신순
-//                themeRepository.getRecentAllThemeListWithJPA();
+                themeList = userThemeRepository.getRecnetAllThemeListWithJPA( pageable);
             }
-        } else {//북마크 조회
-            if (sort == 0) { // 인기순
-//                themeRepository.getPopularBookmarkThemeListWithJPA();
-            } else {//최신순
-//                themeRepository.getPopularRecnetThemeListWithJPA();
-            }
-        }
-
-
-        return null;
+        return themeList;
     }
     public List<ThemeDto> searchTheme(String target) {
         List<ThemeDto> result = new ArrayList<>();
@@ -185,5 +175,23 @@ public class ThemeServiceImpl implements ThemeService {
             result.add(userThemeDto);
         }
         return result;
+    }
+
+    @Override
+    public List<PublicThemeDto> getBookmarkThemeList(int userIdx) {
+        List<Scrap> scrapList = scrapRepository.findByUserIdx(userIdx);
+        List<PublicThemeDto> publicThemeDtoList = new ArrayList<>();
+        for(Scrap scrap : scrapList){
+            Long themeCount = userThemeRepository.getThemeCountWithJPA(scrap.getTheme().getIdx());
+            PublicThemeDto publicThemeDto = PublicThemeDto.builder()
+                    .idx(scrap.getIdx())
+                    .createTime(scrap.getTheme().getCreateTime())
+                    .emoticon(scrap.getTheme().getEmoticon())
+                    .title(scrap.getTheme().getName())
+                    .userCount(themeCount)
+                    .build();
+            publicThemeDtoList.add(publicThemeDto);
+        }
+        return publicThemeDtoList;
     }
 }

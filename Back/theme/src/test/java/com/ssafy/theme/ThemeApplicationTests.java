@@ -122,7 +122,11 @@ class ThemeApplicationTests {
 	void 공용테마목록조회_북마크_전체조회() {
 		int userIdx = 2;
 		List<Scrap> themeList = scrapRepository.findByUserIdx(userIdx);
+
 		for (Scrap publicThemeDto : themeList) {
+			System.out.println(publicThemeDto.getTheme().getIdx());
+			Long themeCount = userThemeRepository.getThemeCountWithJPA(publicThemeDto.getTheme().getIdx());
+			System.out.println(themeCount);
 			System.out.println(publicThemeDto.getTheme().getName());
 		}
 	}

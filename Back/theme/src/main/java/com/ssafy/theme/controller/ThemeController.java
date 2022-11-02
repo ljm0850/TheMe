@@ -8,6 +8,7 @@ import com.ssafy.theme.dto.theme.UserThemeDto;
 import com.ssafy.theme.dto.theme.UserThemeIdxDto;
 import com.ssafy.theme.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -85,9 +86,15 @@ public class ThemeController {
         //임시 JWT 토큰
         int userIdx = 2;
         try {
+            if(isMarked == 0){
+                Slice<PublicThemeDto> themeList = themeService.getPublicThemeList(sort,pageSize,pageIdx);
+                result.put("themeList",themeList);
+            }else{
+                List<PublicThemeDto> themeList = themeService.getBookmarkThemeList(userIdx);
+                result.put("themeList",themeList);
+            }
 
-            List<PublicThemeDto> themeList = themeService.getPublicThemeList(isMarked,sort,userIdx,pageSize,pageIdx);
-            result.put("themeList",themeList);
+
             result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
