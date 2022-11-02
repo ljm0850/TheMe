@@ -1,6 +1,7 @@
 package com.ssafy.theme.service.impl;
 
 import com.ssafy.theme.client.UserClient;
+import com.ssafy.theme.dto.theme.PublicThemeDto;
 import com.ssafy.theme.dto.theme.UserThemeDto;
 import com.ssafy.theme.dto.theme.ThemeRegistDto;
 import com.ssafy.theme.entity.Theme;
@@ -10,6 +11,8 @@ import com.ssafy.theme.repository.UserThemeRepository;
 import com.ssafy.theme.service.ThemeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -88,5 +91,37 @@ public class ThemeServiceImpl implements ThemeService {
         ResponseEntity<?> userInfo = userClient.getUserInfo(nickname);
 
         return userInfo;
+    }
+
+    @Override
+    public ResponseEntity<?> getUserIdxInfo(int userIdx) {
+        ResponseEntity<?> userInfo = userClient.getUserIdxInfo(userIdx);
+
+        return userInfo;
+    }
+
+    @Override
+    public List<PublicThemeDto> getPublicThemeList(int isMarked, int sort,int userIdx, int pageSize, int pageIdx) {
+        List<Theme> themeList;
+        Pageable pageable = PageRequest.of(pageIdx,pageSize);
+
+        if(isMarked == 0){//전체 조회
+            if(sort == 0){ // 인기순
+//                themeList = themeRepository.getPopularAllThemeListWithJPA(pageable);
+            }else{//최신순
+//                themeRepository.getRecentAllThemeListWithJPA();
+            }
+        }else{//북마크 조회
+            if(sort == 0){ // 인기순
+//                themeRepository.getPopularBookmarkThemeListWithJPA();
+            }else{//최신순
+//                themeRepository.getPopularRecnetThemeListWithJPA();
+            }
+        }
+
+
+
+
+        return null;
     }
 }
