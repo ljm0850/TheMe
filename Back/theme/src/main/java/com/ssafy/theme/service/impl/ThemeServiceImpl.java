@@ -1,6 +1,7 @@
 package com.ssafy.theme.service.impl;
 
 import com.ssafy.theme.client.UserClient;
+import com.ssafy.theme.dto.theme.PublicThemeDto;
 import com.ssafy.theme.dto.theme.ThemeDto;
 import com.ssafy.theme.dto.theme.UserThemeDto;
 import com.ssafy.theme.dto.theme.ThemeRegistDto;
@@ -14,6 +15,8 @@ import com.ssafy.theme.repository.UserThemeRepository;
 import com.ssafy.theme.service.ThemeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -98,6 +101,34 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
+    public ResponseEntity<?> getUserIdxInfo(int userIdx) {
+        ResponseEntity<?> userInfo = userClient.getUserIdxInfo(userIdx);
+
+        return userInfo;
+    }
+
+    @Override
+    public List<PublicThemeDto> getPublicThemeList(int isMarked, int sort,int userIdx, int pageSize, int pageIdx) {
+        List<Theme> themeList;
+        Pageable pageable = PageRequest.of(pageIdx, pageSize);
+
+        if (isMarked == 0) {//전체 조회
+            if (sort == 0) { // 인기순
+                //themeList = themeRepository.getPopularAllThemeListWithJPA(pageable);
+            } else {//최신순
+//                themeRepository.getRecentAllThemeListWithJPA();
+            }
+        } else {//북마크 조회
+            if (sort == 0) { // 인기순
+//                themeRepository.getPopularBookmarkThemeListWithJPA();
+            } else {//최신순
+//                themeRepository.getPopularRecnetThemeListWithJPA();
+            }
+        }
+
+
+        return null;
+    }
     public List<ThemeDto> searchTheme(String target) {
         List<ThemeDto> result = new ArrayList<>();
         List<Theme> targetThemeList = themeRepository.searchByTarget(target);
@@ -119,10 +150,11 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public void scrapTheme(int user_id, int theme_idx) {
+    public void scrapTheme(int userIdx, int themeIdx) {
+        Theme theme = themeRepository.findByIdx(themeIdx);
         Scrap scrap = Scrap.builder()
-                .themeIdx(theme_idx)
-                .userIdx(user_id)
+                .theme(theme)
+                .userIdx(userIdx)
                 .build();
 
         scrapRepository.save(scrap);

@@ -1,6 +1,7 @@
 package com.ssafy.theme.controller;
 
 import com.ssafy.theme.client.UserClient;
+import com.ssafy.theme.dto.theme.PublicThemeDto;
 import com.ssafy.theme.dto.theme.ThemeDto;
 import com.ssafy.theme.dto.theme.ThemeRegistDto;
 import com.ssafy.theme.dto.theme.UserThemeDto;
@@ -76,7 +77,26 @@ public class ThemeController {
 
         return new ResponseEntity<>(result, status);
     }
+    @GetMapping("/theme/map/theme") // 공용 테마 목록 조회
+    public ResponseEntity<?> getPublicThemeList(HttpServletResponse response, @RequestParam(name = "isMarked") int isMarked,
+                        @RequestParam(name ="sort")int sort,@RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        //임시 JWT 토큰
+        int userIdx = 2;
+        try {
 
+            List<PublicThemeDto> themeList = themeService.getPublicThemeList(isMarked,sort,userIdx,pageSize,pageIdx);
+            result.put("themeList",themeList);
+            result.put("message",OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(result, status);
+    }
     @GetMapping("/test/{nickname}")
     public ResponseEntity<?> test(HttpServletResponse response, @PathVariable(name = "nickname") String nickname) {
         ResponseEntity<?> result = themeService.getUserInfo(nickname);

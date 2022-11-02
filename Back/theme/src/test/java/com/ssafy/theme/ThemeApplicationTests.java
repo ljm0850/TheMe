@@ -1,5 +1,6 @@
 package com.ssafy.theme;
 
+import com.ssafy.theme.dto.theme.PublicThemeDto;
 import com.ssafy.theme.dto.theme.UserThemeDto;
 import com.ssafy.theme.entity.Scrap;
 import com.ssafy.theme.entity.Theme;
@@ -10,6 +11,10 @@ import com.ssafy.theme.repository.UserThemeRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedWriter;
@@ -28,8 +33,7 @@ class ThemeApplicationTests {
 	UserThemeRepository userThemeRepository;
 	ScrapRepository scrapRepository;
 	@Autowired
-	ThemeApplicationTests(ThemeRepository themeRepository, UserThemeRepository userThemeRepository,
-						  ScrapRepository scrapRepository){
+	ThemeApplicationTests(ThemeRepository themeRepository, UserThemeRepository userThemeRepository,ScrapRepository scrapRepository){
 		this.themeRepository = themeRepository;
 		this.userThemeRepository = userThemeRepository;
 		this.scrapRepository = scrapRepository;
@@ -94,7 +98,34 @@ class ThemeApplicationTests {
 		for(int i=0;i<result.size();i++)
 			System.out.println(result.get(i).toString());
 	}
-
+	@Test
+	void 공용테마목록조회_전체_인기순(){
+		int pageSize = 1;
+		int pageIdx = 0;
+		Pageable pageable = PageRequest.of(pageIdx, pageSize);
+		Slice<PublicThemeDto> themeList = userThemeRepository.getPopularAllThemeListWithJPA( pageable);
+		for(PublicThemeDto publicThemeDto : themeList){
+			System.out.println(publicThemeDto.getTitle());
+		}
+	}
+	@Test
+	void 공용테마목록조회_전체_시간순(){
+		int pageSize = 1;
+		int pageIdx = 0;
+		Pageable pageable = PageRequest.of(pageIdx, pageSize);
+		Slice<PublicThemeDto> themeList = userThemeRepository.getRecnetAllThemeListWithJPA( pageable);
+		for(PublicThemeDto publicThemeDto : themeList){
+			System.out.println(publicThemeDto.getTitle());
+		}
+	}
+	@Test
+	void 공용테마목록조회_북마크_전체조회() {
+		int userIdx = 2;
+		List<Scrap> themeList = scrapRepository.findByUserIdx(userIdx);
+		for (Scrap publicThemeDto : themeList) {
+			System.out.println(publicThemeDto.getTheme().getName());
+		}
+	}
 	@Test
 	void 테마검색() {
 		String target = "test";
@@ -110,8 +141,9 @@ class ThemeApplicationTests {
 	void 즐겨찾기() {
 		int theme_idx = 1;
 		int user_id = 2;
+		Theme theme = themeRepository.findByIdx(theme_idx);
 		Scrap scrap = Scrap.builder()
-				.themeIdx(theme_idx)
+				.theme(theme)
 				.userIdx(user_id)
 				.build();
 

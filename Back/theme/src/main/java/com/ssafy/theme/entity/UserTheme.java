@@ -16,7 +16,7 @@ public class UserTheme {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idx;
-
+    @Column(name = "user_idx")
     private int userIdx; // 테마 작성자
     @ManyToOne
     @JoinColumn(name = "parent_theme_idx")
