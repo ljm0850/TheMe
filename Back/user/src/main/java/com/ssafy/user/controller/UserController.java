@@ -216,19 +216,7 @@ public class UserController {
     }
 
     @GetMapping("/info/id/{user_id}")
-    ResponseEntity<?> getUserInfoById(@PathVariable(name = "user_id") int user_id) {
-        Map<String, Object> result = new HashMap<>();
-
-        HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
-        try {
-            UserInfoByIdDto userInfoByIdDtoList = userService.getUserInfoById(user_id);
-            result.put("message", OK);
-            result.put("userInfoByIdDtoList", userInfoByIdDtoList);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            result.put("message", FAIL);
-        }
-
-        return new ResponseEntity<>(result, status);
+    UserInfoByIdDto getUserInfoById(@PathVariable(name = "user_id") int user_id) {
+        return userService.getUserInfoById(user_id);
     }
 }
