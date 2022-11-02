@@ -1,7 +1,11 @@
 package com.ssafy.feed.service;
 
+import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
+import com.ssafy.feed.dto.comment.CommentListDto;
+
+import java.util.List;
 
 public interface BoardService {
     void registBoard(int userIdx, BoardRegistDto boardRegistDto);
@@ -15,4 +19,8 @@ public interface BoardService {
     void deleteLikes(int userIdx, int boardIdx);
 
     boolean alertBoard(int userIdx, int boardIdx, String content);
+
+    List<BoardListDto> infoBoard(int boardIdx, int userIdx);
+
+    List<CommentListDto> infoComment(int boardIdx, int userIdx);
 }

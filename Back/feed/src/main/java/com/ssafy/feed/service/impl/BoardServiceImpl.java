@@ -1,7 +1,9 @@
 package com.ssafy.feed.service.impl;
 
+import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
+import com.ssafy.feed.dto.comment.CommentListDto;
 import com.ssafy.feed.entity.*;
 import com.ssafy.feed.repository.*;
 import com.ssafy.feed.service.BoardService;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -132,5 +135,16 @@ public class BoardServiceImpl implements BoardService {
             boardRepository.save(board.get());
             return true;
         }
+    }
+
+    @Override
+    public List<BoardListDto> infoBoard(int boardIdx, int userIdx) {
+
+        return null;
+    }
+
+    @Override
+    public List<CommentListDto> infoComment(int boardIdx, int userIdx) {
+        return null;
     }
 }

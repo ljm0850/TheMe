@@ -155,4 +155,14 @@ class BoardApplicationTests {
             System.out.println("true");
         }
     }
+    @Test
+    void 게시글상세조회(){
+        int boardIdx = 2;
+        Optional<Board> board = boardRepository.findById(boardIdx);
+        List<Comment> commentList = commentRepository.findByBoard(board.get());
+        System.out.println(board.get().toString());
+        for(int i=0;i<commentList.size();i++){
+            System.out.println(commentList.get(i).toString());
+        }
+    }
 }

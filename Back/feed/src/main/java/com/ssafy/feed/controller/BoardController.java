@@ -1,7 +1,9 @@
 package com.ssafy.feed.controller;
 
+import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
+import com.ssafy.feed.dto.comment.CommentListDto;
 import com.ssafy.feed.service.BoardService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -123,6 +126,28 @@ public class BoardController {
         try {
             boolean is = boardService.alertBoard(userIdx,boardIdx,content);
             result.put("data", is); // 같은 신고자가 같은 게시물을 한번만 신고가능
+            result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            result.put("message", FAIL);
+        }
+        return new ResponseEntity<>(result, status);
+    }
+    @GetMapping("/board/{board_idx}")
+    @ApiOperation(value = "게시글 상세 조회" , notes = "게시글 세부 내용,댓글 내용들 모두 포함")
+    public ResponseEntity<?> InfoBoardComment(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        //int userIdx = (int) request.getAttribute("userIdx");
+        int userIdx = 1;
+        try {
+            // 글 관련 정보들
+            List<BoardListDto> boardData = boardService.infoBoard(boardIdx,userIdx);
+            result.put("board",boardData);
+            // 댓글 관련 정보들
+            List<CommentListDto> commentData = boardService.infoComment(boardIdx,userIdx);
+            result.put("comment",commentData);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
