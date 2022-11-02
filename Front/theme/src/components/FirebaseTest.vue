@@ -6,6 +6,7 @@
           </p> -->
         <div v-if="state.selectFile">{{ state.selectFile }}</div>
         <button @click="test()">test</button>
+        <button @click="test2()">이미지 주소 찍어보자</button>
         <!-- <img v-if="" src="" alt=""> -->
     </div>
 </template>
@@ -14,10 +15,10 @@
 import { reactive } from '@vue/reactivity'
 // import { useStore } from "vuex";
 // import { storage } from '@/store/firebase/firebase';
-import firebase from "firebase/compat/app";
+// import firebase from "firebase/compat/app";
 import "firebase/compat/storage"
 import "firebase/compat/auth";
-// import { articleImageUpload } from "@/store/firebase/firebase"
+import { articleImageUpload,testUrl } from "@/store/firebase/firebase"
 
 export default {
     components: {
@@ -36,28 +37,17 @@ export default {
             file = e.target.files[0];
             state.selectFile = e.target.files
         }
-
-        const firebaseConfig = {
-            apiKey: process.env.VUE_APP_FB_API_KEY,
-            authDomain: process.env.VUE_APP_FB_AUTH_DOMAIN,
-            projectId: process.env.VUE_APP_FB_PROJECT_ID,
-            storageBucket: process.env.VUE_APP_FB_STORAGEBUCKET,
-            messagingSenderId: process.env.VUE_APP_FB_MESSAGING_SENDER_ID,
-            appId: process.env.VUE_APP_FB_APP_ID,
-            measurementId: process.env.VUE_APP_FB_MEASUREMENT_ID
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        let auth_obj = firebase.auth;
-        let storage_obj = firebase.storage();
+        
         const test = () => {
-            const storageRef = storage_obj.ref("/article");
-            const imagesRef = storageRef.child("test2");
-            console.log(state.selectFile[0])
-            imagesRef.put(state.selectFile[0])
-            // articleImageUpload("zzzz",state.selectFile[0])
+            articleImageUpload("???",state.selectFile[0])
         }
-        return { file, fileChange, state, test, auth_obj}
+
+        const test2 = ()=>{
+            testUrl()
+        }
+
+        // return { file, fileChange, state, test, auth_obj}
+        return { file, fileChange, state, test,test2}
     }
 }
 </script>
