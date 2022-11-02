@@ -149,4 +149,13 @@ class ThemeApplicationTests {
 			System.out.println(result.get(i).toString());
 		}
 	}
+
+	@Test
+	void 실시간테마검색() {
+		List<String> strings = themeRepository.liveSearchByName("test");
+		for(int i=0;i<strings.size();i++) {
+			System.out.println(strings.get(i));
+		}
+
+	}
 }
