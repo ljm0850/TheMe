@@ -4,6 +4,7 @@ import com.ssafy.theme.client.UserClient;
 import com.ssafy.theme.dto.theme.ThemeDto;
 import com.ssafy.theme.dto.theme.UserThemeDto;
 import com.ssafy.theme.dto.theme.ThemeRegistDto;
+import com.ssafy.theme.dto.theme.UserThemeIdxDto;
 import com.ssafy.theme.entity.Scrap;
 import com.ssafy.theme.entity.Theme;
 import com.ssafy.theme.entity.UserTheme;
@@ -80,6 +81,7 @@ public class ThemeServiceImpl implements ThemeService {
                     .modifyTime(userTheme.getModifyTime())
                     .createTime(userTheme.getCreateTime())
                     .openType(userTheme.getOpenType())
+                    .userIdx(userTheme.getUserIdx())
                     .build();
 
             result.add(target);
@@ -124,5 +126,32 @@ public class ThemeServiceImpl implements ThemeService {
                 .build();
 
         scrapRepository.save(scrap);
+    }
+
+    @Override
+    public List<UserThemeDto> followThemeList(UserThemeIdxDto userThemeIdxDto) {
+        List<UserThemeDto> result = new ArrayList<>();
+
+        List<Integer> userThemeList = userThemeIdxDto.getUserThemeList();
+        for(int i=0; i<userThemeList.size();i++) {
+
+            int userThemeIdx = userThemeList.get(i);
+            System.out.println("userThemeIdx : " + userThemeIdx);
+            UserTheme userTheme = userThemeRepository.findById(userThemeIdx).orElseThrow(IllegalAccessError::new);
+
+            UserThemeDto userThemeDto = UserThemeDto.builder()
+                    .theme(userTheme.getTheme())
+                    .userIdx(userTheme.getUserIdx())
+                    .createTime(userTheme.getCreateTime())
+                    .challenge(userTheme.isChallenge())
+                    .description(userTheme.getDescription())
+                    .modifyTime(userTheme.getModifyTime())
+                    .openType(userTheme.getOpenType())
+                    .idx(userTheme.getIdx())
+                    .build();
+
+            result.add(userThemeDto);
+        }
+        return result;
     }
 }
