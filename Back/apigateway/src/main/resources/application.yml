@@ -16,6 +16,20 @@ spring :
     name : apigateway
   cloud :
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "https://k7c2031.p.ssafy.io/"
+            allow-credentials: true
+            allowedHeaders: '*'
+            allowedMethods:
+              - POST
+              - GET
+              - PUT
+              - OPTIONS
+              - DELETE
       routes:
         - id : user
           uri: lb://user/
