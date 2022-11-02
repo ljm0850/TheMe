@@ -2,19 +2,14 @@ package com.ssafy.feed.service.impl;
 
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
-import com.ssafy.feed.entity.Alert;
-import com.ssafy.feed.entity.Board;
-import com.ssafy.feed.entity.Likes;
-import com.ssafy.feed.entity.Picture;
-import com.ssafy.feed.repository.AlertRepository;
-import com.ssafy.feed.repository.BoardRepository;
-import com.ssafy.feed.repository.LikeRepository;
-import com.ssafy.feed.repository.PictureRepository;
+import com.ssafy.feed.entity.*;
+import com.ssafy.feed.repository.*;
 import com.ssafy.feed.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,12 +18,14 @@ public class BoardServiceImpl implements BoardService {
     LikeRepository likeRepository;
     AlertRepository alertRepository;
     PictureRepository pictureRepository;
+    CommentRepository commentRepository;
     @Autowired
-    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository, AlertRepository alertRepository, PictureRepository pictureRepository){
+    BoardServiceImpl(BoardRepository boardRepository, LikeRepository likeRepository, AlertRepository alertRepository, PictureRepository pictureRepository, CommentRepository commentRepository){
         this.boardRepository = boardRepository;
         this.likeRepository = likeRepository;
         this.alertRepository = alertRepository;
         this.pictureRepository = pictureRepository;
+        this.commentRepository = commentRepository;
     }
     @Override
     public void registBoard(int userIdx, BoardRegistDto boardRegistDto) { // 게시글 등록
@@ -56,6 +53,19 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void deleteBoard(int boardIdx) { // 게시글 삭제
+        Optional<Board> board = boardRepository.findById(boardIdx);
+        List<Alert> alertList = alertRepository.findByReferenceIdxAndType(boardIdx, 0); // 게시글 신고 삭제
+        for(int i=0;i<alertList.size();i++){
+            alertRepository.deleteById(alertList.get(i).getIdx());
+        }
+        List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 게시글 사진 삭제
+        for(int i=0;i<pictureList.size();i++){
+            pictureRepository.deleteById(pictureList.get(i).getIdx());
+        }
+        List<Comment> commentList = commentRepository.findByBoard(board.get()); // 댓글 삭제
+        for(int i=0;i<commentList.size();i++){
+            commentRepository.deleteById(commentList.get(i).getIdx());
+        }
         boardRepository.deleteById(boardIdx);
     }
 

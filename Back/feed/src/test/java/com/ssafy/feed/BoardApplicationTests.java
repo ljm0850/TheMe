@@ -1,18 +1,13 @@
 package com.ssafy.feed;
 
-import com.ssafy.feed.entity.Alert;
-import com.ssafy.feed.entity.Board;
-import com.ssafy.feed.entity.Likes;
-import com.ssafy.feed.entity.Picture;
-import com.ssafy.feed.repository.AlertRepository;
-import com.ssafy.feed.repository.BoardRepository;
-import com.ssafy.feed.repository.LikeRepository;
-import com.ssafy.feed.repository.PictureRepository;
+import com.ssafy.feed.entity.*;
+import com.ssafy.feed.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -21,12 +16,14 @@ class BoardApplicationTests {
     LikeRepository likeRepository;
     AlertRepository alertRepository;
     PictureRepository pictureRepository;
+    CommentRepository commentRepository;
     @Autowired
-    void BoardApplicationTests(BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository,PictureRepository pictureRepository) {
+    void BoardApplicationTests(BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository,PictureRepository pictureRepository, CommentRepository commentRepository) {
         this.boardRepository = boardRepository;
         this.likeRepository = likeRepository;
         this.alertRepository = alertRepository;
         this.pictureRepository = pictureRepository;
+        this.commentRepository = commentRepository;
     }
     @Test
     void 게시물등록() {
@@ -63,7 +60,19 @@ class BoardApplicationTests {
     @Test
     void 게시글삭제(){
         int boardIdx = 5;
-
+        Optional<Board> board = boardRepository.findById(boardIdx);
+        List<Alert> alertList = alertRepository.findByReferenceIdxAndType(boardIdx, 0); // 게시글 신고 삭제
+        for(int i=0;i<alertList.size();i++){
+            alertRepository.deleteById(alertList.get(i).getIdx());
+        }
+        List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 게시글 사진 삭제
+        for(int i=0;i<pictureList.size();i++){
+            pictureRepository.deleteById(pictureList.get(i).getIdx());
+        }
+        List<Comment> commentList = commentRepository.findByBoard(board.get()); // 댓글 삭제
+        for(int i=0;i<commentList.size();i++){
+            commentRepository.deleteById(commentList.get(i).getIdx());
+        }
         boardRepository.deleteById(boardIdx);
     }
 
