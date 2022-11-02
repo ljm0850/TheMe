@@ -78,20 +78,21 @@ public class ThemeController {
 
         return new ResponseEntity<>(result, status);
     }
-    @GetMapping("/theme/map/theme") // 공용 테마 목록 조회
+    @GetMapping("/map/theme") // 공용 테마 목록 조회
     public ResponseEntity<?> getPublicThemeList(HttpServletResponse response, @RequestParam(name = "isMarked") int isMarked,
                         @RequestParam(name ="sort")int sort,@RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         //임시 JWT 토큰
         int userIdx = 2;
+        List<PublicThemeDto>  themeList;
         try {
             if(isMarked == 0){
-                Slice<PublicThemeDto> themeList = themeService.getPublicThemeList(sort,pageSize,pageIdx);
+                themeList = themeService.getPublicThemeList(sort,pageSize,pageIdx);
                 result.put("themeList",themeList);
                 result.put("message",OK);
             }else if(isMarked == 1){
-                List<PublicThemeDto> themeList = themeService.getBookmarkThemeList(userIdx);
+                themeList = themeService.getBookmarkThemeList(userIdx);
                 result.put("themeList",themeList);
                 result.put("message",OK);
             }else{

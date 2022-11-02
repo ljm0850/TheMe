@@ -109,7 +109,8 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public Slice<PublicThemeDto> getPublicThemeList(int sort, int pageSize, int pageIdx) {
+    public List<PublicThemeDto> getPublicThemeList(int sort, int pageSize, int pageIdx) {
+        List<PublicThemeDto> resultList = new ArrayList<>();
         Slice<PublicThemeDto> themeList;
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
             if (sort == 0) { // 인기순
@@ -119,7 +120,17 @@ public class ThemeServiceImpl implements ThemeService {
             }else{
                 return null;
             }
-        return themeList;
+        for(PublicThemeDto publicThemeDto : themeList){
+            PublicThemeDto addPublicThemeDto = PublicThemeDto.builder()
+                    .idx(publicThemeDto.getIdx())
+                    .emoticon(publicThemeDto.getEmoticon())
+                    .title(publicThemeDto.getTitle())
+                    .userCount(publicThemeDto.getUserCount())
+                    .createTime(publicThemeDto.getCreateTime())
+                    .build();
+            resultList.add(addPublicThemeDto);
+        }
+        return resultList;
     }
     public List<ThemeDto> searchTheme(String target) {
         List<ThemeDto> result = new ArrayList<>();

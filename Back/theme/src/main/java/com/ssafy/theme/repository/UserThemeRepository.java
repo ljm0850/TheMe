@@ -23,7 +23,7 @@ public interface UserThemeRepository extends JpaRepository<UserTheme,Integer> {
     Slice<PublicThemeDto> getPopularAllThemeListWithJPA( Pageable pageable);
     @Query("SELECT new PublicThemeDto(t.theme.idx, t.theme.name, t.theme.emoticon, t.theme.createTime, count(t.theme.idx)) " +
             "FROM UserTheme t " +
-            "group by t.theme.idx order by t.theme.createTime")
+            "group by t.theme.idx order by t.theme.createTime desc")
     Slice<PublicThemeDto> getRecnetAllThemeListWithJPA(Pageable pageable);
     @Query("SELECT count(t.theme.idx) " +
             "from UserTheme t where t.theme.idx = :idx")
