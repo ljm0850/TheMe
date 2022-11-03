@@ -13,7 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class UserApplicationTests {
@@ -61,7 +63,7 @@ class UserApplicationTests {
 	void 회원정보조회(){
 
 		String nickname ="joe";
-		User user = userRepository.findByNickname(nickname);
+		User user = userRepository.findByNickname(nickname).orElseThrow(IllegalAccessError::new);
 
 		UserInfoDto userInfoDto = UserInfoDto.builder()
 				.nickname(user.getNickname())
@@ -104,7 +106,7 @@ class UserApplicationTests {
 	void remove() {
 		String nickname = "sezin";
 
-		User user = userRepository.findByNickname(nickname);
+		User user = userRepository.findByNickname(nickname).orElseThrow(IllegalAccessError::new);
 
 		List<Follow> followList = followRepository.findByFollowUserOrFollowingUser(user, user);
 
@@ -227,5 +229,79 @@ class UserApplicationTests {
 
 		for(int i=0;i<rankList.size();i++)
 			System.out.println(rankList.get(i));
+	}
+
+	@Test
+	void 실시간검색결과() {
+		List<String> strings = userRepository.liveSearchByName("jo");
+		for(int i=0;i<strings.size();i++) {
+			System.out.println(strings.get(i));
+		}
+	}
+
+	@Test
+	void 유저검색목록() {
+		List<UserDto> result = new ArrayList<>();
+
+		boolean same = userRepository.findByNickname("joe").isPresent();
+
+		if(same) {
+			User user = userRepository.findByNickname("joe").orElseThrow(IllegalAccessError::new);
+
+			UserDto userDto = UserDto.builder()
+					.alertCount(user.getAlertCount())
+					.idx(user.getIdx())
+					.email(user.getEmail())
+					.id(user.getId())
+					.description(user.getDescription())
+					.picture(user.getPicture())
+					.nickname(user.getNickname())
+					.createTime(user.getCreateTime())
+					.build();
+
+			result.add(userDto);
+		}
+
+		List<User> users = userRepository.searchByTarget("joe");
+		if (same) {
+			for(int i=1;i<users.size();i++) {
+				User user = users.get(i);
+
+				UserDto userDto = UserDto.builder()
+						.alertCount(user.getAlertCount())
+						.idx(user.getIdx())
+						.email(user.getEmail())
+						.id(user.getId())
+						.description(user.getDescription())
+						.picture(user.getPicture())
+						.nickname(user.getNickname())
+						.createTime(user.getCreateTime())
+						.build();
+
+				result.add(userDto);
+			}
+		} else {
+			for(int i=0;i<users.size();i++) {
+				User user = users.get(i);
+
+				UserDto userDto = UserDto.builder()
+						.alertCount(user.getAlertCount())
+						.idx(user.getIdx())
+						.email(user.getEmail())
+						.id(user.getId())
+						.description(user.getDescription())
+						.picture(user.getPicture())
+						.nickname(user.getNickname())
+						.createTime(user.getCreateTime())
+						.build();
+
+				result.add(userDto);
+			}
+		}
+
+		System.out.println(same);
+		for(int i=0;i<result.size();i++) {
+			System.out.println(result.get(i).toString());
+		}
 	}
 }
