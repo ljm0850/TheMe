@@ -235,4 +235,9 @@ public class ThemeController {
 
         return new ResponseEntity<>(result, status);
     }
+
+    @GetMapping("/list/{user_idx}")
+    public List<UserThemeDto> getUserThemeByUserIdx(@PathVariable(name = "user_idx") int user_idx) {
+        return themeService.getUserThemeByUserIdx(user_idx);
+    }
 }

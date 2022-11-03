@@ -330,4 +330,29 @@ public class ThemeServiceImpl implements ThemeService {
 
         return result;
     }
+
+    @Override
+    public List<UserThemeDto> getUserThemeByUserIdx(int user_idx) {
+        List<UserTheme> userThemeList = userThemeRepository.findByUserIdx(user_idx);
+
+        List<UserThemeDto> result = new ArrayList<>();
+
+        for(int i=0;i<userThemeList.size();i++) {
+            UserTheme targetUserTheme = userThemeList.get(i);
+            UserThemeDto userThemeDto = UserThemeDto.builder()
+                    .idx(targetUserTheme.getIdx())
+                    .userIdx(targetUserTheme.getUserIdx())
+                    .themeIdx(targetUserTheme.getTheme().getIdx())
+                    .modifyTime(targetUserTheme.getModifyTime())
+                    .createTime(targetUserTheme.getCreateTime())
+                    .challenge(targetUserTheme.isChallenge())
+                    .openType(targetUserTheme.getOpenType())
+                    .description(targetUserTheme.getDescription())
+                    .build();
+
+            result.add(userThemeDto);
+        }
+
+        return result;
+    }
 }

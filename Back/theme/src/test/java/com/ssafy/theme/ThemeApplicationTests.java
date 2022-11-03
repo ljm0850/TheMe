@@ -247,6 +247,30 @@ class ThemeApplicationTests {
 			result.add(userThemeDto);
 			System.out.println(userThemeDto.toString());
 		}
+	}
+
+	@Test
+	void 특정유저의게시물목록_Feign() {
+		List<UserTheme> userThemeList = userThemeRepository.findByUserIdx(9);
+
+		List<UserThemeDto> result = new ArrayList<>();
+
+		for(int i=0;i<userThemeList.size();i++) {
+			UserTheme targetUserTheme = userThemeList.get(i);
+			UserThemeDto userThemeDto = UserThemeDto.builder()
+					.idx(targetUserTheme.getIdx())
+					.userIdx(targetUserTheme.getUserIdx())
+					.themeIdx(targetUserTheme.getTheme().getIdx())
+					.modifyTime(targetUserTheme.getModifyTime())
+					.createTime(targetUserTheme.getCreateTime())
+					.challenge(targetUserTheme.isChallenge())
+					.openType(targetUserTheme.getOpenType())
+					.description(targetUserTheme.getDescription())
+					.build();
+
+			result.add(userThemeDto);
+			System.out.println(userThemeDto.toString());
+		}
 
 	}
 }
