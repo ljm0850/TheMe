@@ -179,10 +179,7 @@ public class ThemeController {
     public String getThemeName(@PathVariable(name = "theme_idx") int theme_idx) {
         return themeService.getThemeName(theme_idx);
     }
-    @GetMapping("/userList/{theme_idx}")
-    public List<UserThemeDto> getThemeUserList(@PathVariable(name = "theme_idx") int theme_idx) {
-        return themeService.getThemeUserList(theme_idx);
-    }
+
     @GetMapping("/search/theme/info")
     public ResponseEntity<?> serachThemeInfo(@RequestParam(name = "value") String value) {
         Map<String, Object> result = new HashMap<>();
