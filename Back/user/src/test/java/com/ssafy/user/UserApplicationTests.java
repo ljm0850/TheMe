@@ -228,4 +228,12 @@ class UserApplicationTests {
 		for(int i=0;i<rankList.size();i++)
 			System.out.println(rankList.get(i));
 	}
+
+	@Test
+	void 실시간검색결과() {
+		List<String> strings = userRepository.liveSearchByName("jo");
+		for(int i=0;i<strings.size();i++) {
+			System.out.println(strings.get(i));
+		}
+	}
 }

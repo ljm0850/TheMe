@@ -278,4 +278,11 @@ public class UserServiceImpl implements UserService {
 
         return rankList;
     }
+
+    @Override
+    public List<String> liveSearchUser(String value) {
+        List<String> strings = userRepository.liveSearchByName(value);
+
+        return strings;
+    }
 }

@@ -17,4 +17,6 @@ public interface UserService {
     UserInfoByIdDto getUserInfoById(int userIdx);
 
     List<UserDto> searchRecommend();
+
+    List<String> liveSearchUser(String value);
 }
