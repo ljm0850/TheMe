@@ -6,12 +6,15 @@ import com.ssafy.feed.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
+@Transactional
 class BoardApplicationTests {
     BoardRepository boardRepository;
     LikeRepository likeRepository;
@@ -33,15 +36,32 @@ class BoardApplicationTests {
         int themeIdx = 1; // 게시글 해당 테마 번호
         int userIdx = 1; // 게시글 작성자
         String name = "컴포즈"; // 게시글 장소 이름
-        String place = "광주광역시 북구"; // 게시글 장소 주소
+        String place = "경상북도 구미시"; // 게시글 장소 주소
         String description = "설명이에요"; // 게시글 장소 설명
         String[] pictures = {"사진1","사진2"};
-
-        System.out.println(place.substring(0,2));
-
+        String city = place.substring(0,2);
+        List<String> cities = new ArrayList<>(){
+            {
+                add("서울");
+                add("대전");
+                add("광주");
+                add("구미");
+                add("부울경");
+            }
+        };
+        if(!cities.contains(city)){
+            if(city.equals("부산") || city.equals("울산")) city = "부울경";
+            else if(city.equals("경상")) {
+                if(place.substring(2,4).equals("남도")) city = "부울경";
+                else if(place.substring(5,7).equals("구미")) city = "구미";
+                else city = "전국";
+            }
+            else city = "전국";
+        }
+        System.out.println(city);
         Board board = Board.builder()
                 .alertCount(0)
-                .city(place.substring(0,2))
+                .city(city)
                 .createTime(LocalDateTime.now())
                 .modifyTime(LocalDateTime.now())
                 .name(name)
