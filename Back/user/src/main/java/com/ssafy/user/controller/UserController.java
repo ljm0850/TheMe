@@ -250,4 +250,23 @@ public class UserController {
 
         return new ResponseEntity<>(result, status);
     }
+
+    @GetMapping("/search/user/info")
+    public ResponseEntity<?> searchUserInfo(@RequestParam(name = "value") String value) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            Map<String, Object> searchResult = userService.searchThemeInfo(value);
+            result.put("isSame", searchResult.get("isSame"));
+            result.put("userList", searchResult.get("result"));
+            result.put("message",OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(result, status);
+    }
 }

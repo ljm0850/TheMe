@@ -7,6 +7,7 @@ import com.ssafy.user.dto.UserInfoDto;
 import com.ssafy.user.dto.UserUpdateDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     UserInfoByIdDto loginUser(String kakaoToken);
@@ -19,4 +20,6 @@ public interface UserService {
     List<UserDto> searchRecommend();
 
     List<String> liveSearchUser(String value);
+
+    Map<String, Object> searchThemeInfo(String value);
 }

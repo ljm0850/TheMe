@@ -21,7 +21,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -90,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoDto getUserInfo(String nickname) { // 마이페이지 조회
 
-        User user = userRepository.findByNickname(nickname);
+        User user = userRepository.findByNickname(nickname).orElseThrow(IllegalAccessError::new);
 
         UserInfoDto userInfoDto = UserInfoDto.builder()
                 .nickname(user.getNickname())
@@ -128,7 +130,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(String nickname, UserUpdateDto userUpdate) { // 회원정보 수정
 
-        User user = userRepository.findByNickname(nickname);
+        User user = userRepository.findByNickname(nickname).orElseThrow(IllegalAccessError::new);
 
         user.updateNickname(userUpdate.getNickname());
         user.updateDescription(userUpdate.getDescription());
@@ -139,7 +141,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String nickname) { // 회원탈퇴
-        User user = userRepository.findByNickname(nickname);
+        User user = userRepository.findByNickname(nickname).orElseThrow(IllegalAccessError::new);
 
         List<Follow> followList = followRepository.findByFollowUserOrFollowingUser(user, user);
 
@@ -284,5 +286,72 @@ public class UserServiceImpl implements UserService {
         List<String> strings = userRepository.liveSearchByName(value);
 
         return strings;
+    }
+
+    @Override
+    public Map<String, Object> searchThemeInfo(String value) {
+        Map<String, Object> answer = new HashMap<>();
+        List<UserDto> result = new ArrayList<>();
+
+        boolean same = userRepository.findByNickname(value).isPresent();
+
+        if(same) {
+            User user = userRepository.findByNickname(value).orElseThrow(IllegalAccessError::new);
+
+            UserDto userDto = UserDto.builder()
+                    .alertCount(user.getAlertCount())
+                    .idx(user.getIdx())
+                    .email(user.getEmail())
+                    .id(user.getId())
+                    .description(user.getDescription())
+                    .picture(user.getPicture())
+                    .nickname(user.getNickname())
+                    .createTime(user.getCreateTime())
+                    .build();
+
+            result.add(userDto);
+        }
+
+        List<User> users = userRepository.searchByTarget(value);
+        if (same) {
+            for(int i=1;i<users.size();i++) {
+                User user = users.get(i);
+
+                UserDto userDto = UserDto.builder()
+                        .alertCount(user.getAlertCount())
+                        .idx(user.getIdx())
+                        .email(user.getEmail())
+                        .id(user.getId())
+                        .description(user.getDescription())
+                        .picture(user.getPicture())
+                        .nickname(user.getNickname())
+                        .createTime(user.getCreateTime())
+                        .build();
+
+                result.add(userDto);
+            }
+        } else {
+            for(int i=0;i<users.size();i++) {
+                User user = users.get(i);
+
+                UserDto userDto = UserDto.builder()
+                        .alertCount(user.getAlertCount())
+                        .idx(user.getIdx())
+                        .email(user.getEmail())
+                        .id(user.getId())
+                        .description(user.getDescription())
+                        .picture(user.getPicture())
+                        .nickname(user.getNickname())
+                        .createTime(user.getCreateTime())
+                        .build();
+
+                result.add(userDto);
+            }
+        }
+
+        answer.put("result",result);
+        answer.put("isSame", same);
+
+        return answer;
     }
 }
