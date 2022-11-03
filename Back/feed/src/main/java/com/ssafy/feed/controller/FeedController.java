@@ -37,7 +37,8 @@ public class FeedController {
         //int userIdx = (int) request.getAttribute("userIdx");
         int userIdx = 5;
         try {
-            //feedService.feedByRegion(userIdx,region,pageIdx,pageSize); // 불러와야해요 리스트
+            List<BoardSimpleListDto> data = feedService.feedByRegion(userIdx,region,pageIdx,pageSize); // 불러와야해요 리스트
+            result.put("data",data);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import com.ssafy.feed.client.UserClient;
 import com.ssafy.feed.dto.board.BoardGroupListDto;
 import com.ssafy.feed.dto.board.BoardSimpleListDto;
 import com.ssafy.feed.dto.theme.UserThemeDtoWithMSA;
+import com.ssafy.feed.dto.user.UserFollowThemeDto;
 import com.ssafy.feed.dto.user.UserInfoByIdDto;
 import com.ssafy.feed.entity.Board;
 import com.ssafy.feed.entity.Comment;
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,5 +102,37 @@ public class FeedServiceImpl implements FeedService {
             boardSimpleListDtoList.add(boardSimpleListDto);
         }
         return boardSimpleListDtoList;
+    }
+
+    @Override
+    public List<BoardSimpleListDto> feedByRegion(int userIdx, int region, int pageIdx, int pageSize) {
+        List<BoardSimpleListDto> boardSimpleListDtoList = new ArrayList<>();
+        List<UserFollowThemeDto> userFollowThemeDtoList = userClient.getUserFollowTheme(userIdx);
+        for(int i=0;i<userFollowThemeDtoList.size();i++){ // 해당 유저가 팔로우한 사람의 테마리스트들 확인
+            int followUserIdx = userFollowThemeDtoList.get(i).getFollowUserIdx();
+            int followThemeIdx = userFollowThemeDtoList.get(i).getFollowThemeIdx();
+            int openType = getThemeOpenType(followUserIdx,followThemeIdx); // 0 전체 공개, 1 친구 공개, 2 비공개
+            if(openType!=2){
+                // 해당 사람이 해당 테마로 작성한 글들 불러오기
+                List<Board> boardList = boardRepository.findByUserIdxAndThemeIdx(followUserIdx,followThemeIdx);
+                // 지역별로 나눠서 확인해야함 - 받은 지역 확인하기
+                for(int j=0;j<boardList.size();j++) {
+                    BoardSimpleListDto boardSimpleListDto = BoardSimpleListDto.builder()
+                            // 여기 내용 채우기 // dto
+                            .build();
+                }
+            }
+        }
+        return boardSimpleListDtoList;
+    }
+    @Override
+    public List<UserFollowThemeDto> getUserFollowTheme(int userIdx){ // 해당 유저가 팔로우하고 있는 사람,테마의 idx받아오기
+        List<UserFollowThemeDto> userFollowThemeDtoList = userClient.getUserFollowTheme(userIdx);
+        return userFollowThemeDtoList;
+    }
+
+    @Override
+    public int getThemeOpenType(int followUserIdx, int followThemeIdx) { // 해당 테마의 공개 여부 확인하기
+        return themeClient.getThemeOpenType(followUserIdx,followThemeIdx);
     }
 }
