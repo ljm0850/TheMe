@@ -15,6 +15,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -22,8 +24,8 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private String secretKey = "secretKey";
-    private final long accessTokenValidMillisecond = 1000L * 60 * 3; // 1시간 유효 토큰
-    private final long refreshTokenValidMillisecond = 1000L * 60 * 60 * 24 * 14; // 2주 유효 토큰
+    private final long accessTokenValidMillisecond = 1000L * 60 * 60; // 1시간 유효 토큰
+    private final long refreshTokenValidMillisecond = 1000L * 60 * 60 * 24; // 하루 유효 토큰
 
     // JwtTokenProvider 시작될 때 초기화
     @PostConstruct
@@ -74,11 +76,25 @@ public class JwtTokenProvider {
 
     public String getUsername(String token) {
         log.info("토큰 기반 회원 구별 정보 추출");
-        String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-        log.info("[getUsername] 토큰 기반 회원 구별 정보 추출 완료, info : {}", info);
-        return info;
-    }
+//        String info = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
 
+        Map<String, Object> map = new HashMap<>();
+        String[] params = token.split("\\.");
+
+        Base64.Decoder decoder = Base64.getDecoder();
+        String payload = new String(decoder.decode(params[1]));
+        payload = payload.replaceAll("\\{", "");
+
+        String[] values = payload.split("\\,");
+
+        String name = values[0].split("\\:")[0];
+        name = name.replaceAll("\"", "");
+        String value = values[0].split("\\:")[1];
+        value = value.replaceAll("\"", "");
+        map.put(name, value);
+
+        return (String) map.get("sub");
+    }
 
     // 쿠키에 있는 값 가져오기
     public String getCookie(ServerHttpRequest request) {
@@ -88,7 +104,7 @@ public class JwtTokenProvider {
 
         log.info("쿠키가 있다면 refreshToken 들고오기");
         Cookie cookie = (Cookie) cookies.get("refreshToken");
-        log.info(cookie.toString());
+        if(cookie == null) System.out.println("쿠키 없다");
 
         if(cookie != null) refreshToken = cookie.getName();
 

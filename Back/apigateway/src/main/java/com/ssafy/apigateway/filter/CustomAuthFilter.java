@@ -48,7 +48,7 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
                         // header에 accessToken 넘기기
                         String accessToken = jwtTokenProvider.createAccessToken(userIdx);
                         String refreshToken = jwtTokenProvider.createRefreshToken(userIdx);
-                        exchange.getResponse().getHeaders().set("authorization", accessToken);
+
 
 //                        jwtTokenProvider.delCookie(exchange.getRequest());
 
@@ -79,16 +79,21 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
                 return handleUnAuthorized(exchange); // 토큰이 일치하지 않을 때  401 Error
             } else if(jwtTokenProvider.validateToken(tokenString).equals("EXPIRED")){
                 // 토큰이 유효하지 않은 경우
-                // 쿠키의 refreshToken 확인 후
+                // 쿠키의 refreshToken과 accessToken의 userIdx 확인
+                // && refreshToken이 유효한지 확인
+//                request.getCookies();
                 String refreshToken = jwtTokenProvider.getCookie(request);
+                String userIdx = jwtTokenProvider.getUsername(tokenString);
 
-                if(jwtTokenProvider.validateToken(refreshToken).equals("ACCESS")){
+                if(userIdx.equals(jwtTokenProvider.getUsername(refreshToken))
+                        &&jwtTokenProvider.validateToken(refreshToken).equals("ACCESS")){
 
                     // accessToken 재발급 해주기
-                    String userIdx = jwtTokenProvider.getUsername(tokenString);
                     String newToken = jwtTokenProvider.createAccessToken(userIdx);
 
-                    return chain.filter(exchange);
+                    return chain.filter(exchange).then(Mono.fromRunnable(()->{
+                        exchange.getResponse().getHeaders().set("authorization", newToken);
+                    }));
 
                 } else {
                     return handleUnAuthorized(exchange); // refreshToken이 유효하지 않으므로 401 Error
