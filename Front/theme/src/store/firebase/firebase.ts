@@ -1,10 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/storage";
-// import { getStorage, ref } from "firebase/storage";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_FB_API_KEY,
@@ -27,25 +24,20 @@ const profileStorageRef = storage_obj.ref("/profile");
 const articleImageUpload = (_imageName:string,_image:File) => {
   const articleImageRef = articleStorageRef.child(_imageName)
   articleImageRef.put(_image)
-  const url = `https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article/${_imageName}`
+  const url = `https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2F${_imageName}?alt=media`
   return url
 }
 const profileImageUpload = (_imageName:string,_image:File) =>{
   const profileImageRef = profileStorageRef.child(_imageName)
   profileImageRef.put(_image)
-  return `gs://theme-b8677.appspot.com`
+  const url = `https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/profile%2F${_imageName}?alt=media`
+  return url
 }
 
-// 참조 생성
-
+// 조회도 가능
 const storage = getStorage();
-const gsReference = ref(storage, 'gs://theme-b8677.appspot.com/article/')
-
-// gs://theme-b8677.appspot.com/article
-
-
-const testUrl = ()=>{
-  getDownloadURL(ref(storage,'article/test'))
+const getImageUrl = (_type:string,_imageName:string)=>{
+  getDownloadURL(ref(storage,`${_type}/${_imageName}`))
     .then((url) => {
       console.log(url)
     })
@@ -54,4 +46,4 @@ const testUrl = ()=>{
     });
   }
 
-export {articleImageUpload,profileImageUpload,testUrl}
+export {articleImageUpload,profileImageUpload,getImageUrl}
