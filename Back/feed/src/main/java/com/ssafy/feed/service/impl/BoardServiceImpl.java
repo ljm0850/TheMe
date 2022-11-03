@@ -13,6 +13,8 @@ import com.ssafy.feed.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -138,6 +140,8 @@ public class BoardServiceImpl implements BoardService {
                     .referenceIdx(boardIdx)
                     .build();
             alertRepository.save(alert);
+            List<Alert> alertList = alertRepository.findByReferenceIdxAndType(boardIdx,0);
+            if(alertList.size()==5) alertUser(targetIdx); // 5회 이상이면 해당 유저 1회 신고
             board.get().updateAlertCount(board.get().getAlertCount()+1);
             boardRepository.save(board.get());
             return true;
@@ -233,5 +237,11 @@ public class BoardServiceImpl implements BoardService {
             else city = "전국";
         }
         return city;
+    }
+
+    @Override
+    public String alertUser(int userIdx){
+        String result = userClient.alertUser(userIdx);
+        return result;
     }
 }

@@ -6,4 +6,6 @@ public interface CommentService {
     boolean deleteComment(int commentIdx);
 
     boolean alertComment(int userIdx, int commentIdx, String content);
+
+    String alertUser(int userIdx);
 }
