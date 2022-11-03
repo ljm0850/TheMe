@@ -48,4 +48,6 @@ public class User {
     public void updatePicture(String picture) {
         this.picture = picture;
     }
+
+    public void updateAlertCount(){this.alertCount += 1;}
 }
