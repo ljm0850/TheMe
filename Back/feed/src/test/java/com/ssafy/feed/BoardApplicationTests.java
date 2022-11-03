@@ -9,6 +9,8 @@ import com.ssafy.feed.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -190,11 +192,14 @@ class BoardApplicationTests {
         List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(themeIdx);
         List<BoardGroupListDto> boardGroupListDtos  = new ArrayList<>();
         List<Integer> openUserList = new ArrayList<>();
+        int pageIdx = 0;
+        int pageSize = 3;
+        Pageable pageable = PageRequest.of(pageIdx, pageSize);
         for(UserThemeDtoWithMSA theme : themeUserList){
             openUserList.add(theme.getUserIdx());
         }
 
-        List<BoardGroupListDto> boardGroupListDto = boardRepository.getBoardGourpByListWithJPA(openUserList,themeIdx);
+        List<BoardGroupListDto> boardGroupListDto = boardRepository.getBoardGourpByListWithJPA(openUserList,themeIdx,pageable);
         for(BoardGroupListDto temp : boardGroupListDto){
             System.out.println(temp.getName() + temp.getBoardCount());
         }
