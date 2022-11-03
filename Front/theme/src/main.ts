@@ -7,7 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 // createApp(App).mount('#app')
 const app = createApp(App);
+const VueCookie = require("vue-cookie")
 app.use(router);
 app.use(store);
 app.use(_)
+app.use(VueCookie)
 app.mount('#app');
