@@ -32,4 +32,6 @@ public interface ThemeService {
     String getThemeName(int theme_idx);
 
     Map<String, Object> searchThemeInfo(String value);
+
+    List<UserThemeDto> getThemeUserList(int theme_idx);
 }
