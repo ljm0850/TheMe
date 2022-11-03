@@ -271,4 +271,25 @@ public class ThemeServiceImpl implements ThemeService {
 
         return answer;
     }
+
+    @Override
+    public List<UserThemeDto> getThemeUserList(int theme_idx) {
+        Theme theme = themeRepository.findByIdx(theme_idx);
+        List<UserTheme> userThemeList = userThemeRepository.findByTheme(theme);
+        List<UserThemeDto> userThemeDtoList = new ArrayList<>();
+        for(UserTheme userTheme : userThemeList){
+            if(userTheme.getOpenType()==1){
+                UserThemeDto userThemeDto = UserThemeDto.builder()
+                        .idx(userTheme.getIdx())
+                        .userIdx(userTheme.getUserIdx())
+                        .description(userTheme.getDescription())
+                        .openType(userTheme.getOpenType())
+                        .createTime(userTheme.getCreateTime())
+                        .modifyTime(userTheme.getModifyTime())
+                        .build();
+                userThemeDtoList.add(userThemeDto);
+            }
+        }
+        return userThemeDtoList;
+    }
 }
