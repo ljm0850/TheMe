@@ -166,7 +166,7 @@ public class ThemeController {
     }
 
     @GetMapping("/follow")
-    public List<UserThemeDto> followThemeList(HttpServletResponse response, @RequestBody UserThemeIdxDto userThemeIdxDto) {
+    public List<UserThemeDto> followThemeList(@RequestBody UserThemeIdxDto userThemeIdxDto) {
         return themeService.followThemeList(userThemeIdxDto);
     }
 
@@ -218,7 +218,7 @@ public class ThemeController {
     }
 
     @GetMapping("/recommend")
-    ResponseEntity<?> getRecommendThemeList() {
+    public ResponseEntity<?> getRecommendThemeList() {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
