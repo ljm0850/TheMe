@@ -42,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
         String[] pictures = boardRegistDto.getPictures(); // 등록할 사진목록
         Board board = Board.builder()
                 .alertCount(0)
-                .city(boardRegistDto.getPlace().substring(0,2))
+                .city(checkCity(boardRegistDto.getPlace()))
                 .createTime(LocalDateTime.now())
                 .modifyTime(LocalDateTime.now())
                 .name(boardRegistDto.getName())
@@ -87,7 +87,7 @@ public class BoardServiceImpl implements BoardService {
         board.get().updateDescription(boardUpdateDto.getDescription());
         board.get().updateName(boardUpdateDto.getName());
         board.get().updatePlace(boardUpdateDto.getPlace());
-        board.get().updateCity(boardUpdateDto.getPlace().substring(0,2));
+        board.get().updateCity(checkCity(boardUpdateDto.getPlace()));
         board.get().updateTime(LocalDateTime.now());
         boardRepository.save(board.get());
         List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 기존 사진 삭제
@@ -209,5 +209,29 @@ public class BoardServiceImpl implements BoardService {
     public String getThemeName(int themeIdx) { // 테마 idx로 이름 받아오기
         String themeInfo = themeClient.getThemeName(themeIdx);
         return themeInfo;
+    }
+
+    @Override
+    public String checkCity(String place) {
+        String city = place.substring(0,2);
+        List<String> cities = new ArrayList<>(){
+            {
+                add("서울");
+                add("대전");
+                add("광주");
+                add("구미");
+                add("부울경");
+            }
+        };
+        if(!cities.contains(city)){
+            if(city.equals("부산") || city.equals("울산")) city = "부울경";
+            else if(city.equals("경상")) {
+                if(place.substring(2,4).equals("남도")) city = "부울경";
+                else if(place.substring(5,7).equals("구미")) city = "구미";
+                else city = "전국";
+            }
+            else city = "전국";
+        }
+        return city;
     }
 }

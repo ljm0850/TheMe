@@ -28,4 +28,5 @@ public interface BoardService {
     UserInfoByIdDto getUserInfo(int userIdx);
 
     String getThemeName(int themeIdx);
+    String checkCity(String place); // 장소를 통한 지역 재설정
 }
