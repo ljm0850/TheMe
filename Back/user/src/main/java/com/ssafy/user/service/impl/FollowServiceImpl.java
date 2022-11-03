@@ -1,5 +1,6 @@
 package com.ssafy.user.service.impl;
 
+import com.ssafy.user.dto.UserFollowThemeDto;
 import com.ssafy.user.entity.Follow;
 import com.ssafy.user.entity.User;
 import com.ssafy.user.repository.FollowRepository;
@@ -102,6 +103,19 @@ public class FollowServiceImpl implements FollowService
     }
 
     @Override
+    public List<UserFollowThemeDto> getUserFollowTheme(int userIdx) {
+        List<UserFollowThemeDto> userFollowThemeDtoList = new ArrayList<>();
+        Optional<User> user = userRepository.findById(userIdx);
+        List<Follow> followList = followRepository.findByFollowingUser(user.get());
+        for(int i=0;i<followList.size();i++){
+            UserFollowThemeDto userFollowThemeDto = UserFollowThemeDto.builder()
+                    .followUserIdx(followList.get(i).getFollowUser().getIdx())
+                    .followThemeIdx(followList.get(i).getThemeIdx())
+                    .build();
+            userFollowThemeDtoList.add(userFollowThemeDto);
+        }
+        return userFollowThemeDtoList;
+    }
     public List<Integer> getRecommendThemeList() {
         return followRepository.countByThemeIdx();
     }

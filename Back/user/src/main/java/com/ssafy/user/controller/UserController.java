@@ -264,6 +264,10 @@ public class UserController {
 
         return new ResponseEntity<>(result, status);
     }
+    @GetMapping("/following/themeList/{user_idx}")
+    List<UserFollowThemeDto> getUserFollowTheme(@RequestParam(name = "user_idx") int userIdx) {
+        return followService.getUserFollowTheme(userIdx);
+    }
 
     @PostMapping("/alertCount/{user_idx}")
     String alertUser(@PathVariable(name = "user_idx") int user_idx){
