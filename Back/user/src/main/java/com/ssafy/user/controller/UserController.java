@@ -276,4 +276,9 @@ public class UserController {
         return OK;
     }
 
+    @GetMapping("/user/follow/recommend")
+    List<Integer> getRecommendThemeList(){
+        return followService.getRecommendThemeList();
+    }
+
 }

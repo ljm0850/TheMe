@@ -13,9 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 class UserApplicationTests {
@@ -302,6 +300,15 @@ class UserApplicationTests {
 		System.out.println(same);
 		for(int i=0;i<result.size();i++) {
 			System.out.println(result.get(i).toString());
+		}
+	}
+
+	@Test
+	void 추천테마목록() {
+		List<Integer> themeRankListDtos = followRepository.countByThemeIdx();
+
+		for(int i=0; i<themeRankListDtos.size(); i++){
+			System.out.println(themeRankListDtos.get(i));
 		}
 	}
 }
