@@ -1,5 +1,6 @@
 package com.ssafy.theme;
 
+import com.ssafy.theme.client.UserClient;
 import com.ssafy.theme.dto.theme.PublicThemeDto;
 import com.ssafy.theme.dto.theme.UserThemeDto;
 import com.ssafy.theme.entity.Scrap;
@@ -33,11 +34,13 @@ class ThemeApplicationTests {
 	ThemeRepository themeRepository;
 	UserThemeRepository userThemeRepository;
 	ScrapRepository scrapRepository;
+	UserClient userClient;
 	@Autowired
-	ThemeApplicationTests(ThemeRepository themeRepository, UserThemeRepository userThemeRepository,ScrapRepository scrapRepository){
+	ThemeApplicationTests(ThemeRepository themeRepository, UserThemeRepository userThemeRepository,ScrapRepository scrapRepository, UserClient userClient){
 		this.themeRepository = themeRepository;
 		this.userThemeRepository = userThemeRepository;
 		this.scrapRepository = scrapRepository;
+		this.userClient = userClient;
 	}
 	@Test
 	void contextLoads() {
@@ -86,7 +89,7 @@ class ThemeApplicationTests {
 
 			UserThemeDto target = UserThemeDto.builder()
 					.idx(userTheme.getIdx())
-					.theme(userTheme.getTheme())
+					.themeIdx(userTheme.getTheme().getIdx())
 					.challenge(userTheme.isChallenge())
 					.description(userTheme.getDescription())
 					.modifyTime(userTheme.getModifyTime())
@@ -156,6 +159,20 @@ class ThemeApplicationTests {
 	}
 
 	@Test
+	void 즐겨찾기삭제() {
+		int theme_idx = 1;
+		int user_id = 2;
+
+		Theme targetTheme = themeRepository.findByIdx(theme_idx);
+		if(scrapRepository.existsByThemeAndUserIdx(targetTheme, user_id)) {
+			Scrap scrap = scrapRepository.findByThemeAndUserIdx(targetTheme, user_id).orElseThrow(IllegalAccessError::new);
+
+			scrapRepository.delete(scrap);
+			System.out.println(true);
+		} else System.out.println(false);
+	}
+
+	@Test
 	void 팔로우하는테마() {
 		List<UserThemeDto> result = new ArrayList<>();
 
@@ -169,7 +186,7 @@ class ThemeApplicationTests {
 			UserTheme userTheme = userThemeRepository.findById(userThemeIdx).orElseThrow(IllegalAccessError::new);
 
 			UserThemeDto userThemeDto = UserThemeDto.builder()
-					.theme(userTheme.getTheme())
+					.themeIdx(userTheme.getTheme().getIdx())
 					.userIdx(userTheme.getUserIdx())
 					.createTime(userTheme.getCreateTime())
 					.challenge(userTheme.isChallenge())
@@ -206,5 +223,30 @@ class ThemeApplicationTests {
 				System.out.println(userTheme.getDescription());
 			}
 		}
+	}
+
+	@Test
+	void 추천테마목록_팔로워순() {
+		List<UserThemeDto> result = new ArrayList<>();
+
+		List<Integer> recommendList = userClient.getRecommendThemeList();
+		for(int i=0;i<recommendList.size();i++) {
+			UserTheme userTheme = userThemeRepository.findById(recommendList.get(i)).orElseThrow(IllegalAccessError::new);
+
+			UserThemeDto userThemeDto = UserThemeDto.builder()
+					.themeIdx(userTheme.getTheme().getIdx())
+					.userIdx(userTheme.getUserIdx())
+					.openType(userTheme.getOpenType())
+					.createTime(userTheme.getCreateTime())
+					.description(userTheme.getDescription())
+					.modifyTime(userTheme.getModifyTime())
+					.challenge(userTheme.isChallenge())
+					.idx(userTheme.getIdx())
+					.build();
+
+			result.add(userThemeDto);
+			System.out.println(userThemeDto.toString());
+		}
+
 	}
 }

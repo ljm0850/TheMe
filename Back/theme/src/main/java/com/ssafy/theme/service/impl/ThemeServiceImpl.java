@@ -51,8 +51,9 @@ public class ThemeServiceImpl implements ThemeService {
     }
     @Override
     public void createUserTheme(UserThemeDto userThemeDto) {
+        Theme theme = themeRepository.findByIdx(userThemeDto.getIdx()) ;
         UserTheme userTheme = UserTheme.builder()
-                .theme(userThemeDto.getTheme())
+                .theme(theme)
                 .userIdx(userThemeDto.getUserIdx())
                 .createTime(userThemeDto.getCreateTime())
                 .challenge(userThemeDto.isChallenge())
@@ -74,7 +75,7 @@ public class ThemeServiceImpl implements ThemeService {
 
             UserThemeDto target = UserThemeDto.builder()
                     .idx(userTheme.getIdx())
-                    .theme(userTheme.getTheme())
+                    .themeIdx(userTheme.getTheme().getIdx())
                     .challenge(userTheme.isChallenge())
                     .description(userTheme.getDescription())
                     .modifyTime(userTheme.getModifyTime())
@@ -159,6 +160,16 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
+    public void deleteScrapTheme(int user_id, int theme_idx) {
+        Theme targetTheme = themeRepository.findByIdx(theme_idx);
+        if(scrapRepository.existsByThemeAndUserIdx(targetTheme, user_id)) {
+            Scrap scrap = scrapRepository.findByThemeAndUserIdx(targetTheme, user_id).orElseThrow(IllegalAccessError::new);
+
+            scrapRepository.delete(scrap);
+        }
+    }
+
+    @Override
     public List<UserThemeDto> followThemeList(UserThemeIdxDto userThemeIdxDto) {
         List<UserThemeDto> result = new ArrayList<>();
 
@@ -170,7 +181,7 @@ public class ThemeServiceImpl implements ThemeService {
             UserTheme userTheme = userThemeRepository.findById(userThemeIdx).orElseThrow(IllegalAccessError::new);
 
             UserThemeDto userThemeDto = UserThemeDto.builder()
-                    .theme(userTheme.getTheme())
+                    .themeIdx(userTheme.getTheme().getIdx())
                     .userIdx(userTheme.getUserIdx())
                     .createTime(userTheme.getCreateTime())
                     .challenge(userTheme.isChallenge())
@@ -289,5 +300,34 @@ public class ThemeServiceImpl implements ThemeService {
             }
         }
         return userThemeDtoList;
+    }
+
+    @Override
+    public List<UserThemeDto> getRecommendThemeList() {
+        List<UserThemeDto> result = new ArrayList<>();
+
+        List<Integer> recommendList = userClient.getRecommendThemeList();
+        for(int i=0;i<recommendList.size();i++) {
+            System.out.println(recommendList.get(i));
+        }
+        for(int i=0;i<recommendList.size();i++) {
+            UserTheme userTheme = userThemeRepository.findById(recommendList.get(i)).orElseThrow(IllegalAccessError::new);
+
+            UserThemeDto userThemeDto = UserThemeDto.builder()
+                    .themeIdx(userTheme.getTheme().getIdx())
+                    .userIdx(userTheme.getUserIdx())
+                    .openType(userTheme.getOpenType())
+                    .createTime(userTheme.getCreateTime())
+                    .description(userTheme.getDescription())
+                    .modifyTime(userTheme.getModifyTime())
+                    .challenge(userTheme.isChallenge())
+                    .idx(userTheme.getIdx())
+                    .build();
+
+            result.add(userThemeDto);
+
+        }
+
+        return result;
     }
 }
