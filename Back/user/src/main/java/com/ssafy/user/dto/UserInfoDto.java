@@ -21,11 +21,11 @@ public class UserInfoDto {
     int follower;
     int following;
 
-    List<ThemeDto> themeDtoList;
-    List<ThemeFollowingDto> followingDtoList;
+    List<UserThemeDto> themeDtoList;
+    List<UserThemeDto> followingDtoList;
 
     @Builder
-    public UserInfoDto(String nickname, String description, String picture, int posts, int themes, int follower, int following, List<ThemeDto> themeDtoList, List<ThemeFollowingDto> followingDtoList) {
+    public UserInfoDto(String nickname, String description, String picture, int posts, int themes, int follower, int following, List<UserThemeDto> themeDtoList, List<UserThemeDto> followingDtoList) {
         this.nickname = nickname;
         this.description = description;
         this.picture = picture;

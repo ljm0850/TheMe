@@ -2,6 +2,7 @@ package com.ssafy.user.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.user.client.FeedClient;
 import com.ssafy.user.client.ThemeClient;
 import com.ssafy.user.dto.*;
 import com.ssafy.user.entity.Follow;
@@ -32,14 +33,16 @@ public class UserServiceImpl implements UserService {
     FollowRepository followRepository;
     FollowService followService;
     ThemeClient themeClient;
+    FeedClient feedClient;
 
     @Autowired
     UserServiceImpl(UserRepository userRepository, FollowRepository followRepository,
-                    FollowService followService, ThemeClient themeClient) {
+                    FollowService followService, ThemeClient themeClient, FeedClient feedClient) {
         this.userRepository = userRepository;
         this.followRepository = followRepository;
         this.followService = followService;
         this.themeClient = themeClient;
+        this.feedClient = feedClient;
     }
 
     @Override
@@ -117,21 +120,22 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         // 내가 쓴 테마 리스트
-        /* FeignClient 적용 부분
+        // FeignClient 적용 부분
 
-        ResponseEntity<?> themeDto = themeClient.getThemeList(user.getId());
-        themeDto.get("themeList");
-
-         */
+        List<UserThemeDto> userThemeByUserIdx = themeClient.getUserThemeByUserIdx(user.getIdx());
+        userInfoDto.setThemeDtoList(userThemeByUserIdx);
 
         // 내가 쓴 게시글 수
-//        int posts =
-//        userInfoDto.setPosts();
-
+        List<BoardDto> userBoardList = feedClient.userBoardList(user.getIdx());
+        userInfoDto.setPosts(userBoardList.size());
 
         // 내가 팔로우한 테마 리스트
+        UserThemeIdxDto userThemeIdxDto = UserThemeIdxDto.builder()
+                .userThemeList(followRepository.findThemeIdByFollowingUser(user))
+                .build();
 
-
+        List<UserThemeDto> userThemeDtos = themeClient.followThemeList(userThemeIdxDto);
+        userInfoDto.setFollowingDtoList(userThemeDtos);
         return userInfoDto;
     }
 
