@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "theme")
 public interface ThemeClient {
-    @GetMapping("/name/{theme_idx}")
+    @GetMapping("/theme/name/{theme_idx}")
     String getThemeName(@PathVariable(name = "theme_idx") int theme_idx);
 }

@@ -169,7 +169,8 @@ public class BoardServiceImpl implements BoardService {
                 .nickname(userInfoByIdDto.getNickname())
                 .picture(pictures)
                 .themeIdx(board.get().getThemeIdx())
-                .userIdx(board.get().getUserIdx()) // 테마이름만 받아와서 추가하기
+                .userIdx(board.get().getUserIdx())
+                .themeName(getThemeName(board.get().getThemeIdx()))
                 .build();
         return boardListDto;
     }
