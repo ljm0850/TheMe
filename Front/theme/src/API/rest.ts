@@ -1,5 +1,5 @@
 // const HOST = "http://localhost:8080"
-const HOST = "http://k7c203.p.ssafy.io:8000"
+const HOST = "https://k7c203.p.ssafy.io:8000"
 const USER = "/user"
 const THEME = '/theme'
 const BOARD = '/board'

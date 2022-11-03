@@ -35,8 +35,7 @@ export default {
                 .then((res) => {
                     console.log(res.data)
                     console.log(res.data.access_token)
-                    // dispatch('login',res.data.access_token)
-                    // dispatch('login',res.data.refresh_token)
+                    dispatch('login',res.data.access_token)
                 })
                 .catch((err) => {
                     console.log(err)

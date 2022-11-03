@@ -25,7 +25,141 @@ export default {
         SET_FEED_RECOMMEND_THEME_List2: (state: { feedRecommendThemeList2: Array<object>}, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList2 = _feedRecommendThemeList,
     },
     actions: {
-        getFeedTheme({ commit,getters }: { commit: Commit, getters: any }, _region:number) {
+        // board-controller
+        createArticle({ commit, getters }: { commit: Commit, getters: any }, _data: object) {
+            axios({
+                url: rest.Feed.createArticle(),
+                method: 'post',
+                headers: getters.authHeader,
+                data: _data
+            })
+                .then((res) => {
+                console.log(res)
+            })
+        },
+        detailArticle({ commit, getters }: { commit: Commit, getters: any }, _boardIdx: string) {
+            axios({
+                url: rest.Feed.fetchArticle(_boardIdx),
+                method: 'get',
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                console.log(res)
+            })
+        },
+        updateArticle({ commit, getters }: { commit: Commit, getters: any }, _boardIdx: string, _data:object) {
+            axios({
+                url: rest.Feed.fetchArticle(_boardIdx),
+                method: 'put',
+                headers: getters.authHeader,
+                data: _data
+            })
+                .then((res) => {
+                console.log(res)
+            })
+        },
+        deleteArticle({ commit, getters }: { commit: Commit, getters: any },_boardIdx:string) {
+            axios({
+                url: rest.Feed.fetchArticle(_boardIdx),
+                method: 'delete',
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                console.log(res)
+            })
+        },
+        reportArticle({ commit, getters }: { commit: Commit, getters: any },_boardIdx:string, _content:string) {
+            axios({
+                url: rest.Feed.reportArticle(_boardIdx),
+                method: 'post',
+                headers: getters.authHeader,
+                params: {
+                    content: _content
+                }
+            })
+                .then((res) => {
+                console.log(res)
+            })
+        },
+        likeArticle({ dispatch, getters }: { dispatch: Dispatch, getters: any },_boardIdx:string) {
+            axios({
+                url: rest.Feed.LikeArticle(_boardIdx),
+                method: 'post',
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                console.log(res)
+            })
+        },
+        unlikeArticle({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _boardIdx: string) {
+            axios({
+                url: rest.Feed.LikeArticle(_boardIdx),
+                method: 'delete',
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                console.log(res)
+            })
+        },
+
+
+        //comment-controller
+        createComment({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _boardIdx: string, _content: string) {
+            axios({
+                url: rest.Feed.comment(_boardIdx),
+                method: 'post',
+                headers: getters.authHeader,
+                params: {
+                    contnet: _content
+                }
+            })
+                .then((res) => {
+                console.log(res)
+            })
+        },
+        deleteComment({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _commentIdx:string) {
+            axios({
+                url: rest.Feed.deleteComment(_commentIdx),
+                method: 'delete',
+                headers: getters.authHeader,
+            })
+                .then((res) => {
+                console.log(res)
+            })
+        },
+        reportComment({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _commentIdx: string,_content:string) {
+            axios({
+                url: rest.Feed.reportComment(_commentIdx),
+                method: 'post',
+                headers: getters.authHeader,
+                params: {
+                    content:_content
+                }
+            })
+                .then((res) => {
+                console.log(res)
+            })
+        },
+
+        // feed-controller
+        themeArticleList({ commit, getters }: { commit: Commit, getters: any },_themeIdx:string,_pageIdx:number,_pageSize:number) {
+            axios({
+                url: rest.Feed.themeArticleList(_themeIdx),
+                method: 'get',
+                headers: getters.authHeader,
+                params: {
+                    pageIdx: _pageIdx,
+                    pageSize: _pageSize
+                }
+            })
+                .then((res => {
+                console.log(res)
+            }))
+        },
+
+
+        // 
+        getFeedTheme({ commit, getters }: { commit: Commit, getters: any }, _region: number) {
             axios({
                 url: rest.Feed.feedList(),
                 method: 'get',
@@ -36,6 +170,7 @@ export default {
                     commit("SET_FEED_THEME",res.data)    
             })
         },
+        
         getRecommendFeedTheme({ commit,getters }: { commit: Commit, getters: any }) {
             axios({
                 url: rest.Feed.recommendTheme(),
@@ -48,20 +183,6 @@ export default {
             })
         },
 
-
-        // getFeedArticleList({ getters }: {getters:any},_region:number) {
-        //     axios({
-        //         url: rest.Feed.feedList(),
-        //         method: 'get',
-        //         headers: getters.authHeader,
-        //         params: { region: _region}  
-        //     })
-        // },
-        // articleImageUpload(_imageFile: File, _fileName: string) {
-        //     // const storageRef = storage.ref();
-        //     // const imagePath = storageRef.child(`article/${_fileName}`)
-        //     // imagePath.put(_imageFile)
-        // }
 
     }
 }
