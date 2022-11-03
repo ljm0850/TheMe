@@ -165,7 +165,7 @@ public class ThemeController {
         return new ResponseEntity<>(result, status);
     }
 
-    @GetMapping("/follow")
+    @PostMapping("/follow")
     public List<UserThemeDto> followThemeList(@RequestBody UserThemeIdxDto userThemeIdxDto) {
         return themeService.followThemeList(userThemeIdxDto);
     }
