@@ -1,5 +1,6 @@
 <template>
 <div>
+    {{ selectedUser }}
     <div class="d-flex justify-content-end">
         <button type="button" data-bs-toggle="modal" data-bs-target="#settingModal">세팅</button>
     </div>
@@ -7,9 +8,9 @@
     <SettingModalVue />
     <!-- 모달 끝 -->
     <div class="d-flex flex-column align-items-center">
-        <img src="@/assets/image/profile.jpg" alt="" class="test">
-        <div class="">프로필=주소이름 {{ nickname }}</div>
-        <div>자기소개</div>
+        <img :src="selectedUser.picture" alt="" class="test">
+        <div class="">{{ selectedUser.nickname }}</div>
+        <div>{{ selectedUser.description }}</div>
         <div class="d-flex flex-row">
             <div class="inroduce-margin">
                 <div>Post</div>
@@ -34,17 +35,23 @@
 
 <script lang="ts">
 import SettingModalVue from './SettingModal.vue'
-import { useRoute } from 'vue-router'
-// import { useStore } from "vuex";
+// import { useRoute } from 'vue-router'
+import { useStore } from "vuex";
+import { computed } from '@vue/runtime-core';
 export default {
     components: {
         SettingModalVue
     },
     setup() {
-        const route = useRoute();
-        let nickname: string | string[] = route.params.nickname
+        // 추후에 nickname으로 selectedUser 갱신
+        // const route = useRoute();
+        // let nickname: string | string[] = route.params.nickname
+        const store = useStore();
+        // const selectedUser = computed(() => store.getters.selectedUser)
+        const selectedUser = computed(() => store.getters.loginUser)
 
-        return { nickname }
+
+        return { selectedUser }
     },
 }
 </script>
