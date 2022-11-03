@@ -13,9 +13,9 @@ public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idx;
-
+    @Column(name = "theme_idx")
     private int themeIdx; // 게시글 해당 테마 번호
-
+    @Column(name = "user_idx")
     private int userIdx; // 게시글 작성자
     private String name; // 게시글 장소 이름
     private String place; // 게시글 장소 주소
@@ -38,4 +38,11 @@ public class Board {
         this.city = city;
         this.alertCount = alertCount;
     }
+    public void updateName(String name){ this.name = name; }
+    public void updatePlace(String place) { this.place = place; }
+    public void updateDescription(String description) { this.description = description; }
+    public void updateThemeIdx(int themeIdx) { this.themeIdx = themeIdx; }
+    public void updateCity(String city) { this.city = city; }
+    public void updateTime(LocalDateTime modifyTime) { this.modifyTime = modifyTime; }
+    public void updateAlertCount(int alertCount) { this.alertCount = alertCount; }
 }

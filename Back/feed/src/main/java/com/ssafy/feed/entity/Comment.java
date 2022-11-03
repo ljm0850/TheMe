@@ -12,6 +12,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idx;
+    @Column(name = "user_idx")
     private int userIdx; // 댓글 작성자
     @ManyToOne
     @JoinColumn(name = "board_idx")
@@ -27,4 +28,5 @@ public class Comment {
         this.content = content;
         this.alertCount = alertCount;
     }
+    public void updateAlertCount(int alertCount) { this.alertCount = alertCount; }
 }
