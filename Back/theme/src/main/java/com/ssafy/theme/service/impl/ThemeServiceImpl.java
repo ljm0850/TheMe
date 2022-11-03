@@ -355,4 +355,11 @@ public class ThemeServiceImpl implements ThemeService {
 
         return result;
     }
+
+    @Override
+    public int getThemeOpenType(int followUserIdx, int followThemeIdx) {
+        Theme theme = themeRepository.findByIdx(followThemeIdx);
+        Optional<UserTheme> userTheme = userThemeRepository.findByThemeAndUserIdx(theme,followUserIdx); // 테마의 공개 여부
+        return userTheme.get().getOpenType();
+    }
 }
