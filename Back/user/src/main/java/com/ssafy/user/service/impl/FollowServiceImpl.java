@@ -100,4 +100,9 @@ public class FollowServiceImpl implements FollowService
             followRepository.delete(followingByUser.get(i));
         }
     }
+
+    @Override
+    public List<Integer> getRecommendThemeList() {
+        return followRepository.countByThemeIdx();
+    }
 }
