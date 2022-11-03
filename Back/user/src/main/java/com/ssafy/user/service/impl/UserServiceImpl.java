@@ -47,7 +47,9 @@ public class UserServiceImpl implements UserService {
 
         KakaoDto userRegister = kakaoUser(kakaoToken);
 
-        if(userRegister==null) throw new IllegalArgumentException("카카오 사용자 가져오기 실패");
+        if(userRegister.getId()==null) throw new IllegalArgumentException("카카오 사용자 가져오기 실패");
+        System.out.println("카카오 정보 잘 넘어왔니?");
+
         UserInfoByIdDto userInfoByIdDto = null;
         if(!userRepository.existsById(userRegister.getId())){ // 없는 회원이면 회원가입
             User user = User.builder()
@@ -84,8 +86,20 @@ public class UserServiceImpl implements UserService {
                     .description(user.getDescription())
                     .picture(user.getPicture())
                     .build();
-        }
 
+            log.info(userInfoByIdDto.toString());
+        } else {
+
+            User user = userRepository.findById(userRegister.getId());
+            userInfoByIdDto = UserInfoByIdDto.builder()
+                    .kakaoId(user.getId())
+                    .nickname(user.getNickname())
+                    .userIdx(user.getIdx())
+                    .createTime(user.getCreateTime())
+                    .description(user.getDescription())
+                    .picture(user.getPicture())
+                    .build();
+        }
         return userInfoByIdDto;
     }
 

@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Integer> {
     boolean existsById(String kakaoId);
     boolean existsByNickname(String nickname);
+    User findById(String kakaoId);
     Optional<User>  findByNickname(String nickname);
 
     @Query("Select U.nickname from User U where U.nickname like CONCAT(:value, '%')")
