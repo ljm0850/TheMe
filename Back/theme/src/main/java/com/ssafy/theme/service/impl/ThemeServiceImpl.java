@@ -22,8 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -218,5 +217,58 @@ public class ThemeServiceImpl implements ThemeService {
     public String getThemeName(int theme_idx) {
         Theme theme = themeRepository.findByIdx(theme_idx);
         return theme.getName();
+    }
+
+    @Override
+    public Map<String, Object> searchThemeInfo(String value) {
+        Map<String, Object> answer = new HashMap<>();
+        List<ThemeDto> result = new ArrayList<>();
+
+        boolean same = themeRepository.findByName(value).isPresent();
+
+        if(same) {
+            Theme theme = themeRepository.findByName(value).orElseThrow(IllegalAccessError::new);
+
+            ThemeDto themeDto = ThemeDto.builder()
+                    .idx(theme.getIdx())
+                    .createTime(theme.getCreateTime())
+                    .emoticon(theme.getEmoticon())
+                    .name(theme.getName())
+                    .build();
+
+            result.add(themeDto);
+        }
+
+        List<Theme> themes = themeRepository.searchByTarget(value);
+        if (same) {
+            for(int i=1;i<themes.size();i++) {
+                Theme target = themes.get(i);
+                ThemeDto themeDto = ThemeDto.builder()
+                        .idx(target.getIdx())
+                        .createTime(target.getCreateTime())
+                        .emoticon(target.getEmoticon())
+                        .name(target.getName())
+                        .build();
+
+                result.add(themeDto);
+            }
+        } else {
+            for(int i=0;i<themes.size();i++) {
+                Theme target = themes.get(i);
+                ThemeDto themeDto = ThemeDto.builder()
+                        .idx(target.getIdx())
+                        .createTime(target.getCreateTime())
+                        .emoticon(target.getEmoticon())
+                        .name(target.getName())
+                        .build();
+
+                result.add(themeDto);
+            }
+        }
+
+        answer.put("result",result);
+        answer.put("isSame", same);
+
+        return answer;
     }
 }

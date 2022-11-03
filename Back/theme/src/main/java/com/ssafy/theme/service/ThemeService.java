@@ -9,6 +9,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ThemeService {
     void registTheme(ThemeRegistDto themeRegistDto);
@@ -29,4 +30,6 @@ public interface ThemeService {
     List<String> liveSearchTheme(String value);
 
     String getThemeName(int theme_idx);
+
+    Map<String, Object> searchThemeInfo(String value);
 }
