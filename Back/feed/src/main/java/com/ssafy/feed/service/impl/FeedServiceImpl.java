@@ -2,6 +2,7 @@ package com.ssafy.feed.service.impl;
 
 import com.ssafy.feed.client.ThemeClient;
 import com.ssafy.feed.client.UserClient;
+import com.ssafy.feed.dto.board.BoardDto;
 import com.ssafy.feed.dto.board.BoardGroupListDto;
 import com.ssafy.feed.dto.board.BoardSimpleListDto;
 import com.ssafy.feed.dto.theme.UserThemeDtoWithMSA;
@@ -99,5 +100,32 @@ public class FeedServiceImpl implements FeedService {
             boardSimpleListDtoList.add(boardSimpleListDto);
         }
         return boardSimpleListDtoList;
+    }
+
+    @Override
+    public List<BoardDto> getUserBoardList(int user_idx) {
+        List<Board> userBoardList = boardRepository.findByUserIdx(user_idx);
+
+        List<BoardDto> boardDtos = new ArrayList<>();
+        for(int i=0;i<userBoardList.size();i++) {
+            Board board = userBoardList.get(i);
+
+            BoardDto boardDto = BoardDto.builder()
+                    .createTime(board.getCreateTime())
+                    .description(board.getDescription())
+                    .idx(board.getIdx())
+                    .city(board.getCity())
+                    .alertCount(board.getAlertCount())
+                    .name(board.getName())
+                    .place(board.getPlace())
+                    .userIdx(board.getUserIdx())
+                    .themeIdx(board.getThemeIdx())
+                    .modifyTime(board.getModifyTime())
+                    .build();
+
+            boardDtos.add(boardDto);
+        }
+
+        return boardDtos;
     }
 }
