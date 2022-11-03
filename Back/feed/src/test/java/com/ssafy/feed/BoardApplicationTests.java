@@ -1,13 +1,20 @@
 package com.ssafy.feed;
 
+import com.ssafy.feed.client.ThemeClient;
 import com.ssafy.feed.client.UserClient;
+import com.ssafy.feed.dto.board.BoardGroupListDto;
+import com.ssafy.feed.dto.theme.UserThemeDtoWithMSA;
 import com.ssafy.feed.entity.*;
 import com.ssafy.feed.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,9 +26,11 @@ class BoardApplicationTests {
     PictureRepository pictureRepository;
     CommentRepository commentRepository;
     UserClient userClient;
+    ThemeClient themeClient;
     @Autowired
-    void BoardApplicationTests(BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository,PictureRepository pictureRepository, CommentRepository commentRepository,UserClient userClient) {
+    void BoardApplicationTests(ThemeClient themeClient,BoardRepository boardRepository,LikeRepository likeRepository, AlertRepository alertRepository,PictureRepository pictureRepository, CommentRepository commentRepository,UserClient userClient) {
         this.boardRepository = boardRepository;
+        this.themeClient = themeClient;
         this.likeRepository = likeRepository;
         this.alertRepository = alertRepository;
         this.pictureRepository = pictureRepository;
@@ -172,5 +181,27 @@ class BoardApplicationTests {
     void 게시글유저정보조회(){
         int userIdx = 5;
         System.out.println();
+    }
+    @Test
+    void 해당테마에대한게시글목록(){
+        //theme.getDescription() + theme.getUserIdx() + theme.getThemeTitle()+theme.getIdx()
+        //설명 : 코딩테마에요    만든이 2  테마idx 2
+        //설명 : 나만알고싶엉    만든이 3  테마idx 2
+        int themeIdx = 1;
+
+        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(themeIdx);
+        List<BoardGroupListDto> boardGroupListDtos  = new ArrayList<>();
+        List<Integer> openUserList = new ArrayList<>();
+        int pageIdx = 0;
+        int pageSize = 3;
+        Pageable pageable = PageRequest.of(pageIdx, pageSize);
+        for(UserThemeDtoWithMSA theme : themeUserList){
+            openUserList.add(theme.getUserIdx());
+        }
+
+        List<BoardGroupListDto> boardGroupListDto = boardRepository.getBoardGourpByListWithJPA(openUserList,themeIdx,pageable);
+        for(BoardGroupListDto temp : boardGroupListDto){
+            System.out.println(temp.getName() + temp.getBoardCount());
+        }
     }
 }
