@@ -276,7 +276,7 @@ public class ThemeServiceImpl implements ThemeService {
         for(UserTheme userTheme : userThemeList){
             if(userTheme.getOpenType()==1){
                 UserThemeDtoWithMSA userThemeDto = UserThemeDtoWithMSA.builder()
-                        .idx(userTheme.getIdx())
+                        .idx(userTheme.getTheme().getIdx())
                         .userIdx(userTheme.getUserIdx())
                         .themeEmoticon(userTheme.getTheme().getEmoticon())
                         .themeTitle(userTheme.getTheme().getName())
