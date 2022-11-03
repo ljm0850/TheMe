@@ -4,7 +4,6 @@
       <a :href="kakaoLogin">
         <img src="@/assets/image/kakao_login_large_wide.png" alt="kakao Login" class="img-size">
       </a>
-      <button @click="test()">asdf</button>
     </div>
   </div>
 </template>
@@ -27,10 +26,7 @@ export default {
       store.dispatch('kakaoLogin',kakao_code)
     }
     // const kakaoToken = store.dispatch()
-    const test = () => {
-      console.log(process.env)
-    }
-    return {kakaoLogin,test}
+    return {kakaoLogin}
   }
 }
 </script>

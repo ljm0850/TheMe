@@ -8,12 +8,30 @@ export default {
     state: {
         // token: localStorage.getItem('token') || '', 
         token :"",
-        loginUser: {},
+        loginUser: {
+            // userIdx: 0,
+            // email: null,
+            // description:null,
+            // kakaoId: "0000000",
+            // nickname : "닉네임",
+            // picture : "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2Ftest?alt=media&token=301ac89b-60a3-4314-9b11-945f104c91f6",
+            // createTime : "2022-11-02T01:27:07"
+        },
+        selectedUser: {
+            userIdx: 0,
+            email: null,
+            description:"C203의 프론트를 맡고있는 이재민입니다",
+            kakaoId: "0000000",
+            nickname : "닉네임",
+            picture : "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2Ftest?alt=media&token=301ac89b-60a3-4314-9b11-945f104c91f6",
+            createTime : "2022-11-02T01:27:07"
+        },
     },
     getters: {
         isLoggedIn: (state: { loginUser: Object; }) => !_.isEmpty(state.loginUser),
-        authHeader: (state: { token: string}) => ({ Authorization: state.token }),
-        
+        authHeader: (state: { token: string }) => ({ Authorization: state.token }),
+        loginUser: (state: {loginUser:Object}) => state.loginUser,
+        selectedUser: (state: { selectedUser: Object }) => state.selectedUser,
     },
     mutations: {
         SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,
@@ -33,7 +51,6 @@ export default {
                 }
             })
                 .then((res) => {
-                    console.log(res.data)
                     console.log(res.data.access_token)
                     dispatch('login',res.data.access_token)
                 })
@@ -42,17 +59,25 @@ export default {
                 })
         },
 
-        login({ commit }: { commit: Commit }, _kakaoCode: string) {
+        login({ commit }: { commit: Commit }, _accessToken: string) {
+            console.log("여긴 도착")
             axios({
                 url: rest.User.login(),
                 method: 'post',
-                data: { kakaoToken: _kakaoCode }
+                data: { kakaoToken: _accessToken }
             })
                 .then((res) => {
+                    console.log("성공")
+                    console.log(res)
+                    console.log("----------------------")
                     console.log(res.data)
                     // commit('SET_TOKEN',res.data)
-                    // commit('SET_LOGIN_USER',res.data)
+                    commit('SET_LOGIN_USER',res.data.userInfo)
                 })
+                .catch((err) => {
+                    console.log("실패")
+                    console.log(err)
+            })
         },
         
         getUserInfoByNickname({ commit,getters }: { commit: Commit,getters:any }, _userNickname: string) {
