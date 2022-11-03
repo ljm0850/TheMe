@@ -1,5 +1,6 @@
 package com.ssafy.feed.service.impl;
 
+import com.ssafy.feed.client.UserClient;
 import com.ssafy.feed.entity.Alert;
 import com.ssafy.feed.entity.Board;
 import com.ssafy.feed.entity.Comment;
@@ -19,11 +20,13 @@ public class CommentServiceImpl implements CommentService {
     BoardRepository boardRepository;
     CommentRepository commentRepository;
     AlertRepository alertRepository;
+    UserClient userClient;
     @Autowired
-    CommentServiceImpl(BoardRepository boardRepository, CommentRepository commentRepository, AlertRepository alertRepository){
+    CommentServiceImpl(BoardRepository boardRepository, CommentRepository commentRepository, AlertRepository alertRepository,UserClient userClient){
         this.boardRepository = boardRepository;
         this.commentRepository = commentRepository;
         this.alertRepository = alertRepository;
+        this.userClient = userClient;
     }
     @Override
     public boolean registComment(int boardIdx, int userIdx, String content) {
@@ -65,9 +68,16 @@ public class CommentServiceImpl implements CommentService {
                     .referenceIdx(commentIdx)
                     .build();
             alertRepository.save(alert);
+            List<Alert> alertList = alertRepository.findByReferenceIdxAndType(commentIdx,1);
+            if(alertList.size()==5) alertUser(targetIdx); // 5회 이상이면 해당 유저 1회 신고
             comment.get().updateAlertCount(comment.get().getAlertCount()+1);
             commentRepository.save(comment.get());
             return true;
         }
+    }
+    @Override
+    public String alertUser(int userIdx){
+        String result = userClient.alertUser(userIdx);
+        return result;
     }
 }
