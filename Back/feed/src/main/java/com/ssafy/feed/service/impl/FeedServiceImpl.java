@@ -20,11 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FeedServiceImpl implements FeedService {
@@ -117,8 +116,33 @@ public class FeedServiceImpl implements FeedService {
                 List<Board> boardList = boardRepository.findByUserIdxAndThemeIdx(followUserIdx,followThemeIdx);
                 // 지역별로 나눠서 확인해야함 - 받은 지역 확인하기
                 for(int j=0;j<boardList.size();j++) {
+                    UserInfoByIdDto userInfo = userClient.getUserInfo(boardList.get(j).getUserIdx()); // 해당 게시글을 작성한 유저의 정보 받기
+                    Optional<Board> board = boardRepository.findById(boardList.get(j).getIdx()); // 해당 게시글
+                    List<Likes> likeList = likeRepository.findByBoard(board.get()); // 해당 게시글의 좋아요
+                    List<Comment> commentList = commentRepository.findByBoard(board.get()); // 해당 게시글의 댓글
+                    List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 해당 게시글의 사진
+                    String[] pictures = new String[pictureList.size()];
+                    for(int k=0;k<pictureList.size();k++){
+                        pictures[k] = (pictureList.get(k).getPicture());
+                    }
+                    boolean isWriter = true;
+                    if(boardList.get(j).getUserIdx()!=userIdx) isWriter = false;
                     BoardSimpleListDto boardSimpleListDto = BoardSimpleListDto.builder()
                             // 여기 내용 채우기 // dto
+                            .boardIdx(boardList.get(j).getIdx())
+                            .alertCount(boardList.get(j).getAlertCount())
+                            .city(boardList.get(j).getCity())
+                            .commentCount(commentList.size())
+                            .isWriter(isWriter)
+                            .likeCount(likeList.size())
+                            .modifyTime(boardList.get(j).getModifyTime())
+                            .name(boardList.get(j).getName())
+                            .nickname(userInfo.getNickname())
+                            .picture(pictures)
+                            .themeIdx(boardList.get(j).getThemeIdx())
+                            .themeName(themeClient.getThemeName(boardList.get(j).getThemeIdx()))
+                            .profile(userInfo.getPicture())
+                            .userIdx(boardList.get(j).getUserIdx())
                             .build();
                 }
             }
@@ -134,5 +158,10 @@ public class FeedServiceImpl implements FeedService {
     @Override
     public int getThemeOpenType(int followUserIdx, int followThemeIdx) { // 해당 테마의 공개 여부 확인하기
         return themeClient.getThemeOpenType(followUserIdx,followThemeIdx);
+    }
+    @Override
+    public String getThemeName(int themeIdx) { // 테마 idx로 이름 받아오기
+        String themeInfo = themeClient.getThemeName(themeIdx);
+        return themeInfo;
     }
 }

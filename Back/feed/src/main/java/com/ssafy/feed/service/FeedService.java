@@ -15,4 +15,6 @@ public interface FeedService {
     List<BoardSimpleListDto> feedByRegion(int userIdx, int region, int pageIdx, int pageSize);
     List<UserFollowThemeDto> getUserFollowTheme(int userIdx);
     int getThemeOpenType(int followUserIdx, int followThemeIdx);
+
+    String getThemeName(int themeIdx);
 }
