@@ -8,6 +8,7 @@ import com.ssafy.theme.entity.UserTheme;
 import com.ssafy.theme.repository.ScrapRepository;
 import com.ssafy.theme.repository.ThemeRepository;
 import com.ssafy.theme.repository.UserThemeRepository;
+import org.apache.catalina.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -193,5 +194,17 @@ class ThemeApplicationTests {
 			System.out.println(strings.get(i));
 		}
 
+	}
+	@Test
+	void 테마_idx로_유저_테마목록_받아오기(){
+		int themeIdx = 2;
+		Theme theme = themeRepository.findByIdx(themeIdx);
+		System.out.println(theme.getName());
+		List<UserTheme> userThemeList = userThemeRepository.findByTheme(theme);
+		for(UserTheme userTheme : userThemeList){
+			if(userTheme.getOpenType()==1){
+				System.out.println(userTheme.getDescription());
+			}
+		}
 	}
 }
