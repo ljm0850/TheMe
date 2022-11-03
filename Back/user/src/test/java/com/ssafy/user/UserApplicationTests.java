@@ -1,5 +1,6 @@
 package com.ssafy.user;
 
+import com.ssafy.user.dto.UserDto;
 import com.ssafy.user.dto.UserInfoByIdDto;
 import com.ssafy.user.dto.UserInfoDto;
 import com.ssafy.user.entity.Follow;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -200,4 +202,30 @@ class UserApplicationTests {
 		System.out.println(userInfoByIdDto.toString());
 	}
 
+	@Test
+	void 팔로워순유저조회() {
+		List<User> followRank = followRepository.searchRecommned();
+
+		System.out.println(followRank.size() + " followRank size");
+		List<UserDto> rankList = new ArrayList<>();
+		for(int i=0;i<followRank.size();i++) {
+			User user = followRank.get(i);
+
+			UserDto userDto = UserDto.builder()
+					.nickname(user.getNickname())
+					.description(user.getDescription())
+					.picture(user.getPicture())
+					.createTime(user.getCreateTime())
+					.idx(user.getIdx())
+					.email(user.getEmail())
+					.id(user.getId())
+					.alertCount(user.getAlertCount())
+					.build();
+
+			rankList.add(userDto);
+		}
+
+		for(int i=0;i<rankList.size();i++)
+			System.out.println(rankList.get(i));
+	}
 }

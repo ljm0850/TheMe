@@ -20,6 +20,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -253,4 +254,28 @@ public class UserServiceImpl implements UserService {
         return nickname;
     }
 
+    @Override
+    public List<UserDto> searchRecommend() {
+        List<User> followRank = followRepository.searchRecommned();
+
+        List<UserDto> rankList = new ArrayList<>();
+        for(int i=0;i<followRank.size();i++) {
+            User user = followRank.get(i);
+
+            UserDto userDto = UserDto.builder()
+                    .nickname(user.getNickname())
+                    .description(user.getDescription())
+                    .picture(user.getPicture())
+                    .createTime(user.getCreateTime())
+                    .idx(user.getIdx())
+                    .email(user.getEmail())
+                    .id(user.getId())
+                    .alertCount(user.getAlertCount())
+                    .build();
+
+            rankList.add(userDto);
+        }
+
+        return rankList;
+    }
 }

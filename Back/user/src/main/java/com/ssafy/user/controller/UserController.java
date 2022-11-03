@@ -1,9 +1,6 @@
 package com.ssafy.user.controller;
 
-import com.ssafy.user.dto.UserInfoByIdDto;
-import com.ssafy.user.dto.UserInfoDto;
-import com.ssafy.user.dto.UserLoginDto;
-import com.ssafy.user.dto.UserUpdateDto;
+import com.ssafy.user.dto.*;
 import com.ssafy.user.service.FollowService;
 import com.ssafy.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -218,5 +215,22 @@ public class UserController {
     @GetMapping("/info/id/{user_id}")
     UserInfoByIdDto getUserInfoById(@PathVariable(name = "user_id") int user_id) {
         return userService.getUserInfoById(user_id);
+    }
+
+    @GetMapping("/search/recommend")
+    ResponseEntity<?> searchRecommend() {
+        Map<String, Object> result = new HashMap<>();
+
+        HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
+        try {
+            List<UserDto> userDtos = userService.searchRecommend();
+            result.put("recommandList", userDtos);
+            result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+        }
+
+        return new ResponseEntity<>(result, status);
     }
 }
