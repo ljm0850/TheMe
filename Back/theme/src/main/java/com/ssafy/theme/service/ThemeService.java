@@ -37,4 +37,6 @@ public interface ThemeService {
     List<UserThemeDto> getRecommendThemeList();
 
     List<UserThemeDto> getUserThemeByUserIdx(int user_idx);
+
+    int getThemeOpenType(int followUserIdx, int followThemeIdx);
 }

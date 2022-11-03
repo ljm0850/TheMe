@@ -40,4 +40,6 @@ public interface UserThemeRepository extends JpaRepository<UserTheme,Integer> {
     Long getThemeCountWithJPA(@Param("idx") int idx);
 
     List<UserTheme> findByTheme(Theme theme);
+
+    Optional<UserTheme> findByThemeAndUserIdx(Theme theme, int userIdx);
 }

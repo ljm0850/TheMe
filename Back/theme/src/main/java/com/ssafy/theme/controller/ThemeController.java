@@ -240,4 +240,10 @@ public class ThemeController {
     public List<UserThemeDto> getUserThemeByUserIdx(@PathVariable(name = "user_idx") int user_idx) {
         return themeService.getUserThemeByUserIdx(user_idx);
     }
+
+    @GetMapping("/openType/{follow_user_idx}/{follow_theme_idx}")
+    public int getThemeOpenType(@PathVariable(name = "follow_user_idx") int followUserIdx
+            , @PathVariable(name = "follow_theme_idx") int followThemeIdx) {
+        return themeService.getThemeOpenType(followUserIdx,followThemeIdx);
+    }
 }
