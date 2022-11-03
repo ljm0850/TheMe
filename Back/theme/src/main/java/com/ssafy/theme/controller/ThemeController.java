@@ -1,14 +1,8 @@
 package com.ssafy.theme.controller;
 
-import com.ssafy.theme.client.UserClient;
-import com.ssafy.theme.dto.theme.PublicThemeDto;
-import com.ssafy.theme.dto.theme.ThemeDto;
-import com.ssafy.theme.dto.theme.ThemeRegistDto;
-import com.ssafy.theme.dto.theme.UserThemeDto;
-import com.ssafy.theme.dto.theme.UserThemeIdxDto;
+import com.ssafy.theme.dto.theme.*;
 import com.ssafy.theme.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -180,7 +174,7 @@ public class ThemeController {
         return themeService.getThemeName(theme_idx);
     }
     @GetMapping("/userList/{theme_idx}")
-    public List<UserThemeDto> getThemeUserList(@PathVariable(name = "theme_idx") int theme_idx) {
+    public List<UserThemeDtoWithMSA> getThemeUserList(@PathVariable(name = "theme_idx") int theme_idx) {
         return themeService.getThemeUserList(theme_idx);
     }
     @GetMapping("/search/theme/info")
