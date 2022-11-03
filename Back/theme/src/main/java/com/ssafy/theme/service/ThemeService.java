@@ -1,10 +1,6 @@
 package com.ssafy.theme.service;
 
-import com.ssafy.theme.dto.theme.PublicThemeDto;
-import com.ssafy.theme.dto.theme.ThemeDto;
-import com.ssafy.theme.dto.theme.UserThemeDto;
-import com.ssafy.theme.dto.theme.ThemeRegistDto;
-import com.ssafy.theme.dto.theme.UserThemeIdxDto;
+import com.ssafy.theme.dto.theme.*;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 
@@ -33,5 +29,5 @@ public interface ThemeService {
 
     Map<String, Object> searchThemeInfo(String value);
 
-    List<UserThemeDto> getThemeUserList(int theme_idx);
+    List<UserThemeDtoWithMSA> getThemeUserList(int theme_idx);
 }

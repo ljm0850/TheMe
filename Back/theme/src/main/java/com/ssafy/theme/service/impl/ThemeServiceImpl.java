@@ -1,11 +1,7 @@
 package com.ssafy.theme.service.impl;
 
 import com.ssafy.theme.client.UserClient;
-import com.ssafy.theme.dto.theme.PublicThemeDto;
-import com.ssafy.theme.dto.theme.ThemeDto;
-import com.ssafy.theme.dto.theme.UserThemeDto;
-import com.ssafy.theme.dto.theme.ThemeRegistDto;
-import com.ssafy.theme.dto.theme.UserThemeIdxDto;
+import com.ssafy.theme.dto.theme.*;
 import com.ssafy.theme.entity.Scrap;
 import com.ssafy.theme.entity.Theme;
 import com.ssafy.theme.entity.UserTheme;
@@ -273,15 +269,17 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<UserThemeDto> getThemeUserList(int theme_idx) {
+    public List<UserThemeDtoWithMSA> getThemeUserList(int theme_idx) {
         Theme theme = themeRepository.findByIdx(theme_idx);
         List<UserTheme> userThemeList = userThemeRepository.findByTheme(theme);
-        List<UserThemeDto> userThemeDtoList = new ArrayList<>();
+        List<UserThemeDtoWithMSA> userThemeDtoList = new ArrayList<>();
         for(UserTheme userTheme : userThemeList){
             if(userTheme.getOpenType()==1){
-                UserThemeDto userThemeDto = UserThemeDto.builder()
+                UserThemeDtoWithMSA userThemeDto = UserThemeDtoWithMSA.builder()
                         .idx(userTheme.getIdx())
                         .userIdx(userTheme.getUserIdx())
+                        .themeEmoticon(userTheme.getTheme().getEmoticon())
+                        .themeTitle(userTheme.getTheme().getName())
                         .description(userTheme.getDescription())
                         .openType(userTheme.getOpenType())
                         .createTime(userTheme.getCreateTime())
