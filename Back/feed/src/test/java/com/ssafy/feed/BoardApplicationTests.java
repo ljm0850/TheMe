@@ -3,6 +3,7 @@ package com.ssafy.feed;
 import com.ssafy.feed.client.ThemeClient;
 import com.ssafy.feed.client.UserClient;
 import com.ssafy.feed.dto.board.BoardGroupListDto;
+import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.theme.UserThemeDtoWithMSA;
 import com.ssafy.feed.entity.*;
 import com.ssafy.feed.repository.*;
@@ -190,7 +191,6 @@ class BoardApplicationTests {
         int themeIdx = 1;
 
         List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(themeIdx);
-        List<BoardGroupListDto> boardGroupListDtos  = new ArrayList<>();
         List<Integer> openUserList = new ArrayList<>();
         int pageIdx = 0;
         int pageSize = 3;
@@ -202,6 +202,25 @@ class BoardApplicationTests {
         List<BoardGroupListDto> boardGroupListDto = boardRepository.getBoardGourpByListWithJPA(openUserList,themeIdx,pageable);
         for(BoardGroupListDto temp : boardGroupListDto){
             System.out.println(temp.getName() + temp.getBoardCount());
+        }
+    }
+    @Test
+    void 해당주소에대한게시글목록(){
+        String name = "컴포즈";
+        int themeIdx = 1;
+        int pageIdx = 0;
+        int pageSize = 3;
+        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(themeIdx);
+        List<Integer> openUserList = new ArrayList<>();
+
+        Pageable pageable = PageRequest.of(pageIdx, pageSize);
+        for(UserThemeDtoWithMSA theme : themeUserList){
+            openUserList.add(theme.getUserIdx());
+            System.out.println(theme.getUserIdx());
+        }
+        List<Board> boardGroupListDto = boardRepository.getBoardListWithJPA(openUserList,themeIdx,name,pageable);
+        for(Board temp : boardGroupListDto){
+            System.out.println(temp.getName() + temp.getDescription());
         }
     }
 }
