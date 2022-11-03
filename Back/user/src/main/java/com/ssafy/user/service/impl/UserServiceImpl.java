@@ -121,13 +121,14 @@ public class UserServiceImpl implements UserService {
 
         // 내가 쓴 테마 리스트
         // FeignClient 적용 부분
-
         List<UserThemeDto> userThemeByUserIdx = themeClient.getUserThemeByUserIdx(user.getIdx());
         userInfoDto.setThemeDtoList(userThemeByUserIdx);
+        System.out.println("내가 쓴 테마");
 
         // 내가 쓴 게시글 수
         List<BoardDto> userBoardList = feedClient.userBoardList(user.getIdx());
         userInfoDto.setPosts(userBoardList.size());
+        System.out.println("내가 쓴 게시글");
 
         // 내가 팔로우한 테마 리스트
         UserThemeIdxDto userThemeIdxDto = UserThemeIdxDto.builder()
@@ -136,6 +137,7 @@ public class UserServiceImpl implements UserService {
 
         List<UserThemeDto> userThemeDtos = themeClient.followThemeList(userThemeIdxDto);
         userInfoDto.setFollowingDtoList(userThemeDtos);
+        System.out.println("내가 팔로우한 테마");
         return userInfoDto;
     }
 
