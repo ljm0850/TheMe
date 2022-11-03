@@ -218,20 +218,14 @@ public class UserController {
     }
 
     @GetMapping("/search/recommend")
-    ResponseEntity<?> searchRecommend() {
+    public List<UserDto> searchRecommend() {
         Map<String, Object> result = new HashMap<>();
 
         HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
-        try {
-            List<UserDto> userDtos = userService.searchRecommend();
-            result.put("recommandList", userDtos);
-            result.put("message", OK);
-            status = HttpStatus.OK;
-        } catch (Exception e) {
-            result.put("message", FAIL);
-        }
 
-        return new ResponseEntity<>(result, status);
+        List<UserDto> userDtos = userService.searchRecommend();
+
+       return userDtos;
     }
 
     @GetMapping("/live/search")
