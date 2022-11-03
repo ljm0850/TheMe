@@ -263,4 +263,8 @@ public class UserController {
 
         return new ResponseEntity<>(result, status);
     }
+    @GetMapping("/following/themeList/{user_idx}")
+    List<UserFollowThemeDto> getUserFollowTheme(@RequestParam(name = "user_idx") int userIdx) {
+        return followService.getUserFollowTheme(userIdx);
+    }
 }
