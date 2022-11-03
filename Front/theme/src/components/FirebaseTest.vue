@@ -18,7 +18,7 @@ import { reactive } from '@vue/reactivity'
 // import firebase from "firebase/compat/app";
 import "firebase/compat/storage"
 import "firebase/compat/auth";
-import { articleImageUpload,testUrl } from "@/store/firebase/firebase"
+import { articleImageUpload, getImageUrl } from "@/store/firebase/firebase"
 
 export default {
     components: {
@@ -39,11 +39,12 @@ export default {
         }
         
         const test = () => {
-            articleImageUpload("???",state.selectFile[0])
+            const url = articleImageUpload("sss", state.selectFile[0])
+            console.log(url)
         }
 
         const test2 = ()=>{
-            testUrl()
+            getImageUrl('article','test')
         }
 
         // return { file, fileChange, state, test, auth_obj}
