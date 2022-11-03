@@ -223,4 +223,13 @@ class BoardApplicationTests {
             System.out.println(temp.getName() + temp.getDescription());
         }
     }
+    @Test
+    void 좋아요_조회(){
+        Optional<Board> board = boardRepository.findById(10);
+        List<Likes> temp = likeRepository.findByBoard(board.get());
+        for(Likes likes : temp){
+            System.out.println(likes.getUserIdx());
+        }
+
+    }
 }
