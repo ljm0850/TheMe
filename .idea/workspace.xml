@@ -2,34 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="671211c3-fe0d-4ce4-999d-b97cf8ac31fe" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/config/SwaggerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/controller/FeedController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/dto/FeedRecommendDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Alert.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Comment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Follow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Like.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Picture.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Scrap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/Theme.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/entity/UserTheme.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/AlertRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/BoardRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/CommentRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/FollowRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/LikeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/PictureRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/ScrapRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/ThemeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/repository/UserThemeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/service/EtcService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Back/etc/src/main/java/com/ssafy/etc/service/impl/EtcServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/etc/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Back/etc/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back/etc/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Back/etc/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back/theme/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Back/theme/.idea/gradle.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +30,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/SSAFY/S07P31C203/Back/theme"
+    "last_opened_file_path": "C:/SSAFY/S07P31C203/Back/feed"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -75,6 +48,7 @@
       <updated>1666830003146</updated>
       <workItem from="1666830005176" duration="42000" />
       <workItem from="1666831304184" duration="52000" />
+      <workItem from="1667435677952" duration="146000" />
     </task>
     <servers />
   </component>
