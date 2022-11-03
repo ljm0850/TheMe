@@ -14,4 +14,5 @@ public interface FollowService {
     void cancelUserFollow(int target_user_id, int user_id);
 
     List<UserFollowThemeDto> getUserFollowTheme(int userIdx);
+    List<Integer> getRecommendThemeList();
 }

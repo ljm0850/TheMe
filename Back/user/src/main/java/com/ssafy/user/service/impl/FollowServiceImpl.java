@@ -116,4 +116,7 @@ public class FollowServiceImpl implements FollowService
         }
         return userFollowThemeDtoList;
     }
+    public List<Integer> getRecommendThemeList() {
+        return followRepository.countByThemeIdx();
+    }
 }

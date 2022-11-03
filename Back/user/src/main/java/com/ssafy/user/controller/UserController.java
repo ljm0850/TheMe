@@ -32,7 +32,8 @@ public class UserController {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
 
-            UserInfoByIdDto userInfoDto = userService.loginUser(userLoginDto.getKakaoToken()); // 예시로 만들어 놓은거라 void로 할게요
+            UserInfoByIdDto userInfoDto = userService.loginUser(userLoginDto.getKakaoToken());
+            response.setHeader("userIdx", Integer.toString(userInfoDto.getUserIdx()));
             result.put("message",OK);
             result.put("userInfo", userInfoDto);
             status = HttpStatus.OK;
@@ -267,4 +268,21 @@ public class UserController {
     List<UserFollowThemeDto> getUserFollowTheme(@RequestParam(name = "user_idx") int userIdx) {
         return followService.getUserFollowTheme(userIdx);
     }
+
+    @PostMapping("/alertCount/{user_idx}")
+    String alertUser(@PathVariable(name = "user_idx") int user_idx){
+        try {
+            userService.alertUser(user_idx);
+        } catch (Exception e){
+            return FAIL;
+        }
+
+        return OK;
+    }
+
+    @GetMapping("/user/follow/recommend")
+    List<Integer> getRecommendThemeList(){
+        return followService.getRecommendThemeList();
+    }
+
 }

@@ -354,4 +354,14 @@ public class UserServiceImpl implements UserService {
 
         return answer;
     }
+    @Override
+    public void alertUser(int userIdx) {
+        User user = userRepository.findById(userIdx)
+                .orElseThrow(IllegalAccessError::new);
+
+        user.updateAlertCount();
+
+        userRepository.save(user);
+    }
+
 }
