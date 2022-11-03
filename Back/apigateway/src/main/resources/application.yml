@@ -41,9 +41,12 @@ spring :
           uri: lb://theme/
           predicates:
             - Path=/theme/**
-
+          filters:
+            - CustomAuthFilter
         - id: feed
           uri: lb://feed/
           predicates:
             - Path=/feed/**
+          filters:
+            - CustomAuthFilter
 
