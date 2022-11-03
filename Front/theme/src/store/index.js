@@ -1,13 +1,11 @@
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import accounts from "./acounts/accounts";
-import articles from "./articles/articles";
-import follow_like from "./follow_like/follow_like";
-import report from "./report/report";
+import user from "./user/user";
+import feed from "./feed/feed";
 import themes from "./themes/themes";
 
 export default createStore({
-    modules: { accounts,articles,follow_like,report,themes },
+    modules: { user,feed,themes },
     plugins: [createPersistedState()],
   });
 

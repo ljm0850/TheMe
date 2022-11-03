@@ -25,55 +25,44 @@ export default {
 
     User: {
         login:() => HOST + USER + '/login',
-        userInfo: (_user_id: string) => HOST + USER + `/info/${_user_id}`,
-        userInfo2: (_user_idx:string) => HOST + USER + `info/id/${_user_idx}`,
-        userTheme:(_user_id:string) => HOST + USER + THEME + `/${_user_id}`,
-        userBoard:(_theme_id:string,_user_id:string) => HOST + USER + BOARD + `/${_theme_id}/${_user_id}`,
-        signOut:(_user_id:string) => HOST + USER + `/${_user_id}`,
-        themeFollow:(_theme_id:string, _user_id:string, _target_user_id:string) => HOST + USER + FOLLOW + `/${_theme_id}/${_user_id}/${_target_user_id}`,
-        cancelThemeFollow:(_follow_id:string) => HOST + USER + FOLLOW + `/${_follow_id}`,
-        themeFollowList:(_user_id:string) => HOST + USER + `/following/${_user_id}`,
-        followerList: (_user_id: string) => HOST + USER + `/follower/${_user_id}`,
-        followingThemeIdxList: (_user_id:string) => HOST + USER + '/following' + THEME + `/${_user_id}`,
-        followingList:(_user_id:string) => HOST + USER + `/following/${_user_id}`,
-        unfollow: (_target_user_idx:string,_user_idx:string) => HOST + USER + `/unfollow/${_target_user_idx}/${_user_idx}`,
-        duplication: (_nickname:string) => HOST + USER + `/duplication/${_nickname}`,
+        userInfo: (_nickname: string) => HOST + USER + `/info/${_nickname}`,
+        duplicationNickname: (_nickname:string) => HOST + USER + `/duplication/${_nickname}`,
+        deleteUser:(_nickname:string) => HOST + USER + `/${_nickname}`,
+        followtheme:(_theme_idx:string, _user_idx:string, _target_user_idx:string) => HOST + USER + FOLLOW + `/${_theme_idx}/${_user_idx}/${_target_user_idx}`,
+        cancelFollow:(_follow_id:string) => HOST + USER + FOLLOW + `/${_follow_id}`,
+        getFollowingThemeIdxList: (_user_idx:string) => HOST + USER + '/following' + THEME + `/${_user_idx}`,
+        getFollowerList: (_user_idx: string) => HOST + USER + `/follower/${_user_idx}`,
+        getFollowingList:(_user_idx:string) => HOST + USER + `/following/${_user_idx}`,
+        unfollowUser: (_target_user_idx:string,_user_idx:string) => HOST + USER + `/unfollow/${_target_user_idx}/${_user_idx}`,
+        userInfoByIdx: (_user_idx: string) => HOST + USER + `/info/id/${_user_idx}`,
+        liveSearchUser: ()=> HOST + USER + '/live/search',
+        
     },
-
-    Board: {
-        createArticle:() => HOST + FEED + BOARD,
-        fetchArticle:(_board_id:string) => HOST + FEED + BOARD + `/${_board_id}`,
-        LikeArticle:(_board_id:string) => HOST + FEED + BOARD + `/like/${_board_id}`,
-        reportArticle:(_board_id:string,_reporter_id:string) => HOST + BOARD + `/alert/${_board_id}/${_reporter_id}`,
-        detailArticle:(_board_id:string) => HOST + BOARD + `/${_board_id}`
-    },
-
-    Comment: {
-        commentInfo:(_board_id:string) => HOST + FEED + COMMENT +`/${_board_id}`,
-        reportComment:(_board_id:string,_reporter_id:string) => HOST + FEED + COMMENT + `/alert/${_board_id}/${_reporter_id}`
-    },
-
-    Feed: {
-        recommendTheme:() => HOST + FEED + '/recommend', 
-        feedList:()=> HOST + FEED  //params로 region 넘겨야함(0:전국 1:서울 2:대전 3:광주 4:구미 5:부울경)
-    },
-
-    Map: {
-        publicThemeList:() => HOST + THEME + MAP + THEME,   //params로 isMarked, sort 넘겨야함(0은 인기순, 1은 최신순)
-        themeArticleList:(_theme_id:string) => HOST + THEME + MAP + `/${_theme_id}`, // params로 sort 넘겨야함(0은 인기순 1은 최신순)
-        placeArticleList:() => HOST + THEME + MAP + '/place'    // params로 value (주소)
-    },
-
-    Search: {
-        recommendUser:()=> HOST + THEME + SEARCH,
-        userAutoComplete:()=>HOST + THEME + SEARCH + USER,  // params로 value = input값
-        themeAutoComplete:()=>HOST + THEME + SEARCH + THEME,    //params로 value = input값
-        userSearch:() => HOST + THEME + SEARCH + USER + '/info',    //params로 value= input값
-        themeSearch:() => HOST + THEME + SEARCH + THEME + '/info'   //params로 value = input값
-    },
+    
     Theme: {
-        createTheme:()=> HOST + THEME,
-        recommendTheme:()=> HOST + THEME + '/recommand',
-        isTheme:()=>HOST + THEME + SEARCH,
-    }
+        getPublicThemeList:() => HOST + THEME + MAP + THEME,
+        liveSearchTheme:()=>HOST + THEME + '/live' + SEARCH,    
+        searchThemeInfo:() => HOST + THEME + SEARCH + THEME + '/info',   
+        registTheme: () => HOST + THEME,
+        createUserTheme: () => HOST + '/userTheme',
+        getUerThemeList: (_user_idx: string) => HOST + THEME + `/${_user_idx}`,
+        recommendThemeList:()=> HOST + THEME + '/recommand',    // api 미완
+        searchTheme: (_target:string)=>HOST + THEME + SEARCH + `${_target}`,
+        scrapTheme: (_user_idx:string, _theme_idx:string)=>HOST + THEME + `/bookmark/${_user_idx}/${_theme_idx}`
+    },
+    
+    Feed: {
+        createArticle: () => HOST + FEED + BOARD,
+        fetchArticle:(_board_idx:string) => HOST + FEED + BOARD + `/${_board_idx}`,
+        LikeArticle:(_board_id:string) => HOST + FEED + BOARD + `/like/${_board_id}`,
+        reportArticle: (_board_idx: string,) => HOST + FEED + BOARD + `/alert/${_board_idx}`,
+        themeArticleList:(_theme_idx:string) => HOST + FEED + MAP + THEME + `${_theme_idx}`,
+        placeArticleList:() => HOST + FEED + MAP + '/place',    
+        comment: (_board_idx: string) => HOST + FEED + COMMENT + `/${_board_idx}`,
+        deleteComment: (_comment_idx: string) => HOST + COMMENT + `${_comment_idx}`,
+        reportComment:(_comment_idx:string) => HOST + FEED + COMMENT + `/alert/${_comment_idx}`,
+        recommendTheme:() => HOST + FEED + '/recommend', 
+        feedList:()=> HOST + FEED + '/region'  
+    },
+
 }
