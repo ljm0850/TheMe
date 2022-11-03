@@ -159,6 +159,16 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
+    public void deleteScrapTheme(int user_id, int theme_idx) {
+        Theme targetTheme = themeRepository.findByIdx(theme_idx);
+        if(scrapRepository.existsByThemeAndUserIdx(targetTheme, user_id)) {
+            Scrap scrap = scrapRepository.findByThemeAndUserIdx(targetTheme, user_id).orElseThrow(IllegalAccessError::new);
+
+            scrapRepository.delete(scrap);
+        }
+    }
+
+    @Override
     public List<UserThemeDto> followThemeList(UserThemeIdxDto userThemeIdxDto) {
         List<UserThemeDto> result = new ArrayList<>();
 

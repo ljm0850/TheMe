@@ -144,6 +144,24 @@ public class ThemeController {
         return new ResponseEntity<>(result, status);
     }
 
+    @DeleteMapping("/bookmark/{user_id}/{theme_idx}")
+    public ResponseEntity<?> deleteScrapTheme(HttpServletResponse response, @PathVariable("user_id") int user_id,
+                                        @PathVariable(name = "theme_idx") int theme_idx) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try {
+            themeService.deleteScrapTheme(user_id, theme_idx);
+            result.put("message",OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(result, status);
+    }
+
     @GetMapping("/follow")
     public List<UserThemeDto> followThemeList(HttpServletResponse response, @RequestBody UserThemeIdxDto userThemeIdxDto) {
         return themeService.followThemeList(userThemeIdxDto);

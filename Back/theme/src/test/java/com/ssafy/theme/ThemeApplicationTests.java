@@ -156,6 +156,20 @@ class ThemeApplicationTests {
 	}
 
 	@Test
+	void 즐겨찾기삭제() {
+		int theme_idx = 1;
+		int user_id = 2;
+
+		Theme targetTheme = themeRepository.findByIdx(theme_idx);
+		if(scrapRepository.existsByThemeAndUserIdx(targetTheme, user_id)) {
+			Scrap scrap = scrapRepository.findByThemeAndUserIdx(targetTheme, user_id).orElseThrow(IllegalAccessError::new);
+
+			scrapRepository.delete(scrap);
+			System.out.println(true);
+		} else System.out.println(false);
+	}
+
+	@Test
 	void 팔로우하는테마() {
 		List<UserThemeDto> result = new ArrayList<>();
 
@@ -207,4 +221,6 @@ class ThemeApplicationTests {
 			}
 		}
 	}
+
+
 }

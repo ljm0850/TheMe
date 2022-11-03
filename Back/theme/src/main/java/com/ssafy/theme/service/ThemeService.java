@@ -30,4 +30,6 @@ public interface ThemeService {
     Map<String, Object> searchThemeInfo(String value);
 
     List<UserThemeDtoWithMSA> getThemeUserList(int theme_idx);
+
+    void deleteScrapTheme(int user_id, int theme_idx);
 }
