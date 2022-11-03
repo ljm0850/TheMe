@@ -17,4 +17,6 @@ public interface UserClient {
     ResponseEntity<?> getUserIdxInfo(@PathVariable(name = "user_idx") int userIdx);
     @GetMapping("/userList/{theme_idx}")
     List<UserThemeDto> getThemeUserList(@PathVariable(name = "theme_idx") int theme_idx);
+    @GetMapping("/user/follow/recommend")
+    List<Integer> getRecommendThemeList();
 }

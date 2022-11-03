@@ -1,5 +1,6 @@
 package com.ssafy.theme.controller;
 
+import com.ssafy.theme.client.UserClient;
 import com.ssafy.theme.dto.theme.*;
 import com.ssafy.theme.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,11 @@ public class ThemeController {
     private final static String OK = "success";
     private final static String FAIL = "fail";
     ThemeService themeService;
+    UserClient userClient;
     @Autowired
-    ThemeController(ThemeService themeService) {
+    ThemeController(ThemeService themeService, UserClient userClient) {
         this.themeService = themeService;
+        this.userClient = userClient;
     }
 
     @PostMapping("")
@@ -210,6 +213,25 @@ public class ThemeController {
             result.put("message", FAIL);
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
+
+        return new ResponseEntity<>(result, status);
+    }
+
+    @GetMapping("/recommend")
+    ResponseEntity<?> getRecommendThemeList() {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        try{
+            List<UserThemeDto> recommendThemeList = themeService.getRecommendThemeList();
+            result.put("recommendList", recommendThemeList);
+            result.put("message",OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
 
         return new ResponseEntity<>(result, status);
     }
