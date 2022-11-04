@@ -50,6 +50,8 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
                         String refreshToken = jwtTokenProvider.createRefreshToken(userIdx);
 
                         exchange.getResponse().getHeaders().set("Authorization", accessToken);
+                        exchange.getResponse().getHeaders().add("Authorization", accessToken);
+
                         exchange.getResponse().getHeaders().setAccessControlAllowCredentials(true);
 
 //                        jwtTokenProvider.delCookie(exchange.getRequest());
