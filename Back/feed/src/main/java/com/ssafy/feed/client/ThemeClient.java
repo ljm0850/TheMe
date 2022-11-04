@@ -13,4 +13,7 @@ public interface ThemeClient {
     String getThemeName(@PathVariable(name = "theme_idx") int theme_idx);
     @GetMapping("/theme/userList/{theme_idx}")
     List<UserThemeDtoWithMSA> getThemeUserList(@PathVariable(name = "theme_idx") int theme_idx);
+    @GetMapping("/theme/openType/{follow_user_idx}/{follow_theme_idx}")
+    int getThemeOpenType(@PathVariable(name = "follow_user_idx") int followUserIdx
+            , @PathVariable(name = "follow_theme_idx") int followThemeIdx);
 }
