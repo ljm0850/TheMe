@@ -50,8 +50,16 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
                         String refreshToken = jwtTokenProvider.createRefreshToken(userIdx);
 
                         exchange.getResponse().getHeaders().set("Authorization", accessToken);
-//                        jwtTokenProvider.delCookie(exchange.getRequest());
+                        exchange.getResponse().getHeaders().setAccessControlAllowCredentials(true);
 
+//                        jwtTokenProvider.delCookie(exchange.getRequest());
+                        ResponseCookie addAccessToken = ResponseCookie.from("Authorization", accessToken)
+                                .sameSite("None")
+                                .domain("p.ssafy.io")
+                                .path("/")
+                                .maxAge(24 * 60 * 60)
+                                .build();
+                        response.addCookie(addAccessToken);
                         // 리프레시토큰 쿠키에 저장
                         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                                 .sameSite("None")
