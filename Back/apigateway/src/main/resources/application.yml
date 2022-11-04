@@ -22,7 +22,7 @@ spring :
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "https://k7c2031.p.ssafy.io/"
+              - "https://*.p.ssafy.io/"
               - "http://localhost:8080/"
             allow-credentials: true
             allowedHeaders: '*'
