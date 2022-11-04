@@ -24,7 +24,7 @@ import java.util.Map;
 public class JwtTokenProvider {
 
     private String secretKey = "secretKey";
-    private final long accessTokenValidMillisecond = 1000L * 60 * 60; // 1시간 유효 토큰
+    private final long accessTokenValidMillisecond = 1000L * 60 * 60 * 24 * 14; // 2주 유효 토큰
     private final long refreshTokenValidMillisecond = 1000L * 60 * 60 * 24; // 하루 유효 토큰
 
     // JwtTokenProvider 시작될 때 초기화
