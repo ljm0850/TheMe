@@ -18,4 +18,5 @@ public interface BoardRepository extends JpaRepository<Board,Integer> {
     @Query("select b from Board b where b.userIdx In (?1) and b.themeIdx=?2 and b.name=?3 order by b.modifyTime desc")
     List<Board> getBoardListWithJPA(List<Integer> openUserList, int themeIdx, String name, Pageable pageable);
     List<Board> findByUserIdxAndThemeIdx(int userIdx, int themeIdx);
+    List<Board> findByUserIdxAndThemeIdxAndCity(int userIdx, int themeIdx, String city);
 }

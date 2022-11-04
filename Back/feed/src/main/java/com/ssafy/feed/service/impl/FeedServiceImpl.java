@@ -105,6 +105,7 @@ public class FeedServiceImpl implements FeedService {
 
     @Override
     public List<BoardSimpleListDto> feedByRegion(int userIdx, int region, int pageIdx, int pageSize) {
+        String[] regionList = {"전국","서울","대전","광주","구미","부울경"};
         List<BoardSimpleListDto> boardSimpleListDtoList = new ArrayList<>();
         List<UserFollowThemeDto> userFollowThemeDtoList = userClient.getUserFollowTheme(userIdx);
         for(int i=0;i<userFollowThemeDtoList.size();i++){ // 해당 유저가 팔로우한 사람의 테마리스트들 확인
@@ -113,8 +114,9 @@ public class FeedServiceImpl implements FeedService {
             int openType = getThemeOpenType(followUserIdx,followThemeIdx); // 0 전체 공개, 1 친구 공개, 2 비공개
             if(openType!=2){
                 // 해당 사람이 해당 테마로 작성한 글들 불러오기
-                List<Board> boardList = boardRepository.findByUserIdxAndThemeIdx(followUserIdx,followThemeIdx);
-                // 지역별로 나눠서 확인해야함 - 받은 지역 확인하기
+                List<Board> boardList;
+                if(region == 0) boardList = boardRepository.findByUserIdxAndThemeIdx(followUserIdx,followThemeIdx);
+                else boardList = boardRepository.findByUserIdxAndThemeIdxAndCity(followUserIdx,followThemeIdx,regionList[region]);// 지역별로 나눠서 확인해야함 - 받은 지역 확인하기
                 for(int j=0;j<boardList.size();j++) {
                     UserInfoByIdDto userInfo = userClient.getUserInfo(boardList.get(j).getUserIdx()); // 해당 게시글을 작성한 유저의 정보 받기
                     Optional<Board> board = boardRepository.findById(boardList.get(j).getIdx()); // 해당 게시글
@@ -128,7 +130,6 @@ public class FeedServiceImpl implements FeedService {
                     boolean isWriter = true;
                     if(boardList.get(j).getUserIdx()!=userIdx) isWriter = false;
                     BoardSimpleListDto boardSimpleListDto = BoardSimpleListDto.builder()
-                            // 여기 내용 채우기 // dto
                             .boardIdx(boardList.get(j).getIdx())
                             .alertCount(boardList.get(j).getAlertCount())
                             .city(boardList.get(j).getCity())
