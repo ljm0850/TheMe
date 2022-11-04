@@ -1,5 +1,6 @@
 package com.ssafy.feed.controller;
 
+import com.ssafy.feed.dto.board.BoardDto;
 import com.ssafy.feed.dto.board.BoardGroupListDto;
 import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.board.BoardSimpleListDto;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,5 +84,11 @@ public class FeedController {
             result.put("message", FAIL);
         }
         return new ResponseEntity<>(result, status);
+    }
+
+    @GetMapping("/board/list/{user_idx}")
+    @ApiOperation(value = "user_idx가 등록한 게시글 리스트" , notes = "유저를 토대로 게시글 목록을 리스팅")
+    public List<BoardDto> userBoardList(@PathVariable(name = "user_idx") int user_idx) {
+        return feedService.getUserBoardList(user_idx);
     }
 }
