@@ -52,8 +52,9 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
 //                        response.getHeaders().set("Authorization", accessToken);
                         response.getHeaders().add("Authorization", accessToken);
                         response.getHeaders().setAccessControlExposeHeaders(Collections.singletonList("Authorization"));
-//                        response.getHeaders().setAccessControlAllowOrigin("https://*.p.ssafy.io");
-                        response.getHeaders().setAccessControlAllowMethods(Arrays.asList(HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.POST, HttpMethod.OPTIONS));                        response.getHeaders().setAccessControlAllowCredentials(true);
+//                        response.getHeaders().setAccessControlAllowOrigin("https://k7c2031.p.ssafy.io");
+//                        response.getHeaders().setAccessControlAllowMethods(Arrays.asList(HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.POST, HttpMethod.OPTIONS));
+                        response.getHeaders().setAccessControlAllowCredentials(true);
                         response.getHeaders().getAccessControlExposeHeaders().add("Authorization");
 
 
