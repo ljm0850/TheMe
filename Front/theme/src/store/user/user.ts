@@ -27,6 +27,7 @@ export default {
             createTime : "2022-11-02T01:27:07"
         },
     },
+    
     getters: {
         isLoggedIn: (state: { loginUser: Object; }) => !_.isEmpty(state.loginUser),
         authHeader: (state: { token: string }) => ({ Authorization: state.token }),
@@ -35,9 +36,11 @@ export default {
     },
     mutations: {
         SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,
-        SET_LOGIN_USER: (state:{ loginUser:Object},_user:Object) => state.loginUser = _user
+        SET_LOGIN_USER: (state: { loginUser: Object }, _user: Object) => state.loginUser = _user,
+        SET_SELECTED_USER: (state: { selectedUser:Object},_user:Object) => state.selectedUser = _user,
     },
     actions: {
+        // 확인
         kakaoLogin({ dispatch }: { dispatch: Dispatch }, _code: string) {
             axios({
                 url: rest.kakao.login(),
@@ -58,7 +61,7 @@ export default {
                     console.log(err)
                 })
         },
-
+        // 확인, 추후 토큰 처리 추가 필요
         login({ commit }: { commit: Commit }, _accessToken: string) {
             console.log("여긴 도착")
             axios.defaults.withCredentials = true;
@@ -68,11 +71,7 @@ export default {
                 data: { kakaoToken: _accessToken }
             })
                 .then((res) => {
-                    console.log("성공")
-                    console.log(res)
-                    console.log("----------------------")
-                    console.log(res.data)
-                    // commit('SET_TOKEN',res.data)
+                    commit('SET_TOKEN',res.headers.authorization)
                     commit('SET_LOGIN_USER',res.data.userInfo)
                 })
                 .catch((err) => {
@@ -80,7 +79,7 @@ export default {
                     console.log(err)
             })
         },
-        
+        // 확인
         getUserInfoByNickname({ commit,getters }: { commit: Commit,getters:any }, _userNickname: string) {
             axios({
                 url: rest.User.userInfo(_userNickname),
@@ -89,53 +88,58 @@ export default {
             })
                 .then((res) => {
                     console.log(res.data)
+                    commit('SET_SELECTED_USER',res.data.userInfo)
                 })
         },
-        Duplicationnickname({ commit,getters }: { commit: Commit,getters:any }, _newNickname: string) {
+        duplicationnickname({ commit,getters }: { commit: Commit,getters:any }, _newNickname: string) {
             axios({
                 url: rest.User.duplicationNickname(_newNickname),
                 method: 'get',
                 headers: getters.authHeader
             })
                 .then((res) => {
-                    console.log(res)
+                    
                 })
         },
 
-        updateUserInfo({ commit,getters }: { commit: Commit,getters:any }, _userNickname: string, _data: Object) {
+        updateUserInfo({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _data: { description: string,  nickname: string, picture: string}) {
             axios({
-                url: rest.User.userInfo(_userNickname),
+                url: rest.User.userInfo(getters.loginUser.nickname),
                 method: 'put',
                 data: _data,
                 headers:getters.authHeader
             })
                 .then((res) => {
+                    dispatch('getUserInfoByNickname',_data.nickname)
                     console.log(res)
                 })
         },
         
-        deleteUser({ commit, getters }: { commit: Commit, getters: any }, _userNickname: string) {
+        deleteUser({ commit, getters }: { commit: Commit, getters: any }) {
             axios({
-                url: rest.User.deleteUser(_userNickname),
+                url: rest.User.deleteUser(getters.loginUser.nickname),
                 method: 'delete',
                 headers: getters.authHeader
             })
                 .then((res) => {
                     console.log(res.data)
-                    // commit('SET_TOKEN', "")
-                    // commit('SET_LOGIN_USER', {})
+                    commit('SET_TOKEN', "")
+                    commit('SET_LOGIN_USER', {})
                 })
         },
-        followTheme({ commit,getters }: { commit: Commit,getters:any }, _themeId: string, _userId: string, _targetUserId: string) {
+        
+        followTheme({ commit, getters }: { commit: Commit, getters: any }, _params :{ themeId: string, userId: string, targetUserId: string }) {
             axios({
-                url: rest.User.followtheme(_themeId, _userId, _targetUserId),
+                url: rest.User.followtheme(_params.themeId, _params.userId, _params.targetUserId),
                 method: 'post',
                 headers: getters.authHeader
             })
                 .then((res) => {
+                    // 뭔가 패치를 해야겠는데 확인해 봐야겠다.
                     console.log(res)
                 })
         },
+
         cancelFollow({ dispatch,getters }: { dispatch: Dispatch,getters:any }, _followId: string) {
             axios({
                 url: rest.User.cancelFollow(_followId),
