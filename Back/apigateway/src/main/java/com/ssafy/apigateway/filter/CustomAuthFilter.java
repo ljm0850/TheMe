@@ -52,18 +52,11 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
 //                        response.getHeaders().set("Authorization", accessToken);
                         response.getHeaders().add("Authorization", accessToken);
                         response.getHeaders().setAccessControlExposeHeaders(Collections.singletonList("Authorization"));
-                        response.getHeaders().setAccessControlAllowOrigin("https://*.p.ssafy.io");
+//                        response.getHeaders().setAccessControlAllowOrigin("https://*.p.ssafy.io");
                         response.getHeaders().setAccessControlAllowMethods(Arrays.asList(HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.POST, HttpMethod.OPTIONS));                        response.getHeaders().setAccessControlAllowCredentials(true);
                         response.getHeaders().getAccessControlExposeHeaders().add("Authorization");
 
-//                        jwtTokenProvider.delCookie(exchange.getRequest());
-                        ResponseCookie addAccessToken = ResponseCookie.from("Authorization", accessToken)
-                                .sameSite("None")
-                                .domain("p.ssafy.io")
-                                .path("/")
-                                .maxAge(24 * 60 * 60)
-                                .build();
-                        response.addCookie(addAccessToken);
+
                         // 리프레시토큰 쿠키에 저장
                         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                                 .sameSite("None")
