@@ -6,7 +6,7 @@
                 <router-link :to="{ name: 'Search' }">
                     <img src="@/assets/logo.png" alt="" class="test">
                 </router-link>
-                <input type="text" class="form-control" id="" placeholder="">
+                <input type="text" class="form-control" id="" placeholder="" v-model="state.inputValue" @input="temp()">
                 <button>검색</button>
             </div>
         </div>
@@ -16,12 +16,23 @@
 
 <script lang="ts">
 import SearchThemeCardVue from '../theme/SearchThemeCard.vue';
-// import { useStore } from "vuex";
+import { reactive } from '@vue/reactivity'
+import { useStore } from "vuex";
 export default {
     components: {
         SearchThemeCardVue
     },
     setup() {
+        const store = useStore();
+        const state = reactive({
+            searchList : store.getters.searchList,
+            inputValue : ""
+        });
+        const temp = () => {
+            store.dispatch("searchTheme",state.inputValue)
+        }
+        return {state,temp}
+        
     }
 }
 </script>

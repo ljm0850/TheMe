@@ -5,10 +5,13 @@ import { Commit, Dispatch } from 'vuex';
 
 export default {
     state: {
+        searchThemeList : []
        },
     getters: {
+        searchTheme: (state: {searchThemeList:Array<String>}) => state.searchThemeList,
         },
     mutations: {
+        SEARCH_THEME_LIST: (state:{ searchThemeList:Array<String>},_themeList:Array<String>) => state.searchThemeList = _themeList
         },
     actions: {
         // 테마등록
@@ -98,6 +101,9 @@ export default {
                 url: rest.Theme.searchTheme(_target),
                 method: 'get',
                 headers: getters.authHeader
+            })
+            .then((res) => {
+                console.log(res)
             })
         },
         scrapTheme({ commit, getters }: { commit: Commit, getters: any },_userIdx:string,_themeIdx:string) {
