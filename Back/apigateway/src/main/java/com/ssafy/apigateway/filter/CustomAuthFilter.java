@@ -56,6 +56,7 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
                         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                                 .sameSite("None")
                                 .secure(true)
+                                .domain("p.ssafy.io")
                                 .path("/")
                                 .maxAge(24 * 60 * 60)
                                 .build();
