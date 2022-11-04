@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
@@ -45,13 +46,13 @@ public class UserController {
         return new ResponseEntity<>(result,status);
     }
 
-    @PostMapping("/follow/{theme_id}/{user_id}/{target_user_id}")
-    public ResponseEntity<?> followTheme(@PathVariable(name = "theme_id") int theme_id, @PathVariable(name = "user_id") int user_id,
-                                            @PathVariable(name = "target_user_id") int target_user_id) {
+    @PostMapping("/follow/{theme_id}/{target_user_id}")
+    public ResponseEntity<?> followTheme(HttpServletRequest request, @PathVariable(name = "theme_id") int theme_id, @PathVariable(name = "target_user_id") int target_user_id) {
         Map<String, Object> result = new HashMap<>();
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            followService.followTheme(theme_id, user_id, target_user_id);
+            followService.followTheme(theme_id, userIdx, target_user_id);
             result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
@@ -196,14 +197,14 @@ public class UserController {
         return new ResponseEntity<>(result, status);
     }
 
-    @DeleteMapping("/unfollow/{target_user_id}/{user_id}")
-    ResponseEntity<?> unfollowUser(@PathVariable(name = "user_id") int user_id,
+    @DeleteMapping("/unfollow/{target_user_id}")
+    ResponseEntity<?> unfollowUser(HttpServletRequest request,
                                    @PathVariable(name = "target_user_id") int target_user_id) {
         Map<String, Object> result = new HashMap<>();
-
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            followService.cancelUserFollow(target_user_id, user_id);
+            followService.cancelUserFollow(target_user_id, userIdx);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
