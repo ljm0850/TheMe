@@ -31,8 +31,7 @@ public class CommentController {
     public ResponseEntity<?> registComment(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request, @RequestParam(name = "content") String content) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        //int userIdx = (int) request.getAttribute("userIdx");
-        int userIdx = 1;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
             boolean is = commentService.registComment(boardIdx, userIdx,content);
             result.put("data", is); // 댓글 등록 여부
@@ -46,11 +45,12 @@ public class CommentController {
     }
     @DeleteMapping("/comment/{comment_idx}")
     @ApiOperation(value = "댓글 삭제")
-    public ResponseEntity<?> deleteComment(@PathVariable(name = "comment_idx") int commentIdx) {
+    public ResponseEntity<?> deleteComment(HttpServletRequest request, @PathVariable(name = "comment_idx") int commentIdx) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            boolean is = commentService.deleteComment(commentIdx);
+            boolean is = commentService.deleteComment(userIdx,commentIdx);
             result.put("data", is); // 댓글 삭제 여부
             result.put("message", OK);
             status = HttpStatus.OK;
@@ -65,8 +65,7 @@ public class CommentController {
     public ResponseEntity<?> alertComment(@PathVariable(name = "comment_idx") int commentIdx, @RequestParam(name = "content") String content, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        //int userIdx = (int) request.getAttribute("userIdx");
-        int userIdx = 1;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
             boolean is = commentService.alertComment(userIdx,commentIdx,content);
             result.put("data", is); // 같은 신고자가 같은 댓글을 한번만 신고가능

@@ -64,46 +64,51 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void deleteBoard(int boardIdx) { // 게시글 삭제
+    public void deleteBoard(int userIdx, int boardIdx) { // 게시글 삭제
         Optional<Board> board = boardRepository.findById(boardIdx);
-        List<Alert> alertList = alertRepository.findByReferenceIdxAndType(boardIdx, 0); // 게시글 신고 삭제
-        for(int i=0;i<alertList.size();i++){
-            alertRepository.deleteById(alertList.get(i).getIdx());
+        if(board.get().getUserIdx()==userIdx){ // 작성자인지 한번더 확인하기
+            List<Alert> alertList = alertRepository.findByReferenceIdxAndType(boardIdx, 0); // 게시글 신고 삭제
+            for(int i=0;i<alertList.size();i++){
+                alertRepository.deleteById(alertList.get(i).getIdx());
+            }
+            List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 게시글 사진 삭제
+            for(int i=0;i<pictureList.size();i++){
+                pictureRepository.deleteById(pictureList.get(i).getIdx());
+            }
+            List<Comment> commentList = commentRepository.findByBoard(board.get()); // 댓글 삭제
+            for(int i=0;i<commentList.size();i++){
+                commentRepository.deleteById(commentList.get(i).getIdx());
+            }
+            boardRepository.deleteById(boardIdx);
         }
-        List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 게시글 사진 삭제
-        for(int i=0;i<pictureList.size();i++){
-            pictureRepository.deleteById(pictureList.get(i).getIdx());
-        }
-        List<Comment> commentList = commentRepository.findByBoard(board.get()); // 댓글 삭제
-        for(int i=0;i<commentList.size();i++){
-            commentRepository.deleteById(commentList.get(i).getIdx());
-        }
-        boardRepository.deleteById(boardIdx);
     }
 
     @Override
-    public boolean updateBoard(int boardIdx, BoardUpdateDto boardUpdateDto) { // 게시글 수정
+    public boolean updateBoard(int userIdx, int boardIdx, BoardUpdateDto boardUpdateDto) { // 게시글 수정
         String[] pictures = boardUpdateDto.getPictures();
         Optional<Board> board = boardRepository.findById(boardIdx);
-        board.get().updateThemeIdx(boardUpdateDto.getThemeIdx());
-        board.get().updateDescription(boardUpdateDto.getDescription());
-        board.get().updateName(boardUpdateDto.getName());
-        board.get().updatePlace(boardUpdateDto.getPlace());
-        board.get().updateCity(checkCity(boardUpdateDto.getPlace()));
-        board.get().updateTime(LocalDateTime.now());
-        boardRepository.save(board.get());
-        List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 기존 사진 삭제
-        for(int i=0;i<pictureList.size();i++){
-            pictureRepository.deleteById(pictureList.get(i).getIdx());
+        if(board.get().getUserIdx()==userIdx) { // 작성자인지 한번더 확인하기
+            board.get().updateThemeIdx(boardUpdateDto.getThemeIdx());
+            board.get().updateDescription(boardUpdateDto.getDescription());
+            board.get().updateName(boardUpdateDto.getName());
+            board.get().updatePlace(boardUpdateDto.getPlace());
+            board.get().updateCity(checkCity(boardUpdateDto.getPlace()));
+            board.get().updateTime(LocalDateTime.now());
+            boardRepository.save(board.get());
+            List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 기존 사진 삭제
+            for (int i = 0; i < pictureList.size(); i++) {
+                pictureRepository.deleteById(pictureList.get(i).getIdx());
+            }
+            for (int i = 0; i < pictures.length; i++) { // 수정된 사진 재등록
+                Picture picture = Picture.builder()
+                        .picture(pictures[i])
+                        .board(board.get())
+                        .build();
+                pictureRepository.save(picture);
+            }
+            return true;
         }
-        for(int i = 0; i < pictures.length; i++){ // 수정된 사진 재등록
-            Picture picture = Picture.builder()
-                    .picture(pictures[i])
-                    .board(board.get())
-                    .build();
-            pictureRepository.save(picture);
-        }
-        return true;
+        else return false;
     }
 
     @Override

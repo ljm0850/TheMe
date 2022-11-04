@@ -42,10 +42,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public boolean deleteComment(int commentIdx) {
+    public boolean deleteComment(int userIdx, int commentIdx) {
         List<Alert> alertList = alertRepository.findByReferenceIdxAndType(commentIdx,1);
-        for(int i=0;i<alertList.size();i++){
-            alertRepository.deleteById(alertList.get(i).getIdx());
+        for(int i=0;i<alertList.size();i++){ // 작성자면 지우기
+            if(alertList.get(i).getReportUserIdx()==userIdx) alertRepository.deleteById(alertList.get(i).getIdx());
         }
         commentRepository.deleteById(commentIdx);
         return true;

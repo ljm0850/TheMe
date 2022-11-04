@@ -36,8 +36,7 @@ public class BoardController {
     public ResponseEntity<?> registBoard(HttpServletRequest request, @RequestBody BoardRegistDto boardRegistDto) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        //int userIdx = (int) request.getAttribute("userIdx");
-        int userIdx = 2;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
             boardService.registBoard(userIdx, boardRegistDto);
             result.put("message", OK);
@@ -51,11 +50,12 @@ public class BoardController {
 
     @DeleteMapping("/board/{board_idx}")
     @ApiOperation(value = "게시글 삭제")
-    public ResponseEntity<?> deleteBoard(@PathVariable(name = "board_idx") int boardIdx) {
+    public ResponseEntity<?> deleteBoard(HttpServletRequest request, @PathVariable(name = "board_idx") int boardIdx) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            boardService.deleteBoard(boardIdx);
+            boardService.deleteBoard(userIdx, boardIdx);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
@@ -66,11 +66,12 @@ public class BoardController {
     }
     @PutMapping("/board/{board_idx}")
     @ApiOperation(value = "게시글 수정")
-    public ResponseEntity<?> updateBoard(@PathVariable(name = "board_idx") int boardIdx, @RequestBody BoardUpdateDto boardUpdateDto) {
+    public ResponseEntity<?> updateBoard(HttpServletRequest request, @PathVariable(name = "board_idx") int boardIdx, @RequestBody BoardUpdateDto boardUpdateDto) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            boolean data = boardService.updateBoard(boardIdx,boardUpdateDto);
+            boolean data = boardService.updateBoard(userIdx, boardIdx,boardUpdateDto);
             result.put("data", data);
             result.put("message", OK);
             status = HttpStatus.OK;
@@ -85,8 +86,7 @@ public class BoardController {
     public ResponseEntity<?> likesBoard(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        //int userIdx = (int) request.getAttribute("userIdx");
-        int userIdx = 1;
+        int userIdx = (int) request.getAttribute("userIdx");
         try {
             boardService.likesBoard(userIdx,boardIdx);
             result.put("message", OK);
@@ -102,15 +102,13 @@ public class BoardController {
     public ResponseEntity<?> deleteLikes(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        //int userIdx = (int) request.getAttribute("userIdx");
-        int userIdx = 1;
+        int userIdx = (int) request.getAttribute("userIdx");
         try {
             boardService.deleteLikes(userIdx, boardIdx);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
-            System.out.println(e);
             result.put("message", FAIL);
         }
         return new ResponseEntity<>(result, status);
@@ -121,8 +119,7 @@ public class BoardController {
     public ResponseEntity<?> alertBoard(@PathVariable(name = "board_idx") int boardIdx, @RequestParam(name = "content") String content, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        //int userIdx = (int) request.getAttribute("userIdx");
-        int userIdx = 1;
+        int userIdx = (int) request.getAttribute("userIdx");
         try {
             boolean is = boardService.alertBoard(userIdx,boardIdx,content);
             result.put("data", is); // 같은 신고자가 같은 게시물을 한번만 신고가능
@@ -139,8 +136,7 @@ public class BoardController {
     public ResponseEntity<?> InfoBoardComment(@PathVariable(name = "board_idx") int boardIdx, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        //int userIdx = (int) request.getAttribute("userIdx");
-        int userIdx = 5;
+        int userIdx = (int) request.getAttribute("userIdx");
         try {
             // 글 관련 정보들
             BoardListDto boardData = boardService.infoBoard(boardIdx,userIdx);
@@ -152,7 +148,6 @@ public class BoardController {
             status = HttpStatus.OK;
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
-            System.out.println(e);
             result.put("message", FAIL);
         }
         return new ResponseEntity<>(result, status);

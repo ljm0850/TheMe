@@ -36,8 +36,7 @@ public class FeedController {
                                           @RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        //int userIdx = (int) request.getAttribute("userIdx");
-        int userIdx = 5;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
             List<BoardSimpleListDto> data = feedService.feedByRegion(userIdx,region,pageIdx,pageSize); // 불러와야해요 리스트
             result.put("data",data);
@@ -51,10 +50,9 @@ public class FeedController {
     }
     @GetMapping("/map/theme/{theme_idx}")
     @ApiOperation(value = "해당 테마에 대한 게시글 목록" , notes = "테마 번호를 토대로 게시글 목록을 리스팅")
-    public ResponseEntity<?> themeBoardGroup(@PathVariable(name = "theme_idx") int theme_idx,@RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx, HttpServletRequest request) {
+    public ResponseEntity<?> themeBoardGroup(@PathVariable(name = "theme_idx") int theme_idx,@RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        int userIdx = 5;
         try {
             List<BoardGroupListDto> boardGroupListDto = feedService.themeBoardGroup(theme_idx,pageIdx,pageSize);
             result.put("data",boardGroupListDto);
@@ -69,10 +67,11 @@ public class FeedController {
     }
     @GetMapping("/map/place/{theme_idx}")
     @ApiOperation(value = "해당 주소에 대한 게시글 목록" , notes = "테마 번호를 토대로 게시글 목록을 리스팅")
-    public ResponseEntity<?> themeBoardList(@PathVariable(name = "theme_idx") int theme_idx,@RequestParam(name="name") String name,@RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx, HttpServletRequest request) {
+    public ResponseEntity<?> themeBoardList(@PathVariable(name = "theme_idx") int theme_idx,@RequestParam(name="name") String name,
+                                            @RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        int userIdx = 5;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
             List<BoardSimpleListDto> boardSimpleListDtoList = feedService.themeBoardList(theme_idx,name,pageIdx,pageSize,userIdx);
             result.put("data",boardSimpleListDtoList);
@@ -86,9 +85,10 @@ public class FeedController {
         return new ResponseEntity<>(result, status);
     }
 
-    @GetMapping("/board/list/{user_idx}")
+    @GetMapping("/board/list")
     @ApiOperation(value = "user_idx가 등록한 게시글 리스트" , notes = "유저를 토대로 게시글 목록을 리스팅")
-    public List<BoardDto> userBoardList(@PathVariable(name = "user_idx") int user_idx) {
-        return feedService.getUserBoardList(user_idx);
+    public List<BoardDto> userBoardList(HttpServletRequest request) {
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
+        return feedService.getUserBoardList(userIdx);
     }
 }

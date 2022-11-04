@@ -11,9 +11,9 @@ import java.util.List;
 public interface BoardService {
     void registBoard(int userIdx, BoardRegistDto boardRegistDto);
 
-    void deleteBoard(int boardIdx);
+    void deleteBoard(int userIdx, int boardIdx);
 
-    boolean updateBoard(int boardIdx, BoardUpdateDto boardUpdateDto);
+    boolean updateBoard(int userIdx, int boardIdx, BoardUpdateDto boardUpdateDto);
 
     void likesBoard(int userIdx, int boardIdx);
 
