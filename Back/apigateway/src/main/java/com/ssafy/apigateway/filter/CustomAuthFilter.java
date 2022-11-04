@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -53,7 +52,7 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
 
 //                        response.getHeaders().set("Authorization", accessToken);
                         response.getHeaders().add("Authorization", accessToken);
-                        response.getHeaders().setAccessControlExposeHeaders(new ArrayList<>());
+                        response.getHeaders().setAccessControlExposeHeaders(Collections.singletonList("Authorization"));
                         response.getHeaders().setAccessControlAllowOrigin("*.p.ssafy.io");
                         response.getHeaders().setAccessControlAllowCredentials(true);
                         response.getHeaders().getAccessControlExposeHeaders().add("Authorization");
