@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@Controller
+@RestController
 @RequestMapping("/feed")
 public class CommentController {
     private final static String OK = "success";

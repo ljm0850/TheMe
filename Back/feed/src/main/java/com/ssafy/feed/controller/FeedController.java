@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/feed")
 public class FeedController {
     private final static String OK = "success";
@@ -85,7 +85,7 @@ public class FeedController {
         return new ResponseEntity<>(result, status);
     }
 
-    @GetMapping("/board/{user_idx}")
+    @GetMapping("/board/list/{user_idx}")
     @ApiOperation(value = "user_idx가 등록한 게시글 리스트" , notes = "유저를 토대로 게시글 목록을 리스팅")
     public List<BoardDto> userBoardList(@PathVariable(name = "user_idx") int user_idx) {
         return feedService.getUserBoardList(user_idx);
