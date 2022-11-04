@@ -26,6 +26,7 @@ spring :
               - "http://localhost:8080/"
             allow-credentials: true
             allowedHeaders: '*'
+            exposedHeaders: '*'
             allowedMethods:
               - POST
               - GET
