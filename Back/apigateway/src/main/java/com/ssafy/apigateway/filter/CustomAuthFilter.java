@@ -3,6 +3,7 @@ package com.ssafy.apigateway.filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -11,9 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Component
 public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFilter.Config> {
@@ -54,6 +53,7 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
                         response.getHeaders().add("Authorization", accessToken);
                         response.getHeaders().setAccessControlExposeHeaders(Collections.singletonList("Authorization"));
                         response.getHeaders().setAccessControlAllowOrigin("https://*.p.ssafy.io");
+                        response.getHeaders().setAccessControlAllowMethods(Arrays.asList(HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE, HttpMethod.POST, HttpMethod.OPTIONS););
                         response.getHeaders().setAccessControlAllowCredentials(true);
                         response.getHeaders().getAccessControlExposeHeaders().add("Authorization");
 
