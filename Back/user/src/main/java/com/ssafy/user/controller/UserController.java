@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,8 +45,9 @@ public class UserController {
     }
 
     @GetMapping("/user/check")
-    public ResponseEntity<?> check(HttpServletResponse response){
+    public ResponseEntity<?> check(HttpServletRequest request, HttpServletResponse response){
         Map<String,Object> result = new HashMap<>();
+        System.out.println(request.getHeader("userIdx"));
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
             result.put("message",OK);
