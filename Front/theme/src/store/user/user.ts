@@ -61,6 +61,7 @@ export default {
 
         login({ commit }: { commit: Commit }, _accessToken: string) {
             console.log("여긴 도착")
+            axios.defaults.withCredentials = true;
             axios({
                 url: rest.User.login(),
                 method: 'post',
