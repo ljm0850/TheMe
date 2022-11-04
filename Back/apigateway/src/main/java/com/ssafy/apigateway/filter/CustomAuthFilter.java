@@ -90,6 +90,9 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
 
                     // accessToken 재발급 해주기
                     String newToken = jwtTokenProvider.createAccessToken(userIdx);
+                    exchange.getRequest().getHeaders().set("userIdx", userIdx);
+                    exchange.getRequest().mutate()
+                            .headers(httpHeaders -> httpHeaders.add("userIdx", userIdx)).build();
 
                     return chain.filter(exchange).then(Mono.fromRunnable(()->{
                         exchange.getResponse().getHeaders().set("Authorization", newToken);
@@ -100,6 +103,10 @@ public class CustomAuthFilter extends AbstractGatewayFilterFactory<CustomAuthFil
                 }
 
             } else {
+                // 유효한 액세스토큰이면
+                String userIdx = jwtTokenProvider.getUsername(tokenString);
+                exchange.getRequest().mutate()
+                        .headers(httpHeaders -> httpHeaders.add("userIdx", userIdx)).build();
                 return chain.filter(exchange);
             }
         });
