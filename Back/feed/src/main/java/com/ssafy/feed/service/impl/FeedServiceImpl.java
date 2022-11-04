@@ -105,6 +105,7 @@ public class FeedServiceImpl implements FeedService {
 
     @Override
     public List<BoardSimpleListDto> feedByRegion(int userIdx, int region, int pageIdx, int pageSize) {
+        Pageable pageable = PageRequest.of(pageIdx, pageSize); // 페이지네이션
         String[] regionList = {"전국","서울","대전","광주","구미","부울경"};
         List<BoardSimpleListDto> boardSimpleListDtoList = new ArrayList<>();
         List<UserFollowThemeDto> userFollowThemeDtoList = userClient.getUserFollowTheme(userIdx);
@@ -116,7 +117,7 @@ public class FeedServiceImpl implements FeedService {
                 // 해당 사람이 해당 테마로 작성한 글들 불러오기
                 List<Board> boardList;
                 if(region == 0) boardList = boardRepository.findByUserIdxAndThemeIdx(followUserIdx,followThemeIdx);
-                else boardList = boardRepository.findByUserIdxAndThemeIdxAndCity(followUserIdx,followThemeIdx,regionList[region]);// 지역별로 나눠서 확인해야함 - 받은 지역 확인하기
+                else boardList = boardRepository.findByUserIdxAndThemeIdxAndCity(followUserIdx,followThemeIdx,regionList[region],pageable);// 지역별로 나눠서 확인해야함 - 받은 지역 확인하기
                 for(int j=0;j<boardList.size();j++) {
                     UserInfoByIdDto userInfo = userClient.getUserInfo(boardList.get(j).getUserIdx()); // 해당 게시글을 작성한 유저의 정보 받기
                     Optional<Board> board = boardRepository.findById(boardList.get(j).getIdx()); // 해당 게시글
