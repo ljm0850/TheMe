@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UserThemeDto {
     private int idx;
-    private int userIdx; // 테마 작성자
+    private int userIdx;
     private int themeIdx; // 부모테마
     private int openType; // 공개여부 (0비공개,1친구공개,2검색허용)
     private LocalDateTime createTime; // 생성시간

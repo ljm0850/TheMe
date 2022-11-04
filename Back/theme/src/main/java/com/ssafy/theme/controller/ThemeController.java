@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ThemeController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> registTheme(HttpServletResponse response, @RequestBody ThemeRegistDto themeRegistDto){
+    public ResponseEntity<?> registTheme(@RequestBody ThemeRegistDto themeRegistDto){
         Map<String,Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
@@ -41,13 +42,13 @@ public class ThemeController {
         return new ResponseEntity<>(result,status);
     }
 
-    @PostMapping("/userThema")
-    public ResponseEntity<?> createUserTheme(HttpServletResponse response, @RequestBody UserThemeDto userThemeDto) {
+    @PostMapping("/userTheme")
+    public ResponseEntity<?> createUserTheme(HttpServletRequest request, @RequestBody UserThemeDto userThemeDto) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            themeService.createUserTheme(userThemeDto);
+            themeService.createUserTheme(userIdx, userThemeDto);
             result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
@@ -59,10 +60,9 @@ public class ThemeController {
     }
 
     @GetMapping("/{user_id}")
-    public ResponseEntity<?> getUserThemeList(HttpServletResponse response, @PathVariable(name = "user_id") int user_id) {
+    public ResponseEntity<?> getUserThemeList(@PathVariable(name = "user_id") int user_id) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-
         try {
             List<UserThemeDto> themeList = themeService.getThemeList(user_id);
             result.put("themeList",themeList);
@@ -76,12 +76,10 @@ public class ThemeController {
         return new ResponseEntity<>(result, status);
     }
     @GetMapping("/map/theme") // 공용 테마 목록 조회
-    public ResponseEntity<?> getPublicThemeList(HttpServletResponse response, @RequestParam(name = "isMarked") int isMarked,
-                        @RequestParam(name ="sort")int sort,@RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx) {
+    public ResponseEntity<?> getPublicThemeList(HttpServletRequest request, @RequestParam(name = "isMarked") int isMarked,@RequestParam(name ="sort")int sort,@RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        //임시 JWT 토큰
-        int userIdx = 2;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         List<PublicThemeDto>  themeList;
         try {
             if(isMarked == 0){
@@ -129,14 +127,13 @@ public class ThemeController {
         return new ResponseEntity<>(result, status);
     }
 
-    @PostMapping("/bookmark/{user_id}/{theme_idx}")
-    public ResponseEntity<?> scrapTheme(HttpServletResponse response, @PathVariable("user_id") int user_id,
-                                        @PathVariable(name = "theme_idx") int theme_idx) {
+    @PostMapping("/bookmark/{theme_idx}")
+    public ResponseEntity<?> scrapTheme(HttpServletRequest request, @PathVariable(name = "theme_idx") int theme_idx) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            themeService.scrapTheme(user_id, theme_idx);
+            themeService.scrapTheme(userIdx, theme_idx);
             result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
@@ -147,14 +144,13 @@ public class ThemeController {
         return new ResponseEntity<>(result, status);
     }
 
-    @DeleteMapping("/bookmark/{user_id}/{theme_idx}")
-    public ResponseEntity<?> deleteScrapTheme(HttpServletResponse response, @PathVariable("user_id") int user_id,
-                                        @PathVariable(name = "theme_idx") int theme_idx) {
+    @DeleteMapping("/bookmark/{theme_idx}")
+    public ResponseEntity<?> deleteScrapTheme(HttpServletRequest request, @PathVariable(name = "theme_idx") int theme_idx) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            themeService.deleteScrapTheme(user_id, theme_idx);
+            themeService.deleteScrapTheme(userIdx, theme_idx);
             result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
@@ -178,7 +174,6 @@ public class ThemeController {
 
         try {
             List<String> themeList = themeService.liveSearchTheme(value);
-            System.out.println(themeList.size());
             result.put("themeList", themeList);
             result.put("message", OK);
             status = HttpStatus.OK;

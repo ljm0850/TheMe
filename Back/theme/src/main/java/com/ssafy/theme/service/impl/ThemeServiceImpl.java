@@ -50,18 +50,17 @@ public class ThemeServiceImpl implements ThemeService {
         themeRepository.save(theme);
     }
     @Override
-    public void createUserTheme(UserThemeDto userThemeDto) {
+    public void createUserTheme(int userIdx, UserThemeDto userThemeDto) {
         Theme theme = themeRepository.findByIdx(userThemeDto.getIdx()) ;
         UserTheme userTheme = UserTheme.builder()
                 .theme(theme)
-                .userIdx(userThemeDto.getUserIdx())
+                .userIdx(userIdx)
                 .createTime(userThemeDto.getCreateTime())
                 .challenge(userThemeDto.isChallenge())
                 .description(userThemeDto.getDescription())
                 .modifyTime(userThemeDto.getModifyTime())
                 .openType(userThemeDto.getOpenType())
                 .build();
-
         userThemeRepository.save(userTheme);
     }
     @Override
@@ -177,7 +176,7 @@ public class ThemeServiceImpl implements ThemeService {
         for(int i=0; i<userThemeList.size();i++) {
 
             int userThemeIdx = userThemeList.get(i);
-            System.out.println("userThemeIdx : " + userThemeIdx);
+            // System.out.println("userThemeIdx : " + userThemeIdx);
             UserTheme userTheme = userThemeRepository.findById(userThemeIdx).orElseThrow(IllegalAccessError::new);
 
             UserThemeDto userThemeDto = UserThemeDto.builder()
