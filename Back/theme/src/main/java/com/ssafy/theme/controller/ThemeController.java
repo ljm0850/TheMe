@@ -43,12 +43,12 @@ public class ThemeController {
     }
 
     @PostMapping("/userTheme")
-    public ResponseEntity<?> createUserTheme(HttpServletRequest request, @RequestBody UserThemeDto userThemeDto) {
+    public ResponseEntity<?> createUserTheme(HttpServletRequest request, @RequestBody UserThemeRegistDto userThemeRegistDto) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            themeService.createUserTheme(userIdx, userThemeDto);
+            themeService.createUserTheme(userIdx, userThemeRegistDto);
             result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {

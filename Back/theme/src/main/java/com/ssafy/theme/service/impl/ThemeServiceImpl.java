@@ -50,16 +50,16 @@ public class ThemeServiceImpl implements ThemeService {
         themeRepository.save(theme);
     }
     @Override
-    public void createUserTheme(int userIdx, UserThemeDto userThemeDto) {
-        Theme theme = themeRepository.findByIdx(userThemeDto.getIdx()) ;
+    public void createUserTheme(int userIdx, UserThemeRegistDto userThemeRegistDto) {
+        Theme theme = themeRepository.findByIdx(userThemeRegistDto.getThemeIdx());
         UserTheme userTheme = UserTheme.builder()
                 .theme(theme)
                 .userIdx(userIdx)
-                .createTime(userThemeDto.getCreateTime())
-                .challenge(userThemeDto.isChallenge())
-                .description(userThemeDto.getDescription())
-                .modifyTime(userThemeDto.getModifyTime())
-                .openType(userThemeDto.getOpenType())
+                .createTime(userThemeRegistDto.getCreateTime())
+                .challenge(userThemeRegistDto.isChallenge())
+                .description(userThemeRegistDto.getDescription())
+                .modifyTime(userThemeRegistDto.getModifyTime())
+                .openType(userThemeRegistDto.getOpenType())
                 .build();
         userThemeRepository.save(userTheme);
     }
