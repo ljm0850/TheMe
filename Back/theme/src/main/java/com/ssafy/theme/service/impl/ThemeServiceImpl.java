@@ -127,23 +127,50 @@ public class ThemeServiceImpl implements ThemeService {
         }
         return resultList;
     }
-    public List<ThemeDto> searchTheme(String target) {
-        List<ThemeDto> result = new ArrayList<>();
+    public List<SearchThemeDto> searchTheme(String target, int userIdx) {
+        List<SearchThemeDto> result = new ArrayList<>();
+
+        //해당 단어를 가진 테마들
         List<Theme> targetThemeList = themeRepository.searchByTarget(target);
+
+        //해당 유저가 가진 유저테마들
+        List<UserTheme> userThemeList = userThemeRepository.findByUserIdx(userIdx);
+        Map<String, Integer> map = new HashMap<>();
+
+        for(int i=0;i<userThemeList.size();i++)
+            map.put(userThemeList.get(i).getTheme().getName(), userThemeList.get(i).getOpenType());
 
         for(int i=0;i<targetThemeList.size();i++) {
             Theme theme = targetThemeList.get(i);
 
-            ThemeDto themeDto = ThemeDto.builder()
-                    .idx(theme.getIdx())
-                    .createTime(theme.getCreateTime())
-                    .emoticon(theme.getEmoticon())
-                    .name(theme.getName())
-                    .build();
+            //openType 0/1/2에 1씩 더해서 1/2/3 배분 후 없는거는 다시 for문
+            if(map.get(theme.getName()) != null) {
+                SearchThemeDto searchThemeDto =  SearchThemeDto.builder()
+                        .createTime(theme.getCreateTime())
+                        .name(theme.getName())
+                        .emoticon(theme.getEmoticon())
+                        .openType(map.get(theme.getName())+1)
+                        .build();
 
-            result.add(themeDto);
+                result.add(searchThemeDto);
+            }
         }
 
+        for(int i=0;i<targetThemeList.size();i++) {
+            Theme theme = targetThemeList.get(i);
+
+            //openType 0/1/2에 1씩 더해서 1/2/3 배분 후 없는거는 다시 for문
+            if(map.get(theme.getName()) == null) {
+                SearchThemeDto searchThemeDto =  SearchThemeDto.builder()
+                        .createTime(theme.getCreateTime())
+                        .name(theme.getName())
+                        .emoticon(theme.getEmoticon())
+                        .openType(0)
+                        .build();
+
+                result.add(searchThemeDto);
+            }
+        }
         return result;
     }
 

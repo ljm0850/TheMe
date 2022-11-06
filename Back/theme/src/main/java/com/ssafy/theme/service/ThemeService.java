@@ -17,7 +17,7 @@ public interface ThemeService {
     ResponseEntity<?> getUserIdxInfo(int userIdx);
 
     List<PublicThemeDto> getPublicThemeList(int sort, int pageSize, int pageIdx);
-    List<ThemeDto> searchTheme(String target);
+    List<SearchThemeDto> searchTheme(String target,int userIdx);
 
     void scrapTheme(int user_id, int theme_idx);
 

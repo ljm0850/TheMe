@@ -110,12 +110,12 @@ public class ThemeController {
     }
 
     @GetMapping("/search/{target}")
-    public ResponseEntity<?> searchTheme(HttpServletResponse response, @PathVariable(name = "target") String target) {
+    public ResponseEntity<?> searchTheme(HttpServletResponse response,HttpServletRequest request, @PathVariable(name = "target") String target) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            List<ThemeDto> themeDtos = themeService.searchTheme(target);
+            List<SearchThemeDto> themeDtos = themeService.searchTheme(target,userIdx);
             result.put("themeDtos" , themeDtos);
             result.put("message",OK);
             status = HttpStatus.OK;
