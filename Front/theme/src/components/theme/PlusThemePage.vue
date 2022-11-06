@@ -10,6 +10,10 @@
     <div>검색 결과 해당 테마가 존재하지 않습니다.</div>
     <div>추가 버튼을 눌러 새로운 테마를 만들어 주세요!!</div>
     <button>추가</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createThemeModal">
+      새로 만들기
+    </button>
+    <CreateThemeModalVue />
   </div>
 
 </div>
@@ -17,11 +21,13 @@
 
 <script lang="ts">
 import AddThemeTextVue from "./AddThemeText.vue"
+import CreateThemeModalVue from "./CreateThemeModal.vue";
 import { reactive } from "vue";
 // import { useStore } from "vuex";
 export default {
   components: {
-    AddThemeTextVue
+    AddThemeTextVue,
+    CreateThemeModalVue,
   },
   setup() {
     const state = reactive({
