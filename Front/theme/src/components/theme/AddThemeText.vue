@@ -6,19 +6,16 @@
         추가
       </button>
     </div>
-    <CreateThemeModalVue />
   </div>
 </template>
 
 <script lang="ts">
 import { useStore } from "vuex";
-import CreateThemeModalVue from './CreateThemeModal.vue';
 export default {
   props: {
     theme:Object,
   },
   components: {
-    CreateThemeModalVue
   },
   setup(props:any) {
     const store = useStore();

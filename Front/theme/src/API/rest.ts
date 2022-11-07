@@ -10,8 +10,8 @@ const SEARCH = '/search'
 
 // 카카오
 const KAKAO_Host = "https://kauth.kakao.com"
-const REDIRECT_URI = "http://localhost:8080"
-// const REDIRECT_URI = "https://k7c2031.p.ssafy.io"
+// const REDIRECT_URI = "http://localhost:8080"
+const REDIRECT_URI = "https://k7c2031.p.ssafy.io"
 const KAKAO_GET_AUTHORIZATION = `/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
 const KAKAO_TOKEN = "/oauth/token"
 export default {
@@ -41,7 +41,7 @@ export default {
         liveSearchTheme:()=>HOST + THEME + '/live' + SEARCH,    
         searchThemeInfo:() => HOST + THEME + SEARCH + THEME + '/info',   
         registTheme: () => HOST + THEME,
-        createUserTheme: () => HOST + '/userTheme',
+        createUserTheme: () => HOST + THEME +'/userTheme',
         getUerThemeList: (_user_idx: string) => HOST + THEME + `/${_user_idx}`,
         recommendThemeList:()=> HOST + THEME + '/recommend',    // api 미완
         searchTheme: (_target:string)=>HOST + THEME + SEARCH + `/${_target}`,

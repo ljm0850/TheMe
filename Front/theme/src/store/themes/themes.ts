@@ -4,6 +4,7 @@ import axios from "axios";
 import { Commit, Dispatch } from 'vuex';
 import _ from "lodash"
 
+
 export default {
     state: {
         searchThemeList: [],
@@ -77,43 +78,41 @@ export default {
             })
         },
         
-        registTheme({ dispatch, getters }: { dispatch:Dispatch,commit: Commit, getters: any }, _data:object) {
-            // {
-            //     emoticon: _emoticon,
-            //     name: _themeName
-            // }
+        registTheme({ dispatch,commit, getters }: { dispatch:Dispatch,commit: Commit, getters: any }, _data:{emoticon:string, name:string, openType:number}) {
             axios({
                 url: rest.Theme.registTheme(),
                 method: 'post',
                 headers: getters.authHeader,
                 data: {
-
+                    emoticon: _data.emoticon,
+                    name: getters.selectedThemeNameForCreate
                 }
             })
                 .then((res) => {
                     const themeIdx = res.data.idx
-                    dispatch('createUserTheme',_data)
-                    
+                    commit('SET_SELECTED_THEME_IDX_FOR_CREATE',themeIdx)
+                    dispatch('createUserTheme',_data.openType)
             })
         },
-        createUserTheme({ getters }: { getters: any }, _data: object) {
-        //  {
-        //   "challenge": true,
-        //   "createTime": "2022-11-07T04:55:45.963Z",
-        //   "description": "string",
-        //   "modifyTime": "2022-11-07T04:55:45.963Z",
-        //   "openType": 0,
-        //   "themeIdx": 0,
-        //   "userIdx": 0
-        // }
+        createUserTheme({ getters }: { getters: any }, _openType:number) {
+            const data = {
+                challenge: true,
+                createTime: new Date(),
+                description: "",
+                modifyTime: "",
+                openType: _openType,
+                themeIdx: getters.selectedThemeIdxForCreate,
+                userIdx: getters.loginUser.userIdx
+            }
             axios({
                 url: rest.Theme.createUserTheme(),
                 method: 'post',
                 headers: getters.authHeader,
-                data: _data
+                data: data
             })
                 .then((res) => {
-                console.log(res)
+                    console.log("유저 테마 생성 완료")
+                    console.log(res.data)
             })
         },
 
