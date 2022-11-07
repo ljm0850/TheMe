@@ -34,7 +34,7 @@ public interface ThemeService {
 
     void deleteScrapTheme(int user_id, int theme_idx);
 
-    List<UserThemeDto> getRecommendThemeList();
+    List<RecommendDto> getRecommendThemeList();
 
     List<UserThemeDto> getUserThemeByUserIdx(int user_idx);
 

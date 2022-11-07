@@ -218,7 +218,7 @@ public class ThemeController {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
         try{
-            List<UserThemeDto> recommendThemeList = themeService.getRecommendThemeList();
+            List<RecommendDto> recommendThemeList = themeService.getRecommendThemeList();
             result.put("recommendList", recommendThemeList);
             result.put("message",OK);
             status = HttpStatus.OK;

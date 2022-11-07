@@ -331,17 +331,19 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<UserThemeDto> getRecommendThemeList() {
-        List<UserThemeDto> result = new ArrayList<>();
+    public List<RecommendDto> getRecommendThemeList() {
+        List<RecommendDto> result = new ArrayList<>();
 
         List<Integer> recommendList = userClient.getRecommendThemeList();
+        System.out.println("여기" + recommendList.size());
         for(int i=0;i<recommendList.size();i++) {
             System.out.println(recommendList.get(i));
         }
         for(int i=0;i<recommendList.size();i++) {
             UserTheme userTheme = userThemeRepository.findById(recommendList.get(i)).orElseThrow(IllegalAccessError::new);
 
-            UserThemeDto userThemeDto = UserThemeDto.builder()
+            RecommendDto userThemeDto = RecommendDto.builder()
+                    .name(userTheme.getTheme().getName())
                     .themeIdx(userTheme.getTheme().getIdx())
                     .userIdx(userTheme.getUserIdx())
                     .openType(userTheme.getOpenType())
