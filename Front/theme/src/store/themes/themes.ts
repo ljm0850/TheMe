@@ -5,12 +5,13 @@ import { Commit, Dispatch } from 'vuex';
 
 export default {
     state: {
-        searchThemeList: []
+        liveSearchTheme : []
        },
     getters: {
-        
+        liveSearchTheme: (state: {liveSearchThemeList:Array<String>}) => state.liveSearchThemeList,
         },
     mutations: {
+        LIVE_SEARCH_THEME_LIST: (state:{ liveSearchTheme:Array<String>},_liveThemeList:Array<String>) => state.liveSearchTheme = _liveThemeList
         },
     actions: {
         getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
@@ -31,9 +32,10 @@ export default {
                 console.log(res)
             })
         },
-        liveSearchTheme({ commit, getters }: {commit:Commit,getters:any}, _value:string) {
+        liveSearchTheme({ commit, getters }: {commit:Commit,getters:any},_target:string) {
             axios({
                 url: rest.Theme.liveSearchTheme(),
+                params:{value:_target},
                 method: 'get',
                 headers: getters.authHeader,
                 params: {
@@ -124,8 +126,8 @@ export default {
                 method: 'get',
                 headers: getters.authHeader
             })
-                .then((res) => {
-                console.log(res.data)
+            .then((res) => {
+                console.log(res)
             })
         },
         scrapTheme({ commit, getters }: { commit: Commit, getters: any },_userIdx:string,_themeIdx:string) {
