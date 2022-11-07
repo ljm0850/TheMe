@@ -9,6 +9,6 @@ import java.util.List;
 
 @FeignClient(name="feed")
 public interface FeedClient {
-    @GetMapping("/board/list/{user_idx}")
+    @GetMapping("/feed/board/list/{user_idx}")
     List<BoardDto> userBoardList(@PathVariable(name = "user_idx") int user_idx);
 }
