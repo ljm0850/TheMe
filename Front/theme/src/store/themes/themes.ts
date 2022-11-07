@@ -8,7 +8,7 @@ export default {
         liveSearchTheme : []
        },
     getters: {
-        liveSearchTheme: (state: {liveSearchThemeList:Array<String>}) => state.liveSearchThemeList,
+        liveSearchTheme: (state: {liveSearchTheme:Array<String>}) => state.liveSearchTheme,
         },
     mutations: {
         LIVE_SEARCH_THEME_LIST: (state:{ liveSearchTheme:Array<String>},_liveThemeList:Array<String>) => state.liveSearchTheme = _liveThemeList
@@ -37,13 +37,12 @@ export default {
                 url: rest.Theme.liveSearchTheme(),
                 params:{value:_target},
                 method: 'get',
-                headers: getters.authHeader,
-                params: {
-                    value: _value
-                }
+                headers: getters.authHeader
             })
                 .then((res) => {
-                console.log(res)
+                commit("LIVE_SEARCH_THEME_LIST",res.data.themeList)
+                console.log(res.data.themeList)
+
             })
         },
         searchThemeInfo({ commit,getters }: {commit:Commit, getters:any},_value:string) {
