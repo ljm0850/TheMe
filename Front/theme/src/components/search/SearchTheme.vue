@@ -1,14 +1,13 @@
 <template>
     <div>
-        <div>테마 검색</div>
         <div class="mb-3">
             <div class="d-flex">
-                <router-link :to="{ name: 'Search' }">
-                    <img src="@/assets/logo.png" alt="" class="test">
+                <router-link :to="{ name: 'Search' }" class="logo">
+                    🎨
                 </router-link>
                 <input type="text" class="form-control" id="" placeholder="" v-model="state.inputValue" @input="temp()">
-                <button>검색</button>
-                {{liveSearchTheme}}
+                <button class="btn btn-light type-button border">검색</button>
+                <!-- {{liveSearchTheme}} -->
             </div>
         </div>
     </div>
@@ -33,8 +32,11 @@ export default {
         const temp = () => {
             store.dispatch("liveSearchTheme",state.inputValue)
         }
-        
-        return {state,temp,liveSearchTheme}
+        // const selectedUser = computed(() => store.getters.selectedUser)
+        const selectedUser = computed(() => store.getters.loginUser)
+
+
+        return {state,temp,liveSearchTheme,selectedUser}
         
     }
 }
@@ -44,5 +46,12 @@ export default {
 .test {
     width: 25px;
     height: 25px;
+}
+.type-button{
+  width: 15%;
+  font-size: 1vh;
+}
+.logo{
+    font-size: 3vh;
 }
 </style>

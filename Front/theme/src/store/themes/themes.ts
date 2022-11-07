@@ -9,6 +9,7 @@ export default {
        },
     getters: {
         liveSearchTheme: (state: {liveSearchTheme:Array<String>}) => state.liveSearchTheme,
+        
         },
     mutations: {
         LIVE_SEARCH_THEME_LIST: (state:{ liveSearchTheme:Array<String>},_liveThemeList:Array<String>) => state.liveSearchTheme = _liveThemeList
@@ -55,7 +56,7 @@ export default {
                 }
             })
                 .then((res) => {
-                console.log(res.data)
+                console.log(res)
                 })
                 .catch((err) => {
                 console.log(err)
