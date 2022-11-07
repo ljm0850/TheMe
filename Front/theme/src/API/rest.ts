@@ -1,7 +1,4 @@
-// const HOST = "http://localhost:8080"
 const HOST = "https://k7c203.p.ssafy.io:8000"
-// const HOST = "http://k7c203.p.ssafy.io:8010"
-// const HOST = "http://k7c203.p.ssafy.io:8010/v2/api-docs"
 const USER = "/user"
 const THEME = '/theme'
 const BOARD = '/board'
@@ -10,7 +7,6 @@ const FEED = '/feed'
 const COMMENT = '/comment'
 const MAP = '/map'
 const SEARCH = '/search'
-
 
 // 카카오
 const KAKAO_Host = "https://kauth.kakao.com"
@@ -47,8 +43,8 @@ export default {
         registTheme: () => HOST + THEME,
         createUserTheme: () => HOST + '/userTheme',
         getUerThemeList: (_user_idx: string) => HOST + THEME + `/${_user_idx}`,
-        recommendThemeList:()=> HOST + THEME + '/recommand',    // api 미완
-        searchTheme: (_target:string)=>HOST + THEME + SEARCH + `${_target}`,
+        recommendThemeList:()=> HOST + THEME + '/recommend',    // api 미완
+        searchTheme: (_target:string)=>HOST + THEME + SEARCH + `/${_target}`,
         scrapTheme: (_user_idx:string, _theme_idx:string)=>HOST + THEME + `/bookmark/${_user_idx}/${_theme_idx}`
     },
     

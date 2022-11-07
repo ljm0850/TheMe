@@ -27,7 +27,7 @@
         <button type="button" class="btn btn-primary button-size">검색</button>
       </router-link>
     
-      <router-link  ter-link :to="{ name: 'Profile', params: { nickname: 'BottomNavBar에서 바꾸자'} }">
+      <router-link  ter-link :to="{ name: 'Profile', params: { nickname: myNickname } }">
         <button type="button" class="btn btn-primary button-size">프로필</button>
       </router-link>
     </div>
@@ -37,6 +37,7 @@
 
 <script lang="ts">
 import { reactive } from '@vue/reactivity'
+import { useStore } from "vuex";
 export default {
   components: {
   },
@@ -47,7 +48,11 @@ export default {
     const togglePlusButton = ()=>{
       state.plusButton = !state.plusButton
     }
-    return {state,togglePlusButton}
+    const store = useStore();
+    const myNickname = store.getters.loginUser.nickname
+
+
+    return { state, togglePlusButton,myNickname }
   }
 }
 </script>

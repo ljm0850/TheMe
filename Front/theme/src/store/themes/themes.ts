@@ -14,12 +14,19 @@ export default {
         LIVE_SEARCH_THEME_LIST: (state:{ liveSearchTheme:Array<String>},_liveThemeList:Array<String>) => state.liveSearchTheme = _liveThemeList
         },
     actions: {
-        // 테마등록
-        getPublicThemeList({ commit,getters }:{commit:Commit,getters:any}) {
+        getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
+            // _params
+            // {
+            //         isMarked: 0,
+            //         sort: 1,
+            //         pageSize: 5,
+            //         pageIdx: 0
+            //     }
             axios({
                 url: rest.Theme.getPublicThemeList(),
                 method: 'get',
-                headers: getters.authHeader
+                headers: getters.authHeader,
+                params: _params
             })
                 .then((res) => {
                 console.log(res)
@@ -30,29 +37,42 @@ export default {
                 url: rest.Theme.liveSearchTheme(),
                 params:{value:_target},
                 method: 'get',
-                headers: getters.authHeader
+                headers: getters.authHeader,
+                params: {
+                    value: _value
+                }
             })
                 .then((res) => {
                 console.log(res)
             })
         },
-        searchThemeInfo({ commit,getters }: {commit:Commit, getters:any}) {
+        searchThemeInfo({ commit,getters }: {commit:Commit, getters:any},_value:string) {
             axios({
                 url: rest.Theme.searchThemeInfo(),
                 method: 'get',
-                headers: getters.authHeader
+                headers: getters.authHeader,
+                params: {
+                    value: _value
+                }
+            })
+                .then((res) => {
+                console.log(res.data)
+                })
+                .catch((err) => {
+                console.log(err)
             })
         },
         
-        registTheme({ commit, getters }: { commit: Commit, getters: any }, _emoticon: string, _themeName: string) {
+        registTheme({ commit, getters }: { commit: Commit, getters: any }, _data:object) {
+            // {
+            //     emoticon: _emoticon,
+            //     name: _themeName
+            // }
             axios({
                 url: rest.Theme.registTheme(),
                 method: 'post',
                 headers: getters.authHeader,
-                data: {
-                    emoticon: _emoticon,
-                    name: _themeName
-                }
+                data: _data
             })
                 .then((res) => {
                 console.log(res)
@@ -90,12 +110,15 @@ export default {
                 console.log(res)
             })
         },
-        recommendThemeList({ getters }:{getters:any}) {
+        getrecommendThemeList({ getters }:{getters:any}) {
             axios({
                 url: rest.Theme.recommendThemeList(),
                 method: 'get',
                 headers:getters.authHeader
-            })  
+            })
+                .then((res) => {
+                console.log(res)
+            })
         },
         searchTheme({ commit, getters }: { commit: Commit, getters: any },_target:string) {
             axios({

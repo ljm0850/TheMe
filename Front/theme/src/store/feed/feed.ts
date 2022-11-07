@@ -178,8 +178,8 @@ export default {
                 headers: getters.authHeader,
             })
                 .then((res) => {
-                commit("SET_FEED_RECOMMEND_THEME_List1",res.data)
-                commit("SET_FEED_RECOMMEND_THEME_List2",res.data)
+                // commit("SET_FEED_RECOMMEND_THEME_List1",res.data)
+                // commit("SET_FEED_RECOMMEND_THEME_List2",res.data)
             })
         },
 
