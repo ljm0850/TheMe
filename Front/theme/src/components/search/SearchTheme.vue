@@ -29,7 +29,7 @@ export default {
             inputValue : ""
         });
         const temp = () => {
-            store.dispatch("searchTheme",state.inputValue)
+            store.dispatch("liveSearchTheme",state.inputValue)
         }
         return {state,temp}
         

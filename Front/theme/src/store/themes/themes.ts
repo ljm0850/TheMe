@@ -5,13 +5,13 @@ import { Commit, Dispatch } from 'vuex';
 
 export default {
     state: {
-        searchThemeList : []
+        liveSearchTheme : []
        },
     getters: {
-        searchTheme: (state: {searchThemeList:Array<String>}) => state.searchThemeList,
+        liveSearchTheme: (state: {liveSearchThemeList:Array<String>}) => state.liveSearchThemeList,
         },
     mutations: {
-        SEARCH_THEME_LIST: (state:{ searchThemeList:Array<String>},_themeList:Array<String>) => state.searchThemeList = _themeList
+        LIVE_SEARCH_THEME_LIST: (state:{ liveSearchTheme:Array<String>},_liveThemeList:Array<String>) => state.liveSearchTheme = _liveThemeList
         },
     actions: {
         // 테마등록
@@ -25,9 +25,10 @@ export default {
                 console.log(res)
             })
         },
-        liveSearchTheme({ commit, getters }: {commit:Commit,getters:any}) {
+        liveSearchTheme({ commit, getters }: {commit:Commit,getters:any},_target:string) {
             axios({
                 url: rest.Theme.liveSearchTheme(),
+                params:{value:_target},
                 method: 'get',
                 headers: getters.authHeader
             })
