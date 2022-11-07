@@ -8,6 +8,10 @@
 <script lang="ts">
 import IntroduceUserVue from './profilePageComponents/IntroduceUser.vue';
 import ProfileThemeFollowingVue from './profilePageComponents/ProfileThemeFollowing.vue'
+import { useStore } from "vuex";
+	
+import { useRoute} from "vue-router";
+import { computed } from '@vue/runtime-core';
 // import { useStore } from "vuex";
 
 export default {
@@ -16,7 +20,15 @@ export default {
     ProfileThemeFollowingVue
   },
   setup (){
+    const store = useStore();
+    const route = useRoute();
 
+    const userNickname = route.params.nickname;
+    store.dispatch("getUserInfoByNickname",userNickname);
+    const selectedUser = computed(()=>store.getters.selectedUser)
+
+
+    return { selectedUser, userNickname }
   },
 };
 </script>

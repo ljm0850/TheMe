@@ -18,13 +18,13 @@ export default {
             // createTime : "2022-11-02T01:27:07"
         },
         selectedUser: {
-            userIdx: 0,
-            email: null,
-            description:"C203의 프론트를 맡고있는 이재민입니다",
-            kakaoId: "0000000",
-            nickname : "닉네임",
-            picture : "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2Ftest?alt=media&token=301ac89b-60a3-4314-9b11-945f104c91f6",
-            createTime : "2022-11-02T01:27:07"
+            // userIdx: 0,
+            // email: null,
+            // description:"C203의 프론트를 맡고있는 이재민입니다",
+            // kakaoId: "0000000",
+            // nickname : "닉네임",
+            // picture : "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2Ftest?alt=media&token=301ac89b-60a3-4314-9b11-945f104c91f6",
+            // createTime : "2022-11-02T01:27:07"
         },
     },
     
@@ -33,6 +33,7 @@ export default {
         authHeader: (state: { token: string }) => ({ Authorization: state.token }),
         loginUser: (state: {loginUser:Object}) => state.loginUser,
         selectedUser: (state: { selectedUser: Object }) => state.selectedUser,
+        postCnt : (state : { postCnt : number}) => state.postCnt
     },
     mutations: {
         SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,

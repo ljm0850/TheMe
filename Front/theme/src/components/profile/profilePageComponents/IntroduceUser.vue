@@ -1,6 +1,5 @@
 <template>
 <div>
-    {{ selectedUser }}
     <div class="d-flex justify-content-end">
         <button type="button" data-bs-toggle="modal" data-bs-target="#settingModal">세팅</button>
     </div>
@@ -14,19 +13,19 @@
         <div class="d-flex flex-row">
             <div class="inroduce-margin">
                 <div>Post</div>
-                <div>1</div>
+                <div>{{selectedUser.posts}}</div>
             </div>
             <div class="inroduce-margin">
                 <div>Themes</div>
-                <div>2</div>
+                <div>{{selectedUser.themes}}</div>
             </div>
             <div class="inroduce-margin">
                 <div>Follower</div>
-                <div>3</div>
+                <div>{{selectedUser.follower}}</div>
             </div>
             <div class="inroduce-margin">
                 <div>Following</div>
-                <div>4</div>
+                <div>{{selectedUser.following}}</div>
             </div>
         </div>
     </div>
@@ -47,11 +46,13 @@ export default {
         // const route = useRoute();
         // let nickname: string | string[] = route.params.nickname
         const store = useStore();
+   
         // const selectedUser = computed(() => store.getters.selectedUser)
-        const selectedUser = computed(() => store.getters.loginUser)
+        const loginUser = computed(() => store.getters.loginUser)
+        const selectedUser = computed(()=>store.getters.selectedUser)
 
 
-        return { selectedUser }
+        return { loginUser, selectedUser }
     },
 }
 </script>
