@@ -18,12 +18,14 @@ public class RecommendDto {
     private LocalDateTime modifyTime; // 수정시간
     private boolean challenge; // 챌린지 여부
     private String description; // 테마 소개
+    private String emoticon;
 
     @Builder
     public RecommendDto(int idx, String name, int userIdx, int themeIdx, int openType, LocalDateTime createTime,
-                        LocalDateTime modifyTime, boolean challenge, String description) {
+                        LocalDateTime modifyTime, boolean challenge, String description,String emoticon) {
         this.idx = idx;
         this.name = name;
+        this.emoticon = emoticon;
         this.userIdx = userIdx;
         this.themeIdx = themeIdx;
         this.openType = openType;

@@ -344,6 +344,7 @@ public class ThemeServiceImpl implements ThemeService {
 
             RecommendDto userThemeDto = RecommendDto.builder()
                     .name(userTheme.getTheme().getName())
+                    .emoticon(userTheme.getTheme().getEmoticon())
                     .themeIdx(userTheme.getTheme().getIdx())
                     .userIdx(userTheme.getUserIdx())
                     .openType(userTheme.getOpenType())
