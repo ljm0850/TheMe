@@ -371,6 +371,8 @@ public class ThemeServiceImpl implements ThemeService {
         for(int i=0;i<userThemeList.size();i++) {
             UserTheme targetUserTheme = userThemeList.get(i);
             UserThemeDto userThemeDto = UserThemeDto.builder()
+                    .name(targetUserTheme.getTheme().getName())
+                    .emoticon(targetUserTheme.getTheme().getEmoticon())
                     .idx(targetUserTheme.getIdx())
                     .userIdx(targetUserTheme.getUserIdx())
                     .themeIdx(targetUserTheme.getTheme().getIdx())
