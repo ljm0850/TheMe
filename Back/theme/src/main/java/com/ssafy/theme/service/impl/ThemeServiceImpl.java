@@ -146,6 +146,7 @@ public class ThemeServiceImpl implements ThemeService {
             //openType 0/1/2에 1씩 더해서 1/2/3 배분 후 없는거는 다시 for문
             if(map.get(theme.getName()) != null) {
                 SearchThemeDto searchThemeDto =  SearchThemeDto.builder()
+                        .themeIdx(theme.getIdx())
                         .createTime(theme.getCreateTime())
                         .name(theme.getName())
                         .emoticon(theme.getEmoticon())
@@ -162,6 +163,7 @@ public class ThemeServiceImpl implements ThemeService {
             //openType 0/1/2에 1씩 더해서 1/2/3 배분 후 없는거는 다시 for문
             if(map.get(theme.getName()) == null) {
                 SearchThemeDto searchThemeDto =  SearchThemeDto.builder()
+                        .themeIdx(theme.getIdx())
                         .createTime(theme.getCreateTime())
                         .name(theme.getName())
                         .emoticon(theme.getEmoticon())

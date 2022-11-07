@@ -11,13 +11,15 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class SearchThemeDto {
+    private int themeIdx;
     private String name;
     private LocalDateTime createTime;
     private String emoticon;
     private int openType;
 
     @Builder
-    public SearchThemeDto(String name, LocalDateTime createTime, String emoticon, int openType) {
+    public SearchThemeDto(int themeIdx, String name, LocalDateTime createTime, String emoticon, int openType) {
+        this.themeIdx = themeIdx;
         this.name = name;
         this.createTime = createTime;
         this.emoticon = emoticon;
