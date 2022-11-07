@@ -13,8 +13,6 @@ import com.ssafy.feed.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -40,7 +38,7 @@ public class BoardServiceImpl implements BoardService {
         this.themeClient = themeClient;
     }
     @Override
-    public void registBoard(int userIdx, BoardRegistDto boardRegistDto) { // 게시글 등록
+    public int registBoard(int userIdx, BoardRegistDto boardRegistDto) { // 게시글 등록
         String[] pictures = boardRegistDto.getPictures(); // 등록할 사진목록
         Board board = Board.builder()
                 .alertCount(0)
@@ -61,6 +59,7 @@ public class BoardServiceImpl implements BoardService {
                     .build();
             pictureRepository.save(picture);
         }
+        return board.getIdx();
     }
 
     @Override

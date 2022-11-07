@@ -9,7 +9,7 @@ import com.ssafy.feed.dto.user.UserInfoByIdDto;
 import java.util.List;
 
 public interface BoardService {
-    void registBoard(int userIdx, BoardRegistDto boardRegistDto);
+    int registBoard(int userIdx, BoardRegistDto boardRegistDto);
 
     void deleteBoard(int userIdx, int boardIdx);
 

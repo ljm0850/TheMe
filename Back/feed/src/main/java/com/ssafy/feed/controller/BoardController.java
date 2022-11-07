@@ -38,7 +38,8 @@ public class BoardController {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            boardService.registBoard(userIdx, boardRegistDto);
+            int boardIdx = boardService.registBoard(userIdx, boardRegistDto);
+            result.put("data",boardIdx);
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
