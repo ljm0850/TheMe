@@ -123,6 +123,7 @@ public class UserServiceImpl implements UserService {
         // FeignClient 적용 부분
         List<UserThemeDto> userThemeByUserIdx = themeClient.getUserThemeByUserIdx(user.getIdx());
         userInfoDto.setThemeDtoList(userThemeByUserIdx);
+        userInfoDto.setThemes(userThemeByUserIdx.size());
         System.out.println("내가 쓴 테마");
 
         // 내가 쓴 게시글 수
