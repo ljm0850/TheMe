@@ -32,7 +32,8 @@ public class ThemeController {
         Map<String,Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            themeService.registTheme(themeRegistDto);
+            int idx = themeService.registTheme(themeRegistDto);
+            result.put("idx", idx);
             result.put("message",OK);
             status = HttpStatus.OK;
         }catch (Exception e){
@@ -48,7 +49,8 @@ public class ThemeController {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            themeService.createUserTheme(userIdx, userThemeRegistDto);
+            int idx = themeService.createUserTheme(userIdx, userThemeRegistDto);
+            result.put("idx",idx);
             result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
@@ -194,7 +196,7 @@ public class ThemeController {
         return themeService.getThemeUserList(theme_idx);
     }
     @GetMapping("/search/theme/info")
-    public ResponseEntity<?> serachThemeInfo(@RequestParam(name = "value") String value) {
+    public ResponseEntity<?> searchThemeInfo(@RequestParam(name = "value") String value) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 

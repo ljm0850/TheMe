@@ -38,7 +38,7 @@ public class ThemeServiceImpl implements ThemeService {
         this.scrapRepository = scrapRepository;
     }
     @Override
-    public void registTheme(ThemeRegistDto themeRegistDto) {
+    public int registTheme(ThemeRegistDto themeRegistDto) {
 
         //builder 사용법
         Theme theme = Theme.builder()
@@ -47,10 +47,11 @@ public class ThemeServiceImpl implements ThemeService {
                 .createTime(LocalDateTime.now())
                 .build();
 
-        themeRepository.save(theme);
+        Theme save = themeRepository.save(theme);
+        return save.getIdx();
     }
     @Override
-    public void createUserTheme(int userIdx, UserThemeRegistDto userThemeRegistDto) {
+    public int createUserTheme(int userIdx, UserThemeRegistDto userThemeRegistDto) {
         Theme theme = themeRepository.findByIdx(userThemeRegistDto.getThemeIdx());
         UserTheme userTheme = UserTheme.builder()
                 .theme(theme)
@@ -61,7 +62,8 @@ public class ThemeServiceImpl implements ThemeService {
                 .modifyTime(userThemeRegistDto.getModifyTime())
                 .openType(userThemeRegistDto.getOpenType())
                 .build();
-        userThemeRepository.save(userTheme);
+        UserTheme save = userThemeRepository.save(userTheme);
+        return save.getIdx();
     }
     @Override
     public List<UserThemeDto> getThemeList(int user_id) {
