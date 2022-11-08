@@ -26,6 +26,7 @@ export default {
             picture : "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2Ftest?alt=media&token=301ac89b-60a3-4314-9b11-945f104c91f6",
             createTime : "2022-11-02T01:27:07"
         },
+        searchPersonInfo : {}
     },
     
     getters: {
@@ -33,11 +34,13 @@ export default {
         authHeader: (state: { token: string }) => ({ Authorization: state.token }),
         loginUser: (state: {loginUser:Object}) => state.loginUser,
         selectedUser: (state: { selectedUser: Object }) => state.selectedUser,
+        searchPersonInfo : (state: { searchPersonInfo: Object }) => state.searchPersonInfo,
     },
     mutations: {
         SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,
         SET_LOGIN_USER: (state: { loginUser: Object }, _user: Object) => state.loginUser = _user,
         SET_SELECTED_USER: (state: { selectedUser:Object},_user:Object) => state.selectedUser = _user,
+        SET_SEARCH_PERSON_INFO :  (state: { searchPersonInfo:Object},_user:Object) => state.searchPersonInfo = _user,
     },
     actions: {
         // 확인
@@ -131,7 +134,22 @@ export default {
                     commit('SET_LOGIN_USER', {})
                 })
         },
-        
+        searchPersonInfo({ commit,getters }: {commit:Commit, getters:any},_value:string) {
+            axios({
+                url: rest.User.getSerchPerson(),
+                method: 'get',
+                headers: getters.authHeader,
+                params: {
+                    value: _value
+                }
+            })
+                .then((res) => {
+                console.log(res)
+                })
+                .catch((err) => {
+                console.log(err)
+            })
+        },
         followTheme({ commit, getters }: { commit: Commit, getters: any }, _params :{ themeId: string, userId: string, targetUserId: string }) {
             axios({
                 url: rest.User.followtheme(_params.themeId, _params.userId, _params.targetUserId),
