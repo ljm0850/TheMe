@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="d-flex justify-content-between">
-            <div>{{ theme_name }}</div>
+            <div>{{ theme_name }}는 주소 이름, 여긴 ThemeDetail</div>
             <div>
                 <button>인기순</button>
                 <button>최신순</button>

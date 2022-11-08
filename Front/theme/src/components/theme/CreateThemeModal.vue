@@ -65,7 +65,7 @@ export default {
     const changeType = (_numer:number)=>{
         state.type = _numer
     }
-
+    
     return { state, createTheme, changeType, themeIdx, themeName, emoticon, isThemeIdx, registTheme }
   }
 }
