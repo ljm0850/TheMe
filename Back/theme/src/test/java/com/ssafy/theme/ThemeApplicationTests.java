@@ -9,25 +9,16 @@ import com.ssafy.theme.entity.UserTheme;
 import com.ssafy.theme.repository.ScrapRepository;
 import com.ssafy.theme.repository.ThemeRepository;
 import com.ssafy.theme.repository.UserThemeRepository;
-import org.apache.catalina.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.io.BufferedWriter;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 class ThemeApplicationTests {
@@ -120,7 +111,7 @@ class ThemeApplicationTests {
 		Pageable pageable = PageRequest.of(pageIdx, pageSize);
 		Slice<PublicThemeDto> themeList = userThemeRepository.getPopularAllThemeListWithJPA( pageable);
 		for(PublicThemeDto publicThemeDto : themeList){
-			System.out.println(publicThemeDto.getTitle());
+			System.out.println(publicThemeDto.getName());
 		}
 	}
 	@Test
@@ -130,7 +121,7 @@ class ThemeApplicationTests {
 		Pageable pageable = PageRequest.of(pageIdx, pageSize);
 		Slice<PublicThemeDto> themeList = userThemeRepository.getRecnetAllThemeListWithJPA( pageable);
 		for(PublicThemeDto publicThemeDto : themeList){
-			System.out.println(publicThemeDto.getTitle());
+			System.out.println(publicThemeDto.getName());
 		}
 	}
 	@Test

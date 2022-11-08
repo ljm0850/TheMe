@@ -11,15 +11,12 @@ import com.ssafy.theme.repository.ThemeRepository;
 import com.ssafy.theme.repository.UserThemeRepository;
 import com.ssafy.theme.service.ThemeService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -135,7 +132,7 @@ public class ThemeServiceImpl implements ThemeService {
             PublicThemeDto addPublicThemeDto = PublicThemeDto.builder()
                     .idx(publicThemeDto.getIdx())
                     .emoticon(publicThemeDto.getEmoticon())
-                    .title(publicThemeDto.getTitle())
+                    .name(publicThemeDto.getName())
                     .userCount(publicThemeDto.getUserCount())
                     .createTime(publicThemeDto.getCreateTime())
                     .build();
@@ -251,7 +248,7 @@ public class ThemeServiceImpl implements ThemeService {
                     .idx(scrap.getIdx())
                     .createTime(scrap.getTheme().getCreateTime())
                     .emoticon(scrap.getTheme().getEmoticon())
-                    .title(scrap.getTheme().getName())
+                    .name(scrap.getTheme().getName())
                     .userCount(themeCount)
                     .build();
             publicThemeDtoList.add(publicThemeDto);

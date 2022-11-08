@@ -14,16 +14,16 @@ import java.time.LocalDateTime;
 public class PublicThemeDto {
     @Id
     private int idx;
-    private String title; // 테마 제목
+    private String name; // 테마 제목
     private String emoticon; // 테마 이모티콘
     private LocalDateTime createTime; // 생성시간
     private long userCount; // 참여한 유저 수
 
 
     @Builder
-    public PublicThemeDto(int idx, String title, String emoticon, LocalDateTime createTime, long userCount) {
+    public PublicThemeDto(int idx, String name, String emoticon, LocalDateTime createTime, long userCount) {
         this.idx = idx;
-        this.title = title;
+        this.name = name;
         this.emoticon = emoticon;
         this.createTime = createTime;
         this.userCount = userCount;
