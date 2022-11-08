@@ -2,6 +2,7 @@ package com.ssafy.feed.service.impl;
 
 import com.ssafy.feed.client.ThemeClient;
 import com.ssafy.feed.client.UserClient;
+import com.ssafy.feed.dto.board.BoardInfoDto;
 import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
@@ -247,5 +248,28 @@ public class BoardServiceImpl implements BoardService {
     public String alertUser(int userIdx){
         String result = userClient.alertUser(userIdx);
         return result;
+    }
+    @Override
+    public BoardInfoDto boardInfoByTheme(int themeIdx){
+        List<Board> boardList = boardRepository.findByThemeIdxOrderByModifyTimeDesc(themeIdx);
+        List<Picture> pictureList = new ArrayList<>();
+        int count = 0;
+        for(int i=0;i<boardList.size();i++){
+            if(count>5) break; // 5개만 가져오기
+            List<Picture> pictures = pictureRepository.findByBoardOrderByIdxDesc(boardList.get(i));
+            if(pictures.size()>0) {
+                pictureList.add(pictures.get(0)); // 한 사람의 게시물 중 하나의 사진만 나오도록 하기
+                count++;
+            }
+        }
+        String[] picturesList = new String[pictureList.size()];
+        for(int i=0;i<pictureList.size();i++){
+            picturesList[i] = pictureList.get(i).getPicture();
+        }
+        BoardInfoDto boardInfoDto = BoardInfoDto.builder()
+                .boardCount(boardList.size())
+                .pictures(picturesList)
+                .build();
+        return boardInfoDto;
     }
 }

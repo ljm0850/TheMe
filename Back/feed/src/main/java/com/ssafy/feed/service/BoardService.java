@@ -1,5 +1,6 @@
 package com.ssafy.feed.service;
 
+import com.ssafy.feed.dto.board.BoardInfoDto;
 import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
@@ -30,4 +31,6 @@ public interface BoardService {
     String getThemeName(int themeIdx);
     String checkCity(String place); // 장소를 통한 지역 재설정
     String alertUser(int userIdx); // 신고
+
+    BoardInfoDto boardInfoByTheme(int themeIdx);
 }
