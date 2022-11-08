@@ -1,5 +1,6 @@
 package com.ssafy.feed.controller;
 
+import com.ssafy.feed.dto.board.BoardInfoDto;
 import com.ssafy.feed.dto.board.BoardListDto;
 import com.ssafy.feed.dto.board.BoardRegistDto;
 import com.ssafy.feed.dto.board.BoardUpdateDto;
@@ -152,5 +153,9 @@ public class BoardController {
             result.put("message", FAIL);
         }
         return new ResponseEntity<>(result, status);
+    }
+    @GetMapping("/board/themeList/{theme_idx}")
+    public BoardInfoDto boardInfoByTheme(@PathVariable(name = "theme_idx") int themeIdx){ // 해당 테마 번호로 게시물 정보 받기
+        return boardService.boardInfoByTheme(themeIdx);
     }
 }
