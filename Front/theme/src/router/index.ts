@@ -9,6 +9,7 @@ import ThemeDetail from "@/components/theme/ThemeDetail.vue"
 import SearchProfile from "@/components/search/SearchProfile.vue";
 import SearchTheme from "@/components/search/SearchTheme.vue";
 import FirebaseTestVue from "@/components/FirebaseTest.vue";
+import KakaoMapTestVue from "@/components/KakaoMapTest.vue";
 const routes = [
   // 메인
   {
@@ -65,6 +66,11 @@ const routes = [
     path: "/test",
     name: "Test",
     component: FirebaseTestVue,
+  },
+  {
+    path: "/maptest",
+    name: "MapTest",
+    component: KakaoMapTestVue,
   }
 ]
 
