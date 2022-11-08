@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import KakaoMapVue from '@/components/map/KakaoMap.vue';
+import KakaoMapVue from '@/components/map/NewKakaoMap.vue';
 import MarkerHandler from "@/store/kakaoMap/marker-handler"
 import api from "@/store/kakaoMap/api"
 export default {
