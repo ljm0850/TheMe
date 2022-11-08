@@ -10,12 +10,14 @@ import com.ssafy.theme.repository.ThemeRepository;
 import com.ssafy.theme.repository.UserThemeRepository;
 import com.ssafy.theme.service.ThemeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -38,17 +40,24 @@ public class ThemeServiceImpl implements ThemeService {
         this.scrapRepository = scrapRepository;
     }
     @Override
-    public int registTheme(ThemeRegistDto themeRegistDto) {
-
+    public int registTheme(ThemeRegistDto themeRegistDto,int userIdx) {
         //builder 사용법
         Theme theme = Theme.builder()
                 .name(themeRegistDto.getName())
                 .emoticon(themeRegistDto.getEmoticon())
                 .createTime(LocalDateTime.now())
                 .build();
-
-        Theme save = themeRepository.save(theme);
-        return save.getIdx();
+        themeRepository.save(theme);
+        // 내가 만든 테마이므로 유저테마에도 등록
+        UserTheme userTheme = UserTheme.builder()
+                .userIdx(userIdx)
+                .challenge(false)
+                .createTime(theme.getCreateTime())
+                .modifyTime(theme.getCreateTime())
+                .theme(theme)
+                .build();
+        userThemeRepository.save(userTheme);
+        return theme.getIdx();
     }
     @Override
     public int createUserTheme(int userIdx, UserThemeRegistDto userThemeRegistDto) {
@@ -212,6 +221,7 @@ public class ThemeServiceImpl implements ThemeService {
 
             UserThemeDto userThemeDto = UserThemeDto.builder()
                     .themeIdx(userTheme.getTheme().getIdx())
+                    .name(userTheme.getTheme().getName())
                     .userIdx(userTheme.getUserIdx())
                     .createTime(userTheme.getCreateTime())
                     .challenge(userTheme.isChallenge())

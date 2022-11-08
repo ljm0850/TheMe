@@ -28,11 +28,12 @@ public class ThemeController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> registTheme(@RequestBody ThemeRegistDto themeRegistDto){
+    public ResponseEntity<?> registTheme(HttpServletRequest request, @RequestBody ThemeRegistDto themeRegistDto){
         Map<String,Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            int idx = themeService.registTheme(themeRegistDto);
+            int idx = themeService.registTheme(themeRegistDto,userIdx);
             result.put("idx", idx);
             result.put("message",OK);
             status = HttpStatus.OK;

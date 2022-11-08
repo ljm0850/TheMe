@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ThemeService {
-    int registTheme(ThemeRegistDto themeRegistDto);
+    int registTheme(ThemeRegistDto themeRegistDto,int userIdx);
     int createUserTheme(int userIdx, UserThemeRegistDto userThemeRegistDto);
     List<UserThemeDto> getThemeList(int user_id);
     ResponseEntity<?> getUserInfo(String nickname);
