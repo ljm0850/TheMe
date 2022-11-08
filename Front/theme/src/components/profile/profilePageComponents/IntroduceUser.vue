@@ -1,10 +1,10 @@
 <template>
 <div>
     <div class="d-flex justify-content-end">
-        <button type="button" data-bs-toggle="modal" data-bs-target="#settingModal">세팅</button>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#settingModal">🛠</button>
     </div>
     <!-- 세팅 모달 -->
-    <SettingModalVue />
+    <SettingModalVue :userInfo="loginUser"/>
     <!-- 모달 끝 -->
     <div class="d-flex flex-column align-items-center">
         <img :src="selectedUser.picture" alt="" class="test">
@@ -42,6 +42,7 @@ export default {
         SettingModalVue
     },
     setup() {
+        
         // 추후에 nickname으로 selectedUser 갱신
         // const route = useRoute();
         // let nickname: string | string[] = route.params.nickname

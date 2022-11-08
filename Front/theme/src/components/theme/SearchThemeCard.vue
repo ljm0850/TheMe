@@ -4,7 +4,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <div>{{theme.name}}</div>
-                <button>🔖</button>
+                <button>❤</button>
                 
             </div>
         </div>
@@ -21,8 +21,8 @@
                 </div>
             </div>
             <div>
-                <div class="default-img">👨</div>
-                <div class="default-img">👨</div>
+                <div class="default-img">👨‍👦 4.7k</div>
+                <div class="default-img">💬 1.1k</div>
             </div>
         </div>
     </div>
@@ -30,6 +30,7 @@
 
 <script lang="ts">
 // import { useStore } from "vuex";
+
 export default {
     props:{
         theme:Object
@@ -37,6 +38,7 @@ export default {
     components: {
     },
     setup() {
+        
     }
 }
 </script>
