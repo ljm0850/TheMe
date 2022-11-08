@@ -2,17 +2,36 @@
 import rest from '@/API/rest'
 import axios from "axios";
 import { Commit, Dispatch } from 'vuex';
+import _ from "lodash"
+
 
 export default {
     state: {
+        searchThemeList: [],
+        selectedThemeIdxForCreate: 0,
+        selectedThemeNameForCreate: "",
+        selectedThemeEmoticonForCreate: "",
+        getRecommendThemeList:[],
         liveSearchTheme : []
        },
     getters: {
-        liveSearchTheme: (state: {liveSearchTheme:Array<String>}) => state.liveSearchTheme,
-        },
+        searchThemeList: (state: { searchThemeList: Array<object> }) => state.searchThemeList,
+        isSearchThemeList: (state: { searchThemeList: Array<object> }) => !_.isEmpty(state.searchThemeList),
+        selectedThemeIdxForCreate: (state: { selectedThemeIdxForCreate: number}) => state.selectedThemeIdxForCreate,
+        isSelectedThemeIdxForCreate: (state: { selectedThemeIdxForCreate: number}) => !(state.selectedThemeIdxForCreate==0),
+        selectedThemeNameForCreate: (state: { selectedThemeNameForCreate: string}) => state.selectedThemeNameForCreate,
+        selectedThemeEmoticonForCreate: (state: { selectedThemeEmoticonForCreate: string }) => state.selectedThemeEmoticonForCreate,
+        getRecommendThemeList: (state: {getRecommendThemeList:Array<Object> }) => state.getRecommendThemeList,
+                liveSearchTheme: (state: {liveSearchTheme:Array<String>}) => state.liveSearchTheme,
+    },
     mutations: {
-        LIVE_SEARCH_THEME_LIST: (state:{ liveSearchTheme:Array<String>},_liveThemeList:Array<String>) => state.liveSearchTheme = _liveThemeList
-        },
+        SET_SEARCH_THEME_LIST: (state: { searchThemeList: Array<object> }, _searchThemeList: Array<object>) => state.searchThemeList = _searchThemeList,
+        SET_SELECTED_THEME_IDX_FOR_CREATE: (state: {selectedThemeIdxForCreate:number},_idx:number)=> state.selectedThemeIdxForCreate = _idx ,    
+        SET_SELECTED_THEME_NAME_FOR_CREATE: (state: {selectedThemeNameForCreate:string},_name:string)=> state.selectedThemeNameForCreate = _name ,    
+        SET_SELECTED_THEME_EMOTICON_FOR_CREATE: (state: { selectedThemeEmoticonForCreate: string }, _name: string) => state.selectedThemeEmoticonForCreate = _name,
+        SET_RECOMMEND_THEME_LIST: (state: {getRecommendThemeList:Array<Object>},_themeList:Array<Object> ) => state.getRecommendThemeList = _themeList,
+                LIVE_SEARCH_THEME_LIST: (state:{ liveSearchTheme:Array<String>},_liveThemeList:Array<String>) => state.liveSearchTheme = _liveThemeList
+    },
     actions: {
         getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
             // _params
@@ -55,37 +74,48 @@ export default {
                 }
             })
                 .then((res) => {
-                console.log(res.data)
+                console.log(res)
                 })
                 .catch((err) => {
                 console.log(err)
             })
         },
         
-        registTheme({ commit, getters }: { commit: Commit, getters: any }, _data:object) {
-            // {
-            //     emoticon: _emoticon,
-            //     name: _themeName
-            // }
+        registTheme({ dispatch,commit, getters }: { dispatch:Dispatch,commit: Commit, getters: any }, _data:{emoticon:string, name:string, openType:number}) {
             axios({
                 url: rest.Theme.registTheme(),
                 method: 'post',
                 headers: getters.authHeader,
-                data: _data
+                data: {
+                    emoticon: _data.emoticon,
+                    name: getters.selectedThemeNameForCreate
+                }
             })
                 .then((res) => {
-                console.log(res)
+                    const themeIdx = res.data.idx
+                    commit('SET_SELECTED_THEME_IDX_FOR_CREATE',themeIdx)
+                    dispatch('createUserTheme',_data.openType)
             })
         },
-        createUserTheme({ getters }: { getters: any },_data:object) {
+        createUserTheme({ getters }: { getters: any }, _openType:number) {
+            const data = {
+                challenge: true,
+                createTime: new Date(),
+                description: "",
+                modifyTime: "",
+                openType: _openType,
+                themeIdx: getters.selectedThemeIdxForCreate,
+                userIdx: getters.loginUser.userIdx
+            }
             axios({
                 url: rest.Theme.createUserTheme(),
                 method: 'post',
                 headers: getters.authHeader,
-                data: _data
+                data: data
             })
                 .then((res) => {
-                console.log(res)
+                    console.log("유저 테마 생성 완료")
+                    console.log(res.data)
             })
         },
 
@@ -109,14 +139,15 @@ export default {
                 console.log(res)
             })
         },
-        getrecommendThemeList({ getters }:{getters:any}) {
+        getRecommendThemeList({ commit,getters }:{commit:Commit,getters:any}) {
             axios({
                 url: rest.Theme.recommendThemeList(),
                 method: 'get',
                 headers:getters.authHeader
             })
                 .then((res) => {
-                console.log(res)
+                    console.log(res.data.recommendList)
+                    commit('SET_RECOMMEND_THEME_LIST',res.data.recommendList)
             })
         },
         searchTheme({ commit, getters }: { commit: Commit, getters: any },_target:string) {
@@ -125,8 +156,8 @@ export default {
                 method: 'get',
                 headers: getters.authHeader
             })
-            .then((res) => {
-                console.log(res)
+                .then((res) => {
+                    commit('SET_SEARCH_THEME_LIST',res.data.themeDtos)
             })
         },
         scrapTheme({ commit, getters }: { commit: Commit, getters: any },_userIdx:string,_themeIdx:string) {
@@ -149,5 +180,15 @@ export default {
                 console.log(res)
             })
         },
+        selectedThemeIdxForCreate({ commit }: { commit: Commit },_idx:number) {
+            commit('SET_SELECTED_THEME_IDX_FOR_CREATE',_idx)
+        },
+        selectedThemeNameForCreate({ commit }: { commit: Commit },_name:string) {
+            commit('SET_SELECTED_THEME_NAME_FOR_CREATE',_name)
+        },
+        selectedThemeEmoticonForCreate({ commit }: { commit: Commit }, _emoticon: string) {
+            commit('SET_SELECTED_THEME_EMOTICON_FOR_CREATE',_emoticon)
+        },
+
     }
 }

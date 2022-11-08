@@ -34,6 +34,7 @@ export default {
         unfollowUser: (_target_user_idx:string,_user_idx:string) => HOST + USER + `/unfollow/${_target_user_idx}/${_user_idx}`,
         userInfoByIdx: (_user_idx: string) => HOST + USER + `/info/id/${_user_idx}`,
         liveSearchUser: ()=> HOST + USER + '/live/search',
+        getSerchPerson:() => HOST + THEME + '/search/user/info',
     },
     
     Theme: {
@@ -41,7 +42,7 @@ export default {
         liveSearchTheme:()=>HOST + THEME + '/live' + SEARCH,    
         searchThemeInfo:() => HOST + THEME + SEARCH + THEME + '/info',   
         registTheme: () => HOST + THEME,
-        createUserTheme: () => HOST + '/userTheme',
+        createUserTheme: () => HOST + THEME +'/userTheme',
         getUerThemeList: (_user_idx: string) => HOST + THEME + `/${_user_idx}`,
         recommendThemeList:()=> HOST + THEME + '/recommend',    // api 미완
         searchTheme: (_target:string)=>HOST + THEME + SEARCH + `/${_target}`,

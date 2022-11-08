@@ -7,7 +7,7 @@
         </div>
         <div>게시물 개수</div>
     </div>
-
+    <hr>
 </template>
 
 <script lang="ts">
@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style lang="scss`">
+<style lang="scss">
 
 
 </style>
