@@ -12,6 +12,7 @@ export default {
         selectedThemeNameForCreate: "",
         selectedThemeEmoticonForCreate: "",
         getRecommendThemeList:[],
+        liveSearchTheme : []
        },
     getters: {
         searchThemeList: (state: { searchThemeList: Array<object> }) => state.searchThemeList,
@@ -21,6 +22,7 @@ export default {
         selectedThemeNameForCreate: (state: { selectedThemeNameForCreate: string}) => state.selectedThemeNameForCreate,
         selectedThemeEmoticonForCreate: (state: { selectedThemeEmoticonForCreate: string }) => state.selectedThemeEmoticonForCreate,
         getRecommendThemeList: (state: {getRecommendThemeList:Array<Object> }) => state.getRecommendThemeList,
+                liveSearchTheme: (state: {liveSearchTheme:Array<String>}) => state.liveSearchTheme,
     },
     mutations: {
         SET_SEARCH_THEME_LIST: (state: { searchThemeList: Array<object> }, _searchThemeList: Array<object>) => state.searchThemeList = _searchThemeList,
@@ -28,6 +30,7 @@ export default {
         SET_SELECTED_THEME_NAME_FOR_CREATE: (state: {selectedThemeNameForCreate:string},_name:string)=> state.selectedThemeNameForCreate = _name ,    
         SET_SELECTED_THEME_EMOTICON_FOR_CREATE: (state: { selectedThemeEmoticonForCreate: string }, _name: string) => state.selectedThemeEmoticonForCreate = _name,
         SET_RECOMMEND_THEME_LIST: (state: {getRecommendThemeList:Array<Object>},_themeList:Array<Object> ) => state.getRecommendThemeList = _themeList,
+                LIVE_SEARCH_THEME_LIST: (state:{ liveSearchTheme:Array<String>},_liveThemeList:Array<String>) => state.liveSearchTheme = _liveThemeList
     },
     actions: {
         getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
@@ -48,17 +51,17 @@ export default {
                 console.log(res)
             })
         },
-        liveSearchTheme({ commit, getters }: {commit:Commit,getters:any}, _value:string) {
+        liveSearchTheme({ commit, getters }: {commit:Commit,getters:any},_target:string) {
             axios({
                 url: rest.Theme.liveSearchTheme(),
+                params:{value:_target},
                 method: 'get',
-                headers: getters.authHeader,
-                params: {
-                    value: _value
-                }
+                headers: getters.authHeader
             })
                 .then((res) => {
-                console.log(res)
+                commit("LIVE_SEARCH_THEME_LIST",res.data.themeList)
+                console.log(res.data.themeList)
+
             })
         },
         searchThemeInfo({ commit,getters }: {commit:Commit, getters:any},_value:string) {
