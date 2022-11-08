@@ -3,8 +3,7 @@
     <h3>kakao map demo</h3>
     <div>
         <div class="searchbos">
-            <div><input type="text" value="양산호수공원" @keyup.enter="searchPlace"></div>
-
+            <div><input type="text" @keyup.enter="searchPlace"></div>
         </div>
         <div class="map-area">
             <div class="harbors">
@@ -20,7 +19,7 @@
 </template>
 
 <script>
-import KakaoMapVue from './map/KakaoMap.vue';
+import KakaoMapVue from '@/components/map/KakaoMap.vue';
 import MarkerHandler from "@/store/kakaoMap/marker-handler"
 import api from "@/store/kakaoMap/api"
 export default {
@@ -48,7 +47,9 @@ export default {
         const vueKakaoMap = this.$refs.kmap;
         this.markers = new MarkerHandler(vueKakaoMap)
 
-        // this.markers.add()
+        this.markers.add(this.harbors, (harbor)=>{
+            return {lat:harbor.lat, lng:harbor.lng};
+        })
     },
     methods: {
         searchPlace(e) {
@@ -64,7 +65,7 @@ export default {
             })
         },
         showOnMap(harbor) {
-            console.log(harbor)
+            // console.log(harbor)
             this.mapOption.center = {
                 lat: harbor.lat,
                 lng: harbor.lng
