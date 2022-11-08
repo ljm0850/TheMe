@@ -42,7 +42,7 @@ export default {
         liveSearchTheme:()=>HOST + THEME + '/live' + SEARCH,    
         searchThemeInfo:() => HOST + THEME + SEARCH + THEME + '/info',   
         registTheme: () => HOST + THEME,
-        createUserTheme: () => HOST + '/userTheme',
+        createUserTheme: () => HOST + THEME +'/userTheme',
         getUerThemeList: (_user_idx: string) => HOST + THEME + `/${_user_idx}`,
         recommendThemeList:()=> HOST + THEME + '/recommend',    // api 미완
         searchTheme: (_target:string)=>HOST + THEME + SEARCH + `/${_target}`,

@@ -66,7 +66,6 @@ export default {
         },
         // 확인, 추후 토큰 처리 추가 필요
         login({ commit }: { commit: Commit }, _accessToken: string) {
-            console.log("여긴 도착")
             axios.defaults.withCredentials = true;
             axios({
                 url: rest.User.login(),
@@ -82,6 +81,11 @@ export default {
                     console.log(err)
             })
         },
+        logout({commit}:{ commit:Commit}){
+            commit('SET_TOKEN','')
+            commit('SET_LOGIN_USER',{})
+        },
+
         // 확인
         getUserInfoByNickname({ commit,getters }: { commit: Commit,getters:any }, _userNickname: string) {
             axios({
