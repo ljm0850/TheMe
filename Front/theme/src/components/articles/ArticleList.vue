@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div>아티클 리스트 목록</div>
-        <hr>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#articleListModal">
-            <ArticleItemVue />
-        </button>
-
+        <!-- <div>아티클 리스트 목록</div>
+        <hr> -->
+        <ArticleItemVue />
+        <ArticleItemVue />
+        <ArticleItemVue />
+        <ArticleItemVue />
         <!-- 모달 -->
         <!-- <ArticleListModalVue /> -->
     </div>
@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style lang="scss`">
+<style lang="scss">
 
 
 </style>
