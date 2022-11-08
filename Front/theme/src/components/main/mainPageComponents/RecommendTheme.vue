@@ -46,9 +46,28 @@ components: {
     store.dispatch("getPublicThemeList", state)
     const recommendThemeList = computed(()=>store.getters.publicThemeList);
     let tempIdx = []
-    for (let i = 2; i < store.getters.publicThemeList.length; i+=2){
+    for (let i = 2; i < store.getters.publicThemeList.length; i+=2){ //6
       tempIdx.push(i)
     }
+    // 6개 랜덤으로 비동기로 돌려야될듯???
+    // const sixThemeList:any[] =[]
+    // let sixIdxList :number[] = []
+    // while(sixIdxList.length <6){
+    //   let randIdx = Math.floor(Math.random() * 100 % 24)
+    //   let ptr = 0
+    //   for(let i=0; i<sixIdxList.length;i++){
+    //     if(randIdx == sixIdxList[i]){
+    //       ptr=1
+    //       break
+    //     }
+    //   }
+    //   if(ptr==0){
+    //     sixIdxList.push(randIdx)
+    //   }
+    // }
+    // for(let i=0; i<sixIdxList.length; i++){
+    //   sixThemeList.push(store.getters.publicThemeList[sixIdxList[i]])
+    // }
     return { recommendThemeList,tempIdx }
 
   }
