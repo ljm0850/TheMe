@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface PictureRepository extends JpaRepository<Picture, Integer> {
     List<Picture> findByBoard(Board board);
+    List<Picture> findByBoardOrderByIdxDesc(Board board);
 }

@@ -256,7 +256,7 @@ public class BoardServiceImpl implements BoardService {
         int count = 0;
         for(int i=0;i<boardList.size();i++){
             if(count>5) break; // 5개만 가져오기
-            List<Picture> pictures = pictureRepository.findByBoard(boardList.get(i));
+            List<Picture> pictures = pictureRepository.findByBoardOrderByIdxDesc(boardList.get(i));
             if(pictures.size()>0) {
                 pictureList.add(pictures.get(0)); // 한 사람의 게시물 중 하나의 사진만 나오도록 하기
                 count++;
