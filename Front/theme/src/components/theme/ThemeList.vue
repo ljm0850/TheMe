@@ -2,28 +2,16 @@
 <div>
   <div class="d-flex justify-content-between">
     <div>
-      <button class="filter-button">전체 테마</button>
-      <button class="filter-button">북마크</button>
+      <button class="filter-button" @click="setisMarked(0)">전체 테마</button>
+      <button class="filter-button" @click="setisMarked(1)">북마크</button>
     </div>
     <div>
-      <button class="sort-button">인기순</button>
-      <button class="sort-button">최신순</button>
+      <button class="sort-button" @click="setSort(0)">인기순</button>
+      <button class="sort-button" @click="setSort(1)">최신순</button>
     </div>
   </div>
   <div class="d-flex card-list">
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
-    <ThemeMiniCardVue :theme="temp"/>
+    <ThemeMiniCardVue v-for="theme in publicThemeList" :key="theme" :theme="theme"/>
   </div>
 </div>
 
@@ -31,18 +19,36 @@
 
 <script lang="ts">
 import ThemeMiniCardVue from './ThemeMiniCard.vue';
-// import { useStore } from "vuex";
+import { computed, reactive } from "vue";
+import { useStore } from "vuex";
 export default {
   components: {
     ThemeMiniCardVue
   },
   setup() {
-    const temp = { 
-      title: "우선 테마 제목",
-      emoticon: "☕",
-      partipation: "8"
+    // 테마 전체 목록 불러오기
+    const store = useStore()
+    const state = reactive({
+      isMarked: 0,
+      sort: 1,
+      pageSize: 15,
+      pageIdx: 0
+    })
+    // 클릭했을 때 state 값 변하고 난 후에 다시 리스트 불러오기
+    const setisMarked = (clickIdx : number) => {
+        state.isMarked = clickIdx
+        store.dispatch("getPublicThemeList", state)
     }
-    return {temp}
+    const setSort = (clickIdx : number) => {
+        state.sort = clickIdx
+        store.dispatch("getPublicThemeList", state)
+    }
+    store.dispatch("getPublicThemeList", state)
+    const publicThemeList = computed(() => store.getters.publicThemeList)
+
+    //북마크 하기
+
+    return {publicThemeList, setisMarked, setSort}
   }
 }
 </script>
