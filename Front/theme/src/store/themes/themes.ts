@@ -12,7 +12,8 @@ export default {
         selectedThemeNameForCreate: "",
         selectedThemeEmoticonForCreate: "",
         getRecommendThemeList:[],
-        liveSearchTheme : []
+        liveSearchTheme : [],
+        publicThemeList :[],
        },
     getters: {
         searchThemeList: (state: { searchThemeList: Array<object> }) => state.searchThemeList,
@@ -22,7 +23,8 @@ export default {
         selectedThemeNameForCreate: (state: { selectedThemeNameForCreate: string}) => state.selectedThemeNameForCreate,
         selectedThemeEmoticonForCreate: (state: { selectedThemeEmoticonForCreate: string }) => state.selectedThemeEmoticonForCreate,
         getRecommendThemeList: (state: {getRecommendThemeList:Array<Object> }) => state.getRecommendThemeList,
-                liveSearchTheme: (state: {liveSearchTheme:Array<String>}) => state.liveSearchTheme,
+        liveSearchTheme: (state: {liveSearchTheme:Array<String>}) => state.liveSearchTheme,
+        publicThemeList : (state: {publicThemeList:Array<Object>}) => state.publicThemeList,
     },
     mutations: {
         SET_SEARCH_THEME_LIST: (state: { searchThemeList: Array<object> }, _searchThemeList: Array<object>) => state.searchThemeList = _searchThemeList,
@@ -30,7 +32,8 @@ export default {
         SET_SELECTED_THEME_NAME_FOR_CREATE: (state: {selectedThemeNameForCreate:string},_name:string)=> state.selectedThemeNameForCreate = _name ,    
         SET_SELECTED_THEME_EMOTICON_FOR_CREATE: (state: { selectedThemeEmoticonForCreate: string }, _name: string) => state.selectedThemeEmoticonForCreate = _name,
         SET_RECOMMEND_THEME_LIST: (state: {getRecommendThemeList:Array<Object>},_themeList:Array<Object> ) => state.getRecommendThemeList = _themeList,
-                LIVE_SEARCH_THEME_LIST: (state:{ liveSearchTheme:Array<String>},_liveThemeList:Array<String>) => state.liveSearchTheme = _liveThemeList
+        LIVE_SEARCH_THEME_LIST: (state:{ liveSearchTheme:Array<String>},_liveThemeList:Array<String>) => state.liveSearchTheme = _liveThemeList,
+        SET_PUBLIC_THEME_LIST: (state:{ publicThemeList: Array<object>}, _publicThemeList:Array<Object>) => state.publicThemeList = _publicThemeList,
     },
     actions: {
         getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
@@ -48,7 +51,8 @@ export default {
                 params: _params
             })
                 .then((res) => {
-                console.log(res)
+                commit("SET_PUBLIC_THEME_LIST", res.data.themeList)
+                console.log(res.data.themeList)
             })
         },
         liveSearchTheme({ commit, getters }: {commit:Commit,getters:any},_target:string) {

@@ -3,7 +3,7 @@
   <div class="card-body" @click="clickTheme()">
     <div>{{theme.emoticon}}</div>
     <div class="card-title">{{theme.title}}</div>
-    <div>{{theme.partipation}}명이 참여함</div>
+    <div>{{theme.userCount}}명이 참여함</div>
   </div>
 </div>
 </template>
