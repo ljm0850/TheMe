@@ -197,18 +197,19 @@ public class ThemeController {
         return themeService.getThemeUserList(theme_idx);
     }
     @GetMapping("/search/theme/info")
-    public ResponseEntity<?> searchThemeInfo(@RequestParam(name = "value") String value) {
+    public ResponseEntity<?> searchThemeInfo(@RequestParam(name = "value") String value,HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            Map<String, Object> searchResult = themeService.searchThemeInfo(value);
+            Map<String, Object> searchResult = themeService.searchThemeInfo(value,userIdx);
             result.put("isSame", searchResult.get("isSame"));
             result.put("themeList", searchResult.get("result"));
             result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
             result.put("message", FAIL);
+            System.out.println(e);
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
