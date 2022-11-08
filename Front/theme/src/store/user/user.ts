@@ -26,7 +26,8 @@ export default {
             // picture : "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2Ftest?alt=media&token=301ac89b-60a3-4314-9b11-945f104c91f6",
             // createTime : "2022-11-02T01:27:07"
         },
-        searchPersonInfo : {}
+        searchPersonInfo : {},
+        duplicationnickname : false
     },
     
     getters: {
@@ -36,12 +37,14 @@ export default {
         selectedUser: (state: { selectedUser: Object }) => state.selectedUser,
         postCnt : (state : { postCnt : number}) => state.postCnt,
         searchPersonInfo : (state: { searchPersonInfo: Object }) => state.searchPersonInfo,
+        duplicationnickname : (state: { duplicationnickname : boolean}) => state.duplicationnickname,
     },
     mutations: {
         SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,
         SET_LOGIN_USER: (state: { loginUser: Object }, _user: Object) => state.loginUser = _user,
         SET_SELECTED_USER: (state: { selectedUser:Object},_user:Object) => state.selectedUser = _user,
         SET_SEARCH_PERSON_INFO :  (state: { searchPersonInfo:Object},_user:Object) => state.searchPersonInfo = _user,
+        SET_DUPLICATIONNICKNAME : (state: { duplicationnickname:boolean}, _duplicationnickname:boolean) => state.duplicationnickname = _duplicationnickname 
     },
     actions: {
         // 확인
@@ -106,7 +109,8 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
-                    
+                    console.log(res);
+                    commit("SET_DUPLICATIONNICKNAME",res.data.isPossible);
                 })
         },
 
