@@ -18,12 +18,18 @@
           </div>
         </div>
     </div>
+    <div v-if="!state.isSerched">
     <br>
-    <div class="">
-      🔥 현재인기있는 사람들
+      
+      &nbsp; 🔥 현재인기있는 사람들
+      <br>
+      <SearchProfileCardVue />
+      <SearchProfileCardVue />
+      <SearchProfileCardVue />
     </div>
-    <br>
-    <SearchProfileCardVue />
+    <div v-else>
+      여기에 검색이 들어올거에요
+    </div>
   </div>
 </template>
 
@@ -40,6 +46,7 @@ export default {
     const store = useStore();
     const state = reactive({
             isClicked : false,
+            isSerched : false,
             inputValue : -1,
             inputText : "",
         });
@@ -47,11 +54,14 @@ export default {
         state.isClicked = !state.isClicked
         state.inputValue = clickIdx
         state.inputText = ""
+        state.isSerched = false
     }
     const getSerchTheme = (inputText : string) => {
+            state.isSerched = true
             store.dispatch("searchThemeInfo",inputText)
         }
         const getSerchPerson = (inputText : string) => {
+            state.isSerched = true
             store.dispatch("searchPersonInfo",inputText)
         }
     const getSerchList = computed(() => store.getters.loginUser)
