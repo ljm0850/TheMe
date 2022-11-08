@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ThemeService {
-    int registTheme(ThemeRegistDto themeRegistDto);
+    int registTheme(ThemeRegistDto themeRegistDto,int userIdx);
     int createUserTheme(int userIdx, UserThemeRegistDto userThemeRegistDto);
     List<UserThemeDto> getThemeList(int user_id);
     ResponseEntity<?> getUserInfo(String nickname);
@@ -28,7 +28,7 @@ public interface ThemeService {
 
     String getThemeName(int theme_idx);
 
-    Map<String, Object> searchThemeInfo(String value);
+    Map<String, Object> searchThemeInfo(String value, int userIdx);
 
     List<UserThemeDtoWithMSA> getThemeUserList(int theme_idx);
 
@@ -39,4 +39,5 @@ public interface ThemeService {
     List<UserThemeDto> getUserThemeByUserIdx(int user_idx);
 
     int getThemeOpenType(int followUserIdx, int followThemeIdx);
+    BoardInfoDto boardInfoByTheme(int themeIdx);
 }

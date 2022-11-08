@@ -1,5 +1,6 @@
 package com.ssafy.theme.service.impl;
 
+import com.ssafy.theme.client.FeedClient;
 import com.ssafy.theme.client.UserClient;
 import com.ssafy.theme.dto.theme.*;
 import com.ssafy.theme.entity.Scrap;
@@ -10,12 +11,15 @@ import com.ssafy.theme.repository.ThemeRepository;
 import com.ssafy.theme.repository.UserThemeRepository;
 import com.ssafy.theme.service.ThemeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -27,28 +31,38 @@ public class ThemeServiceImpl implements ThemeService {
     UserThemeRepository userThemeRepository;
     ScrapRepository scrapRepository;
     UserClient userClient;
+    FeedClient feedClient;
     @Autowired
     ThemeServiceImpl(ThemeRepository themeRepository,
                      UserThemeRepository userThemeRepository,
                      UserClient userClient,
-                     ScrapRepository scrapRepository) {
+                     ScrapRepository scrapRepository,
+                     FeedClient feedClient) {
         this.themeRepository = themeRepository;
         this.userThemeRepository = userThemeRepository;
         this.userClient = userClient;
         this.scrapRepository = scrapRepository;
+        this.feedClient = feedClient;
     }
     @Override
-    public int registTheme(ThemeRegistDto themeRegistDto) {
-
+    public int registTheme(ThemeRegistDto themeRegistDto,int userIdx) {
         //builder 사용법
         Theme theme = Theme.builder()
                 .name(themeRegistDto.getName())
                 .emoticon(themeRegistDto.getEmoticon())
                 .createTime(LocalDateTime.now())
                 .build();
-
-        Theme save = themeRepository.save(theme);
-        return save.getIdx();
+        themeRepository.save(theme);
+        // 내가 만든 테마이므로 유저테마에도 등록
+        UserTheme userTheme = UserTheme.builder()
+                .userIdx(userIdx)
+                .challenge(false)
+                .createTime(theme.getCreateTime())
+                .modifyTime(theme.getCreateTime())
+                .theme(theme)
+                .build();
+        userThemeRepository.save(userTheme);
+        return theme.getIdx();
     }
     @Override
     public int createUserTheme(int userIdx, UserThemeRegistDto userThemeRegistDto) {
@@ -212,6 +226,7 @@ public class ThemeServiceImpl implements ThemeService {
 
             UserThemeDto userThemeDto = UserThemeDto.builder()
                     .themeIdx(userTheme.getTheme().getIdx())
+                    .name(userTheme.getTheme().getName())
                     .userIdx(userTheme.getUserIdx())
                     .createTime(userTheme.getCreateTime())
                     .challenge(userTheme.isChallenge())
@@ -257,55 +272,52 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public Map<String, Object> searchThemeInfo(String value) {
+    public Map<String, Object> searchThemeInfo(String value,int userIdx) {
         Map<String, Object> answer = new HashMap<>();
-        List<ThemeDto> result = new ArrayList<>();
-
+        List<ThemeListDto> result = new ArrayList<>();
         boolean same = themeRepository.findByName(value).isPresent();
-
-        if(same) {
+        int sameThemeIdx = 0;
+        if(same) { // 아예 같은 값
             Theme theme = themeRepository.findByName(value).orElseThrow(IllegalAccessError::new);
-
-            ThemeDto themeDto = ThemeDto.builder()
-                    .idx(theme.getIdx())
+            sameThemeIdx = theme.getIdx();
+            BoardInfoDto boardInfoDto = boardInfoByTheme(theme.getIdx());
+            Optional<Scrap> scrap = scrapRepository.findByThemeAndUserIdx(theme,userIdx); // 보는 사람이 그 테마를 스크랩 했는지
+            boolean flag = false;
+            if(scrap.isPresent()) flag = true;
+            List<UserTheme> userThemes = userThemeRepository.findByTheme(theme); // 총 몇명이 테마를 참여하는지
+            ThemeListDto themeListDto = ThemeListDto.builder()
+                    .boardCount(boardInfoDto.getBoardCount())
+                    .isBookMarked(flag)
                     .createTime(theme.getCreateTime())
+                    .personCount(userThemes.size())
+                    .pictures(boardInfoDto.getPictures())
                     .emoticon(theme.getEmoticon())
                     .name(theme.getName())
                     .build();
-
-            result.add(themeDto);
+            result.add(themeListDto);
         }
-
         List<Theme> themes = themeRepository.searchByTarget(value);
-        if (same) {
-            for(int i=1;i<themes.size();i++) {
-                Theme target = themes.get(i);
-                ThemeDto themeDto = ThemeDto.builder()
-                        .idx(target.getIdx())
-                        .createTime(target.getCreateTime())
-                        .emoticon(target.getEmoticon())
-                        .name(target.getName())
-                        .build();
-
-                result.add(themeDto);
-            }
-        } else {
-            for(int i=0;i<themes.size();i++) {
-                Theme target = themes.get(i);
-                ThemeDto themeDto = ThemeDto.builder()
-                        .idx(target.getIdx())
-                        .createTime(target.getCreateTime())
-                        .emoticon(target.getEmoticon())
-                        .name(target.getName())
-                        .build();
-
-                result.add(themeDto);
-            }
+        for(int i=0;i<themes.size();i++) {
+                BoardInfoDto boardInfoDto = boardInfoByTheme(themes.get(i).getIdx());
+                if(sameThemeIdx!=themes.get(i).getIdx()) { // 위에서 겹치는 거 제외하기
+                    Optional<Scrap> scrap = scrapRepository.findByThemeAndUserIdx(themes.get(i), userIdx); // 보는 사람이 그 테마를 스크랩 했는지
+                    boolean flag = false;
+                    if (scrap.isPresent()) flag = true;
+                    List<UserTheme> userThemes = userThemeRepository.findByTheme(themes.get(i)); // 총 몇명이 테마를 참여하는지
+                    ThemeListDto themeListDto = ThemeListDto.builder()
+                            .boardCount(boardInfoDto.getBoardCount())
+                            .isBookMarked(flag)
+                            .createTime(themes.get(i).getCreateTime())
+                            .personCount(userThemes.size())
+                            .pictures(boardInfoDto.getPictures())
+                            .emoticon(themes.get(i).getEmoticon())
+                            .name(themes.get(i).getName())
+                            .build();
+                    result.add(themeListDto);
+                }
         }
-
         answer.put("result",result);
         answer.put("isSame", same);
-
         return answer;
     }
 
@@ -396,5 +408,10 @@ public class ThemeServiceImpl implements ThemeService {
         Theme theme = themeRepository.findByIdx(followThemeIdx);
         Optional<UserTheme> userTheme = userThemeRepository.findByThemeAndUserIdx(theme,followUserIdx); // 테마의 공개 여부
         return userTheme.get().getOpenType();
+    }
+    @Override
+    public BoardInfoDto boardInfoByTheme(int themeIdx) {
+        BoardInfoDto boardInfoDto = feedClient.boardInfoByTheme(themeIdx);
+        return  boardInfoDto;
     }
 }

@@ -55,10 +55,21 @@ class ThemeApplicationTests {
 		Theme theme = Theme.builder()
 				.name(name)
 				.emoticon(emoticon)
-				.createTime(LocalDateTime.now())
+				.createTime(createTime)
 				.build();
-
 		themeRepository.save(theme);
+		// 내가 만든 테마이므로 유저테마에도 등록
+		UserTheme userTheme = UserTheme.builder()
+				.userIdx(10)
+				.challenge(false)
+				.createTime(theme.getCreateTime())
+				.modifyTime(theme.getCreateTime())
+				.theme(theme)
+				.build();
+		userThemeRepository.save(userTheme);
+		System.out.println(userTheme.getTheme().getName());
+		System.out.println(userTheme.getUserIdx());
+		System.out.println(userTheme.getCreateTime());
 	}
 
 	@Test
