@@ -2,7 +2,7 @@
 <div>
   <div>테마 생성 페이지</div>
   <div class="mb-3">
-    <input type="text" class="form-control" id="searchTheme" placeholder="원하는 테마를 검색해주세요." v-model="state.searchValue" @input="searchTheme()">
+    <input type="text" class="form-control" id="searchTheme" placeholder="원하는 테마를 검색해주세요." :value="state.searchValue" @input="searchTheme">
   </div>
   <!-- 추천 테마 -->
   <div v-if="!isSearchThemeList && !state.searchValue">
@@ -44,7 +44,8 @@ export default {
     const state = reactive({
       searchValue: "",
     })
-    const searchTheme = () => {
+    const searchTheme = (e:any) => {
+      state.searchValue = e.target.value
       if (state.searchValue.length >= 2) {
         console.log(state.searchValue)
         store.dispatch("searchTheme",state.searchValue)
