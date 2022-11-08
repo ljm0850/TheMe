@@ -45,6 +45,7 @@ export default {
             })
                 .then((res) => {
                 commit("SET_PUBLIC_THEME_LIST", res.data.themeList)
+                
             })
         },
         liveSearchTheme({ commit, getters }: {commit:Commit,getters:any},_target:string) {
