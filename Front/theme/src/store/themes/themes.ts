@@ -37,13 +37,6 @@ export default {
     },
     actions: {
         getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
-            // _params
-            // {
-            //         isMarked: 0,
-            //         sort: 1,
-            //         pageSize: 5,
-            //         pageIdx: 0
-            //     }
             axios({
                 url: rest.Theme.getPublicThemeList(),
                 method: 'get',
@@ -52,7 +45,7 @@ export default {
             })
                 .then((res) => {
                 commit("SET_PUBLIC_THEME_LIST", res.data.themeList)
-                console.log(res.data.themeList)
+                
             })
         },
         liveSearchTheme({ commit, getters }: {commit:Commit,getters:any},_target:string) {

@@ -1,31 +1,32 @@
 <template>
 <div class="card-custom card">
-  <div class="card-body" @click="clickTheme()">
+  <div class="card-body" @click="clickTheme()" v-if="theme">
     <div>{{theme.emoticon}}</div>
-    <div class="card-title">{{theme.title}}</div>
-    <div>{{theme.userCount}}명이 참여함</div>
+    <div class="card-title">{{theme.name}}</div>
+    <div class="card-count">{{theme.userCount}}명이 참여함</div>
   </div>
 </div>
 </template>
   
 <script lang="ts">
 import { useRouter } from 'vue-router'
-// import { useStore } from "vuex";
 export default {
   components: {
   },
   props: {
     theme:Object
   },
-  setup() {
+  setup(props:any) {
     const router = useRouter();
     const clickTheme = () => {
-      router.push({ name: "PublicTheme", params: { 
-        emoticon : "☕",
-        themeName:"코딩 잘되는 카페" } })
+      router.push({ 
+        name: "PublicTheme", 
+        params: { 
+          emoticon : props.theme.emoticon,
+          themeName: props.theme.name
+        } 
+      })
     }
-
-    // const store = useStore(); 
   return {clickTheme,}
 
   }
@@ -49,6 +50,13 @@ export default {
 }
 .card-body{
   text-align: center;
+}
+.card-title{
+  font-size: 16px;
+  font-weight: 600;
+}
+.card-count{
+  font-size: 8px;
 }
   
 </style>

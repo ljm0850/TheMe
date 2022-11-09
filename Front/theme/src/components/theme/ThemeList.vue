@@ -28,6 +28,7 @@ export default {
   setup() {
     // 테마 전체 목록 불러오기
     const store = useStore()
+    store.commit("SET_PUBLIC_THEME_LIST",[])
     const state = reactive({
       isMarked: 0,
       sort: 1,

@@ -58,8 +58,9 @@ export default {
 
 <style scoped lang="scss">
 .custom-card{
-    width: 390px;
-    border-radius: 20px !important;
+    width: 380px;
+    border-radius: 10px !important;
+    margin: 5px;
     .theme-name{
         font-size: large;
         font-weight: bold;
