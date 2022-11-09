@@ -22,14 +22,19 @@ public class BoardGroupListDto {
     String name; // 장소 이름
     String place; // 장소 주소
     Long boardCount; //게시글 갯수
+    String latitude;
+    String longitude;
 
     @Builder
-    public BoardGroupListDto(int themeIdx,int userIdx, String city, String name, String place, Long boardCount) {
+    public BoardGroupListDto(int themeIdx,int userIdx, String city, String name, String place, Long boardCount
+                            ,String latitude, String longitude) {
         this.themeIdx = themeIdx;
         this.userIdx = userIdx;
         this.city = city;
         this.name = name;
         this.place = place;
         this.boardCount = boardCount;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }

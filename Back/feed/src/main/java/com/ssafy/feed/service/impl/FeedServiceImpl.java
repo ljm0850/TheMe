@@ -50,6 +50,7 @@ public class FeedServiceImpl implements FeedService {
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
         for(UserThemeDtoWithMSA theme : themeUserList){ //해당 번호 배열로 저장
             openUserList.add(theme.getUserIdx());
+            System.out.println(theme.getUserIdx());
         }
 
         return boardRepository.getBoardGourpByListWithJPA(openUserList,theme_idx,pageable); //게시글 목록 리턴
