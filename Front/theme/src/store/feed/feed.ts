@@ -39,10 +39,11 @@ export default {
                 // place: getters.selectedPlace.address_name,
                 place: getters.selectedPlace.road_address_name,
                 themeIdx: _data.themeIdx,
-                // x좌표
+                // x좌표 : getters.selectedPlace.x
                 // y좌표
             }
             console.log(dt.pictures[0])
+            console.log(dt.pictures[1])
 
             // axios({
             //     url: rest.Feed.createArticle(),
