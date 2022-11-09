@@ -1,13 +1,12 @@
 <template>
 <div>
-    <div>프로필 검색</div>
     <div class="mb-3">
         <div class="d-flex">
-            <router-link :to="{ name: 'Search' }">
-                <img src="@/assets/logo.png" alt="" class="test">
+            <router-link :to="{ name: 'Search' }" class="logo">
+                👨‍👦 
             </router-link>
             <input type="text" class="form-control" id="" placeholder="">
-            <button>검색</button>
+            <button class="btn btn-light type-button border">검색</button>
         </div>
     </div>
     <SearchProfileCardVue />
@@ -31,5 +30,11 @@ export default {
     width: 25px;
     height: 25px;
 }
-
+.type-button{
+  width: 15%;
+  font-size: 1vh;
+}
+.logo{
+    font-size: 3vh;
+}
 </style>

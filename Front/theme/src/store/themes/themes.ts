@@ -14,6 +14,7 @@ export default {
         getRecommendThemeList:[],
         liveSearchTheme: [],
         selectedUserThemeList: [],
+        publicThemeList :[],
        },
     getters: {
         searchThemeList: (state: { searchThemeList: Array<object> }) => state.searchThemeList,
@@ -25,6 +26,7 @@ export default {
         getRecommendThemeList: (state: {getRecommendThemeList:Array<Object> }) => state.getRecommendThemeList,
         liveSearchTheme: (state: { liveSearchTheme: Array<String> }) => state.liveSearchTheme,
         selectedUserThemeList: (state: { selectedUserThemeList:Array<Object> }) => state.selectedUserThemeList,
+        publicThemeList : (state: {publicThemeList:Array<Object>}) => state.publicThemeList,
     },
     mutations: {
         SET_SEARCH_THEME_LIST: (state: { searchThemeList: Array<object> }, _searchThemeList: Array<object>) => state.searchThemeList = _searchThemeList,
@@ -34,6 +36,7 @@ export default {
         SET_RECOMMEND_THEME_LIST: (state: {getRecommendThemeList:Array<Object>},_themeList:Array<Object> ) => state.getRecommendThemeList = _themeList,
         LIVE_SEARCH_THEME_LIST: (state: { liveSearchTheme: Array<String> }, _liveThemeList: Array<String>) => state.liveSearchTheme = _liveThemeList,
         SET_SELECTED_USER_THEME_LIST:(state: {selectedUserThemeList:Array<Object>}, _themeList:Array<Object>)=> state.selectedUserThemeList = _themeList,
+        SET_PUBLIC_THEME_LIST: (state:{ publicThemeList: Array<object>}, _publicThemeList:Array<Object>) => state.publicThemeList = _publicThemeList,
     },
     actions: {
         getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
@@ -51,7 +54,8 @@ export default {
                 params: _params
             })
                 .then((res) => {
-                console.log(res)
+                commit("SET_PUBLIC_THEME_LIST", res.data.themeList)
+                console.log(res.data.themeList)
             })
         },
         liveSearchTheme({ commit, getters }: {commit:Commit,getters:any},_target:string) {
@@ -77,7 +81,7 @@ export default {
                 }
             })
                 .then((res) => {
-                console.log(res.data)
+                console.log(res)
                 })
                 .catch((err) => {
                 console.log(err)

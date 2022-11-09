@@ -1,15 +1,19 @@
 <template>
     <div>
-        <div class="d-flex justify-content-between">
-            <div>{{ theme_name }}는 주소 이름, 여긴 ThemeDetail</div>
-            <div>
+        <div class="theme-header">
+            <div class="theme-title-box">
+                <div class="theme-title-text">ㅁ</div>
+                <div class="theme-title-text">☕</div>
+                <div class="theme-title-text">{{ theme_name }}</div>
+            </div>
+            <div class="theme-sort">
                 <button>인기순</button>
                 <button>최신순</button>
             </div>
         </div>
-        <KakaoMapVue />
-        <button>+</button>
-        <ArticleListVue />
+        <KakaoMapVue class="kakao-map" />
+        <button class="theme-plus-button">+</button>
+        <ArticleListVue class="article-list"/>
     </div>
 </template>
 
@@ -31,7 +35,58 @@ export default {
 }
 </script>
 
-<style lang="scss`">
+<style>
 
-
+.theme-header{
+    position: relative;
+    top: 20px;
+    z-index: 1;
+    width: 200px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    align-items: center;
+}
+.theme-title-text{
+    display: inline;
+    justify-content: center !important;
+    height: 45px;
+    text-align : center;
+    padding-right: 5px;
+    font-size: 17px;
+}
+.theme-sort{
+    position: relative;
+    top: -25px;
+    left: 255px;
+}
+.theme-sort button{
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #C7C7C7;
+    width: 65px;
+    height: 30px;
+    font-weight: 400;
+    font-size: 15px;
+}
+.kakao-map{
+    top : -40px;
+    position: relative; 
+    z-index: -1;
+}
+.theme-plus-button{
+    top: -85px;
+    left:345px;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #CDCDCD;
+}
+.article-list{
+    position: relative;
+    top:-40px;
+}
 </style>
