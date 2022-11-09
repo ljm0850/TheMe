@@ -33,12 +33,12 @@
     <div v-else-if="state.isSerched && getSerchPersonList.length > 0">
       <SearchProfileCardVue v-for="theme in getSerchPersonList" :key="theme" :theme="theme" />
     </div>
-    <div v-if="getSerchThemeList.length > 0"  class="search-theme">
+    <div v-if="state.isSerched"  class="search-theme">
       <div v-for="theme in liveSearchTheme" :key="theme" class="search-theme-card" @click="getSerchTheme(theme)">
         {{theme}}
       </div>
     </div>
-    <div v-else-if="getSerchPersonList.length > 0"  class="search-person">
+    <div v-else-if="!state.isSerched && state.inputPersonText.length > 1 "  class="search-person">
       <div v-for="person in getSerchPersonList" :key="person" class="search-person-card" @click="getSerchPerson(person)">
         테마
         {{person}}
@@ -70,17 +70,17 @@ export default {
     let liveSearchTheme :any;
     let liveSearchPerson :any;
     const searchTheme = (e:any) => {
-      liveSearchPerson = null
+      // liveSearchPerson = null
       state.isSerched = false
-      state.inputPersonText = e.target.value
-      if (state.inputPersonText.length >= 1 ) {
-        store.dispatch("liveSearchTheme",state.inputPersonText)
+      state.inputThemeText = e.target.value
+      if (state.inputThemeText.length >= 1 ) {
+        store.dispatch("liveSearchTheme",state.inputThemeText)
       }else{
         liveSearchTheme = null
       }
     }
     const searchUser = (e:any) => {
-      liveSearchTheme = null
+      // liveSearchTheme = null
       state.isSerched = false
       state.inputPersonText = e.target.value
       if (state.inputPersonText.length >= 1 ) {
@@ -93,7 +93,7 @@ export default {
       state.isClicked = !state.isClicked
       state.inputValue = clickIdx
       state.inputPersonText = ""
-      state.inputPersonText = ""
+      state.inputThemeText = ""
       state.isSerched = false
     }
     const getSerchTheme = (inputText : string) => {
