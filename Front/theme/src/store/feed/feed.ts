@@ -9,20 +9,22 @@ export default {
         feedArticleList: [{ themeName: "tttasdgfa" }, { themeName: "임시2" }],
         feedTheme: [],
         feedRecommendThemeList1: [{title:"코딩하기 좋은 까페"},{title:"낮잠자기 좋은 까페"},{title:"짧"}],
-        feedRecommendThemeList2: [{title:"프로젝트 하기 좋은 싸피"},{title:"수완지구 분위기 있는 레스토랑"},{title:"다"}],
+        feedRecommendThemeList2: [{ title: "프로젝트 하기 좋은 싸피" }, { title: "수완지구 분위기 있는 레스토랑" }, { title: "다" }],
+        searchPlacesList: []
     },
     getters: {
         getFeedArticleList: (state: { feedArticleList: Array<object> }) => state.feedArticleList,
         getFeedTheme: (state: { feedTheme: Array<object>; }) => state.feedTheme,
         getFeedRecommendThemeList1: (state: { feedRecommendThemeList1 : Array<object>}) => state.feedRecommendThemeList1,
-        getFeedRecommendThemeList2: (state: { feedRecommendThemeList2 : Array<object>}) => state.feedRecommendThemeList2,
-        
+        getFeedRecommendThemeList2: (state: { feedRecommendThemeList2: Array<object> }) => state.feedRecommendThemeList2,
+        searchPlacesList: (state: { searchPlacesList: Array<Object> }) => state.searchPlacesList
     },
     mutations: {
         SET_FEED_ARTICLE_LIST: (state: {feedArticleList : Array<object>}, _list:Array<object>) => state.feedArticleList = _list,
         SET_FEED_THEME: (state: { feedTheme: Array<object>; }, _feedTheme: Array<object>) => state.feedTheme = _feedTheme,
         SET_FEED_RECOMMEND_THEME_List1: (state: { feedRecommendThemeList1: Array<object>}, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList1 = _feedRecommendThemeList,
-        SET_FEED_RECOMMEND_THEME_List2: (state: { feedRecommendThemeList2: Array<object>}, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList2 = _feedRecommendThemeList,
+        SET_FEED_RECOMMEND_THEME_List2: (state: { feedRecommendThemeList2: Array<object> }, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList2 = _feedRecommendThemeList,
+        SET_SEARCH_PLACES_LIST: (state: {searchPlacesList:Array<Object>}, _searchPlacesList:Array<Object>) => state.searchPlacesList = _searchPlacesList
     },
     actions: {
         // board-controller
@@ -182,7 +184,9 @@ export default {
                 // commit("SET_FEED_RECOMMEND_THEME_List2",res.data)
             })
         },
-
+        searchPlacesList({ commit }: { commit: Commit }, _list: Array<Object>) {
+            commit("SET_SEARCH_PLACES_LIST",_list)
+        },
 
     }
 }

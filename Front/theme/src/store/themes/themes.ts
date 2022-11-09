@@ -126,8 +126,8 @@ export default {
             })
                 .then((res) => {
                     commit('SET_SELECTED_USER_THEME_LIST',res.data.themeList)
-                    console.log(res.data.themeList)
-                    console.log(getters.selectedUserThemeList)
+                    // console.log(res.data.themeList)
+                    // console.log(getters.selectedUserThemeList)
             })
         },
         getMyThemeList({ dispatch,getters }: {dispatch:Dispatch, getters: any}) {

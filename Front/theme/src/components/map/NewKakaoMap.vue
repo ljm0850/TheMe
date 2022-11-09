@@ -15,7 +15,7 @@ export default {
     },
     mounted() {
         kakao = kakao || window.kakao
-        console.log("이건 null 나오면 안됨",this.$refs.map);
+        // console.log("이건 null 나오면 안됨",this.$refs.map);
         let container = this.$refs.map
         // let options = {
         //     center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -30,7 +30,7 @@ export default {
     },
     watch: {
         "options.center"(cur) {
-            console.log("새로운 센터", cur.lat, cur.lng)
+            // console.log("새로운 센터", cur.lat, cur.lng)
             this.mapInstance.setCenter(new kakao.maps.LatLng(cur.lat,cur.lng));
         }
     }
