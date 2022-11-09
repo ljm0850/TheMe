@@ -48,6 +48,8 @@ public class BoardServiceImpl implements BoardService {
                 .themeIdx(boardRegistDto.getThemeIdx())
                 .description(boardRegistDto.getDescription())
                 .place(boardRegistDto.getPlace())
+                .latitude(boardRegistDto.getLatitude())
+                .longitude(boardRegistDto.getLogitude())
                 .build();
         boardRepository.save(board);
         for(int i = 0; i < pictures.length; i++){
@@ -91,6 +93,8 @@ public class BoardServiceImpl implements BoardService {
             board.get().updatePlace(boardUpdateDto.getPlace());
             board.get().updateCity(checkCity(boardUpdateDto.getPlace()));
             board.get().updateTime(LocalDateTime.now());
+            board.get().updateLatitude(boardUpdateDto.getLatitude());
+            board.get().updateLongitude(boardUpdateDto.getLogitude());
             boardRepository.save(board.get());
             List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 기존 사진 삭제
             for (int i = 0; i < pictureList.size(); i++) {
