@@ -60,8 +60,6 @@ export default {
             })
                 .then((res) => {
                 commit("LIVE_SEARCH_THEME_LIST",res.data.themeList)
-                console.log(res.data.themeList)
-
             })
         },
         searchThemeInfo({ commit,getters }: {commit:Commit, getters:any},_value:string) {
@@ -74,7 +72,12 @@ export default {
                 }
             })
                 .then((res) => {
-                console.log(res)
+                    if(res.data.isSame) {//true 라면
+                        res.data.themeList[0].isSame = true
+                    }else{
+                        res.data.themeList[0].isSame = false
+                    }
+                    commit("SET_SEARCH_THEME_LIST",res.data.themeList)
                 })
                 .catch((err) => {
                 console.log(err)

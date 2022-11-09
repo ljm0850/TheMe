@@ -1,28 +1,29 @@
 <template>
-    <div class="card">
-        <!-- <div>공용인지 개인인지는 props 이용해서 처리하자</div> -->
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div>{{theme.name}}</div>
-                <button>❤</button>
-                
-            </div>
-        </div>
-        <div class="d-flex card-total">
-            <img src="@/assets/logo.png" alt="" class="best-img">
-            <div class="d-flex column">
-                <div>
-                    <img src="@/assets/logo.png" alt="" class="default-img">
-                    <img src="@/assets/logo.png" alt="" class="default-img">
-                </div>
-                <div>
-                    <img src="@/assets/logo.png" alt="" class="default-img">
-                    <img src="@/assets/logo.png" alt="" class="default-img">
+    <div  v-if="theme" :class="[theme.isSame ? 'isSame card' : 'card']">
+        <div class="card-body" style="padding: 0px;">
+            <div class="d-flex">
+                <div>{{theme.emoticon}}</div>
+                    <div class="ms-2">{{theme.name}}</div>
+                    <button class="btn position-absolute top-0 end-0">🤍</button>
                 </div>
             </div>
-            <div>
-                <div class="default-img">👨‍👦 4.7k</div>
-                <div class="default-img">💬 1.1k</div>
+            <div class="d-flex card-total">
+                <img src="https://hobbyen.co.kr/news/data/20190923/p179512992441679_996.png" alt="" class="best-img">
+                <div class="d-flex">
+                    <div class='row'>
+                        <div class='col-sm-6' > 
+                        <img src="https://s3-ap-northeast-2.amazonaws.com/mp-seoul-image-production/598583_1566712699742938.jpg?fit=around|600:*&crop=600:*;*,*&output-format=jpg&output-quality=80" alt="" class="default-img">
+                        <img src="https://mp-seoul-image-production-s3.mangoplate.com/454608/449685_1623483714472_41747" alt="" class="default-img">
+                        </div> 
+                    <div class='col-sm-6' >   
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiFZOqzQeHKyL1eA4JoksLk1COqIWmMs5rVw&usqp=CAU" alt="" class="default-img">
+                        <img src="https://blog.kakaocdn.net/dn/QLxeI/btqBOC35A9Z/ykuIhpLRqEGLLGPz6V6oE0/img.jpg" alt="" class="default-img more-img">
+                    </div>
+                    
+                </div>
+                <div class="view-info">
+                    <div class="default-img btn-type"><div class="view-info-img"><br><br>💬</div> <div class="view-info-text">&nbsp;&nbsp;{{theme.boardCount}}</div></div>
+                </div>
             </div>
         </div>
     </div>
@@ -31,42 +32,91 @@
 <script lang="ts">
 // import { useStore } from "vuex";
 
+
 export default {
     props:{
         theme:Object
     },
     components: {
     },
-    setup() {
+    setup(props:any) {
+        console.log(props.theme)
         
     }
 }
 </script>
 
 <style lang="scss">
-@media screen {
-    .card-total {
-        max-width: 390px;
-
-        .best-img {
-            width: 128px;
-            height: 128px;
-        }
-
-        .default-img {
-            width: 64px;
-            height: 64px;
-        }
-    }
-    .card {
-        width: 360px;
-        height: 190px;
-
-        background: #FAFAFA;
-        border: 1px solid #CDCDCD;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 15px;
-    }
+.isSame{
+    border : 3px solid #bddaff !important;
 
 }
+.btn{
+  padding: 0px;
+  margin: 0px;
+}
+.card{
+  border-radius: 12px !important;
+  width: 360px;
+  margin-left : 15px;
+  margin-top: 10px;
+  background: #FAFAFA;
+  border: 1px solid #CDCDCD;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.col-sm-6{
+  padding: 0px !important;
+  text-align: center;
+
+}
+.card-body{
+  margin-top: 8px;
+  margin-left: 8px;
+}
+@media screen {
+  .card-total{
+    margin: 10px;
+    max-width: 390px;
+    .best-img{
+      border-radius: 8px;
+      width: 131px;
+      height: 131px;
+      // margin-right: 1vh;
+    }
+    .default-img{
+      // margin-left: 1px;
+      border-radius: 8px;
+      margin-bottom: 3px;
+      margin-right: 3px;
+      width: 64px;
+      height: 64px;
+      
+    }
+    .more-img{
+      opacity: 0.3;
+    }
+    
+  }
+  .user-profile{
+    width: 4vh;
+    height: 4vh;
+    border-radius: 70%;
+  }
+  .view-info-text{
+    font-size:1.5vh;
+    text-align: center;
+    width: 56px;
+    height: 56px;
+  }
+  .view-info-img{
+    padding-top: 15px;
+    font-size: 15px;
+    text-align: center;
+  }
+  .view-info{
+    width: 56px;
+    height: 56px;
+  }
+}
+
 </style>

@@ -5,20 +5,20 @@
         <div v-if="state.isClicked && state.inputValue==0">
           <div class="d-flex">
             <div class=" logo"  @click="selectSearch(0)"> 👨‍👦 </div>
-            <input type="text" class="form-control" id="" placeholder="누구를 찾고 있나요?"  v-model ="state.inputText">
-            <button class="btn btn-light type-button border"  @click="getSerchPerson(state.inputText)">검색</button>
+            <input type="text" class="form-control" id="" placeholder="누구를 찾고 있나요?"  :value  ="state.inputPersonText" @input="searchUser">
+            <button class="btn btn-light type-button border"  @click="getSerchPerson(state.inputPersonText)">검색</button>
           </div>
         </div>
         <button  v-if="!state.isClicked" class="btn btn-light type-button border" @click="selectSearch(1)">🎨테마</button>
         <div v-if="state.isClicked && state.inputValue==1">
           <div class="d-flex">
             <div class=" logo"  @click="selectSearch(1)"> 🎨 </div>
-            <input type="text" class="form-control" id="" placeholder="어떤 테마를 찾고 있나요?" v-model ="state.inputText">
-            <button class="btn btn-light type-button border" @click="getSerchTheme(state.inputText)">검색</button>
+            <input type="text" class="form-control" id="" placeholder="어떤 테마를 찾고 있나요?" :value ="state.inputThemeText"  @input="searchTheme">
+            <button class="btn btn-light type-button border" @click="getSerchTheme(state.inputThemeText)">검색</button>
           </div>
         </div>
     </div>
-    <div v-if="!state.isSerched">
+    <div v-if="!state.isSerched && (state.inputThemeText.length < 1 || state.inputPersonText.length < 1)" >
     <br>
       
       &nbsp; 🔥 현재인기있는 사람들
@@ -27,57 +27,118 @@
       <SearchProfileCardVue />
       <SearchProfileCardVue />
     </div>
-    <div v-else>
-      여기에 검색이 들어올거에요
+    <div v-else-if="state.isSerched && getSerchThemeList.length > 0">
+      <SearchThemeCardVue v-for="theme in getSerchThemeList" :key="theme" :theme="theme" />
+    </div>
+    <div v-else-if="state.isSerched && getSerchPersonList.length > 0">
+      <SearchProfileCardVue v-for="theme in getSerchPersonList" :key="theme" :theme="theme" />
+    </div>
+    <div v-if="getSerchThemeList.length > 0"  class="search-theme">
+      <div v-for="theme in liveSearchTheme" :key="theme" class="search-theme-card" @click="getSerchTheme(theme)">
+        {{theme}}
+      </div>
+    </div>
+    <div v-else-if="getSerchPersonList.length > 0"  class="search-person">
+      <div v-for="person in getSerchPersonList" :key="person" class="search-person-card" @click="getSerchPerson(person)">
+        테마
+        {{person}}
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import SearchProfileCardVue from "@/components/profile/SearchProfileCard.vue"
+import SearchThemeCardVue from '../theme/SearchThemeCard.vue';
 import { computed } from "@vue/reactivity";
 import { reactive } from "vue";
 import { useStore } from "vuex";
 export default {
   components: {
-    SearchProfileCardVue
+    SearchProfileCardVue,
+    SearchThemeCardVue
   },
   setup() {
     const store = useStore();
     const state = reactive({
-            isClicked : false,
-            isSerched : false,
-            inputValue : -1,
-            inputText : "",
-        });
+      isClicked : false,
+      isSerched : false,
+      inputValue : -1,
+      inputThemeText : "",
+      inputPersonText : "",
+    });
+    let liveSearchTheme :any;
+    let liveSearchPerson :any;
+    const searchTheme = (e:any) => {
+      liveSearchPerson = null
+      state.isSerched = false
+      state.inputPersonText = e.target.value
+      if (state.inputPersonText.length >= 1 ) {
+        store.dispatch("liveSearchTheme",state.inputPersonText)
+      }else{
+        liveSearchTheme = null
+      }
+    }
+    const searchUser = (e:any) => {
+      liveSearchTheme = null
+      state.isSerched = false
+      state.inputPersonText = e.target.value
+      if (state.inputPersonText.length >= 1 ) {
+        store.dispatch("liveSearchPerson",state.inputPersonText)
+      }else{
+        liveSearchPerson = null
+      }
+    }
     const selectSearch = (clickIdx : number) => {
-        state.isClicked = !state.isClicked
-        state.inputValue = clickIdx
-        state.inputText = ""
-        state.isSerched = false
+      state.isClicked = !state.isClicked
+      state.inputValue = clickIdx
+      state.inputPersonText = ""
+      state.inputPersonText = ""
+      state.isSerched = false
     }
     const getSerchTheme = (inputText : string) => {
-            state.isSerched = true
-            store.dispatch("searchThemeInfo",inputText)
-        }
-        const getSerchPerson = (inputText : string) => {
-            state.isSerched = true
-            store.dispatch("searchPersonInfo",inputText)
-        }
-    const getSerchList = computed(() => store.getters.loginUser)
-    return {state,selectSearch,getSerchTheme,getSerchList,getSerchPerson}
+      state.isSerched = true
+      state.inputThemeText = inputText
+      store.dispatch("searchThemeInfo",inputText)
+    }
+    const getSerchPerson = (inputText : string) => {
+      state.isSerched = true
+      state.inputPersonText = inputText
+      store.dispatch("searchPersonInfo",inputText)
+    }
+    const getSerchThemeList = computed(() => store.getters.searchThemeList)
+    const getSerchPersonList = computed(() => store.getters.searchPersonInfo)
+    liveSearchTheme = computed(() => store.getters.liveSearchTheme)
+    liveSearchPerson = computed(() => store.getters.liveSearchPerson)
+    
+    return {state,selectSearch,getSerchTheme,getSerchThemeList,getSerchPerson,liveSearchPerson,searchTheme,liveSearchTheme,getSerchPersonList,searchUser,}
   }
 }
 </script>
 
 <style>
+
+.search-theme-card{
+  margin: 4px;
+  border: 1px solid;
+  border-color: beige;
+  font-size: 20px;
+}
+.search-theme{
+padding-top: 20px;
+padding-left:30px;
+padding-right: 30px;
+overflow:scroll; 
+width:390px; 
+height:300px;
+}
 .type-button{
-  width: 50%;
+width: 50%;
 
 }
 .logo{
-  margin: 0px;
-    font-size: 3vh;
-      
+margin: 0px;
+  font-size: 3vh;
+    
 }
 </style>

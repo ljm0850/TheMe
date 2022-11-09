@@ -67,6 +67,7 @@ export default {
   margin: 0px;
 }
 .card{
+  width: 360px;
   border-radius: 100px;
   margin-left : 15px;
   margin-top: 10px;
