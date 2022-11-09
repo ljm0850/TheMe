@@ -51,6 +51,7 @@ export default {
 
     created() {
         this.$store.dispatch('searchPlacesList', [])
+        this.$store.dispatch('selectedPlace', {})
     },
 
     mounted() {
@@ -80,6 +81,8 @@ export default {
             })
         },
         showOnMap(place) {
+            console.log(place)
+            this.$store.dispatch('selectedPlace',place)
             this.mapOption.center = {
                 lat: place.y,
                 lng: place.x
