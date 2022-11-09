@@ -80,12 +80,12 @@ public class UserController {
     }
 
     @GetMapping("/info/{nickname}")
-    ResponseEntity<?> getUserInfo(@PathVariable(name = "nickname") String nickname) {
+    ResponseEntity<?> getUserInfo(HttpServletRequest request,@PathVariable(name = "nickname") String nickname) {
         Map<String, Object> result = new HashMap<>();
-
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            UserInfoDto userInfo = userService.getUserInfo(nickname);
+            UserInfoDto userInfo = userService.getUserInfo(nickname,userIdx);
             result.put("message", OK);
             result.put("userInfo", userInfo);
             status = HttpStatus.OK;

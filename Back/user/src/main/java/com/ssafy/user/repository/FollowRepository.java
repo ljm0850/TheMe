@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.lang.management.OperatingSystemMXBean;
 import java.util.List;
+import java.util.Optional;
 
 public interface FollowRepository extends JpaRepository<Follow, Integer> {
 
@@ -31,5 +33,7 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
 
     @Query("select F.themeIdx from Follow F group by F.themeIdx order by count(F.themeIdx) desc")
     List<Integer> countByThemeIdx();
+
+    Optional<Follow> findByFollowingUserAndFollowUserAndThemeIdx(User FollowingUser, User FollowerUser,int themeIdx);
 
 }
