@@ -21,4 +21,10 @@ public interface BoardRepository extends JpaRepository<Board,Integer> {
     List<Board> findByUserIdxAndThemeIdxAndCity(int userIdx, int themeIdx, String city, Pageable pageable);
     List<Board> findByUserIdx(int user_idx);
     List<Board> findByThemeIdxOrderByModifyTimeDesc(int themeIdx);
+    @Query("select b from Board b group by b.place having b.themeIdx=?1")
+    List<Board> findByThemeIdxGroupByPlace(int themeIdx);
+    @Query("select b from Board b group by b.place having b.themeIdx=?1 and b.userIdx=?2")
+    List<Board> findByThemeIdxAndUserIdxGroupByPlace(int themeIdx,int userIdx);
+    @Query("select b from Board b group by b.userIdx having b.themeIdx=?1")
+    List<Board> findByThemeIdxGroupByUserIdx(int themeIdx);
 }

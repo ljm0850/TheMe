@@ -2,10 +2,7 @@ package com.ssafy.feed.service.impl;
 
 import com.ssafy.feed.client.ThemeClient;
 import com.ssafy.feed.client.UserClient;
-import com.ssafy.feed.dto.board.BoardInfoDto;
-import com.ssafy.feed.dto.board.BoardListDto;
-import com.ssafy.feed.dto.board.BoardRegistDto;
-import com.ssafy.feed.dto.board.BoardUpdateDto;
+import com.ssafy.feed.dto.board.*;
 import com.ssafy.feed.dto.comment.CommentListDto;
 import com.ssafy.feed.dto.user.UserInfoByIdDto;
 import com.ssafy.feed.entity.*;
@@ -271,5 +268,41 @@ public class BoardServiceImpl implements BoardService {
                 .pictures(picturesList)
                 .build();
         return boardInfoDto;
+    }
+
+    @Override
+    public BoardInfoForUserDto boardInfoForUser(int themeIdx,int userIdx) {
+        int commentCount = 0;
+        List<Picture> pictureList = new ArrayList<>(); // 대표 사진
+        List<Board> boardList = boardRepository.findByThemeIdxOrderByModifyTimeDesc(themeIdx);
+        for(int i=0;i<boardList.size();i++){
+            List<Comment> comment = commentRepository.findByBoard(boardList.get(i));
+            commentCount += comment.size();
+        }
+        int count = 0;
+        for(int i=0;i<boardList.size();i++){
+            if(count>5) break; // 5개만 가져오기
+            List<Picture> pictures = pictureRepository.findByBoardOrderByIdxDesc(boardList.get(i));
+            if(pictures.size()>0) {
+                pictureList.add(pictures.get(0)); // 한 사람의 게시물 중 하나의 사진만 나오도록 하기
+                count++;
+            }
+        }
+        String[] picturesList = new String[pictureList.size()];
+        for(int i=0;i<pictureList.size();i++){
+            picturesList[i] = pictureList.get(i).getPicture();
+        }
+        List<Board> allBoardList = boardRepository.findByThemeIdxGroupByPlace(themeIdx);
+        List<Board> currentBoardList = boardRepository.findByThemeIdxAndUserIdxGroupByPlace(themeIdx,userIdx);
+        List<Board> personBoardList = boardRepository.findByThemeIdxGroupByUserIdx(themeIdx);
+        BoardInfoForUserDto boardInfoForUserDto = BoardInfoForUserDto.builder()
+                .commentCount(commentCount)
+                .personCount(personBoardList.size())
+                .allBoardCount(allBoardList.size()) // 전체 장소 수
+                .currentBoardCount(currentBoardList.size()) // 현재 자신이 간 장소 수
+                .boardCount(boardList.size()) // 전체 게시물 수
+                .pictures(picturesList)
+                .build();
+        return boardInfoForUserDto;
     }
 }
