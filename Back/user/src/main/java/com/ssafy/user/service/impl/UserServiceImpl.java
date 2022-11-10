@@ -121,6 +121,7 @@ public class UserServiceImpl implements UserService {
                 .build();
         // 내가 쓴 테마 리스트
         List<UserThemeDto> userThemeDtoList = themeClient.getUserThemeByUserIdx(pageUserIdx);
+        userInfoDto.setThemes(userThemeDtoList.size());
         List<UserThemeListDto> userThemeListDtoList = new ArrayList<>(); // 테마 리스트 관련 정보 넣기
         for(int i=0;i<userThemeDtoList.size();i++){
             Optional<Follow> userFollow = followRepository.findByFollowingUserAndFollowUserAndThemeIdx(user,followUser.get(),userThemeDtoList.get(i).getThemeIdx());
