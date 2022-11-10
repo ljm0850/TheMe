@@ -1,8 +1,9 @@
 <template>
 <div>
+  <div class="page-title">테마 등록</div>
   <div class="create-theme-page container">
+  <!-- <div class="create-theme-page"> -->
     <br>
-    <div>테마 생성 페이지</div>
     <div class="mb-3">
       <input type="text" class="form-control" id="searchTheme" placeholder="원하는 테마를 검색해주세요." :value="state.searchValue" @input="searchTheme">
     </div>
@@ -73,6 +74,15 @@ export default {
 
 <style scoped lang="scss">
 .create-theme-page {
-  background-color: #CDCDCD;
+  background-color: #FAFAFA;
+  border-radius: 10px;
+  outline-color: #CDCDCD;
+  border: 5px;
+  border-color: red;
+}
+.page-title {
+  font-weight: 100;
+  text-align: center;
+  font-size: 3vh;
 }
 </style>
