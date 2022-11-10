@@ -42,4 +42,6 @@ public interface ThemeService {
     BoardInfoDto boardInfoByTheme(int themeIdx);
 
     ThemeDto getPublicThemeDetail(int theme_idx);
+
+    int isUserTheme(int userIdx, int themeIdx);
 }

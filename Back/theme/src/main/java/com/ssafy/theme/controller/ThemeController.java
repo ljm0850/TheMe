@@ -3,6 +3,7 @@ package com.ssafy.theme.controller;
 import com.ssafy.theme.client.UserClient;
 import com.ssafy.theme.dto.theme.*;
 import com.ssafy.theme.service.ThemeService;
+import net.bytebuddy.implementation.bind.annotation.Pipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -261,5 +262,10 @@ public class ThemeController {
     public int getThemeOpenType(@PathVariable(name = "follow_user_idx") int followUserIdx
             , @PathVariable(name = "follow_theme_idx") int followThemeIdx) {
         return themeService.getThemeOpenType(followUserIdx,followThemeIdx);
+    }
+    @PostMapping("/isUserTheme/{user_idx}/{theme_idx}")
+    public int isUserTheme(@PathVariable(name = "user_idx") int userIdx
+            , @PathVariable(name = "theme_idx") int ThemeIdx){
+        return themeService.isUserTheme(userIdx,ThemeIdx);
     }
 }

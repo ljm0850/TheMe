@@ -425,4 +425,24 @@ public class ThemeServiceImpl implements ThemeService {
                 .build();
         return themeDto;
     }
+
+    @Override
+    public int isUserTheme(int userIdx, int themeIdx) {
+        Theme theme = themeRepository.findByIdx(themeIdx);
+        Optional<UserTheme> userTheme = userThemeRepository.findByThemeAndUserIdx(theme,userIdx);
+        if(!userTheme.isPresent()){
+            UserTheme addUserTheme = UserTheme.builder()
+                    .theme(theme)
+                    .description(theme.getName())
+                    .modifyTime(LocalDateTime.now())
+                    .createTime(LocalDateTime.now())
+                    .challenge(false)
+                    .userIdx(userIdx)
+                    .openType(0) // 공용에서 등록한거니까
+                    .build();
+            userThemeRepository.save(addUserTheme);
+            return addUserTheme.getIdx();
+        }
+        else return userTheme.get().getIdx(); // userThemeIdx를 넘겨주기
+    }
 }
