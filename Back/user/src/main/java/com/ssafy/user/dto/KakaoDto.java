@@ -1,13 +1,12 @@
 package com.ssafy.user.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @ToString
+@Getter
+@Builder
 public class KakaoDto {
     String id;
     String nickname;
