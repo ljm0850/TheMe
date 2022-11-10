@@ -94,6 +94,7 @@ public class ThemeServiceImpl implements ThemeService {
                     .createTime(userTheme.getCreateTime())
                     .openType(userTheme.getOpenType())
                     .userIdx(userTheme.getUserIdx())
+                    .name(userTheme.getTheme().getName())
                     .build();
 
             result.add(target);
