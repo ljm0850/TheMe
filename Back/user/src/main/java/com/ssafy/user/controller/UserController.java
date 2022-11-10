@@ -57,6 +57,7 @@ public class UserController {
             status = HttpStatus.OK;
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
+            System.out.println(e);
             result.put("message",FAIL);
         }
 
@@ -287,4 +288,10 @@ public class UserController {
         return followService.getRecommendThemeList();
     }
 
+    @GetMapping("/isFollow/{user_idx}/{target_user_idx}/{theme_idx}")
+    boolean isFollow(@PathVariable(name = "user_idx") int user_idx,
+                     @PathVariable(name = "target_user_idx") int target_user_idx,
+                     @PathVariable(name = "theme_idx") int theme_idx){
+        return followService.isFollow(user_idx,target_user_idx,theme_idx);
+    }
 }

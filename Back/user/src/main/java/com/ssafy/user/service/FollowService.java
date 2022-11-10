@@ -15,4 +15,6 @@ public interface FollowService {
 
     List<UserFollowThemeDto> getUserFollowTheme(int userIdx);
     List<Integer> getRecommendThemeList();
+
+    boolean isFollow(int user_idx, int target_user_idx, int theme_idx);
 }

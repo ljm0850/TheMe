@@ -119,4 +119,12 @@ public class FollowServiceImpl implements FollowService
     public List<Integer> getRecommendThemeList() {
         return followRepository.countByThemeIdx();
     }
+
+    @Override
+    public boolean isFollow(int user_idx, int target_user_idx, int theme_idx) {
+        Optional<User> user = userRepository.findById(user_idx);
+        Optional<User> targetUser = userRepository.findById(target_user_idx);
+        Optional<Follow> follow = followRepository.findByFollowingUserAndFollowUserAndThemeIdx(targetUser.get(),user.get(),theme_idx);
+        return follow.isPresent();
+    }
 }
