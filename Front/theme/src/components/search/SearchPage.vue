@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div>
+    <div class="top-box">
         <button v-if="!state.isClicked" class="btn btn-light type-button border" @click="selectSearch(0)">👨‍👦인물</button>
         <div v-if="state.isClicked && state.inputValue==0">
           <div class="d-flex">
@@ -40,7 +39,6 @@
         {{person}}
       </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -121,7 +119,9 @@ export default {
 </script>
 
 <style>
-
+.top-box{
+  height: 38px;
+}
 .search-theme-card{
   margin: 4px;
   border: 1px solid;

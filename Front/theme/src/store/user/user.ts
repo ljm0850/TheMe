@@ -133,6 +133,10 @@ export default {
         },
 
         updateUserInfo({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _data: { description: string,  nickname: string, picture: string}) {
+            if (_data.nickname==="")
+            _data.nickname = getters.loginUser.nickname
+            if (_data.description==="")
+            _data.description = getters.loginUser.description
             axios({
                 url: rest.User.userInfo(getters.loginUser.nickname),
                 method: 'put',
