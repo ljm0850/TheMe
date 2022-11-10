@@ -43,6 +43,7 @@ public class BoardController {
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             result.put("message", FAIL);
+            System.out.println(e);
         }
         return new ResponseEntity<>(result, status);
     }

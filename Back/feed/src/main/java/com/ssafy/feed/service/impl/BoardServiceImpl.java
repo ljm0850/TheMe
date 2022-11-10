@@ -37,6 +37,7 @@ public class BoardServiceImpl implements BoardService {
     }
     @Override
     public int registBoard(int userIdx, BoardRegistDto boardRegistDto) { // 게시글 등록
+        int idx = isUserTheme(userIdx,boardRegistDto.getThemeIdx());
         String[] pictures = boardRegistDto.getPictures(); // 등록할 사진목록
         Board board = Board.builder()
                 .alertCount(0)
@@ -45,7 +46,7 @@ public class BoardServiceImpl implements BoardService {
                 .modifyTime(LocalDateTime.now())
                 .name(boardRegistDto.getName())
                 .userIdx(userIdx)
-                .themeIdx(boardRegistDto.getThemeIdx())
+                .themeIdx(idx)
                 .description(boardRegistDto.getDescription())
                 .place(boardRegistDto.getPlace())
                 .latitude(boardRegistDto.getLatitude())
@@ -308,5 +309,9 @@ public class BoardServiceImpl implements BoardService {
                 .pictures(picturesList)
                 .build();
         return boardInfoForUserDto;
+    }
+    @Override
+    public int isUserTheme(int userIdx, int themeIdx){
+        return themeClient.isUserTheme(userIdx,themeIdx);
     }
 }

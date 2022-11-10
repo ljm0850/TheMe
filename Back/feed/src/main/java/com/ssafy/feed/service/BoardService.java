@@ -3,6 +3,8 @@ package com.ssafy.feed.service;
 import com.ssafy.feed.dto.board.*;
 import com.ssafy.feed.dto.comment.CommentListDto;
 import com.ssafy.feed.dto.user.UserInfoByIdDto;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -32,4 +34,6 @@ public interface BoardService {
     BoardInfoDto boardInfoByTheme(int themeIdx);
 
     BoardInfoForUserDto boardInfoForUser(int themeIdx,int userIdx);
+
+    int isUserTheme(int userIdx, int themeIdx);
 }
