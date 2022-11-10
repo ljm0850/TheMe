@@ -5,8 +5,8 @@
                 <router-link :to="{ name: 'Search' }" class="logo">
                     🎨
                 </router-link>
-                <input type="text" class="form-control" id="" placeholder="" v-model="state.inputValue" @input="temp()">
-                <button class="btn btn-light type-button border">검색</button>
+                <input type="text" class="form-control" id="" placeholder="" v-model="state.inputText" @input="temp()">
+                <button class="btn btn-light type-button border" @click="getSerchThemeInfo(state.inputText)">검색</button>
                 <!-- {{liveSearchTheme}} -->
             </div>
         </div>
@@ -27,16 +27,20 @@ export default {
         const store = useStore();
         const state = reactive({
             liveSearchTheme : store.getters.liveSearchTheme,
-            inputValue : ""
+            inputText : ""
         });
         const temp = () => {
-            store.dispatch("liveSearchTheme",state.inputValue)
+            store.dispatch("liveSearchTheme",state.inputText)
         }
         // const selectedUser = computed(() => store.getters.selectedUser)
-        const selectedUser = computed(() => store.getters.loginUser)
+        // const selectedUser = computed(() => store.getters.loginUser)
 
+        const getSerchThemeInfo = (inputText : string) => {
+            store.dispatch("searchThemeInfo",inputText)
+        }
 
-        return {state,temp,liveSearchTheme,selectedUser}
+        // console.log(getSerchThemeInfo)
+        return {state,temp,liveSearchTheme,getSerchThemeInfo}
         
     }
 }

@@ -6,28 +6,13 @@ import { Commit, Dispatch } from 'vuex';
 
 export default {
     state: {
-        // token: localStorage.getItem('token') || '', 
         token :"",
-        loginUser: {
-            // userIdx: 0,
-            // email: null,
-            // description:null,
-            // kakaoId: "0000000",
-            // nickname : "닉네임",
-            // picture : "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2Ftest?alt=media&token=301ac89b-60a3-4314-9b11-945f104c91f6",
-            // createTime : "2022-11-02T01:27:07"
-        },
-        selectedUser: {
-            // userIdx: 0,
-            // email: null,
-            // description:"C203의 프론트를 맡고있는 이재민입니다",
-            // kakaoId: "0000000",
-            // nickname : "닉네임",
-            // picture : "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2Ftest?alt=media&token=301ac89b-60a3-4314-9b11-945f104c91f6",
-            // createTime : "2022-11-02T01:27:07"
-        },
+        loginUser: {},
+        selectedUser: {},
         searchPersonInfo : {},
-        duplicationnickname : false
+        duplicationnickname : false,
+        liveSearchPerson : [],
+        recommandPersonList :[],
     },
     
     getters: {
@@ -38,16 +23,46 @@ export default {
         postCnt : (state : { postCnt : number}) => state.postCnt,
         searchPersonInfo : (state: { searchPersonInfo: Object }) => state.searchPersonInfo,
         duplicationnickname : (state: { duplicationnickname : boolean}) => state.duplicationnickname,
+        liveSearchPerson: (state: { liveSearchPerson: Array<String> }) => state.liveSearchPerson,
+        recommandPersonList: (state: { recommandPersonList: Array<String> }) => state.recommandPersonList,
     },
     mutations: {
         SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,
         SET_LOGIN_USER: (state: { loginUser: Object }, _user: Object) => state.loginUser = _user,
         SET_SELECTED_USER: (state: { selectedUser:Object},_user:Object) => state.selectedUser = _user,
-        SET_SEARCH_PERSON_INFO :  (state: { searchPersonInfo:Object},_user:Object) => state.searchPersonInfo = _user,
-        SET_DUPLICATIONNICKNAME : (state: { duplicationnickname:boolean}, _duplicationnickname:boolean) => state.duplicationnickname = _duplicationnickname 
+        SET_SEARCH_PERSON_INFO :  (state: { searchPersonInfo:Object},_searchPersonInfo:Object) => state.searchPersonInfo = _searchPersonInfo,
+        SET_DUPLICATIONNICKNAME : (state: { duplicationnickname:boolean}, _duplicationnickname:boolean) => state.duplicationnickname = _duplicationnickname ,
+        LIVE_SEARCH_PERSON_LIST: (state: { liveSearchPerson: Array<String> }, _liveSearchPerson: Array<String>) => state.liveSearchPerson = _liveSearchPerson,
+        SET_RECOMMAND_PERSON_LIST: (state: { recommandPersonList: Array<Object> }, _recommandPersonList: Array<Object>) => state.recommandPersonList = _recommandPersonList,
     },
     actions: {
-        // 확인
+        
+        getRecommendPersonList({ commit,getters }:{commit:Commit,getters:any}) {
+            axios({
+                url: rest.User.recommandPersonList(),
+                method: 'get',
+                headers:getters.authHeader
+            })
+                .then((res) => {
+                    console.log(res.data)
+                    commit('SET_RECOMMAND_PERSON_LIST',res.data)
+            })  .catch((err) => {
+                console.log(err)
+            })
+        },
+        liveSearchPerson({ commit, getters }: {commit:Commit,getters:any},_target:string) {
+            axios({
+                url: rest.User.liveSearchUser(),
+                params:{value:_target},
+                method: 'get',
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                console.log(res.data)
+                commit("LIVE_SEARCH_PERSON_LIST",res.data.userList)
+            })
+        },
+
         kakaoLogin({ dispatch }: { dispatch: Dispatch }, _code: string) {
             axios({
                 url: rest.kakao.login(),
@@ -152,7 +167,12 @@ export default {
                 }
             })
                 .then((res) => {
-                console.log(res)
+                    if(res.data.isSame) {//true 라면
+                        res.data.userList[0].isSame = true
+                    }else{
+                        res.data.userList[0].isSame = false
+                    }
+                commit('SET_SEARCH_PERSON_INFO',res.data.userList)
                 })
                 .catch((err) => {
                 console.log(err)

@@ -181,9 +181,10 @@ export default {
                 url: rest.Feed.feedList(),
                 method: 'get',
                 headers: getters.authHeader,
-                params: { region: _region}
+                params: { region: _region,pageSize : 3,pageIdx:0}
             })
                 .then((res) => {
+                    console.log(res.data)
                     commit("SET_FEED_THEME",res.data)    
             })
         },

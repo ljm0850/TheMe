@@ -30,7 +30,8 @@ export default {
     },
     setup() {
         const store = useStore();
-        const FeedList = computed(() => store.getters.getFeedArticleList)
+        store.dispatch("getFeedTheme",3)
+        const FeedList = computed(() => store.getters.getFeedTheme)
 
         return {FeedList}
     }
