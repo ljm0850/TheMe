@@ -1,6 +1,8 @@
 <template>
   <div class="nav-header">
-    <img src="@/assets/image/logo.png" alt="TheMe" class="img-size">
+    <img src="@/assets/image/logo.png" alt="TheMe" class="img-size"><br>
+    <span class="The">The</span>
+    <span class="Me">Me</span>
   </div>
     
 </template>
@@ -19,13 +21,20 @@ export default {
 .nav-header{
   width: 390px;
   height: 55px; 
+  text-align: center;
 }
-
+.The{
+  color : #E89A3D
+}
+.Me{
+  color: #61D85B;
+}
 .img-size {
-  width: 180px;
-  margin: auto;
-  margin-top: 20px;
-  display: block;
+  height: 20px; 
+  width: 40px  !important;
+  /* margin: auto; */
+  margin-top: 10px;
+  /* display: block; */
 }
 
 
