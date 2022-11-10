@@ -311,12 +311,12 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<UserThemeDtoWithMSA> getThemeUserList(int theme_idx) {
+    public List<UserThemeDtoWithMSA> getThemeUserList(int theme_idx,int user_idx) {
         Theme theme = themeRepository.findByIdx(theme_idx);
         List<UserTheme> userThemeList = userThemeRepository.findByTheme(theme);
         List<UserThemeDtoWithMSA> userThemeDtoList = new ArrayList<>();
         for(UserTheme userTheme : userThemeList){
-            if(userTheme.getOpenType()==1){
+            if(userTheme.getOpenType()==0){
                 UserThemeDtoWithMSA userThemeDto = UserThemeDtoWithMSA.builder()
                         .idx(userTheme.getTheme().getIdx())
                         .userIdx(userTheme.getUserIdx())
@@ -328,6 +328,22 @@ public class ThemeServiceImpl implements ThemeService {
                         .modifyTime(userTheme.getModifyTime())
                         .build();
                 userThemeDtoList.add(userThemeDto);
+            }
+            else if(userTheme.getOpenType()==1){ // 친구 공개
+                boolean flag = userClient.isFollow(userTheme.getUserIdx(),user_idx,userTheme.getIdx());
+                if(flag){
+                    UserThemeDtoWithMSA userThemeDto = UserThemeDtoWithMSA.builder()
+                            .idx(userTheme.getTheme().getIdx())
+                            .userIdx(userTheme.getUserIdx())
+                            .themeEmoticon(userTheme.getTheme().getEmoticon())
+                            .themeTitle(userTheme.getTheme().getName())
+                            .description(userTheme.getDescription())
+                            .openType(userTheme.getOpenType())
+                            .createTime(userTheme.getCreateTime())
+                            .modifyTime(userTheme.getModifyTime())
+                            .build();
+                    userThemeDtoList.add(userThemeDto);
+                }
             }
         }
         return userThemeDtoList;
@@ -442,5 +458,10 @@ public class ThemeServiceImpl implements ThemeService {
     public int whoUserIdx(int userThemeIdx) {
         Optional<UserTheme> userTheme = userThemeRepository.findById(userThemeIdx);
         return userTheme.get().getUserIdx();
+    }
+
+    @Override
+    public boolean isFollow(int user_idx, int target_user_idx, int theme_idx) {
+        return userClient.isFollow(user_idx,target_user_idx,theme_idx);
     }
 }

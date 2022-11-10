@@ -4,6 +4,8 @@ import com.ssafy.theme.dto.theme.*;
 import com.ssafy.theme.entity.UserTheme;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +32,7 @@ public interface ThemeService {
 
     Map<String, Object> searchThemeInfo(String value, int userIdx);
 
-    List<UserThemeDtoWithMSA> getThemeUserList(int theme_idx);
+    List<UserThemeDtoWithMSA> getThemeUserList(int theme_idx,int user_idx);
 
     void deleteScrapTheme(int user_id, int theme_idx);
 
@@ -46,4 +48,5 @@ public interface ThemeService {
     int isUserTheme(int userIdx, int themeIdx);
 
     int whoUserIdx(int userThemeIdx);
+    boolean isFollow(int user_idx, int target_user_idx, int theme_idx);
 }

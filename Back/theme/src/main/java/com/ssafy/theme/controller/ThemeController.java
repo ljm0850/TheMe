@@ -210,9 +210,9 @@ public class ThemeController {
     public String getThemeName(@PathVariable(name = "theme_idx") int theme_idx) {
         return themeService.getThemeName(theme_idx);
     }
-    @GetMapping("/userList/{theme_idx}")
-    public List<UserThemeDtoWithMSA> getThemeUserList(@PathVariable(name = "theme_idx") int theme_idx) {
-        return themeService.getThemeUserList(theme_idx);
+    @GetMapping("/userList/{theme_idx}/{user_idx}")
+    public List<UserThemeDtoWithMSA> getThemeUserList(@PathVariable(name = "theme_idx") int theme_idx,@PathVariable(name = "user_idx") int user_idx) {
+        return themeService.getThemeUserList(theme_idx,user_idx);
     }
     @GetMapping("/search/theme/info")
     public ResponseEntity<?> searchThemeInfo(@RequestParam(name = "value") String value,HttpServletRequest request) {
