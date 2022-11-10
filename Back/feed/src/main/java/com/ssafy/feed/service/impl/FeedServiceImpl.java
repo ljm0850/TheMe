@@ -46,8 +46,8 @@ public class FeedServiceImpl implements FeedService {
         this.pictureRepository = pictureRepository;
     }
     @Override
-    public List<BoardGroupListDto> themeBoardGroup(int theme_idx,int pageIdx,int pageSize) {
-        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(theme_idx); //테마 번호로 openType이 1인 userTheme만 받아오기
+    public List<BoardGroupListDto> themeBoardGroup(int user_idx,int theme_idx,int pageIdx,int pageSize) {
+        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(theme_idx,user_idx); //테마 번호로 openType이 1인 userTheme만 받아오기
         List<Integer> openUserList = new ArrayList<>();
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
         for(UserThemeDtoWithMSA theme : themeUserList){ //해당 번호 배열로 저장
@@ -60,7 +60,7 @@ public class FeedServiceImpl implements FeedService {
 
     @Override
     public List<BoardSimpleListDto> themeBoardList(int theme_idx, String name, int pageIdx, int pageSize,int userIdx) {
-        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(theme_idx);
+        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(theme_idx,userIdx);
         List<Integer> openUserList = new ArrayList<>();
         List<BoardSimpleListDto> boardSimpleListDtoList = new ArrayList<>();
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
@@ -198,9 +198,9 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public List<BoardGroupListDto> userThemeList(int userThemeIdx,int pageIdx,int pageSize) {
+    public List<BoardGroupListDto> userThemeList(int userThemeIdx,int pageIdx,int pageSize,int user_idx) {
         int userIdx = whoUserIdx(userThemeIdx);
-        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(userThemeIdx); //테마 번호로 openType이 1인 userTheme만 받아오기
+        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(userThemeIdx,user_idx); //테마 번호로 openType이 1인 userTheme만 받아오기
         List<Integer> openUserList = new ArrayList<>();
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
         for(UserThemeDtoWithMSA theme : themeUserList){ //해당 번호 배열로 저장

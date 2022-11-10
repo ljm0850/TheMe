@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 public interface FeedService {
-    List<BoardGroupListDto> themeBoardGroup(int theme_idx,int pageIdx,int pageSize);
+    List<BoardGroupListDto> themeBoardGroup(int user_idx,int theme_idx,int pageIdx,int pageSize);
     List<BoardSimpleListDto> themeBoardList(int theme_idx, String name, int pageIdx, int pageSize,int userIdx);
     List<BoardSimpleListDto> feedByRegion(int userIdx, int region, int pageIdx, int pageSize);
     List<UserFollowThemeDto> getUserFollowTheme(int userIdx);
@@ -17,6 +17,6 @@ public interface FeedService {
     String getThemeName(int themeIdx);
     List<BoardDto> getUserBoardList(int user_idx);
 
-    List<BoardGroupListDto> userThemeList(int userThemeIdx,int pageIdx,int pageSize);
+    List<BoardGroupListDto> userThemeList(int userThemeIdx,int pageIdx,int pageSize,int user_idx);
     int whoUserIdx(int userThemeIdx);
 }
