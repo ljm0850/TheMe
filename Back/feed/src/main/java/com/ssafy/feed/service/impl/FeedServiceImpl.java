@@ -148,6 +148,7 @@ public class FeedServiceImpl implements FeedService {
                             .profile(userInfo.getPicture())
                             .userIdx(boardList.get(j).getUserIdx())
                             .build();
+                    boardSimpleListDtoList.add(boardSimpleListDto);
                 }
             }
         }
