@@ -7,14 +7,32 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div>별명 <input type="text" class="form-control" id="" placeholder="변경할 닉네임을 입력하세요."  v-model ="state.inputNicknameText"></div>
-                <button @click="getDuplicateNickname(state.inputNicknameText)">중복검사</button>
+                <div>닉네임<input type="text" class="form-control" id="" placeholder="변경할 닉네임을 입력해주세요."  @input="getDuplicateNickname"></div>
+                <!-- <button @click="getDuplicateNickname(state.inputNicknameText)">중복검사</button>
+                <div v-if="state.isClicked && state.inputNicknameText.length < 1">
+                    변경할 닉네임을 입력해주세요.
+                </div> -->
+                <div v-if="state.inputNicknameText.length  >= 1">
+                    <div v-if="state.inputNicknameText == selectedUser.nickname">
+                        기존 닉네임과 같습니다.
+                    </div>
+                    <div v-else-if = isPossible>
+                        사용 가능한 닉네임입니다.
+                    </div>
+                    <div v-else-if = !isPossible >
+                        사용 불가능한 닉네임입니다.
+                    </div>
+                </div>
+
             <!-- v-if문으로 띄우기 눌렀느지 안눌렀는지는 여기 스테이트에서 처리 설정버튼 눌렀을때 false로초기화-->
                 <div>자기 소개 <input type="text" class="form-control" id="" placeholder="변경할 자기소개를 입력하세요."  v-model ="state.inputDescriptionText"></div>
             </div>
             <div class="modal-footer">
+                
+                <button v-if="isPossible" type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="updateUserInfo">변경</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
+            
         </div>
     </div>
 </div>
@@ -25,6 +43,7 @@
 import { reactive } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { useRouter } from 'vue-router'
 export default {
     props:{
         userInfo:Object
@@ -33,18 +52,39 @@ export default {
     },
     setup() {
         const store = useStore();
+        const router = useRouter();
         const state = reactive({
             inputNicknameText : "",
             inputDescriptionText : "",
+            isClicked : false,
         });
 
-        const duplicationnickname = computed(() => store.getters.duplicationnickname)
-
-
-        const getDuplicateNickname = (inputText : string) => {
-            store.dispatch("duplicationnickname",inputText)
+        const isPossible = computed(()=>store.getters.duplicationnickname)
+        const selectedUser = computed(()=>store.getters.selectedUser)
+        const getDuplicateNickname = (e:any) => {
+            state.inputNicknameText = e.target.value
+            store.dispatch("duplicationnickname", state.inputNicknameText),
+            state.isClicked = true
         }
-        return { state,getDuplicateNickname , duplicationnickname}
+        
+        
+        const updateUserInfo = () => {
+            
+                store.dispatch("updateUserInfo", {description: state.inputDescriptionText, nickname : state.inputNicknameText, picture : "https://velog.velcdn.com/images%2Fjini_eun%2Fpost%2F107f5cfb-e97c-4c4c-b997-06098062e5b3%2Fimage.png"})
+                router.push({
+                    name: "Profile", 
+                    params: { 
+                        nickname : state.inputNicknameText,
+                    } 
+                })
+            
+
+
+            
+        } 
+
+        
+        return { state,getDuplicateNickname, isPossible, updateUserInfo, selectedUser}
     }
 }
 </script>

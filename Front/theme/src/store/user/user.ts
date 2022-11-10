@@ -101,6 +101,7 @@ export default {
                 .then((res) => {
                     console.log(res.data)
                     commit('SET_SELECTED_USER',res.data.userInfo)
+                    commit('SET_LOGIN_USER',res.data.userInfo)
                 })
         },
         duplicationnickname({ commit,getters }: { commit: Commit,getters:any }, _newNickname: string) {
@@ -124,6 +125,7 @@ export default {
             })
                 .then((res) => {
                     dispatch('getUserInfoByNickname',_data.nickname)
+                    
                     console.log(res)
                 })
         },
