@@ -1,9 +1,9 @@
 <template>
     <div class="d-flex justify-content-between">
         <div>
-            <div>장소 이름(리디파인)</div>
-            <div>주소</div>
-            <div>글쓴이</div>
+            <div>{{article.themeName}}</div>
+            <div>{{article.place}}</div>
+            <div>{{article.nickname}}</div>
         </div>
         <div>게시물 개수</div>
     </div>
@@ -15,7 +15,11 @@
 export default {
     components: {
     },
+    props:{
+        article:Object
+    },
     setup() {
+        
     }
 }
 </script>

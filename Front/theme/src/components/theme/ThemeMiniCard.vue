@@ -22,8 +22,7 @@ export default {
       router.push({ 
         name: "PublicTheme", 
         params: { 
-          emoticon : props.theme.emoticon,
-          themeName: props.theme.name
+          themeIdx: props.theme.idx
         } 
       })
     }

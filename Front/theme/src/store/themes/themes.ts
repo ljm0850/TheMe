@@ -15,6 +15,7 @@ export default {
         liveSearchTheme: [],
         selectedUserThemeList: [],
         publicThemeList :[],
+        publicThemeDetail :[],
        },
     getters: {
         searchThemeList: (state: { searchThemeList: Array<object> }) => state.searchThemeList,
@@ -27,6 +28,7 @@ export default {
         liveSearchTheme: (state: { liveSearchTheme: Array<String> }) => state.liveSearchTheme,
         selectedUserThemeList: (state: { selectedUserThemeList:Array<Object> }) => state.selectedUserThemeList,
         publicThemeList : (state: {publicThemeList:Array<Object>}) => state.publicThemeList,
+        publicThemeDetail:(state: {publicThemeDetail:Object}) => state.publicThemeDetail,
     },
     mutations: {
         SET_SEARCH_THEME_LIST: (state: { searchThemeList: Array<object> }, _searchThemeList: Array<object>) => state.searchThemeList = _searchThemeList,
@@ -37,6 +39,7 @@ export default {
         LIVE_SEARCH_THEME_LIST: (state: { liveSearchTheme: Array<String> }, _liveThemeList: Array<String>) => state.liveSearchTheme = _liveThemeList,
         SET_SELECTED_USER_THEME_LIST:(state: {selectedUserThemeList:Array<Object>}, _themeList:Array<Object>)=> state.selectedUserThemeList = _themeList,
         SET_PUBLIC_THEME_LIST: (state:{ publicThemeList: Array<object>}, _publicThemeList:Array<Object>) => state.publicThemeList = _publicThemeList,
+        SET_PUBLIC_THEME_DETAIL : (state:{ publicThemeDetail: Object}, _publicThemeDetail:Object) => state.publicThemeDetail = _publicThemeDetail,
     },
     actions: {
         getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
@@ -182,6 +185,16 @@ export default {
             })
             .then((res) => {
                 console.log(res)
+            })
+        },
+        detailTheme({ commit, getters }: { commit: Commit, getters: any }, _themeIdx: string) {
+            axios({
+                url: rest.Theme.getThemeDetail(_themeIdx),
+                method: 'get',
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                commit("SET_PUBLIC_THEME_DETAIL", res.data.themeDetail)
             })
         },
         selectedThemeIdxForCreate({ commit }: { commit: Commit },_idx:number) {
