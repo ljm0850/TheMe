@@ -40,4 +40,6 @@ public interface ThemeService {
 
     int getThemeOpenType(int followUserIdx, int followThemeIdx);
     BoardInfoDto boardInfoByTheme(int themeIdx);
+
+    ThemeDto getPublicThemeDetail(int theme_idx);
 }
