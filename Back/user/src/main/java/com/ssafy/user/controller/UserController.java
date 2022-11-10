@@ -91,6 +91,7 @@ public class UserController {
             status = HttpStatus.OK;
         } catch (Exception e) {
             result.put("message", FAIL);
+            System.out.println(e);
         }
 
         return new ResponseEntity<>(result, status);

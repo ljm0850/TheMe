@@ -13,6 +13,6 @@ public interface FeedClient {
     @GetMapping("/feed/board/list/{user_idx}")
     List<BoardDto> userBoardList(@PathVariable(name = "user_idx") int user_idx);
 
-    @GetMapping("/board/themeInfo/{theme_idx}/{user_idx}")
+    @GetMapping("/feed/board/themeInfo/{theme_idx}/{user_idx}")
     BoardInfoForUserDto boardInfoForUser(@PathVariable(name = "theme_idx") int themeIdx, @PathVariable(name = "user_idx") int userIdx);
 }

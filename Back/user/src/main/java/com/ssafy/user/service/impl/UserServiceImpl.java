@@ -153,16 +153,39 @@ public class UserServiceImpl implements UserService {
         // 내가 쓴 게시글 수
         List<BoardDto> userBoardList = feedClient.userBoardList(user.getIdx());
         userInfoDto.setPosts(userBoardList.size());
-        System.out.println("내가 쓴 게시글");
 
         // 내가 팔로우한 테마 리스트
-//        UserThemeIdxDto userThemeIdxDto = UserThemeIdxDto.builder()
-//                .userThemeList(followRepository.findThemeIdByFollowingUser(user))
-//                .build();
-//
-//        List<UserThemeDto> userThemeListDtos = themeClient.followThemeList(userThemeIdxDto);
-//        userInfoDto.setFollowingDtoList(userThemeListDtos);
-//        System.out.println("내가 팔로우한 테마");
+        UserThemeIdxDto userThemeIdxDto = UserThemeIdxDto.builder()
+                .userThemeList(followRepository.findThemeIdByFollowingUser(user))
+                .build();
+
+        List<UserThemeDto> userThemeListDtos = themeClient.followThemeList(userThemeIdxDto);
+        List<UserThemeListDto> userThemeListDtoLists = new ArrayList<>(); // 테마 리스트 관련 정보 넣기
+        for(int i=0;i<userThemeListDtos.size();i++){
+            boolean isfollow = true;
+            BoardInfoForUserDto boardInfoForUserDto = boardInfoForUser(userThemeListDtos.get(i).getThemeIdx(),pageUserIdx);
+            UserThemeListDto userThemeListDto = UserThemeListDto.builder()
+                    .allChallengeCount(boardInfoForUserDto.getAllBoardCount())
+                    .boardCount(boardInfoForUserDto.getBoardCount())
+                    .challenge(userThemeListDtos.get(i).isChallenge())
+                    .commentCount(boardInfoForUserDto.getCommentCount())
+                    .currentChallengeCount(boardInfoForUserDto.getCurrentBoardCount())
+                    .emoticon(userThemeListDtos.get(i).getEmoticon())
+                    .follow(isfollow)
+                    .createTime(userThemeListDtos.get(i).getCreateTime())
+                    .isMy(false)
+                    .description(userThemeListDtos.get(i).getDescription())
+                    .modifyTime(userThemeListDtos.get(i).getModifyTime())
+                    .name(userThemeListDtos.get(i).getName())
+                    .openType(userThemeListDtos.get(i).getOpenType())
+                    .personCount(boardInfoForUserDto.getPersonCount())
+                    .themeIdx(userThemeListDtos.get(i).getThemeIdx())
+                    .pictures(boardInfoForUserDto.getPictures())
+                    .userIdx(userThemeListDtos.get(i).getUserIdx())
+                    .build();
+            userThemeListDtoLists.add(userThemeListDto);
+        }
+        userInfoDto.setFollowingDtoList(userThemeListDtoLists);
         return userInfoDto;
     }
 
@@ -216,7 +239,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public KakaoDto kakaoUser(String token){
-        KakaoDto kakaoDto = null;
+        KakaoDto kakaoDto = new KakaoDto();
         String reqURL = "https://kapi.kakao.com/v2/user/me";
 
         // access_token을 이용하여 사용자 정보 조회
