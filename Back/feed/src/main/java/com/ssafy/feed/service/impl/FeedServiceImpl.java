@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,5 +195,21 @@ public class FeedServiceImpl implements FeedService {
         }
 
         return boardDtos;
+    }
+
+    @Override
+    public List<BoardGroupListDto> userThemeList(int userThemeIdx,int pageIdx,int pageSize) {
+        int userIdx = whoUserIdx(userThemeIdx);
+        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(userThemeIdx); //테마 번호로 openType이 1인 userTheme만 받아오기
+        List<Integer> openUserList = new ArrayList<>();
+        Pageable pageable = PageRequest.of(pageIdx, pageSize);
+        for(UserThemeDtoWithMSA theme : themeUserList){ //해당 번호 배열로 저장
+            openUserList.add(theme.getUserIdx());
+        }
+        return boardRepository.getBoardGourpByListWithJPA(openUserList,userThemeIdx,pageable); //게시글 목록 리턴
+    }
+    @Override
+    public int whoUserIdx(int userThemeIdx) {
+        return themeClient.whoUserIdx(userThemeIdx);
     }
 }

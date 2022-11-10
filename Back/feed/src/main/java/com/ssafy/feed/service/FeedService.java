@@ -16,4 +16,7 @@ public interface FeedService {
     int getThemeOpenType(int followUserIdx, int followThemeIdx);
     String getThemeName(int themeIdx);
     List<BoardDto> getUserBoardList(int user_idx);
+
+    List<BoardGroupListDto> userThemeList(int userThemeIdx,int pageIdx,int pageSize);
+    int whoUserIdx(int userThemeIdx);
 }

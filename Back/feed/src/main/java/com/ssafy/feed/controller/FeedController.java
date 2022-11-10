@@ -90,4 +90,23 @@ public class FeedController {
     public List<BoardDto> userBoardList(@PathVariable(name = "user_idx") int user_idx) {
         return feedService.getUserBoardList(user_idx);
     }
+    @GetMapping("/map/userTheme/{userTheme_idx}")
+    @ApiOperation(value = "유저 테마에 대한 게시글 목록")
+    public ResponseEntity<?> userThemeList(@PathVariable(name = "userTheme_idx") int userThemeIdx,
+                                           @RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        try {
+            // 유저 테마에 대한 게시글 목록
+            List<BoardGroupListDto> boardGroupListDto = feedService.userThemeList(userThemeIdx,pageIdx,pageSize);
+            result.put("data",boardGroupListDto);
+            result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            result.put("message", FAIL);
+            System.out.println(e);
+        }
+        return new ResponseEntity<>(result, status);
+    }
 }

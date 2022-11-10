@@ -20,4 +20,6 @@ public interface ThemeClient {
     @PostMapping("/theme/isUserTheme/{user_idx}/{theme_idx}")
     int isUserTheme(@PathVariable(name = "user_idx") int userIdx
             , @PathVariable(name = "theme_idx") int ThemeIdx);
+    @GetMapping("/theme/userTheme/{user_theme_idx}")
+    int whoUserIdx(@PathVariable(name = "user_theme_idx") int userThemeIdx);
 }
