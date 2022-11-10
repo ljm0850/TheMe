@@ -1,8 +1,8 @@
 <template>
   <div>
-     <div class="d-flex theme-style">
-      <div class="form-control">{{theme.name}}</div>
-      <button v-if="theme.openType==0" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
+     <div class="d-flex theme-style" v-if="theme">
+      <div class="form-control form-custom">{{theme.name}}</div>
+      <button v-if="theme.openType==0" type="button" class="btn btn-outline-secondary white-button" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
         추가
       </button>
     </div>
@@ -35,6 +35,16 @@ export default {
   .theme-style {
     margin-bottom: 1vh;
   }
+  .form-custom{
+    // outline-color: #CDCDCD;
+    outline-color: black;
+    border-color: black;
+  }
+  .white-button{
+    background-color: white;
+    outline-color: black;
+    border-color: black;
+    margin-left: 1vw;
+  }
 }
-
 </style>

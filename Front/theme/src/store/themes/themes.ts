@@ -129,11 +129,15 @@ export default {
             })
                 .then((res) => {
                     commit('SET_SELECTED_USER_THEME_LIST',res.data.themeList)
-                    // console.log(res.data.themeList)
+                    console.log(res.data)
                     // console.log(getters.selectedUserThemeList)
             })
         },
-        getMyThemeList({ dispatch,getters }: {dispatch:Dispatch, getters: any}) {
+        getMyThemeList({ dispatch, getters}: { dispatch: Dispatch, getters: any }) {
+            console.log("머임")
+            console.log(getters.loginUser)
+            console.log(getters.loginUser.userIdx)
+            console.log(typeof(getters.loginUser))
             dispatch("getUserThemeList",getters.loginUser.userIdx)
         },
         bookmarkTheme({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _userIdx:string, _themeIdx:string) {

@@ -8,7 +8,7 @@
         <select class="form-select" id="inputGroupSelect01" v-model="state.theme">
           <option selected>테마 선택</option>
           <!-- 현재 유저 테마의 idx가 선택되어 있음 -->
-          <option v-for="theme in themeList" :key="theme" :value="theme.idx" >{{ theme.name }} 지금 테마이름값이 안넘어와서</option>
+          <option v-for="theme in themeList" :key="theme" :value="theme.idx" >{{ theme.name }}</option>
         </select>
       </div>
       <!-- 이미지 파일 첨부 -->

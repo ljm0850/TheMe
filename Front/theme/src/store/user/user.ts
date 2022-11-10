@@ -92,7 +92,8 @@ export default {
                 data: { kakaoToken: _accessToken }
             })
                 .then((res) => {
-                    console.log(res.headers.authorization)
+                    console.log(res.headers)
+                    console.log(res.data.userInfo)
                     commit('SET_TOKEN',res.headers.authorization)
                     commit('SET_LOGIN_USER',res.data.userInfo)
                 })

@@ -38,6 +38,7 @@
 <script lang="ts">
 import { reactive } from '@vue/reactivity'
 import { useStore } from "vuex";
+import { computed } from '@vue/runtime-core';
 export default {
   components: {
   },
@@ -49,7 +50,7 @@ export default {
       state.plusButton = !state.plusButton
     }
     const store = useStore();
-    const myNickname = store.getters.loginUser.nickname
+    const myNickname = computed(()=>store.getters.loginUser.nickname)
 
 
     return { state, togglePlusButton,myNickname }
