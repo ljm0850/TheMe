@@ -411,4 +411,18 @@ public class ThemeServiceImpl implements ThemeService {
         BoardInfoDto boardInfoDto = feedClient.boardInfoByTheme(themeIdx);
         return  boardInfoDto;
     }
+
+    @Override
+    public ThemeDto getPublicThemeDetail(int theme_idx) {
+        Theme theme = themeRepository.findById(theme_idx)
+                .orElseThrow(IllegalArgumentException::new);
+
+        ThemeDto themeDto = ThemeDto.builder()
+                .createTime(theme.getCreateTime())
+                .emoticon(theme.getEmoticon())
+                .idx(theme.getIdx())
+                .name(theme.getName())
+                .build();
+        return themeDto;
+    }
 }
