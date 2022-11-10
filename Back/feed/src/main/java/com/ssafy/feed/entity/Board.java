@@ -24,9 +24,11 @@ public class Board {
     private LocalDateTime modifyTime; // 수정 시간
     private String city; // 게시글 장소 지역
     private int alertCount; // 게시글 신고 횟수
-
+    private String latitude; // 위도
+    private String longitude; // 경도
     @Builder
-    public Board(int idx, int themeIdx, int userIdx, String name, String place, String description, LocalDateTime createTime, LocalDateTime modifyTime, String city, int alertCount) {
+    public Board(int idx, int themeIdx, int userIdx, String name, String place, String description, LocalDateTime createTime,
+                 LocalDateTime modifyTime, String city, int alertCount, String latitude, String longitude) {
         this.idx = idx;
         this.themeIdx = themeIdx;
         this.userIdx = userIdx;
@@ -37,6 +39,8 @@ public class Board {
         this.modifyTime = modifyTime;
         this.city = city;
         this.alertCount = alertCount;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
     public void updateName(String name){ this.name = name; }
     public void updatePlace(String place) { this.place = place; }
@@ -45,4 +49,6 @@ public class Board {
     public void updateCity(String city) { this.city = city; }
     public void updateTime(LocalDateTime modifyTime) { this.modifyTime = modifyTime; }
     public void updateAlertCount(int alertCount) { this.alertCount = alertCount; }
+    public void updateLatitude(String latitude) { this.latitude = latitude; }
+    public void updateLongitude(String longitude) { this.longitude = longitude; }
 }

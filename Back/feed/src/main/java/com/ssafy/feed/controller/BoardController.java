@@ -1,9 +1,6 @@
 package com.ssafy.feed.controller;
 
-import com.ssafy.feed.dto.board.BoardInfoDto;
-import com.ssafy.feed.dto.board.BoardListDto;
-import com.ssafy.feed.dto.board.BoardRegistDto;
-import com.ssafy.feed.dto.board.BoardUpdateDto;
+import com.ssafy.feed.dto.board.*;
 import com.ssafy.feed.dto.comment.CommentListDto;
 import com.ssafy.feed.service.BoardService;
 import io.swagger.annotations.ApiOperation;
@@ -46,6 +43,7 @@ public class BoardController {
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             result.put("message", FAIL);
+            System.out.println(e);
         }
         return new ResponseEntity<>(result, status);
     }
@@ -157,5 +155,9 @@ public class BoardController {
     @GetMapping("/board/themeList/{theme_idx}")
     public BoardInfoDto boardInfoByTheme(@PathVariable(name = "theme_idx") int themeIdx){ // 해당 테마 번호로 게시물 정보 받기
         return boardService.boardInfoByTheme(themeIdx);
+    }
+    @GetMapping("/board/themeInfo/{theme_idx}/{user_idx}")
+    public BoardInfoForUserDto boardInfoForUser(@PathVariable(name = "theme_idx") int themeIdx,@PathVariable(name = "user_idx") int userIdx){ // 해당 테마 번호로 게시물,댓글,챌린지 정보 받기
+        return boardService.boardInfoForUser(themeIdx,userIdx);
     }
 }

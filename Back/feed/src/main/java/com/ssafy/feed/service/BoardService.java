@@ -1,11 +1,10 @@
 package com.ssafy.feed.service;
 
-import com.ssafy.feed.dto.board.BoardInfoDto;
-import com.ssafy.feed.dto.board.BoardListDto;
-import com.ssafy.feed.dto.board.BoardRegistDto;
-import com.ssafy.feed.dto.board.BoardUpdateDto;
+import com.ssafy.feed.dto.board.*;
 import com.ssafy.feed.dto.comment.CommentListDto;
 import com.ssafy.feed.dto.user.UserInfoByIdDto;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -33,4 +32,8 @@ public interface BoardService {
     String alertUser(int userIdx); // 신고
 
     BoardInfoDto boardInfoByTheme(int themeIdx);
+
+    BoardInfoForUserDto boardInfoForUser(int themeIdx,int userIdx);
+
+    int isUserTheme(int userIdx, int themeIdx);
 }
