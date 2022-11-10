@@ -1,9 +1,9 @@
 <template>
-<div class="card" style="border-radius: 12px;">
+  <div  v-if="person" :class="[person.isSame ? 'isSame card' : 'card']">
   <div class="card-body" style="padding: 0px;">
     <div class="d-flex">
-      <img :src="selectedUser.picture" alt="" class="user-profile">
-      <div class="ms-2">{{selectedUser.nickname}}</div>
+      <!-- <img :src="person.picture" alt="" class="user-profile"> -->
+      <div class="ms-2">{{person.nickname}}</div>
       <button class="btn position-absolute top-0 end-0">🤍</button>
     </div>
   </div>
@@ -44,16 +44,19 @@
     </div> -->
   </div>
 </div>
-
 </template>
 
 <script lang="ts">
 import { useStore } from "vuex";
 import { computed } from '@vue/reactivity'
 export default {
+  props:{
+        person:Object
+  },
   components: {
   },
-  setup (){
+  setup (props:any){
+    console.log(props.person)
     const store = useStore();
     const selectedUser = computed(() => store.getters.loginUser)
     return { selectedUser}
@@ -62,6 +65,10 @@ export default {
 </script>
 
 <style lang="scss">
+.isSame{
+    border : 3px solid #bddaff !important;
+
+}
 .btn{
   padding: 0px;
   margin: 0px;

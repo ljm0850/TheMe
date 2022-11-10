@@ -34,7 +34,8 @@ export default {
         unfollowUser: (_target_user_idx:string,_user_idx:string) => HOST + USER + `/unfollow/${_target_user_idx}/${_user_idx}`,
         userInfoByIdx: (_user_idx: string) => HOST + USER + `/info/id/${_user_idx}`,
         liveSearchUser: ()=> HOST + USER + '/live/search',
-        getSerchPerson:() => HOST + THEME + '/search/user/info',
+        getSerchPerson:() => HOST + USER + '/search/user/info',
+        recommandPersonList : () => HOST + USER + `/search/recommend`,
     },
     
     Theme: {

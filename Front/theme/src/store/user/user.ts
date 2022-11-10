@@ -11,7 +11,8 @@ export default {
         selectedUser: {},
         searchPersonInfo : {},
         duplicationnickname : false,
-        liveSearchPerson : []
+        liveSearchPerson : [],
+        recommandPersonList :[],
     },
     
     getters: {
@@ -23,24 +24,41 @@ export default {
         searchPersonInfo : (state: { searchPersonInfo: Object }) => state.searchPersonInfo,
         duplicationnickname : (state: { duplicationnickname : boolean}) => state.duplicationnickname,
         liveSearchPerson: (state: { liveSearchPerson: Array<String> }) => state.liveSearchPerson,
+        recommandPersonList: (state: { recommandPersonList: Array<String> }) => state.recommandPersonList,
     },
     mutations: {
         SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,
         SET_LOGIN_USER: (state: { loginUser: Object }, _user: Object) => state.loginUser = _user,
         SET_SELECTED_USER: (state: { selectedUser:Object},_user:Object) => state.selectedUser = _user,
-        SET_SEARCH_PERSON_INFO :  (state: { searchPersonInfo:Object},_user:Object) => state.searchPersonInfo = _user,
+        SET_SEARCH_PERSON_INFO :  (state: { searchPersonInfo:Object},_searchPersonInfo:Object) => state.searchPersonInfo = _searchPersonInfo,
         SET_DUPLICATIONNICKNAME : (state: { duplicationnickname:boolean}, _duplicationnickname:boolean) => state.duplicationnickname = _duplicationnickname ,
         LIVE_SEARCH_PERSON_LIST: (state: { liveSearchPerson: Array<String> }, _liveSearchPerson: Array<String>) => state.liveSearchPerson = _liveSearchPerson,
+        SET_RECOMMAND_PERSON_LIST: (state: { recommandPersonList: Array<Object> }, _recommandPersonList: Array<Object>) => state.recommandPersonList = _recommandPersonList,
     },
     actions: {
+        
+        getRecommendPersonList({ commit,getters }:{commit:Commit,getters:any}) {
+            axios({
+                url: rest.User.recommandPersonList(),
+                method: 'get',
+                headers:getters.authHeader
+            })
+                .then((res) => {
+                    console.log(res.data)
+                    commit('SET_RECOMMAND_PERSON_LIST',res.data)
+            })  .catch((err) => {
+                console.log(err)
+            })
+        },
         liveSearchPerson({ commit, getters }: {commit:Commit,getters:any},_target:string) {
             axios({
                 url: rest.User.liveSearchUser(),
                 params:{value:_target},
-                method: 'post',
+                method: 'get',
                 headers: getters.authHeader
             })
                 .then((res) => {
+                console.log(res.data)
                 commit("LIVE_SEARCH_PERSON_LIST",res.data.userList)
             })
         },
@@ -147,8 +165,12 @@ export default {
                 }
             })
                 .then((res) => {
-                console.log(res)
-                // commit('SET_SEARCH_PERSON_INFO',res.data.)
+                    if(res.data.isSame) {//true 라면
+                        res.data.userList[0].isSame = true
+                    }else{
+                        res.data.userList[0].isSame = false
+                    }
+                commit('SET_SEARCH_PERSON_INFO',res.data.userList)
                 })
                 .catch((err) => {
                 console.log(err)
