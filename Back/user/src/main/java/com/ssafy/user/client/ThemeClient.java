@@ -1,6 +1,7 @@
 package com.ssafy.user.client;
 
 import com.ssafy.user.dto.UserThemeDto;
+import com.ssafy.user.dto.UserThemeListDto;
 import com.ssafy.user.dto.UserThemeIdxDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

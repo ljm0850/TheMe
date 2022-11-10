@@ -16,15 +16,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -107,38 +105,87 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoDto getUserInfo(String nickname) { // 마이페이지 조회
-
+    public UserInfoDto getUserInfo(String nickname,int userIdx) { // 마이페이지 조회 -> userIdx는 현재 보고있는 사람
         User user = userRepository.findByNickname(nickname).orElseThrow(IllegalAccessError::new);
-
+        Optional<User> followUser = userRepository.findById(userIdx);
+        int pageUserIdx = user.getIdx();
+        boolean isMy = false;
+        if(pageUserIdx==userIdx) isMy = true;
+        // 해당 유저의 프로필 정보
         UserInfoDto userInfoDto = UserInfoDto.builder()
                 .nickname(user.getNickname())
                 .description(user.getDescription())
                 .picture(user.getPicture())
-                .follower(followService.getFollowerList(user.getIdx()).size())
-                .following(followService.getFollowingList(user.getIdx()).size())
+                .follower(followService.getFollowerList(pageUserIdx).size())
+                .following(followService.getFollowingList(pageUserIdx).size())
                 .build();
-
         // 내가 쓴 테마 리스트
-        // FeignClient 적용 부분
-        List<UserThemeDto> userThemeByUserIdx = themeClient.getUserThemeByUserIdx(user.getIdx());
-        userInfoDto.setThemeDtoList(userThemeByUserIdx);
-        userInfoDto.setThemes(userThemeByUserIdx.size());
-        System.out.println("내가 쓴 테마");
+        List<UserThemeDto> userThemeDtoList = themeClient.getUserThemeByUserIdx(pageUserIdx);
+        List<UserThemeListDto> userThemeListDtoList = new ArrayList<>(); // 테마 리스트 관련 정보 넣기
+        for(int i=0;i<userThemeDtoList.size();i++){
+            Optional<Follow> userFollow = followRepository.findByFollowingUserAndFollowUserAndThemeIdx(user,followUser.get(),userThemeDtoList.get(i).getThemeIdx());
+            boolean isfollow = false;
+            BoardInfoForUserDto boardInfoForUserDto = boardInfoForUser(userThemeDtoList.get(i).getThemeIdx(),userIdx);
+            if(userFollow.isPresent()) isfollow = true;
+            UserThemeListDto userThemeListDto = UserThemeListDto.builder()
+                    .allChallengeCount(boardInfoForUserDto.getAllBoardCount())
+                    .boardCount(boardInfoForUserDto.getBoardCount())
+                    .challenge(userThemeDtoList.get(i).isChallenge())
+                    .commentCount(boardInfoForUserDto.getCommentCount())
+                    .currentChallengeCount(boardInfoForUserDto.getCurrentBoardCount())
+                    .emoticon(userThemeDtoList.get(i).getEmoticon())
+                    .follow(isfollow)
+                    .createTime(userThemeDtoList.get(i).getCreateTime())
+                    .isMy(isMy)
+                    .description(userThemeDtoList.get(i).getDescription())
+                    .modifyTime(userThemeDtoList.get(i).getModifyTime())
+                    .name(userThemeDtoList.get(i).getName())
+                    .openType(userThemeDtoList.get(i).getOpenType())
+                    .personCount(boardInfoForUserDto.getPersonCount())
+                    .themeIdx(userThemeDtoList.get(i).getThemeIdx())
+                    .pictures(boardInfoForUserDto.getPictures())
+                    .userIdx(userThemeDtoList.get(i).getUserIdx())
+                    .build();
+            userThemeListDtoList.add(userThemeListDto);
+        }
+        userInfoDto.setThemeDtoList(userThemeListDtoList);
 
         // 내가 쓴 게시글 수
         List<BoardDto> userBoardList = feedClient.userBoardList(user.getIdx());
         userInfoDto.setPosts(userBoardList.size());
-        System.out.println("내가 쓴 게시글");
 
         // 내가 팔로우한 테마 리스트
         UserThemeIdxDto userThemeIdxDto = UserThemeIdxDto.builder()
                 .userThemeList(followRepository.findThemeIdByFollowingUser(user))
                 .build();
 
-        List<UserThemeDto> userThemeDtos = themeClient.followThemeList(userThemeIdxDto);
-        userInfoDto.setFollowingDtoList(userThemeDtos);
-        System.out.println("내가 팔로우한 테마");
+        List<UserThemeDto> userThemeListDtos = themeClient.followThemeList(userThemeIdxDto);
+        List<UserThemeListDto> userThemeListDtoLists = new ArrayList<>(); // 테마 리스트 관련 정보 넣기
+        for(int i=0;i<userThemeListDtos.size();i++){
+            boolean isfollow = true;
+            BoardInfoForUserDto boardInfoForUserDto = boardInfoForUser(userThemeListDtos.get(i).getThemeIdx(),pageUserIdx);
+            UserThemeListDto userThemeListDto = UserThemeListDto.builder()
+                    .allChallengeCount(boardInfoForUserDto.getAllBoardCount())
+                    .boardCount(boardInfoForUserDto.getBoardCount())
+                    .challenge(userThemeListDtos.get(i).isChallenge())
+                    .commentCount(boardInfoForUserDto.getCommentCount())
+                    .currentChallengeCount(boardInfoForUserDto.getCurrentBoardCount())
+                    .emoticon(userThemeListDtos.get(i).getEmoticon())
+                    .follow(isfollow)
+                    .createTime(userThemeListDtos.get(i).getCreateTime())
+                    .isMy(false)
+                    .description(userThemeListDtos.get(i).getDescription())
+                    .modifyTime(userThemeListDtos.get(i).getModifyTime())
+                    .name(userThemeListDtos.get(i).getName())
+                    .openType(userThemeListDtos.get(i).getOpenType())
+                    .personCount(boardInfoForUserDto.getPersonCount())
+                    .themeIdx(userThemeListDtos.get(i).getThemeIdx())
+                    .pictures(boardInfoForUserDto.getPictures())
+                    .userIdx(userThemeListDtos.get(i).getUserIdx())
+                    .build();
+            userThemeListDtoLists.add(userThemeListDto);
+        }
+        userInfoDto.setFollowingDtoList(userThemeListDtoLists);
         return userInfoDto;
     }
 
@@ -192,7 +239,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public KakaoDto kakaoUser(String token){
-        KakaoDto kakaoDto = null;
+        KakaoDto kakaoDto = new KakaoDto();
         String reqURL = "https://kapi.kakao.com/v2/user/me";
 
         // access_token을 이용하여 사용자 정보 조회
@@ -384,5 +431,8 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
     }
-
+    @Override
+    public BoardInfoForUserDto boardInfoForUser(int themeIdx, int userIdx){
+        return feedClient.boardInfoForUser(themeIdx,userIdx);
+    }
 }

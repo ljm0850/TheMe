@@ -1,17 +1,14 @@
 package com.ssafy.user.service;
 
 
-import com.ssafy.user.dto.UserDto;
-import com.ssafy.user.dto.UserInfoByIdDto;
-import com.ssafy.user.dto.UserInfoDto;
-import com.ssafy.user.dto.UserUpdateDto;
+import com.ssafy.user.dto.*;
 
 import java.util.List;
 import java.util.Map;
 
 public interface UserService {
     UserInfoByIdDto loginUser(String kakaoToken);
-    UserInfoDto getUserInfo(String nickname);
+    UserInfoDto getUserInfo(String nickname,int userIdx);
     boolean isPossibleNickname(String nickname);
     void updateUser(String nickname, UserUpdateDto userUpdate);
     void deleteUser(String nickname);
@@ -22,4 +19,5 @@ public interface UserService {
     List<String> liveSearchUser(String value);
 
     Map<String, Object> searchThemeInfo(String value);
+    BoardInfoForUserDto boardInfoForUser(int themeIdx, int userIdx);
 }

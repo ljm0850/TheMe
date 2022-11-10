@@ -1,18 +1,18 @@
 package com.ssafy.user.dto;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
+import lombok.*;
 
 @Getter
+@Setter
+@Builder
 @ToString
 @NoArgsConstructor
 public class UserThemeDto {
     private int idx;
-    private int userIdx; // 테마 작성자
+    private int userIdx;
     private int themeIdx; // 부모테마
     private int openType; // 공개여부 (0비공개,1친구공개,2검색허용)
     private LocalDateTime createTime; // 생성시간
@@ -27,8 +27,8 @@ public class UserThemeDto {
     public UserThemeDto(int idx, int userIdx, int themeIdx, int openType, LocalDateTime createTime,
                         LocalDateTime modifyTime, boolean challenge, String description, String name, String emoticon) {
         this.idx = idx;
-        this.emoticon = emoticon;
         this.name = name;
+        this.emoticon = emoticon;
         this.userIdx = userIdx;
         this.themeIdx = themeIdx;
         this.openType = openType;
@@ -38,4 +38,3 @@ public class UserThemeDto {
         this.description = description;
     }
 }
-
