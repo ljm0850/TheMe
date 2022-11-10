@@ -39,21 +39,20 @@ export default {
                 // place: getters.selectedPlace.address_name,
                 place: getters.selectedPlace.road_address_name,
                 themeIdx: _data.themeIdx,
-                // x좌표 : getters.selectedPlace.x
-                // y좌표
+                logitude : getters.selectedPlace.x,
+                latitude : getters.selectedPlace.y,
             }
-            console.log(dt.pictures[0])
-            console.log(dt.pictures[1])
+            console.log(dt)
 
-            // axios({
-            //     url: rest.Feed.createArticle(),
-            //     method: 'post',
-            //     headers: getters.authHeader,
-            //     data: dt
-            // })
-            //     .then((res) => {
-            //     console.log(res)
-            // })
+            axios({
+                url: rest.Feed.createArticle(),
+                method: 'post',
+                headers: getters.authHeader,
+                data: dt
+            })
+                .then((res) => {
+                console.log(res.data)
+            })
         },
         detailArticle({ commit, getters }: { commit: Commit, getters: any }, _boardIdx: string) {
             axios({

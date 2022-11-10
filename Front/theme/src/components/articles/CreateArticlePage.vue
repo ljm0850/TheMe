@@ -11,11 +11,9 @@
           <option v-for="theme in themeList" :key="theme" :value="theme.idx" >{{ theme.name }} 지금 테마이름값이 안넘어와서</option>
         </select>
       </div>
-      <!-- <div>장소 등록</div>
-      <div class="input-group mb-3">
-        <label class="input-group-text">장소 등록</label>
-        <input class="form-control" type="text" placeholder="장소등록" aria-label="default input example" v-model="state.searchValue">
-      </div> -->
+      <!-- 이미지 파일 첨부 -->
+      <input type="file" multiple accept="image/*" @change="fileChange" />
+      <PreviewImageVue v-if="isSelectFile"/>
       <!-- 지도 -->
       <ArticleMapVue />
       <!-- 내용 -->
@@ -23,7 +21,6 @@
         <label for="exampleFormControlTextarea1" class="form-label">내용</label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="state.description"></textarea>
       </div>
-      <input type="file" multiple accept="image/*" @change="fileChange" />
       <button @click.prevent="createArticle()">게시물 등록</button>
     </form>
     {{ themeList }}
@@ -36,21 +33,25 @@ import { useStore } from "vuex";
 import "firebase/compat/storage"
 import "firebase/compat/auth";
 import ArticleMapVue from "../map/ArticleMap.vue";
+import PreviewImageVue from "./PreviewImage.vue";
 import { articleImageUpload } from "@/store/firebase/firebase"
+import _ from "lodash"
 export default {
   components: {
     ArticleMapVue,
+    PreviewImageVue,
   },
   setup (){
     const state :any = reactive({
       theme: 0,
       coordinate_x:0,
       coordinate_y: 0,
-      selectFile: [],
+      selectFile: {},
       previewImgUrl: null,
       searchValue: "",
       description:""
     })
+    const isSelectFile = computed(()=> !_.isEmpty(state.selectFile))
     const imageUrls: string[] = [];
     const store = useStore();
     const createArticle = async()=>{
@@ -66,17 +67,49 @@ export default {
     }
     store.dispatch("getMyThemeList")
     const themeList = computed(() => store.getters.selectedUserThemeList)
-
+    let body;
     const fileChange = (e: any) => {
-      console.log(e.target.files)
+      // console.log(e.target.files)
       state.selectFile = e.target.files
+      body = document.querySelector("#previewImg")
+      // 기존에 올린 이미지 제거
+      while (body?.firstChild) {
+        body.firstChild.remove()
+      }
+
+      for (let i = 0; i < state.selectFile.length; i++){
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          createPreview(e.target?.result,i)
+        };
+        reader.readAsDataURL(state.selectFile[i])
+      }
     }
-    return { state,createArticle, themeList,fileChange }
+
+    const createPreview = (_img: string, idx: number) => {
+      body = document.querySelector("#previewImg")
+      const newDiv = document.createElement('div')
+      if (idx === 0) {
+        newDiv.className = 'carousel-item active'
+      }
+      else {
+        newDiv.className = 'carousel-item'
+      }
+      const newImg = document.createElement('img')
+      newImg.src = _img
+      newImg.className = 'img-size'
+      newDiv.appendChild(newImg)
+      body?.appendChild(newDiv)
+    }
+
+    return { state, createArticle, themeList, fileChange, createPreview, isSelectFile }
   }
 }
 </script>
 
-<style lang="scss`">
-
+<style lang="scss">
+.img-size{
+  width: 360px;
+}
 
 </style>
