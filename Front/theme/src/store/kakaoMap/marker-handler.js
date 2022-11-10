@@ -1,19 +1,25 @@
+import _ from "lodash"
 const kakao = window.kakao
-
+// var nowMarker = null 
 class MarkerHandler {
     constructor(vueKakaoMap) {
         // console.log("[vue component]", vueKakaoMap)
         this.vueMap = vueKakaoMap;
     }
-    add(userData, fnConv) {
-        userData.forEach((data) => {
-            const option = fnConv(data)
-            const markerInstance = new kakao.maps.Marker({
+    add(userData) {
+        if (_.isEmpty(userData)) {
+            return
+        }
+        userData.forEach(data => {
+            // if (nowMarker) {
+            //     nowMarker.setMap(null)
+            // }
+            new kakao.maps.Marker({
                 map: this.vueMap.mapInstance,
-                position: new kakao.maps.LatLng(option.lat,option.lng)
+                position: new kakao.maps.LatLng(data.y,data.x)
             });
-            console.log(markerInstance)
-        })
+            // nowMarker.setMap(this.vueMap.mapInstance)
+        });
     }
     
 }

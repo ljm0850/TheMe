@@ -9,33 +9,51 @@ export default {
         feedArticleList: [{ themeName: "tttasdgfa" }, { themeName: "임시2" }],
         feedTheme: [],
         feedRecommendThemeList1: [{title:"코딩하기 좋은 까페"},{title:"낮잠자기 좋은 까페"},{title:"짧"}],
-        feedRecommendThemeList2: [{title:"프로젝트 하기 좋은 싸피"},{title:"수완지구 분위기 있는 레스토랑"},{title:"다"}],
+        feedRecommendThemeList2: [{ title: "프로젝트 하기 좋은 싸피" }, { title: "수완지구 분위기 있는 레스토랑" }, { title: "다" }],
+        searchPlacesList: [],
+        selectedPlace: {},
     },
     getters: {
         getFeedArticleList: (state: { feedArticleList: Array<object> }) => state.feedArticleList,
         getFeedTheme: (state: { feedTheme: Array<object>; }) => state.feedTheme,
         getFeedRecommendThemeList1: (state: { feedRecommendThemeList1 : Array<object>}) => state.feedRecommendThemeList1,
-        getFeedRecommendThemeList2: (state: { feedRecommendThemeList2 : Array<object>}) => state.feedRecommendThemeList2,
-        
+        getFeedRecommendThemeList2: (state: { feedRecommendThemeList2: Array<object> }) => state.feedRecommendThemeList2,
+        searchPlacesList: (state: { searchPlacesList: Array<Object> }) => state.searchPlacesList,
+        selectedPlace: (state: { selectedPlace:Object})=> state.selectedPlace,
     },
     mutations: {
         SET_FEED_ARTICLE_LIST: (state: {feedArticleList : Array<object>}, _list:Array<object>) => state.feedArticleList = _list,
         SET_FEED_THEME: (state: { feedTheme: Array<object>; }, _feedTheme: Array<object>) => state.feedTheme = _feedTheme,
         SET_FEED_RECOMMEND_THEME_List1: (state: { feedRecommendThemeList1: Array<object>}, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList1 = _feedRecommendThemeList,
-        SET_FEED_RECOMMEND_THEME_List2: (state: { feedRecommendThemeList2: Array<object>}, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList2 = _feedRecommendThemeList,
+        SET_FEED_RECOMMEND_THEME_List2: (state: { feedRecommendThemeList2: Array<object> }, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList2 = _feedRecommendThemeList,
+        SET_SEARCH_PLACES_LIST: (state: {searchPlacesList:Array<Object>}, _searchPlacesList:Array<Object>) => state.searchPlacesList = _searchPlacesList,
+        SET_SELECTED_PLACE: (state:{selectedPlace:Object}, _selectedPlace:Array<Object>) => state.selectedPlace = _selectedPlace
     },
     actions: {
         // board-controller
-        createArticle({ commit, getters }: { commit: Commit, getters: any }, _data: object) {
-            axios({
-                url: rest.Feed.createArticle(),
-                method: 'post',
-                headers: getters.authHeader,
-                data: _data
-            })
-                .then((res) => {
-                console.log(res)
-            })
+        createArticle({ commit, getters }: { commit: Commit, getters: any }, _data: { description:string, pictures:Array<string>,themeIdx:number}) {
+            const dt = {
+                description: _data.description,
+                name: getters.selectedPlace.place_name,
+                pictures: _data.pictures,
+                // place: getters.selectedPlace.address_name,
+                place: getters.selectedPlace.road_address_name,
+                themeIdx: _data.themeIdx,
+                // x좌표 : getters.selectedPlace.x
+                // y좌표
+            }
+            console.log(dt.pictures[0])
+            console.log(dt.pictures[1])
+
+            // axios({
+            //     url: rest.Feed.createArticle(),
+            //     method: 'post',
+            //     headers: getters.authHeader,
+            //     data: dt
+            // })
+            //     .then((res) => {
+            //     console.log(res)
+            // })
         },
         detailArticle({ commit, getters }: { commit: Commit, getters: any }, _boardIdx: string) {
             axios({
@@ -182,7 +200,12 @@ export default {
                 // commit("SET_FEED_RECOMMEND_THEME_List2",res.data)
             })
         },
-
+        searchPlacesList({ commit }: { commit: Commit }, _list: Array<Object>) {
+            commit("SET_SEARCH_PLACES_LIST",_list)
+        },
+        selectedPlace({ commit }: { commit: Commit }, _place: Object) {
+            commit("SET_SELECTED_PLACE",_place)
+        },
 
     }
 }
