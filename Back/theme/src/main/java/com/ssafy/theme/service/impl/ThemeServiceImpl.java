@@ -50,15 +50,6 @@ public class ThemeServiceImpl implements ThemeService {
                 .createTime(LocalDateTime.now())
                 .build();
         themeRepository.save(theme);
-        // 내가 만든 테마이므로 유저테마에도 등록
-        UserTheme userTheme = UserTheme.builder()
-                .userIdx(userIdx)
-                .challenge(false)
-                .createTime(theme.getCreateTime())
-                .modifyTime(theme.getCreateTime())
-                .theme(theme)
-                .build();
-        userThemeRepository.save(userTheme);
         return theme.getIdx();
     }
     @Override
@@ -445,5 +436,11 @@ public class ThemeServiceImpl implements ThemeService {
             return addUserTheme.getIdx();
         }
         else return userTheme.get().getIdx(); // userThemeIdx를 넘겨주기
+    }
+
+    @Override
+    public int whoUserIdx(int userThemeIdx) {
+        Optional<UserTheme> userTheme = userThemeRepository.findById(userThemeIdx);
+        return userTheme.get().getUserIdx();
     }
 }

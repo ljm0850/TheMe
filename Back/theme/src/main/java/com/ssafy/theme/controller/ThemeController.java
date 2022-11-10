@@ -268,4 +268,8 @@ public class ThemeController {
             , @PathVariable(name = "theme_idx") int ThemeIdx){
         return themeService.isUserTheme(userIdx,ThemeIdx);
     }
+    @GetMapping("/userTheme/{user_theme_idx}")
+    public int whoUserIdx(@PathVariable(name = "user_theme_idx") int userThemeIdx) {
+        return themeService.whoUserIdx(userThemeIdx);
+    }
 }

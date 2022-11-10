@@ -44,4 +44,6 @@ public interface ThemeService {
     ThemeDto getPublicThemeDetail(int theme_idx);
 
     int isUserTheme(int userIdx, int themeIdx);
+
+    int whoUserIdx(int userThemeIdx);
 }
