@@ -10,8 +10,8 @@ const SEARCH = '/search'
 
 // 카카오
 const KAKAO_Host = "https://kauth.kakao.com"
-const REDIRECT_URI = "http://localhost:8080"
-// const REDIRECT_URI = "https://k7c2031.p.ssafy.io"
+// const REDIRECT_URI = "http://localhost:8080"
+const REDIRECT_URI = "https://k7c2031.p.ssafy.io"
 const KAKAO_GET_AUTHORIZATION = `/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
 const KAKAO_TOKEN = "/oauth/token"
 export default {
