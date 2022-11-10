@@ -2,7 +2,8 @@
     <div>
         <div class="theme-header">
             <div class="theme-title-box">
-                <div class="theme-title-text">⭐︎</div>
+                <div v-if="state.isMarked" class="theme-title-text" @click="clickBookmark()">⭐︎</div>
+                <div v-if="!state.isMarked" class="theme-title-text" @click="clickBookmark()">☆</div>
                 <div class="theme-title-text">{{themeDetail.emoticon}}</div>
                 <div class="theme-title-text">{{themeDetail.name}}</div>
             </div>
@@ -20,7 +21,7 @@
 <script lang="ts">
 import ArticleListVue from "@/components/articles/ArticleList.vue"
 import KakaoMapVue from "../map/KakaoMap.vue"
-import { computed } from "vue";
+import { computed, reactive } from "vue";
 import { useRoute } from 'vue-router'
 import { useStore } from "vuex";
 export default {
@@ -31,11 +32,29 @@ export default {
     setup() {
         const store = useStore()
         const route = useRoute()
+
         let theme_idx = route.params.themeIdx
-        const themeDetail = computed(() => store.getters.publicThemeDetail)
         store.dispatch("detailTheme", theme_idx)
 
-        return { themeDetail }
+        const themeDetail = computed(() => store.getters.publicThemeDetail)
+        
+
+        const state = reactive({
+            isMarked : false,
+        });
+
+        const clickBookmark = () => {
+            if(state.isMarked){
+                // 북마크 취소
+                store.dispatch("scrapTheme", theme_idx)
+            } else {
+                // 북마크 하기
+                store.dispatch("unScrapTheme", theme_idx)
+            }
+            state.isMarked = !state.isMarked
+        }
+
+        return { themeDetail, state, clickBookmark }
     }
 }
 </script>

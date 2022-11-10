@@ -5,7 +5,7 @@
             <div>{{article.place}}</div>
             <div>{{article.nickname}}</div>
         </div>
-        <div>게시물 개수</div>
+        <div>{{article.count}}</div>
     </div>
     <hr>
 </template>

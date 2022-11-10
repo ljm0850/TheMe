@@ -23,7 +23,7 @@ export default {
     setup(props:any) {
         const state = reactive({
             themeIdx: props.themeDetail.idx,
-            pageSize: 15,
+            pageSize: 10,
             pageIdx: 0
         })
 

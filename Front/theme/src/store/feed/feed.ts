@@ -175,8 +175,8 @@ export default {
                 }
             })
                 .then((res => {
-                console.log(res.data)
-                commit("SET_PUBLIC_THEME_ARTICLE_LIST", res.data)
+                console.log(res.data.data)
+                commit("SET_PUBLIC_THEME_ARTICLE_LIST", res.data.data)
             }))
         },
 

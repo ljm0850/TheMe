@@ -46,7 +46,7 @@ export default {
         getUerThemeList: (_user_idx: string) => HOST + THEME + `/${_user_idx}`,
         recommendThemeList:()=> HOST + THEME + '/recommend',    // api 미완
         searchTheme: (_target:string)=>HOST + THEME + SEARCH + `/${_target}`,
-        scrapTheme: (_user_idx:string, _theme_idx:string)=>HOST + THEME + `/bookmark/${_user_idx}/${_theme_idx}`,
+        scrapTheme: (_theme_idx:string)=>HOST + THEME + `/bookmark/${_theme_idx}`,
         getThemeDetail:(_theme_idx:string)=> HOST + THEME + '/detail' + `/${_theme_idx}`,
     },
     

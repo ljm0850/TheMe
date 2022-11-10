@@ -136,16 +136,6 @@ export default {
         getMyThemeList({ dispatch,getters }: {dispatch:Dispatch, getters: any}) {
             dispatch("getUserThemeList",getters.loginUser.userIdx)
         },
-        bookmarkTheme({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _userIdx:string, _themeIdx:string) {
-            axios({
-                url: rest.Theme.scrapTheme(_userIdx, _themeIdx),
-                method: 'post',
-                headers: getters.authHeader
-            })
-            .then((res) => {
-                console.log(res)
-            })
-        },
         getRecommendThemeList({ commit,getters }:{commit:Commit,getters:any}) {
             axios({
                 url: rest.Theme.recommendThemeList(),
@@ -167,9 +157,9 @@ export default {
                     commit('SET_SEARCH_THEME_LIST',res.data.themeDtos)
             })
         },
-        scrapTheme({ commit, getters }: { commit: Commit, getters: any },_userIdx:string,_themeIdx:string) {
+        scrapTheme({ commit, getters }: { commit: Commit, getters: any },_themeIdx:string) {
             axios({
-                url: rest.Theme.scrapTheme(_userIdx, _themeIdx),
+                url: rest.Theme.scrapTheme(_themeIdx),
                 method: 'post',
                 headers: getters.authHeader
             })
@@ -177,9 +167,9 @@ export default {
                 console.log(res)
             })
         },
-        unScrapTheme({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _userIdx: string, _themeIdx: string) {
+        unScrapTheme({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _themeIdx: string) {
             axios({
-                url: rest.Theme.scrapTheme(_userIdx, _themeIdx),
+                url: rest.Theme.scrapTheme(_themeIdx),
                 method: 'delete',
                 headers: getters.authHeader
             })
