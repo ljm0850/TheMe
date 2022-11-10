@@ -25,8 +25,9 @@
                 <div>자기 소개 <input type="text" class="form-control" id="" :placeholder="selectedUser.description" @input="updateDescription"></div>
             </div>
             <div class="modal-footer">
-                <button v-if="state.isChanged" type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="updateUserInfo">변경</button>
+                <button v-if="state.isChanged" type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="updateUserInfo">Update</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="logout">LogOut</button>
             </div>
             
         </div>
@@ -81,7 +82,13 @@ export default {
             })
         } 
         
-        return { state,getDuplicateNickname, isPossible, updateUserInfo, selectedUser, updateDescription}
+        const logout = () => {
+            store.dispatch("logout")
+            router.push({
+                name:"Main"
+            })
+        }
+        return { state,getDuplicateNickname, isPossible, updateUserInfo, selectedUser, updateDescription, logout}
     }
 }
 </script>
