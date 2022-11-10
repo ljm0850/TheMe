@@ -4,7 +4,7 @@
         <button type="button" data-bs-toggle="modal" data-bs-target="#settingModal">🛠</button>
     </div>
     <!-- 세팅 모달 -->
-    <SettingModalVue :userInfo="loginUser"/>
+    <SettingModalVue :userInfo="selectedUser"/>
     <!-- 모달 끝 -->
     <div class="d-flex flex-column align-items-center">
         <img :src="selectedUser.picture" alt="" class="test">
