@@ -102,7 +102,7 @@ export default {
       }
       const newImg = document.createElement('img')
       newImg.src = _img
-      newImg.className = 'img-size'
+      newImg.className = 'preview-img-size'
       newDiv.appendChild(newImg)
       body?.appendChild(newDiv)
     }
@@ -117,8 +117,9 @@ export default {
   text-align: center;
   font-size: 24px;
 }
-// .img-size{
-//   width: 360px;
-// }
+.preview-img-size{
+  width: 360px;
+  height: 360px;
+}
 
 </style>

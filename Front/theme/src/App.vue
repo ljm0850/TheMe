@@ -49,7 +49,10 @@ export default defineComponent({
   outline-color: black !important;
   border-color: #cdcdcd !important;
   border-radius: 5px;
-
+}
+.preview-img-size {
+  width: 360px;
+  height: 360px;
 }
 #default_app {
   max-height: 844px;

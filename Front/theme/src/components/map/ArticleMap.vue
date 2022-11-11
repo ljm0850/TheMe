@@ -13,6 +13,7 @@
                 <h3>{{ place.address_name }}</h3>
             </div>
         </div>
+        <!-- <KakaoMapVue v-show="state" ref="kmap" class="kmap" :options="mapOption" /> -->
         <KakaoMapVue v-show="state" ref="kmap" class="kmap" :options="mapOption" />
     </div>
 </div>
@@ -26,12 +27,6 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
     components: {
         KakaoMapVue
-    },
-    computed: {
-        ...mapGetters(['searchPlacesList']),
-        places() {
-            return this.searchPlacesList
-        }
     },
     data() {
         return {
@@ -47,7 +42,13 @@ export default {
             mapFlag: false
         }
     },
-
+    
+    computed: {
+        ...mapGetters(['searchPlacesList']),
+        places() {
+            return this.searchPlacesList
+        }
+    },
     created() {
         this.$store.dispatch('searchPlacesList', [])
         this.$store.dispatch('selectedPlace', {})
