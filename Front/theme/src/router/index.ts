@@ -25,7 +25,7 @@ const routes = [
     component: ThemeListPage,
   },
   {
-    path: "/theme/public/:themeName",
+    path: "/theme/public/:themeIdx",
     name: "PublicTheme",
     component: ThemeDetail,
   },

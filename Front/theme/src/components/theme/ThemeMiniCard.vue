@@ -3,7 +3,10 @@
   <div class="card-body" @click="clickTheme()" v-if="theme">
     <div>{{theme.emoticon}}</div>
     <div class="card-title">{{theme.name}}</div>
-    <div class="card-count">{{theme.userCount}}명이 참여함</div>
+    <div class="position-absolute top-0 end-0 userCount">
+      <div class="card-count">👤</div>
+      <div class="card-count">{{theme.userCount}}</div>
+    </div>
   </div>
 </div>
 </template>
@@ -22,8 +25,7 @@ export default {
       router.push({ 
         name: "PublicTheme", 
         params: { 
-          emoticon : props.theme.emoticon,
-          themeName: props.theme.name
+          themeIdx: props.theme.idx
         } 
       })
     }
@@ -48,6 +50,9 @@ export default {
   border-radius: 10px !important;
 
 }
+.userCount{
+  margin: 5px;
+}
 .card-body{
   text-align: center;
 }
@@ -56,6 +61,8 @@ export default {
   font-weight: 600;
 }
 .card-count{
+  display: inline;
+  margin: 3px;
   font-size: 8px;
 }
   

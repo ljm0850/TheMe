@@ -12,6 +12,7 @@ export default {
         feedRecommendThemeList2: [{ title: "프로젝트 하기 좋은 싸피" }, { title: "수완지구 분위기 있는 레스토랑" }, { title: "다" }],
         searchPlacesList: [],
         selectedPlace: {},
+        publicThemeArticleList : [],
     },
     getters: {
         getFeedArticleList: (state: { feedArticleList: Array<object> }) => state.feedArticleList,
@@ -20,6 +21,7 @@ export default {
         getFeedRecommendThemeList2: (state: { feedRecommendThemeList2: Array<object> }) => state.feedRecommendThemeList2,
         searchPlacesList: (state: { searchPlacesList: Array<Object> }) => state.searchPlacesList,
         selectedPlace: (state: { selectedPlace:Object})=> state.selectedPlace,
+        publicThemeArticleList: (state: { publicThemeArticleList:Object})=> state.publicThemeArticleList,
     },
     mutations: {
         SET_FEED_ARTICLE_LIST: (state: {feedArticleList : Array<object>}, _list:Array<object>) => state.feedArticleList = _list,
@@ -27,7 +29,8 @@ export default {
         SET_FEED_RECOMMEND_THEME_List1: (state: { feedRecommendThemeList1: Array<object>}, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList1 = _feedRecommendThemeList,
         SET_FEED_RECOMMEND_THEME_List2: (state: { feedRecommendThemeList2: Array<object> }, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList2 = _feedRecommendThemeList,
         SET_SEARCH_PLACES_LIST: (state: {searchPlacesList:Array<Object>}, _searchPlacesList:Array<Object>) => state.searchPlacesList = _searchPlacesList,
-        SET_SELECTED_PLACE: (state:{selectedPlace:Object}, _selectedPlace:Array<Object>) => state.selectedPlace = _selectedPlace
+        SET_SELECTED_PLACE: (state:{selectedPlace:Object}, _selectedPlace:Array<Object>) => state.selectedPlace = _selectedPlace,
+        SET_PUBLIC_THEME_ARTICLE_LIST: (state:{publicThemeArticleList:Object}, _publicThemeArticleList:Array<Object>) => state.publicThemeArticleList = _publicThemeArticleList,
     },
     actions: {
         // board-controller
@@ -159,18 +162,20 @@ export default {
         },
 
         // feed-controller
-        themeArticleList({ commit, getters }: { commit: Commit, getters: any },_themeIdx:string,_pageIdx:number,_pageSize:number) {
+        themeArticleList({ commit, getters }: { commit: Commit, getters: any }, _data:{themeIdx:string, pageIdx:number, pageSize:number}) {
+            
             axios({
-                url: rest.Feed.themeArticleList(_themeIdx),
+                url: rest.Feed.themeArticleList(_data.themeIdx),
                 method: 'get',
                 headers: getters.authHeader,
                 params: {
-                    pageIdx: _pageIdx,
-                    pageSize: _pageSize
+                    pageIdx: _data.pageIdx,
+                    pageSize: _data.pageSize
                 }
             })
                 .then((res => {
-                console.log(res)
+                console.log(res.data.data)
+                commit("SET_PUBLIC_THEME_ARTICLE_LIST", res.data.data)
             }))
         },
 
