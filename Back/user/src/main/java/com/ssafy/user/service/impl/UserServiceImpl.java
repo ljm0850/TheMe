@@ -119,8 +119,8 @@ public class UserServiceImpl implements UserService {
                 .nickname(user.getNickname())
                 .description(user.getDescription())
                 .picture(user.getPicture())
-                .follower(followService.getFollowerList(pageUserIdx).size())
-                .following(followService.getFollowingList(pageUserIdx).size())
+                .follower(followService.getFollowingList(pageUserIdx).size())
+                .following(followService.getFollowerList(pageUserIdx).size())
                 .userIdx(user.getIdx())
                 .build();
         // 내가 쓴 테마 리스트
@@ -187,6 +187,7 @@ public class UserServiceImpl implements UserService {
                     .themeIdx(userThemeListDtos.get(i).getThemeIdx())
                     .pictures(boardInfoForUserDto.getPictures())
                     .userIdx(userThemeListDtos.get(i).getUserIdx())
+                    .userThemeIdx(userThemeIdxDto.getUserThemeList().get(i))
                     .build();
             userThemeListDtoLists.add(userThemeListDto);
         }

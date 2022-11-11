@@ -14,6 +14,7 @@ public class UserThemeListDto { // 유저 테마 dto
 
     private int idx;
     private int userIdx; // 테마 작성자
+    private int userThemeIdx; // 해당 유저테마 번호
     private int themeIdx; // 부모테마
     private int openType; // 공개여부 (0비공개,1친구공개,2검색허용)
     private LocalDateTime createTime; // 생성시간
@@ -31,11 +32,12 @@ public class UserThemeListDto { // 유저 테마 dto
     private int currentChallengeCount; // 현재 참여한 챌린지 수
     private boolean isMy; // 본인인지 아닌지 확인
     @Builder
-    public UserThemeListDto(int idx, int userIdx, int themeIdx, int openType, LocalDateTime createTime, LocalDateTime modifyTime,
+    public UserThemeListDto(int idx, int userThemeIdx, int userIdx, int themeIdx, int openType, LocalDateTime createTime, LocalDateTime modifyTime,
                             boolean challenge, String description, String name, String emoticon, String[] pictures, int personCount,
                             int boardCount, int commentCount, boolean follow, int allChallengeCount, int currentChallengeCount,
                             boolean isMy) {
         this.idx = idx;
+        this.userThemeIdx = userThemeIdx
         this.userIdx = userIdx;
         this.themeIdx = themeIdx;
         this.openType = openType;
