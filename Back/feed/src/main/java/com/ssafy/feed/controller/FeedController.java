@@ -1,9 +1,6 @@
 package com.ssafy.feed.controller;
 
-import com.ssafy.feed.dto.board.BoardDto;
-import com.ssafy.feed.dto.board.BoardGroupListDto;
-import com.ssafy.feed.dto.board.BoardListDto;
-import com.ssafy.feed.dto.board.BoardSimpleListDto;
+import com.ssafy.feed.dto.board.*;
 import com.ssafy.feed.dto.comment.CommentListDto;
 import com.ssafy.feed.service.FeedService;
 import io.swagger.annotations.ApiOperation;
@@ -55,7 +52,7 @@ public class FeedController {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            List<BoardGroupListDto> boardGroupListDto = feedService.themeBoardGroup(userIdx,theme_idx,pageIdx,pageSize);
+            List<BoardGroupShowListDto> boardGroupListDto = feedService.themeBoardGroup(userIdx,theme_idx,pageIdx,pageSize);
             result.put("data",boardGroupListDto);
             result.put("message", OK);
             status = HttpStatus.OK;

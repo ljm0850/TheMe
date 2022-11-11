@@ -4,6 +4,7 @@ import com.ssafy.feed.client.ThemeClient;
 import com.ssafy.feed.client.UserClient;
 import com.ssafy.feed.dto.board.BoardDto;
 import com.ssafy.feed.dto.board.BoardGroupListDto;
+import com.ssafy.feed.dto.board.BoardGroupShowListDto;
 import com.ssafy.feed.dto.board.BoardSimpleListDto;
 import com.ssafy.feed.dto.theme.UserThemeDtoWithMSA;
 import com.ssafy.feed.dto.user.UserFollowThemeDto;
@@ -17,6 +18,7 @@ import com.ssafy.feed.repository.CommentRepository;
 import com.ssafy.feed.repository.LikeRepository;
 import com.ssafy.feed.repository.PictureRepository;
 import com.ssafy.feed.service.FeedService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -46,16 +48,32 @@ public class FeedServiceImpl implements FeedService {
         this.pictureRepository = pictureRepository;
     }
     @Override
-    public List<BoardGroupListDto> themeBoardGroup(int user_idx,int theme_idx,int pageIdx,int pageSize) {
-        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(theme_idx,user_idx); //테마 번호로 openType이 1인 userTheme만 받아오기
+    public List<BoardGroupShowListDto> themeBoardGroup(int user_idx, int theme_idx, int pageIdx, int pageSize) {
+        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(theme_idx,user_idx); //테마 번호로 openType이 0,1인 userTheme만 받아오기
         List<Integer> openUserList = new ArrayList<>();
+        List<BoardGroupShowListDto> result = new ArrayList<>();
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
         for(UserThemeDtoWithMSA theme : themeUserList){ //해당 번호 배열로 저장
             openUserList.add(theme.getUserIdx());
-            System.out.println(theme.getUserIdx());
+            List<BoardGroupListDto> boardGroupListDtos = boardRepository.getBoardGourpByListWithJPA(openUserList,theme.getUserThemeIdx(),pageable); //게시글 목록 리턴
+            for(int i=0;i<boardGroupListDtos.size();i++){
+                BoardGroupShowListDto boardGroupShowListDto = BoardGroupShowListDto.builder()
+                        .boardCount(boardGroupListDtos.get(i).getBoardCount())
+                        .isBookMarked(isScrap(user_idx,theme_idx))
+                        .isFollow(false)
+                        .isMy(false)
+                        .latitude(boardGroupListDtos.get(i).getLatitude())
+                        .longitude(boardGroupListDtos.get(i).getLongitude())
+                        .themeIdx(boardGroupListDtos.get(i).getThemeIdx())
+                        .city(boardGroupListDtos.get(i).getCity())
+                        .name(boardGroupListDtos.get(i).getName())
+                        .place(boardGroupListDtos.get(i).getPlace())
+                        .userIdx(boardGroupListDtos.get(i).getUserIdx())
+                        .build();
+                result.add(boardGroupShowListDto);
+            }
         }
-
-        return boardRepository.getBoardGourpByListWithJPA(openUserList,theme_idx,pageable); //게시글 목록 리턴
+        return  result;
     }
 
     @Override
@@ -211,5 +229,9 @@ public class FeedServiceImpl implements FeedService {
     @Override
     public int whoUserIdx(int userThemeIdx) {
         return themeClient.whoUserIdx(userThemeIdx);
+    }
+    @Override
+    public boolean isScrap(int userIdx, int themeIdx) {
+        return themeClient.isScrap(userIdx,themeIdx);
     }
 }

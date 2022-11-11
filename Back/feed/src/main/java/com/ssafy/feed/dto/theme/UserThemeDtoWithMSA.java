@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class UserThemeDtoWithMSA {
-    private int idx;
+    private int idx; // 부모테마 idx
+    private int userThemeIdx; //개인테마 idx
     private int userIdx; // 테마 작성자
     private String themeTitle; // 부모테마
     private String themeEmoticon; //
@@ -22,9 +23,10 @@ public class UserThemeDtoWithMSA {
     private String description; // 테마 소개
 
     @Builder
-    public UserThemeDtoWithMSA(int idx, int userIdx, String themeTitle, String themeEmoticon, int openType, LocalDateTime createTime,
+    public UserThemeDtoWithMSA(int idx, int userThemeIdx,int userIdx, String themeTitle, String themeEmoticon, int openType, LocalDateTime createTime,
                                LocalDateTime modifyTime, boolean challenge, String description) {
         this.idx = idx;
+        this.userThemeIdx = userThemeIdx;
         this.userIdx = userIdx;
         this.themeTitle = themeTitle;
         this.themeEmoticon = themeEmoticon;

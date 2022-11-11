@@ -22,4 +22,6 @@ public interface ThemeClient {
             , @PathVariable(name = "theme_idx") int ThemeIdx);
     @GetMapping("/theme/userTheme/{user_theme_idx}")
     int whoUserIdx(@PathVariable(name = "user_theme_idx") int userThemeIdx);
+    @GetMapping("/theme/isScrap/{user_idx}/{theme_idx}")
+    boolean isScrap(@PathVariable(name = "user_idx") int userIdx,@PathVariable(name = "theme_idx") int themeIdx);
 }

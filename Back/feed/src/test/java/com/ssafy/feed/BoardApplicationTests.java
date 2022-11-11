@@ -207,40 +207,40 @@ class BoardApplicationTests {
         //theme.getDescription() + theme.getUserIdx() + theme.getThemeTitle()+theme.getIdx()
         //설명 : 코딩테마에요    만든이 2  테마idx 2
         //설명 : 나만알고싶엉    만든이 3  테마idx 2
-        int themeIdx = 1;
-
-        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(themeIdx);
-        List<Integer> openUserList = new ArrayList<>();
-        int pageIdx = 0;
-        int pageSize = 3;
-        Pageable pageable = PageRequest.of(pageIdx, pageSize);
-        for(UserThemeDtoWithMSA theme : themeUserList){
-            openUserList.add(theme.getUserIdx());
-        }
-
-        List<BoardGroupListDto> boardGroupListDto = boardRepository.getBoardGourpByListWithJPA(openUserList,themeIdx,pageable);
-        for(BoardGroupListDto temp : boardGroupListDto){
-            System.out.println(temp.getName() + temp.getBoardCount());
-        }
+//        int themeIdx = 1;
+//
+//        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(themeIdx);
+//        List<Integer> openUserList = new ArrayList<>();
+//        int pageIdx = 0;
+//        int pageSize = 3;
+//        Pageable pageable = PageRequest.of(pageIdx, pageSize);
+//        for(UserThemeDtoWithMSA theme : themeUserList){
+//            openUserList.add(theme.getUserIdx());
+//        }
+//
+//        List<BoardGroupListDto> boardGroupListDto = boardRepository.getBoardGourpByListWithJPA(openUserList,themeIdx,pageable);
+//        for(BoardGroupListDto temp : boardGroupListDto){
+//            System.out.println(temp.getName() + temp.getBoardCount());
+//        }
     }
     @Test
     void 해당주소에대한게시글목록(){
         String name = "컴포즈";
         int themeIdx = 1;
         int pageIdx = 0;
-        int pageSize = 3;
-        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(themeIdx);
-        List<Integer> openUserList = new ArrayList<>();
-
-        Pageable pageable = PageRequest.of(pageIdx, pageSize);
-        for(UserThemeDtoWithMSA theme : themeUserList){
-            openUserList.add(theme.getUserIdx());
-            System.out.println(theme.getUserIdx());
-        }
-        List<Board> boardGroupListDto = boardRepository.getBoardListWithJPA(openUserList,themeIdx,name,pageable);
-        for(Board temp : boardGroupListDto){
-            System.out.println(temp.getName() + temp.getDescription());
-        }
+//        int pageSize = 3;
+//        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(themeIdx);
+//        List<Integer> openUserList = new ArrayList<>();
+//
+//        Pageable pageable = PageRequest.of(pageIdx, pageSize);
+//        for(UserThemeDtoWithMSA theme : themeUserList){
+//            openUserList.add(theme.getUserIdx());
+//            System.out.println(theme.getUserIdx());
+//        }
+//        List<Board> boardGroupListDto = boardRepository.getBoardListWithJPA(openUserList,themeIdx,name,pageable);
+//        for(Board temp : boardGroupListDto){
+//            System.out.println(temp.getName() + temp.getDescription());
+//        }
     }
     @Test
     void 좋아요_조회(){
