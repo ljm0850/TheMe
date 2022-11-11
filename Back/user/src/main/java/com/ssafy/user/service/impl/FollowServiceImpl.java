@@ -25,10 +25,10 @@ public class FollowServiceImpl implements FollowService
 
     @Override
     public void followTheme(int theme_id, int user_id, int target_user_id) { // 테마 팔로우
-        User followingUser = userRepository.findById(user_id)
+        User followingUser = userRepository.findById(target_user_id)
                 .orElseThrow(IllegalAccessError::new);
 
-        User followUser = userRepository.findById(target_user_id)
+        User followUser = userRepository.findById(user_id)
                 .orElseThrow(IllegalAccessError::new);
 
         // 이 유저테마 존재 여부 확인하는 api
@@ -96,7 +96,7 @@ public class FollowServiceImpl implements FollowService
         User followerUser = userRepository.findById(target_user_id).orElseThrow(IllegalAccessError::new);
         User followingUser = userRepository.findById(user_id).orElseThrow(IllegalAccessError::new);
 
-        List<Follow> followingByUser = followRepository.findByFollowUserAndFollowingUser(followerUser, followingUser);
+        List<Follow> followingByUser = followRepository.findByFollowUserAndFollowingUser(followingUser,followerUser);
         for(int i=0;i<followingByUser.size();i++) {
             followRepository.delete(followingByUser.get(i));
         }

@@ -12,13 +12,13 @@ import java.util.Optional;
 
 public interface FollowRepository extends JpaRepository<Follow, Integer> {
 
-    @Query("Select F.themeIdx From Follow F where F.followingUser =:user")
+    @Query("Select F.themeIdx From Follow F where F.followUser =:user")
     List<Integer> findThemeIdByFollowingUser(@Param("user") User user);
 
-    @Query("Select distinct(F.followingUser.idx) From Follow F where F.followUser =:user")
+    @Query("Select distinct(F.followingUser.idx) From Follow F where F.followingUser =:user")
     List<Integer> findFollowerByUser(@Param("user") User user);
 
-    @Query("Select distinct (F.followUser.idx) From Follow F where F.followingUser=:user")
+    @Query("Select distinct (F.followUser.idx) From Follow F where F.followUser=:user")
     List<Integer> findFollowingByUser(@Param("user") User user);
 
     List<Follow> findByFollowUserAndFollowingUser(User FollowerUser, User FollowingUser);
