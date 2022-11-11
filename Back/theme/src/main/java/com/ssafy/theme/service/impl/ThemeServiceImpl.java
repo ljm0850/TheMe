@@ -109,8 +109,8 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<PublicThemeDto> getPublicThemeList(int sort, int pageSize, int pageIdx) {
-        List<PublicThemeDto> resultList = new ArrayList<>();
+    public List<PublicThemeListDto> getPublicThemeList(int userIdx,int sort, int pageSize, int pageIdx) {
+        List<PublicThemeListDto> resultList = new ArrayList<>();
         Slice<PublicThemeDto> themeList;
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
             if (sort == 0) { // 인기순
@@ -121,12 +121,21 @@ public class ThemeServiceImpl implements ThemeService {
                 return null;
             }
         for(PublicThemeDto publicThemeDto : themeList){
-            PublicThemeDto addPublicThemeDto = PublicThemeDto.builder()
+            List<Scrap> scraps = scrapRepository.findByUserIdx(userIdx);
+            boolean flag = false;
+            for(int i=0;i<scraps.size();i++){
+                if(scraps.get(i).getTheme().getIdx()==publicThemeDto.getIdx()) {
+                    flag = true;
+                    break;
+                }
+            }
+            PublicThemeListDto addPublicThemeDto = PublicThemeListDto.builder()
                     .idx(publicThemeDto.getIdx())
                     .emoticon(publicThemeDto.getEmoticon())
                     .name(publicThemeDto.getName())
                     .userCount(publicThemeDto.getUserCount())
                     .createTime(publicThemeDto.getCreateTime())
+                    .isBookmarked(flag)
                     .build();
             resultList.add(addPublicThemeDto);
         }
@@ -231,17 +240,18 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public List<PublicThemeDto> getBookmarkThemeList(int userIdx) {
+    public List<PublicThemeListDto> getBookmarkThemeList(int userIdx) {
         List<Scrap> scrapList = scrapRepository.findByUserIdx(userIdx);
-        List<PublicThemeDto> publicThemeDtoList = new ArrayList<>();
+        List<PublicThemeListDto> publicThemeDtoList = new ArrayList<>();
         for(Scrap scrap : scrapList){
             Long themeCount = userThemeRepository.getThemeCountWithJPA(scrap.getTheme().getIdx());
-            PublicThemeDto publicThemeDto = PublicThemeDto.builder()
+            PublicThemeListDto publicThemeDto = PublicThemeListDto.builder()
                     .idx(scrap.getIdx())
                     .createTime(scrap.getTheme().getCreateTime())
                     .emoticon(scrap.getTheme().getEmoticon())
                     .name(scrap.getTheme().getName())
                     .userCount(themeCount)
+                    .isBookmarked(true)
                     .build();
             publicThemeDtoList.add(publicThemeDto);
         }

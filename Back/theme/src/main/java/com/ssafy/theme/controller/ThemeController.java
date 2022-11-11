@@ -84,10 +84,10 @@ public class ThemeController {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         int userIdx = Integer.parseInt(request.getHeader("userIdx"));
-        List<PublicThemeDto>  themeList;
+        List<PublicThemeListDto>  themeList;
         try {
             if(isMarked == 0){
-                themeList = themeService.getPublicThemeList(sort,pageSize,pageIdx);
+                themeList = themeService.getPublicThemeList(userIdx,sort,pageSize,pageIdx);
                 result.put("themeList",themeList);
                 result.put("message",OK);
             }else if(isMarked == 1){
@@ -102,6 +102,7 @@ public class ThemeController {
         } catch (Exception e) {
             result.put("message", FAIL);
             status = HttpStatus.INTERNAL_SERVER_ERROR;
+            System.out.println(e);
         }
 
         return new ResponseEntity<>(result, status);
