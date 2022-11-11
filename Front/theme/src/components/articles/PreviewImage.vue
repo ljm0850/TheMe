@@ -30,6 +30,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
-
+<style scoped lang="scss">
+.preview-img-size {
+  width: 360px;
+  height: 360px;
+}
 </style>

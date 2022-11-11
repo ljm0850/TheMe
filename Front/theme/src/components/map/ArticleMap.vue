@@ -1,23 +1,22 @@
 <template>
-    <div>
+<div>
+    <br>
+    <div class="input-group mb-3">
+        <label class="input-group-text">장소 검색</label>
+        <input class="form-control" type="text" v-model="searchValue" >
+        <button @click.prevent="searchPlace">검색</button>
+    </div>
+    <div class="map-area">
         <div>
-            <div class="input-group mb-3">
-                <label class="input-group-text">장소 검색</label>
-                <input class="form-control" type="text" v-model="searchValue" >
-                <button @click.prevent="searchPlace">검색</button>
-            </div>
-            <div class="map-area">
-                <div>
-                    <div v-for="place in places" :key="place.id" @click="showOnMap(place)">
-                        <h3>{{ place.place_name }}</h3>
-                        <h3>{{ place.address_name }}</h3>
-                    </div>
-                </div>
-                <KakaoMapVue ref="kmap" class="kmap" :options="mapOption" />
+            <div v-for="place in places" :key="place.id" @click="showOnMap(place)">
+                <h3>{{ place.place_name }}</h3>
+                <h3>{{ place.address_name }}</h3>
             </div>
         </div>
-        <!-- <div class="kmap" ref="map"></div> -->
+        <!-- <KakaoMapVue v-show="state" ref="kmap" class="kmap" :options="mapOption" /> -->
+        <KakaoMapVue v-show="state" ref="kmap" class="kmap" :options="mapOption" />
     </div>
+</div>
 </template>
 
 <script>
@@ -28,12 +27,6 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
     components: {
         KakaoMapVue
-    },
-    computed: {
-        ...mapGetters(['searchPlacesList']),
-        places() {
-            return this.searchPlacesList
-        }
     },
     data() {
         return {
@@ -46,9 +39,16 @@ export default {
                 level: 3,
             },
             markers: null,
+            mapFlag: false
         }
     },
-
+    
+    computed: {
+        ...mapGetters(['searchPlacesList']),
+        places() {
+            return this.searchPlacesList
+        }
+    },
     created() {
         this.$store.dispatch('searchPlacesList', [])
         this.$store.dispatch('selectedPlace', {})
@@ -81,7 +81,6 @@ export default {
             })
         },
         showOnMap(place) {
-            console.log(place)
             this.$store.dispatch('selectedPlace',place)
             this.mapOption.center = {
                 lat: place.y,
