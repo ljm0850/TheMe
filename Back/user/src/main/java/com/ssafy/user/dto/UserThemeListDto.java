@@ -37,7 +37,7 @@ public class UserThemeListDto { // 유저 테마 dto
                             int boardCount, int commentCount, boolean follow, int allChallengeCount, int currentChallengeCount,
                             boolean isMy) {
         this.idx = idx;
-        this.userThemeIdx = userThemeIdx
+        this.userThemeIdx = userThemeIdx;
         this.userIdx = userIdx;
         this.themeIdx = themeIdx;
         this.openType = openType;
