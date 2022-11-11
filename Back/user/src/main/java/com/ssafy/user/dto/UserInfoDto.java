@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class UserInfoDto {
+    int userIdx;
     String nickname;
     String description;
     String picture;
@@ -25,7 +26,8 @@ public class UserInfoDto {
     List<UserThemeListDto> followingDtoList;
 
     @Builder
-    public UserInfoDto(String nickname, String description, String picture, int posts, int themes, int follower, int following, List<UserThemeListDto> themeDtoList, List<UserThemeListDto> followingDtoList) {
+    public UserInfoDto(int userIdx, String nickname, String description, String picture, int posts, int themes, int follower, int following, List<UserThemeListDto> themeDtoList, List<UserThemeListDto> followingDtoList) {
+        this.userIdx = userIdx;
         this.nickname = nickname;
         this.description = description;
         this.picture = picture;

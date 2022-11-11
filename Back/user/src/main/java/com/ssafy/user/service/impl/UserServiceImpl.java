@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService {
                     .createTime(user.getCreateTime())
                     .description(user.getDescription())
                     .picture(user.getPicture())
+                    .userIdx(user.getIdx())
                     .build();
 
             log.info(userInfoByIdDto.toString());
@@ -100,6 +101,7 @@ public class UserServiceImpl implements UserService {
                     .createTime(user.getCreateTime())
                     .description(user.getDescription())
                     .picture(user.getPicture())
+                    .userIdx(user.getIdx())
                     .build();
         }
         return userInfoByIdDto;
@@ -119,6 +121,7 @@ public class UserServiceImpl implements UserService {
                 .picture(user.getPicture())
                 .follower(followService.getFollowerList(pageUserIdx).size())
                 .following(followService.getFollowingList(pageUserIdx).size())
+                .userIdx(user.getIdx())
                 .build();
         // 내가 쓴 테마 리스트
         List<UserThemeDto> userThemeDtoList = themeClient.getUserThemeByUserIdx(pageUserIdx);
