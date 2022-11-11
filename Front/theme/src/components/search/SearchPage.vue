@@ -143,6 +143,6 @@ width: 50%;
 .logo{
 margin: 0px;
   font-size: 3vh;
-    
+  height: 38px;
 }
 </style>

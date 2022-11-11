@@ -1,16 +1,16 @@
 <template>
     <div class="card custom-card d-flex justify-content-center">
-        <div class="card-body">
+        <div class="card-body" v-if="article">
             <div class="theme-name">{{article.themeName}}</div>
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
-                    <div>프로필사진</div>
-                    <div>글쓴이</div>
+                    <img :src="article.profile" class="profile-img"/>
+                    <div>{{article.nickname}}</div>
                 </div>
                 <div>3년전</div>
             </div>
             <!-- 사진 -->
-            <ArticleImageVue :test="article.themeName"/>
+            <ArticleImageVue :pictures="article.picture"/>
             <!-- 사진 끝 -->
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
@@ -44,19 +44,25 @@ export default {
         ArticleImageVue,
         CommentListVue,
     },
-    setup() {
+    setup(props:any) {
         const state = reactive({
             commentFlag : false,
         })
         const displayComment = ()=>{
             state.commentFlag = true;
         }
+        console.log(props.article)
         return {state,displayComment}
     }
 }
 </script>
 
 <style scoped lang="scss">
+.profile-img{
+    width: 32px;
+    height: 32px;
+    border-radius: 70%;
+}
 .custom-card{
     width: 380px;
     border-radius: 10px !important;

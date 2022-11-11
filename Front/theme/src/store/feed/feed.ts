@@ -184,8 +184,7 @@ export default {
                 params: { region: _region,pageSize : 3,pageIdx:0}
             })
                 .then((res) => {
-                    console.log(res.data)
-                    commit("SET_FEED_THEME",res.data)    
+                    commit("SET_FEED_THEME",res.data.data)    
             })
         },
         
