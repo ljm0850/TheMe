@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="d-flex card-list">
-    <ThemeMiniCardVue v-for="theme in publicThemeList" :key="theme" :theme="theme"/>
+    <ThemeMiniCardVue page="themeList" v-for="theme in publicThemeList" :key="theme" :theme="theme"/>
   </div>
 </div>
 
@@ -31,7 +31,7 @@ export default {
     store.commit("SET_PUBLIC_THEME_LIST",[])
     const state = reactive({
       isMarked: 0,
-      sort: 1,
+      sort: 0,
       pageSize: 15,
       pageIdx: 0
     })

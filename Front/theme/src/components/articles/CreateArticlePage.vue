@@ -102,6 +102,9 @@ export default {
       body?.appendChild(newDiv)
     }
 
+    const themeDetail = computed(() => store.getters.selectedThemeforArticle)
+    console.log("ddd"+themeDetail.value.emoticon)
+
     return { state, createArticle, themeList, fileChange, createPreview, isSelectFile }
   }
 }

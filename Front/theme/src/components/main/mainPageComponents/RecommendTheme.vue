@@ -3,14 +3,14 @@
   <div class="carousel-inner" v-if =" recommendThemeList.length > 0">
     <div class="carousel-item active">
         <div class="d-flex justify-content-around">
-          <ThemeMiniCardVue :theme="recommendThemeList[0]" :key="recommendThemeList[0]"/>  
-          <ThemeMiniCardVue :theme="recommendThemeList[1]" :key="recommendThemeList[1]"/> 
+          <ThemeMiniCardVue page="main" :theme="recommendThemeList[0]" :key="recommendThemeList[0]"/>  
+          <ThemeMiniCardVue page="main" :theme="recommendThemeList[1]" :key="recommendThemeList[1]"/> 
         </div>
     </div>
     <div class="carousel-item" v-for="idx in tempIdx" :key="idx">
       <div class="d-flex justify-content-around">
-        <ThemeMiniCardVue :theme="recommendThemeList[idx]" :key="recommendThemeList[idx]"/>
-        <ThemeMiniCardVue :theme="recommendThemeList[idx+1]" :key="recommendThemeList[idx+1]"/>
+        <ThemeMiniCardVue page="main" :theme="recommendThemeList[idx]" :key="recommendThemeList[idx]"/>
+        <ThemeMiniCardVue page="main" :theme="recommendThemeList[idx+1]" :key="recommendThemeList[idx+1]"/>
       </div>
     </div>
   </div>
