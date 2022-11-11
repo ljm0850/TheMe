@@ -4,7 +4,11 @@
             <div class="d-flex">
                 <div>{{theme.emoticon}}</div>
                     <div class="ms-2">{{theme.name}}</div>
-                    <button v-if="isSame" @click="check()" class="btn position-absolute top-0 end-0">🤍</button>
+                    <div v-if="!state.isSame">
+                        <button v-if="!state.isFollow" class="btn position-absolute top-0 end-0">🤍</button>
+                        <button v-if="state.isFollow" class="btn position-absolute top-0 end-0">💙</button>
+                    </div>
+                    
                 </div>
             </div>
             <div class="d-flex card-total">
@@ -31,7 +35,7 @@
 
 <script lang="ts">
 // import { useStore } from "vuex";
-// import { reactive } from "vue";
+import { reactive } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 // import { useRouter } from 'vue-router'
@@ -44,17 +48,31 @@ export default {
     },
     setup(props:any) {
       const store = useStore();
-    
-      const isSame = computed(()=>store.getters.isSame(props.theme.userIdx))
-      const selectedUser = computed(()=>store.getters.selectedUser)
-      const loginUser = computed(()=>store.getters.loginUser)
-      
-      const check = () => {
-        console.log()
-        console.log()
-      }
+      const state = reactive({
+      searchValue: "",
+      isSame: false,
+      isFollow : false
+    })
+
+    const test = async () => {
+        state.isSame = await store.dispatch("isSame", props.theme.userIdx)
         
-      return {isSame, selectedUser, loginUser, check}
+        console.log(props.theme)
+        state.isFollow = await store.dispatch("isFollow", { 
+            userIdx : props.theme.userIdx,
+            themeIdx: props.theme.themeIdx})
+            
+
+        console.log(state.isFollow);
+    }
+
+    test()
+    
+    const selectedUser = computed(()=>store.getters.selectedUser)
+    const loginUser = computed(()=>store.getters.loginUser)
+      
+        
+    return { selectedUser, loginUser, state }
     }
 }
 </script>
