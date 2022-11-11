@@ -13,6 +13,7 @@ export default {
         searchPlacesList: [],
         selectedPlace: {},
         publicThemeArticleList : [],
+        selectedThemeforArticle : [],
     },
     getters: {
         getFeedArticleList: (state: { feedArticleList: Array<object> }) => state.feedArticleList,
@@ -22,6 +23,7 @@ export default {
         searchPlacesList: (state: { searchPlacesList: Array<Object> }) => state.searchPlacesList,
         selectedPlace: (state: { selectedPlace:Object})=> state.selectedPlace,
         publicThemeArticleList: (state: { publicThemeArticleList:Object})=> state.publicThemeArticleList,
+        selectedThemeforArticle: (state: { selectedThemeforArticle:Object})=> state.selectedThemeforArticle,
     },
     mutations: {
         SET_FEED_ARTICLE_LIST: (state: {feedArticleList : Array<object>}, _list:Array<object>) => state.feedArticleList = _list,
@@ -31,6 +33,7 @@ export default {
         SET_SEARCH_PLACES_LIST: (state: {searchPlacesList:Array<Object>}, _searchPlacesList:Array<Object>) => state.searchPlacesList = _searchPlacesList,
         SET_SELECTED_PLACE: (state:{selectedPlace:Object}, _selectedPlace:Array<Object>) => state.selectedPlace = _selectedPlace,
         SET_PUBLIC_THEME_ARTICLE_LIST: (state:{publicThemeArticleList:Object}, _publicThemeArticleList:Array<Object>) => state.publicThemeArticleList = _publicThemeArticleList,
+        SET_SELECTED_THEME_FOR_ARTICLE : (state:{selectedThemeforArticle:Object}, _selectedThemeforArticle:Object) => state.selectedThemeforArticle = _selectedThemeforArticle,
     },
     actions: {
         // board-controller
@@ -210,6 +213,9 @@ export default {
         },
         selectedPlace({ commit }: { commit: Commit }, _place: Object) {
             commit("SET_SELECTED_PLACE",_place)
+        },
+        selectedThemeForArticle({ commit }: { commit: Commit }, _themeDetail: Object) {
+            commit("SET_SELECTED_THEME_FOR_ARTICLE",_themeDetail)
         },
 
     }

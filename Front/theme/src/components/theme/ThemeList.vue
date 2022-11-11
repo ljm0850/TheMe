@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="d-flex card-list">
-    <ThemeMiniCardVue v-for="theme in publicThemeList" :key="theme" :theme="theme"/>
+    <ThemeMiniCardVue page="themeList" v-for="theme in publicThemeList" :key="theme" :theme="theme"/>
   </div>
 </div>
 

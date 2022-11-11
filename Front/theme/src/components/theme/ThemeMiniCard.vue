@@ -3,10 +3,10 @@
   <div class="card-body" v-if="theme">
     <div @click="clickTheme()">{{theme.emoticon}}</div>
     <div class="card-title" @click="clickTheme()" >{{theme.name}}</div>
-    <div v-if="!state.isMarked" class="bookmark" @click="clickBookmark()">
+    <div v-show="state.isTheme" v-if="!state.isMarked" class="bookmark" @click="clickBookmark()">
       <img src="@/assets/image/emptyBookmark.png" alt="" class="emtpyBookmark">
     </div>
-    <div v-if="state.isMarked" class="bookmark" @click="clickBookmark()">
+    <div v-show="state.isTheme" v-if="state.isMarked" class="bookmark" @click="clickBookmark()">
       <img src="@/assets/image/fillBookmark.png" alt="" class="fillBookmark">
     </div>
     <div class="position-absolute top-0 end-0 userCount">
@@ -25,6 +25,7 @@ export default {
   components: {
   },
   props: {
+    page:String,
     theme:Object
   },
   setup(props:any) {
@@ -32,20 +33,31 @@ export default {
     const router = useRouter();
 
     const state = reactive({
-        isMarked : props.theme.isMarked,
+        isMarked : false,
+        isTheme : false
     });
 
     const clickBookmark = () => {
         if(state.isMarked){
             // 북마크 취소
-            store.dispatch("scrapTheme", props.theme.idx)
+            store.dispatch("unScrapTheme", props.theme.idx)
         } else {
             // 북마크 하기
-            store.dispatch("unScrapTheme", props.theme.idx)
+            store.dispatch("scrapTheme", props.theme.idx)
         }
+
         state.isMarked = !state.isMarked
         console.log(state.isMarked)
     }
+
+    const isThemePage = () => {
+        if(props.page == "themeList"){
+            state.isMarked = props.theme.bookmarked
+            state.isTheme = true
+        } 
+    }
+
+    isThemePage();
 
     const clickTheme = () => {
       router.push({ 
@@ -55,7 +67,6 @@ export default {
         } 
       })
     }
-    console.log(props.theme)
   return {clickTheme, state, clickBookmark}
 
   }

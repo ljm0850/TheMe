@@ -17,7 +17,7 @@
             </div> -->
         </div>
         <KakaoMapVue class="kakao-map" />
-        <button class="theme-plus-button">+</button>
+        <button @click="goCreateArticle()" class="theme-plus-button">+</button>
         <ArticleListVue class="article-list" :themeDetail="themeDetail"/>
     </div>
 </template>
@@ -26,7 +26,7 @@
 import ArticleListVue from "@/components/articles/ArticleList.vue"
 import KakaoMapVue from "../map/KakaoMap.vue"
 import { computed, reactive } from "vue";
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from "vuex";
 export default {
     components: {
@@ -36,6 +36,7 @@ export default {
     setup() {
         const store = useStore()
         const route = useRoute()
+        const router = useRouter()
 
         let theme_idx = route.params.themeIdx
         store.dispatch("detailTheme", theme_idx)
@@ -44,7 +45,7 @@ export default {
         
 
         const state = reactive({
-            isMarked : themeDetail.value.isMarked,
+            isMarked : themeDetail.value.bookmarked,
         });
 
         const clickBookmark = () => {
@@ -59,7 +60,16 @@ export default {
             console.log(state.isMarked)
         }
 
-        return { themeDetail, state, clickBookmark }
+        const goCreateArticle = () => {
+            // 글쓰러가는 테마 정보 state에 올려놓기
+            store.dispatch("selectedThemeForArticle", themeDetail.value)
+            // 글쓰는 페이지로 넘어가기
+            router.push({ 
+                name: "CreateArticle"
+            })
+        }
+
+        return { themeDetail, state, clickBookmark, goCreateArticle }
     }
 }
 </script>
@@ -68,7 +78,7 @@ export default {
 
 .theme-header{
     position: relative;
-    top: 20px;
+    top: 25px;
     z-index: 1;
     width: 200px;
     height: 60px;
@@ -84,7 +94,7 @@ export default {
 
 .theme-title-box{
     text-align: center;
-    padding-top: 10px;
+    padding-top: 20px;
     padding-left: 10px;
 }
 
@@ -100,7 +110,7 @@ export default {
 
 .bookmark{
   position: absolute;
-  top:10px;
+  top:18px;
   left:8px;
 }
 
