@@ -4,7 +4,10 @@
             <div class="d-flex">
                 <div>{{theme.emoticon}}</div>
                     <div class="ms-2">{{theme.name}}</div>
-                    <button v-if="isSame" @click="check()" class="btn position-absolute top-0 end-0">🤍</button>
+                    <div v-if="!state.isSame">
+                        <button v-if="!state.isFollow" class="btn position-absolute top-0 end-0">🤍</button>
+                        <button v-if="state.isFollow" class="btn position-absolute top-0 end-0">💙</button>
+                    </div>
                 </div>
             </div>
             <div class="d-flex card-total">
@@ -31,7 +34,7 @@
 
 <script lang="ts">
 // import { useStore } from "vuex";
-// import { reactive } from "vue";
+import { reactive } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 // import { useRouter } from 'vue-router'
@@ -44,17 +47,34 @@ export default {
     },
     setup(props:any) {
       const store = useStore();
-    
-      const isSame = computed(()=>store.getters.isSame(props.theme.userIdx))
+      const state = reactive({
+      searchValue: "",
+      isSame: false,
+      isFollow : false
+    })
+      const isSame = computed(()=>store.getters.isSame);
       const selectedUser = computed(()=>store.getters.selectedUser)
       const loginUser = computed(()=>store.getters.loginUser)
-      
+
+      const test = async () => {
+        state.isSame = await store.dispatch("isSame", props.theme.userIdx)
+        console.log("여기 아래 내가 출력할 유저테마")
+        console.log(props.theme)
+        state.isFollow = await store.dispatch("isFollow", { 
+            userIdx : props.theme.userIdx,
+            themeIdx: props.theme.userThemeIdx})
+            
+
+        console.log(state.isFollow);
+    }
+
+    test()
       const check = () => {
-        console.log()
-        console.log()
+        console.log("들어오나?")
+
       }
         
-      return {isSame, selectedUser, loginUser, check}
+      return {isSame, selectedUser, loginUser, check, state}
     }
 }
 </script>

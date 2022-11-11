@@ -25,7 +25,6 @@ export default {
         duplicationnickname : (state: { duplicationnickname : boolean}) => state.duplicationnickname,
         liveSearchPerson: (state: { liveSearchPerson: Array<String> }) => state.liveSearchPerson,
         recommandPersonList: (state: { recommandPersonList: Array<String> }) => state.recommandPersonList,
-        isSame : (state : {loginUser : {userIdx:number}, selectedUser : {userIdx:number}}) =>  state.loginUser.userIdx == state.selectedUser.userIdx,
     },
     mutations: {
         SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,
@@ -37,7 +36,9 @@ export default {
         SET_RECOMMAND_PERSON_LIST: (state: { recommandPersonList: Array<Object> }, _recommandPersonList: Array<Object>) => state.recommandPersonList = _recommandPersonList,
     },
     actions: {
-        
+        isSame({getters}:{getters:any},_themeUserIdx : number) {
+            return getters.loginUser.userIdx == _themeUserIdx;
+        },
         getRecommendPersonList({ commit,getters }:{commit:Commit,getters:any}) {
             axios({
                 url: rest.User.recommandPersonList(),
@@ -116,9 +117,10 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
+                    console.log("dasfasdfsadf")
                     console.log(res.data)
                     commit('SET_SELECTED_USER',res.data.userInfo)
-                    commit('SET_LOGIN_USER',res.data.userInfo)
+                    //commit('SET_LOGIN_USER',res.data.userInfo)
                 })
         },
         duplicationnickname({ commit,getters }: { commit: Commit,getters:any }, _newNickname: string) {
@@ -257,6 +259,17 @@ export default {
                 console.log(res)
             })
         },
-   
+        isFollow({ commit,getters }: { commit: Commit,getters:any }, _data : {userIdx : number, themeIdx:number} ) {
+            return axios({
+                url :rest.User.isFollow(getters.loginUser.userIdx, _data.userIdx, _data.themeIdx),
+                method:'get',
+                headers:getters.authHeader
+            })
+                .then((res) => {
+                    console.log("결과값")
+                    console.log(res)
+                    return res.data
+                })
+            }
         }
     }

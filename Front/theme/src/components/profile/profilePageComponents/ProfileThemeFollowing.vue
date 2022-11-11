@@ -7,12 +7,12 @@
     <br>
     <ul v-if="state.vueTarget">
         <li v-for="item in selectedUser.themeDtoList" :key="item">
-            <SearchThemeCardVue :theme="item" class="themeCard"/>
+            <UserThemeCard :theme="item" class="themeCard"/>
         </li>
     </ul>
     <ul v-if="!state.vueTarget">
         <li v-for="item in selectedUser.followingDtoList" :key="item">
-            <SearchThemeCardVue :theme="item" class="themeCard"/>
+            <FollowingThemeCard :theme="item" class="themeCard"/>
         </li>
     </ul>
     
@@ -20,17 +20,22 @@
 </template>
 
 <script lang="ts">
-import SearchThemeCardVue from '@/components/theme/SearchThemeCard.vue';
 import { useStore } from "vuex";
 import { computed } from '@vue/runtime-core';
 import { reactive } from '@vue/reactivity'
+import FollowingThemeCard from '@/components/theme/FollowingThemeCard.vue';
+import UserThemeCard from '@/components/theme/UserThemeCard.vue';
 export default {
     components: {
-        SearchThemeCardVue
-    },
+    FollowingThemeCard,
+    UserThemeCard
+},
     setup() {
         const store = useStore();
+        
         const selectedUser = computed(() => store.getters.selectedUser)
+        console.log("여기아래 집중")
+        console.log(selectedUser)
         // console.log("selectedUser")
         
         const state = reactive({vueTarget : true});
