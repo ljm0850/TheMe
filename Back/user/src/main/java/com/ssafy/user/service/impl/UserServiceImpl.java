@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService {
                     .createTime(user.getCreateTime())
                     .description(user.getDescription())
                     .picture(user.getPicture())
+                    .userIdx(user.getIdx())
                     .build();
 
             log.info(userInfoByIdDto.toString());
