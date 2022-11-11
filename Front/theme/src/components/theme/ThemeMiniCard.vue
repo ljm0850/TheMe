@@ -1,8 +1,14 @@
 <template>
 <div class="card-custom card">
-  <div class="card-body" @click="clickTheme()" v-if="theme">
-    <div>{{theme.emoticon}}</div>
-    <div class="card-title">{{theme.name}}</div>
+  <div class="card-body" v-if="theme">
+    <div @click="clickTheme()">{{theme.emoticon}}</div>
+    <div class="card-title" @click="clickTheme()" >{{theme.name}}</div>
+    <div v-if="!state.isMarked" class="bookmark" @click="clickBookmark()">
+      <img src="@/assets/image/emptyBookmark.png" alt="" class="emtpyBookmark">
+    </div>
+    <div v-if="state.isMarked" class="bookmark" @click="clickBookmark()">
+      <img src="@/assets/image/fillBookmark.png" alt="" class="fillBookmark">
+    </div>
     <div class="position-absolute top-0 end-0 userCount">
       <div class="card-count">👤</div>
       <div class="card-count">{{theme.userCount}}</div>
@@ -12,7 +18,9 @@
 </template>
   
 <script lang="ts">
+import { reactive } from "vue";
 import { useRouter } from 'vue-router'
+import { useStore } from "vuex";
 export default {
   components: {
   },
@@ -20,7 +28,25 @@ export default {
     theme:Object
   },
   setup(props:any) {
+    const store = useStore()
     const router = useRouter();
+
+    const state = reactive({
+        isMarked : props.theme.isMarked,
+    });
+
+    const clickBookmark = () => {
+        if(state.isMarked){
+            // 북마크 취소
+            store.dispatch("scrapTheme", props.theme.idx)
+        } else {
+            // 북마크 하기
+            store.dispatch("unScrapTheme", props.theme.idx)
+        }
+        state.isMarked = !state.isMarked
+        console.log(state.isMarked)
+    }
+
     const clickTheme = () => {
       router.push({ 
         name: "PublicTheme", 
@@ -29,7 +55,8 @@ export default {
         } 
       })
     }
-  return {clickTheme,}
+    console.log(props.theme)
+  return {clickTheme, state, clickBookmark}
 
   }
 }
@@ -48,8 +75,23 @@ export default {
   border: 1px solid rgba(205, 205, 205, 0.81);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px !important;
-
 }
+.emtpyBookmark{
+  width: 15px;
+  height: 15px;
+}
+
+.fillBookmark{
+  width: 22px;
+  height: 19px;
+}
+
+.bookmark{
+  position: absolute;
+  top:5px;
+  left:10px;
+}
+
 .userCount{
   margin: 5px;
 }
