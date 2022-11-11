@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <div>{{theme.emoticon}}</div>
                     <div class="ms-2">{{theme.name}}</div>
-                    <button class="btn position-absolute top-0 end-0">🤍</button>
+                    <button @click="check()" class="btn position-absolute top-0 end-0">🤍</button>
                 </div>
             </div>
             <div class="d-flex card-total">
@@ -31,7 +31,10 @@
 
 <script lang="ts">
 // import { useStore } from "vuex";
-
+// import { reactive } from "vue";
+import { computed } from "@vue/reactivity";
+import { useStore } from "vuex";
+// import { useRouter } from 'vue-router'
 
 export default {
     props:{
@@ -39,9 +42,19 @@ export default {
     },
     components: {
     },
-    setup(props:any) {
-        console.log(props.theme)
+    setup() {
+      const store = useStore();
+    
+      const isSame = computed(()=>store.getters.isSame);
+      const selectedUser = computed(()=>store.getters.selectedUser)
+      const loginUser = computed(()=>store.getters.loginUser)
+      
+      const check = () => {
+        console.log("들어오나?")
+
+      }
         
+      return {isSame, selectedUser, loginUser, check}
     }
 }
 </script>

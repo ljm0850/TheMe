@@ -38,11 +38,7 @@ export default {
             state.vueTarget = type;
         }
 
-
-
         return { selectedUser,state, changeViewMode}
-
-    
     }
 }
 </script>
