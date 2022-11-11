@@ -38,12 +38,17 @@ export default defineComponent({
   min-height: 90vh;
   // max-width: 380px !important;
 }
+.create-page {
+  background-color: #CDCDCD;
+  border-radius: 10px;
+}
 .white-add-button {
   width: 80px !important;
   color: black !important;
   background-color: white !important;
   outline-color: black !important;
   border-color: #cdcdcd !important;
+  border-radius: 5px;
 
 }
 #default_app {

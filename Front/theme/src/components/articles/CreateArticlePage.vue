@@ -1,27 +1,32 @@
 <template>
   <div>
     <form action="">
-      <div>게시글 등록</div>
-      <div>테마 선택</div>
-      <div class="input-group mb-3">
-        <!-- <label class="input-group-text">테마 선택</label> -->
-        <select class="form-select" id="inputGroupSelect01" v-model="state.theme">
-          <option selected>테마 선택</option>
-          <!-- 현재 유저 테마의 idx가 선택되어 있음 -->
-          <option v-for="theme in themeList" :key="theme" :value="theme.idx" >{{ theme.name }}</option>
-        </select>
-      </div>
-      <!-- 이미지 파일 첨부 -->
-      <input type="file" multiple accept="image/*" @change="fileChange" />
-      <PreviewImageVue v-if="isSelectFile"/>
-      <!-- 지도 -->
-      <ArticleMapVue />
+      <h1 class="" style="text-align:center">게시글 등록</h1>
+      <div class="create-page container">
+        <br>
+        <div class="title-text-custom">테마 선택</div>
+        <div class="input-group mb-3">
+          <!-- <label class="input-group-text">테마 선택</label> -->
+          <select class="form-select" id="inputGroupSelect01" v-model="state.theme">
+            <option selected>테마 선택</option>
+            <!-- 현재 유저 테마의 idx가 선택되어 있음 -->
+            <option v-for="theme in themeList" :key="theme" :value="theme.idx" >{{ theme.name }}</option>
+          </select>
+        </div>
+        <br>
+        <!-- 이미지 파일 첨부 -->
+        <input type="file" multiple accept="image/*" @change="fileChange" />
+        <PreviewImageVue v-if="isSelectFile"/>
+        <br>
+        <!-- 지도 -->
+        <ArticleMapVue />
       <!-- 내용 -->
       <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">내용</label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="state.description"></textarea>
       </div>
       <button @click.prevent="createArticle()">게시물 등록</button>
+    </div>
     </form>
     {{ themeList }}
   </div>
@@ -107,9 +112,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.img-size{
-  width: 360px;
+<style scoped lang="scss">
+.title-text-custom{
+  text-align: center;
+  font-size: 24px;
 }
+// .img-size{
+//   width: 360px;
+// }
 
 </style>

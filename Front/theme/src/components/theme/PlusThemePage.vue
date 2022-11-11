@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="create-theme-page container">
+  <div class="create-page container">
     <br>
     <div>테마 생성 페이지</div>
     <div class="mb-3">
@@ -71,8 +71,5 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.create-theme-page {
-  background-color: #CDCDCD;
-}
+<style lang="scss">
 </style>

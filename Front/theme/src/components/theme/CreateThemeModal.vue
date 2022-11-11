@@ -31,7 +31,7 @@
       <div class="d-flex justify-content-center">
         <button @click="registTheme()" class="white-add-button item">테마 추가</button>
       </div>
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="button" class="white-add-button item" data-bs-dismiss="modal">Close</button>
     </div>
   </div>
 </div>
