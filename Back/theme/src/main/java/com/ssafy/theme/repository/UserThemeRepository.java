@@ -42,4 +42,5 @@ public interface UserThemeRepository extends JpaRepository<UserTheme,Integer> {
     List<UserTheme> findByTheme(Theme theme);
 
     Optional<UserTheme> findByThemeAndUserIdx(Theme theme, int userIdx);
+    Optional<UserTheme> findByIdxAndUserIdx(int themeIdx, int userIdx);
 }
