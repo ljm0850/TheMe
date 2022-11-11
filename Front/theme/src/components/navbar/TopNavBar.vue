@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .nav-header{
   width: 390px;
   height: 55px; 
