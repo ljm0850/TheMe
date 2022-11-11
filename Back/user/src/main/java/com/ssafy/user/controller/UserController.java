@@ -262,6 +262,7 @@ public class UserController {
             status = HttpStatus.OK;
         } catch (Exception e) {
             result.put("message", FAIL);
+            System.out.println(e);
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 

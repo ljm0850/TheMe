@@ -11,6 +11,7 @@ import com.ssafy.user.repository.FollowRepository;
 import com.ssafy.user.repository.UserRepository;
 import com.ssafy.user.service.FollowService;
 import com.ssafy.user.service.UserService;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -360,14 +361,40 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> searchThemeInfo(String value) {
         Map<String, Object> answer = new HashMap<>();
-        List<UserDto> result = new ArrayList<>();
-
+        List<UserListDto> result = new ArrayList<>();
+        List<String> pictureArr = new ArrayList<>();
         boolean same = userRepository.findByNickname(value).isPresent();
-
-        if(same) {
+        int sameUserIdx = 0; // 같은 사람 있는 경우 그 사람 번호 여기에 넣어서  두번 출력안되도록 하기
+        System.out.println("들어오나");
+        if(same) { // 아예 같은 사람
             User user = userRepository.findByNickname(value).orElseThrow(IllegalAccessError::new);
-
-            UserDto userDto = UserDto.builder()
+            sameUserIdx = user.getIdx();
+            int boardCount = 0;
+            int commentCount = 0;
+            List<Integer> followList = followRepository.findFollowerByUser(user);
+            List<UserThemeDto> userThemeDtoList = themeClient.getUserThemeByUserIdx(user.getIdx());
+            for(int i=0;i<userThemeDtoList.size();i++){
+                BoardInfoForUserDto boardInfoForUserDto;
+                try {
+                    boardInfoForUserDto = feedClient.boardInfoForUser(userThemeDtoList.get(i).getIdx(), sameUserIdx);
+                    boardCount += boardInfoForUserDto.getBoardCount();
+                    commentCount += boardInfoForUserDto.getCommentCount();
+                }
+                catch (Exception e){
+                    continue;
+                }
+                if(userThemeDtoList.get(i).getOpenType()==0) { // 전체공개인 경우만 사진 받아오기
+                    if(boardInfoForUserDto.getPictures().length>0){
+                        String[] arr = boardInfoForUserDto.getPictures();
+                        pictureArr.add(arr[0]);
+                    }
+                }
+            }
+            String[] pictureArray = new String[pictureArr.size()];
+            for(int j=0;j< pictureArr.size();j++){
+                pictureArray[j] = pictureArr.get(j);
+            }
+            UserListDto userDto = UserListDto.builder()
                     .alertCount(user.getAlertCount())
                     .idx(user.getIdx())
                     .email(user.getEmail())
@@ -376,17 +403,45 @@ public class UserServiceImpl implements UserService {
                     .picture(user.getPicture())
                     .nickname(user.getNickname())
                     .createTime(user.getCreateTime())
+                    .followCount(followList.size())
+                    .boardCount(boardCount)
+                    .commentCount(commentCount)
+                    .pictures(pictureArray)
                     .build();
-
             result.add(userDto);
         }
-
         List<User> users = userRepository.searchByTarget(value);
-        if (same) {
-            for(int i=1;i<users.size();i++) {
-                User user = users.get(i);
-
-                UserDto userDto = UserDto.builder()
+        for(int i=0;i<users.size();i++) {
+            User user = users.get(i);
+            if(user.getIdx()!=sameUserIdx){
+                int boardCount = 0;
+                int commentCount = 0;
+                List<Integer> followList = followRepository.findFollowerByUser(user);
+                List<UserThemeDto> userThemeDtoList = themeClient.getUserThemeByUserIdx(user.getIdx());
+                for(int j=0;j<userThemeDtoList.size();j++){
+                    System.out.println(userThemeDtoList.size());
+                    BoardInfoForUserDto boardInfoForUserDto;
+                    try {
+                        boardInfoForUserDto = feedClient.boardInfoForUser(userThemeDtoList.get(j).getIdx(), user.getIdx());
+                        System.out.println(boardInfoForUserDto.toString());
+                        boardCount += boardInfoForUserDto.getBoardCount();
+                        commentCount += boardInfoForUserDto.getCommentCount();
+                    }
+                    catch (Exception e){
+                        continue;
+                    }
+                    if(userThemeDtoList.get(j).getOpenType()==0) { // 전체공개인 경우만 사진 받아오기
+                        if(boardInfoForUserDto.getPictures().length>0){
+                            String[] arr = boardInfoForUserDto.getPictures();
+                            pictureArr.add(arr[0]);
+                        }
+                    }
+                }
+                String[] pictureArray = new String[pictureArr.size()];
+                for(int j=0;j< pictureArr.size();j++){
+                    pictureArray[j] = pictureArr.get(j);
+                }
+                UserListDto userDto = UserListDto.builder()
                         .alertCount(user.getAlertCount())
                         .idx(user.getIdx())
                         .email(user.getEmail())
@@ -395,32 +450,16 @@ public class UserServiceImpl implements UserService {
                         .picture(user.getPicture())
                         .nickname(user.getNickname())
                         .createTime(user.getCreateTime())
+                        .followCount(followList.size())
+                        .boardCount(boardCount)
+                        .commentCount(commentCount)
+                        .pictures(pictureArray)
                         .build();
-
-                result.add(userDto);
-            }
-        } else {
-            for(int i=0;i<users.size();i++) {
-                User user = users.get(i);
-
-                UserDto userDto = UserDto.builder()
-                        .alertCount(user.getAlertCount())
-                        .idx(user.getIdx())
-                        .email(user.getEmail())
-                        .id(user.getId())
-                        .description(user.getDescription())
-                        .picture(user.getPicture())
-                        .nickname(user.getNickname())
-                        .createTime(user.getCreateTime())
-                        .build();
-
                 result.add(userDto);
             }
         }
-
         answer.put("result",result);
         answer.put("isSame", same);
-
         return answer;
     }
     @Override
