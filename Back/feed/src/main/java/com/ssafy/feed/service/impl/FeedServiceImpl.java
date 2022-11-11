@@ -216,15 +216,45 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public List<BoardGroupListDto> userThemeList(int userThemeIdx,int pageIdx,int pageSize,int user_idx) {
+    public List<BoardGroupShowListDto> userThemeList(int userThemeIdx,int pageIdx,int pageSize,int user_idx) {
         int userIdx = whoUserIdx(userThemeIdx);
-        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(userThemeIdx,user_idx); //테마 번호로 openType이 1인 userTheme만 받아오기
+        List<BoardGroupShowListDto> result = new ArrayList<>();
+        List<UserThemeDtoWithMSA> themeUserList = themeClient.getUserThemeUserList(userThemeIdx,user_idx); //테마 번호로 openType이 1인 userTheme만 받아오기
         List<Integer> openUserList = new ArrayList<>();
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
         for(UserThemeDtoWithMSA theme : themeUserList){ //해당 번호 배열로 저장
             openUserList.add(theme.getUserIdx());
+            boolean isFollow = false;
+            boolean isMy = false;
+            if(theme.getUserIdx()==user_idx) isMy = true;
+            else{
+                List<UserFollowThemeDto> userFollowThemeDtoList = userClient.getUserFollowTheme(user_idx);
+                for(int i=0;i<userFollowThemeDtoList.size();i++){
+                    if(userFollowThemeDtoList.get(i).getFollowThemeIdx()==theme.getUserThemeIdx()){
+                        isFollow = true;
+                        break;
+                    }
+                }
+            }
+            List<BoardGroupListDto> boardGroupListDtos = boardRepository.getBoardGourpByListWithJPA(openUserList,theme.getUserThemeIdx(),pageable); //게시글 목록 리턴
+            for(int i=0;i<boardGroupListDtos.size();i++){
+                BoardGroupShowListDto boardGroupShowListDto = BoardGroupShowListDto.builder()
+                        .boardCount(boardGroupListDtos.get(i).getBoardCount())
+                        .isBookMarked(false)
+                        .isFollow(isFollow)
+                        .isMy(isMy)
+                        .latitude(boardGroupListDtos.get(i).getLatitude())
+                        .longitude(boardGroupListDtos.get(i).getLongitude())
+                        .themeIdx(boardGroupListDtos.get(i).getThemeIdx())
+                        .city(boardGroupListDtos.get(i).getCity())
+                        .name(boardGroupListDtos.get(i).getName())
+                        .place(boardGroupListDtos.get(i).getPlace())
+                        .userIdx(boardGroupListDtos.get(i).getUserIdx())
+                        .build();
+                result.add(boardGroupShowListDto);
+            }
         }
-        return boardRepository.getBoardGourpByListWithJPA(openUserList,userThemeIdx,pageable); //게시글 목록 리턴
+        return  result;
     }
     @Override
     public int whoUserIdx(int userThemeIdx) {
@@ -233,5 +263,9 @@ public class FeedServiceImpl implements FeedService {
     @Override
     public boolean isScrap(int userIdx, int themeIdx) {
         return themeClient.isScrap(userIdx,themeIdx);
+    }
+    @Override
+    public List<UserThemeDtoWithMSA> getUserThemeUserList(int theme_idx,int user_idx) {
+        return themeClient.getUserThemeUserList(theme_idx,user_idx);
     }
 }

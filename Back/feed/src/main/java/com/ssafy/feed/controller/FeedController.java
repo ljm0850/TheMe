@@ -97,7 +97,7 @@ public class FeedController {
         int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
             // 유저 테마에 대한 게시글 목록
-            List<BoardGroupListDto> boardGroupListDto = feedService.userThemeList(userThemeIdx,pageIdx,pageSize,userIdx);
+            List<BoardGroupShowListDto> boardGroupListDto = feedService.userThemeList(userThemeIdx,pageIdx,pageSize,userIdx);
             result.put("data",boardGroupListDto);
             result.put("message", OK);
             status = HttpStatus.OK;

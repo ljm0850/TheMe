@@ -4,6 +4,7 @@ import com.ssafy.feed.dto.board.BoardDto;
 import com.ssafy.feed.dto.board.BoardGroupListDto;
 import com.ssafy.feed.dto.board.BoardGroupShowListDto;
 import com.ssafy.feed.dto.board.BoardSimpleListDto;
+import com.ssafy.feed.dto.theme.UserThemeDtoWithMSA;
 import com.ssafy.feed.dto.user.UserFollowThemeDto;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -18,7 +19,8 @@ public interface FeedService {
     String getThemeName(int themeIdx);
     List<BoardDto> getUserBoardList(int user_idx);
 
-    List<BoardGroupListDto> userThemeList(int userThemeIdx,int pageIdx,int pageSize,int user_idx);
+    List<BoardGroupShowListDto> userThemeList(int userThemeIdx,int pageIdx,int pageSize,int user_idx);
     int whoUserIdx(int userThemeIdx);
     boolean isScrap(int userIdx, int themeIdx);
+    List<UserThemeDtoWithMSA> getUserThemeUserList(int theme_idx, int user_idx);
 }

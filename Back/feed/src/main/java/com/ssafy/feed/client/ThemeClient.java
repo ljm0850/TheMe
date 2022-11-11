@@ -24,4 +24,6 @@ public interface ThemeClient {
     int whoUserIdx(@PathVariable(name = "user_theme_idx") int userThemeIdx);
     @GetMapping("/theme/isScrap/{user_idx}/{theme_idx}")
     boolean isScrap(@PathVariable(name = "user_idx") int userIdx,@PathVariable(name = "theme_idx") int themeIdx);
+    @GetMapping("/theme/userThemeList/{theme_idx}/{user_idx}")
+    List<UserThemeDtoWithMSA> getUserThemeUserList(@PathVariable(name = "theme_idx") int theme_idx,@PathVariable(name = "user_idx") int user_idx);
 }
