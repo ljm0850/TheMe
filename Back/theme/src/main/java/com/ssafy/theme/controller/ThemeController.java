@@ -273,4 +273,9 @@ public class ThemeController {
     public int whoUserIdx(@PathVariable(name = "user_theme_idx") int userThemeIdx) {
         return themeService.whoUserIdx(userThemeIdx);
     }
+    @GetMapping("/isScrap/{user_idx}/{theme_idx}")
+    public boolean isScrap(@PathVariable(name = "user_idx") int userIdx,@PathVariable(name = "theme_idx") int themeIdx) {
+        return themeService.isScrap(userIdx,themeIdx);
+    }
+
 }

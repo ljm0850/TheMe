@@ -329,6 +329,7 @@ public class ThemeServiceImpl implements ThemeService {
             if(userTheme.getOpenType()==0){
                 UserThemeDtoWithMSA userThemeDto = UserThemeDtoWithMSA.builder()
                         .idx(userTheme.getTheme().getIdx())
+                        .userThemeIdx(userTheme.getIdx())
                         .userIdx(userTheme.getUserIdx())
                         .themeEmoticon(userTheme.getTheme().getEmoticon())
                         .themeTitle(userTheme.getTheme().getName())
@@ -344,6 +345,7 @@ public class ThemeServiceImpl implements ThemeService {
                 if(flag){
                     UserThemeDtoWithMSA userThemeDto = UserThemeDtoWithMSA.builder()
                             .idx(userTheme.getTheme().getIdx())
+                            .userThemeIdx(userTheme.getIdx())
                             .userIdx(userTheme.getUserIdx())
                             .themeEmoticon(userTheme.getTheme().getEmoticon())
                             .themeTitle(userTheme.getTheme().getName())
@@ -473,4 +475,12 @@ public class ThemeServiceImpl implements ThemeService {
     public boolean isFollow(int user_idx, int target_user_idx, int theme_idx) {
         return userClient.isFollow(user_idx,target_user_idx,theme_idx);
     }
+
+    @Override
+    public boolean isScrap(int userIdx, int themeIdx) {
+        Theme theme = themeRepository.findByIdx(themeIdx);
+        Optional<Scrap> scrap = scrapRepository.findByThemeAndUserIdx(theme,userIdx);
+        return scrap.isPresent();
+    }
+
 }

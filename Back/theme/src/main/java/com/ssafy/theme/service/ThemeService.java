@@ -49,4 +49,6 @@ public interface ThemeService {
 
     int whoUserIdx(int userThemeIdx);
     boolean isFollow(int user_idx, int target_user_idx, int theme_idx);
+
+    boolean isScrap(int userIdx, int themeIdx);
 }
