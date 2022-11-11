@@ -16,7 +16,7 @@ export default {
     },
     
     getters: {
-        isLoggedIn: (state: { loginUser: Object; }) => !_.isEmpty(state.loginUser),
+        isLoggedIn: (state: { loginUser: Object }) => !_.isEmpty(state.loginUser),
         authHeader: (state: { token: string }) => ({ Authorization: state.token }),
         loginUser: (state: {loginUser:Object}) => state.loginUser,
         selectedUser: (state: { selectedUser: Object }) => state.selectedUser,
@@ -25,6 +25,7 @@ export default {
         duplicationnickname : (state: { duplicationnickname : boolean}) => state.duplicationnickname,
         liveSearchPerson: (state: { liveSearchPerson: Array<String> }) => state.liveSearchPerson,
         recommandPersonList: (state: { recommandPersonList: Array<String> }) => state.recommandPersonList,
+        isSame : (state : {loginUser : {userIdx:number}, selectedUser : {userIdx:number}}) =>  state.loginUser.userIdx == state.selectedUser.userIdx,
     },
     mutations: {
         SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,
