@@ -482,5 +482,42 @@ public class ThemeServiceImpl implements ThemeService {
         Optional<Scrap> scrap = scrapRepository.findByThemeAndUserIdx(theme,userIdx);
         return scrap.isPresent();
     }
+    @Override
+    public List<UserThemeDtoWithMSA> getUserThemeUserList(int userThemeIdx,int user_idx) {
+        Optional<UserTheme> userTheme = userThemeRepository.findById(userThemeIdx);
+        List<UserThemeDtoWithMSA> userThemeDtoList = new ArrayList<>();
+        if(userTheme.get().getOpenType()==0){
+            UserThemeDtoWithMSA userThemeDto = UserThemeDtoWithMSA.builder()
+                    .idx(userTheme.get().getTheme().getIdx())
+                    .userThemeIdx(userTheme.get().getIdx())
+                    .userIdx(userTheme.get().getUserIdx())
+                    .themeEmoticon(userTheme.get().getTheme().getEmoticon())
+                    .themeTitle(userTheme.get().getTheme().getName())
+                    .description(userTheme.get().getDescription())
+                    .openType(userTheme.get().getOpenType())
+                    .createTime(userTheme.get().getCreateTime())
+                    .modifyTime(userTheme.get().getModifyTime())
+                    .build();
+            userThemeDtoList.add(userThemeDto);
+        }
+        else if(userTheme.get().getOpenType()==1){ // 친구 공개
+            boolean flag = userClient.isFollow(userTheme.get().getUserIdx(),user_idx,userTheme.get().getIdx());
+            if(flag){
+                UserThemeDtoWithMSA userThemeDto = UserThemeDtoWithMSA.builder()
+                        .idx(userTheme.get().getTheme().getIdx())
+                        .userThemeIdx(userTheme.get().getIdx())
+                        .userIdx(userTheme.get().getUserIdx())
+                        .themeEmoticon(userTheme.get().getTheme().getEmoticon())
+                        .themeTitle(userTheme.get().getTheme().getName())
+                        .description(userTheme.get().getDescription())
+                        .openType(userTheme.get().getOpenType())
+                        .createTime(userTheme.get().getCreateTime())
+                        .modifyTime(userTheme.get().getModifyTime())
+                        .build();
+                userThemeDtoList.add(userThemeDto);
+            }
+        }
+        return userThemeDtoList;
+    }
 
 }

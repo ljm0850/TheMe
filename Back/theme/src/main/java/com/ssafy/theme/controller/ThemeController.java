@@ -215,6 +215,10 @@ public class ThemeController {
     public List<UserThemeDtoWithMSA> getThemeUserList(@PathVariable(name = "theme_idx") int theme_idx,@PathVariable(name = "user_idx") int user_idx) {
         return themeService.getThemeUserList(theme_idx,user_idx);
     }
+    @GetMapping("/userThemeList/{theme_idx}/{user_idx}")
+    public List<UserThemeDtoWithMSA> getUserThemeUserList(@PathVariable(name = "theme_idx") int theme_idx,@PathVariable(name = "user_idx") int user_idx) {
+        return themeService.getUserThemeUserList(theme_idx,user_idx);
+    }
     @GetMapping("/search/theme/info")
     public ResponseEntity<?> searchThemeInfo(@RequestParam(name = "value") String value,HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();

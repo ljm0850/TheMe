@@ -51,4 +51,5 @@ public interface ThemeService {
     boolean isFollow(int user_idx, int target_user_idx, int theme_idx);
 
     boolean isScrap(int userIdx, int themeIdx);
+    List<UserThemeDtoWithMSA> getUserThemeUserList(int userThemeIdx,int user_idx);
 }
