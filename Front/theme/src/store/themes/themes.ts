@@ -98,6 +98,7 @@ export default {
                 }
             })
                 .then((res) => {
+                    console.log("공용테마 등록",res.data)
                     const themeIdx = res.data.idx
                     commit('SET_SELECTED_THEME_IDX_FOR_CREATE',themeIdx)
                     dispatch('createUserTheme',_data.openType)

@@ -38,6 +38,14 @@ export default defineComponent({
   min-height: 90vh;
   // max-width: 380px !important;
 }
+.white-add-button {
+  width: 80px !important;
+  color: black !important;
+  background-color: white !important;
+  outline-color: black !important;
+  border-color: #cdcdcd !important;
+
+}
 #default_app {
   max-height: 844px;
   // max-width: 370px !important;
@@ -53,5 +61,6 @@ export default defineComponent({
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+
 }
 </style>
