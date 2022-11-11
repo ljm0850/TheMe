@@ -2,8 +2,8 @@
   <div  v-if="person" :class="[person.isSame ? 'isSame card' : 'card']">
   <div class="card-body" style="padding: 0px;">
     <div class="d-flex">
-      <!-- <img :src="person.picture" alt="" class="user-profile"> -->
-      <div class="ms-2">{{person.nickname}}</div>
+      <img :src="person.picture" alt="" class="user-profile">
+      <div class="mt-1">{{person.nickname}}</div>
       <button class="btn position-absolute top-0 end-0">🤍</button>
     </div>
   </div>
@@ -25,8 +25,8 @@
   
     </div>
     <div class="view-info">
-      <div class="default-img btn-type"><div class="view-info-img">👨‍👦</div> <div class="view-info-text">&nbsp;&nbsp;2.7K</div></div>
-      <div class="default-img btn-type"><div class="view-info-img">💬</div> <div class="view-info-text">&nbsp;&nbsp;1.3M</div></div>
+      <div class="default-img btn-type"><div class="view-info-img">👨‍👦</div> <div class="view-info-text">&nbsp;&nbsp;{{person.followCount}}</div></div>
+      <div class="default-img btn-type"><div class="view-info-img">💬</div> <div class="view-info-text">&nbsp;&nbsp;{{person.commentCount}}</div></div>
     </div>
     <!-- <div class="d-flex">
       <div class="small-img">
@@ -115,9 +115,9 @@ box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     
   }
   .user-profile{
-    width: 4vh;
-    height: 4vh;
-    border-radius: 70%;
+    width: 36px;
+    height: 36px;
+    border-radius: 30%;
   }
   .view-info-text{
     font-size:1.5vh;
