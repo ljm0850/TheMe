@@ -1,11 +1,11 @@
 <template>
     <div class="d-flex justify-content-between">
         <div>
-            <div>{{article.themeName}}</div>
+            <div>{{article.name}}</div>
             <div>{{article.place}}</div>
             <div>{{article.nickname}}</div>
         </div>
-        <div>{{article.count}}</div>
+        <div>{{article.boardCount}}</div>
     </div>
     <hr>
 </template>
@@ -18,8 +18,8 @@ export default {
     props:{
         article:Object
     },
-    setup() {
-        
+    setup(props:any) {
+        console.log(props.article)
     }
 }
 </script>
