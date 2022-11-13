@@ -432,15 +432,17 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public ThemeDto getPublicThemeDetail(int theme_idx) {
+    public ThemeDto getPublicThemeDetail(int theme_idx, int userIdx) {
         Theme theme = themeRepository.findById(theme_idx)
                 .orElseThrow(IllegalArgumentException::new);
+
 
         ThemeDto themeDto = ThemeDto.builder()
                 .createTime(theme.getCreateTime())
                 .emoticon(theme.getEmoticon())
                 .idx(theme.getIdx())
                 .name(theme.getName())
+                .bookmarked(scrapRepository.existsByThemeAndUserIdx(theme, userIdx))
                 .build();
         return themeDto;
     }

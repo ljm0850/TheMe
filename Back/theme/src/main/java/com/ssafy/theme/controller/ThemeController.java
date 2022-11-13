@@ -167,11 +167,12 @@ public class ThemeController {
     }
 
     @GetMapping("/detail/{theme_idx}")
-    public ResponseEntity<?> getPublicThemeDetail(@PathVariable(name = "theme_idx") int theme_idx) {
+    public ResponseEntity<?> getPublicThemeDetail(HttpServletRequest request, @PathVariable(name = "theme_idx") int theme_idx) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            ThemeDto themeDto= themeService.getPublicThemeDetail(theme_idx);
+            ThemeDto themeDto= themeService.getPublicThemeDetail(theme_idx, userIdx);
             result.put("themeDetail", themeDto);
             result.put("message",OK);
             status = HttpStatus.OK;

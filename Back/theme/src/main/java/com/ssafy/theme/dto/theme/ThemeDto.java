@@ -17,12 +17,14 @@ public class ThemeDto {
     private String name;
     private LocalDateTime createTime;
     private String emoticon;
+    private boolean bookmarked;
 
     @Builder
-    public ThemeDto(int idx, String name, LocalDateTime createTime, String emoticon) {
+    public ThemeDto(int idx, String name, LocalDateTime createTime, String emoticon, boolean bookmarked) {
         this.idx = idx;
         this.name = name;
         this.createTime = createTime;
         this.emoticon = emoticon;
+        this.bookmarked = bookmarked;
     }
 }

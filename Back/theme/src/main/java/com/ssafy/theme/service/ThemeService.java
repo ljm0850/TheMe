@@ -43,7 +43,7 @@ public interface ThemeService {
     int getThemeOpenType(int followUserIdx, int followThemeIdx);
     BoardInfoDto boardInfoByTheme(int themeIdx);
 
-    ThemeDto getPublicThemeDetail(int theme_idx);
+    ThemeDto getPublicThemeDetail(int theme_idx, int user_idx);
 
     int isUserTheme(int userIdx, int themeIdx);
 
