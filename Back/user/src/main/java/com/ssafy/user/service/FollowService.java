@@ -1,5 +1,6 @@
 package com.ssafy.user.service;
 
+import com.ssafy.user.dto.UserDto;
 import com.ssafy.user.dto.UserFollowThemeDto;
 import com.ssafy.user.entity.User;
 
@@ -9,8 +10,8 @@ public interface FollowService {
     int followTheme(int theme_id, int user_id, int target_user_id);
     void cancelFollow(int user_theme_id, int user_id);
     List<Integer> getFollowingThemeList(int user_id);
-    List<String> getFollowingList(int user_id);
-    List<String> getFollowerList(int user_id);
+    List<UserDto> getFollowingList(int user_id);
+    List<UserDto> getFollowerList(int user_id);
     void cancelUserFollow(int target_user_id, int user_id);
 
     List<UserFollowThemeDto> getUserFollowTheme(int userIdx);

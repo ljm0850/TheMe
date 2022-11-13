@@ -1,5 +1,6 @@
 package com.ssafy.user.service.impl;
 
+import com.ssafy.user.dto.UserDto;
 import com.ssafy.user.dto.UserFollowThemeDto;
 import com.ssafy.user.entity.Follow;
 import com.ssafy.user.entity.User;
@@ -63,8 +64,8 @@ public class FollowServiceImpl implements FollowService
     }
 
     @Override
-    public List<String> getFollowingList(int user_id) {
-        List<String> followList = new ArrayList<>();
+    public List<UserDto> getFollowingList(int user_id) {
+        List<UserDto> followList = new ArrayList<>();
         User targetUser = userRepository.findById(user_id).orElseThrow(IllegalAccessError::new);
 
         List<Integer> followingIdxList = followRepository.findFollowingByUser(targetUser);
@@ -72,25 +73,43 @@ public class FollowServiceImpl implements FollowService
             int userIdx = followingIdxList.get(i);
             User following = userRepository.findById(userIdx).orElseThrow(IllegalAccessError::new);
 
-            followList.add(following.getNickname());
+            UserDto userDto = UserDto.builder()
+                    .nickname(following.getNickname())
+                    .email(following.getEmail())
+                    .picture(following.getPicture())
+                    .description(following.getDescription())
+                    .idx(following.getIdx())
+                    .build();
+
+            followList.add(userDto);
         }
         return followList;
     }
 
     @Override
-    public List<String> getFollowerList(int user_id) {
+    public List<UserDto> getFollowerList(int user_id) {
+        List<UserDto> followList = new ArrayList<>();
         User targetUser = userRepository.findById(user_id).orElseThrow(IllegalAccessError::new);
 
-        List<String> followerList = new ArrayList<>();
-        List<Integer> followerIdxList = followRepository.findFollowerByUser(targetUser);
-        for(int i=0;i<followerIdxList.size();i++) {
-            int userIdx = followerIdxList.get(i);
-            User follower = userRepository.findById(userIdx).orElseThrow(IllegalAccessError::new);
+        List<Integer> followingIdxList = followRepository.findFollower(targetUser);
+        for(int i=0;i<followingIdxList.size();i++) {
+            int userIdx = followingIdxList.get(i);
+            User following = userRepository.findById(userIdx).orElseThrow(IllegalAccessError::new);
 
-            followerList.add(follower.getNickname());
+            UserDto userDto = UserDto.builder()
+                    .nickname(following.getNickname())
+                    .email(following.getEmail())
+                    .picture(following.getPicture())
+                    .description(following.getDescription())
+                    .idx(following.getIdx())
+                    .build();
+
+            followList.add(userDto);
+            //followList.add(following.getNickname());
         }
 
-        return followerList;
+
+        return followList;
     }
 
     @Override

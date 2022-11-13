@@ -171,7 +171,7 @@ public class UserController {
 
         HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            List<String> followerList = followService.getFollowerList(user_id);
+            List<UserDto> followerList = followService.getFollowerList(user_id);
             result.put("message", OK);
             result.put("followerList", followerList);
             status = HttpStatus.OK;
@@ -188,7 +188,7 @@ public class UserController {
 
         HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            List<String> followingList = followService.getFollowingList(user_id);
+            List<UserDto> followingList = followService.getFollowingList(user_id);
             result.put("message", OK);
             result.put("followingList", followingList);
             status = HttpStatus.OK;
