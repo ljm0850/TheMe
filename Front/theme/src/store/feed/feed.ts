@@ -13,7 +13,8 @@ export default {
         searchPlacesList: [],
         selectedPlace: {},
         publicThemeArticleList : [],
-        selectedThemeforArticle : [],
+        selectedThemeforArticle: [],
+        userThemeArticleList: [],
     },
     getters: {
         getFeedArticleList: (state: { feedArticleList: Array<object> }) => state.feedArticleList,
@@ -23,7 +24,8 @@ export default {
         searchPlacesList: (state: { searchPlacesList: Array<Object> }) => state.searchPlacesList,
         selectedPlace: (state: { selectedPlace:Object})=> state.selectedPlace,
         publicThemeArticleList: (state: { publicThemeArticleList:Object})=> state.publicThemeArticleList,
-        selectedThemeforArticle: (state: { selectedThemeforArticle:Object})=> state.selectedThemeforArticle,
+        selectedThemeforArticle: (state: { selectedThemeforArticle: Object }) => state.selectedThemeforArticle,
+        userThemeArticleList: (state: { userThemeArticleList: Object }) => state.userThemeArticleList,
     },
     mutations: {
         SET_FEED_ARTICLE_LIST: (state: {feedArticleList : Array<object>}, _list:Array<object>) => state.feedArticleList = _list,
@@ -33,7 +35,8 @@ export default {
         SET_SEARCH_PLACES_LIST: (state: {searchPlacesList:Array<Object>}, _searchPlacesList:Array<Object>) => state.searchPlacesList = _searchPlacesList,
         SET_SELECTED_PLACE: (state:{selectedPlace:Object}, _selectedPlace:Array<Object>) => state.selectedPlace = _selectedPlace,
         SET_PUBLIC_THEME_ARTICLE_LIST: (state:{publicThemeArticleList:Object}, _publicThemeArticleList:Array<Object>) => state.publicThemeArticleList = _publicThemeArticleList,
-        SET_SELECTED_THEME_FOR_ARTICLE : (state:{selectedThemeforArticle:Object}, _selectedThemeforArticle:Object) => state.selectedThemeforArticle = _selectedThemeforArticle,
+        SET_SELECTED_THEME_FOR_ARTICLE: (state: { selectedThemeforArticle: Object }, _selectedThemeforArticle: Object) => state.selectedThemeforArticle = _selectedThemeforArticle,
+        SET_USER_THEME_ARTICLE_LIST: (state: { userThemeArticleList: Object }, _userThemeArticleList: Object) => state.userThemeArticleList = _userThemeArticleList,
     },
     actions: {
         // board-controller
@@ -205,6 +208,22 @@ export default {
                 .then((res) => {
                 // commit("SET_FEED_RECOMMEND_THEME_List1",res.data)
                 // commit("SET_FEED_RECOMMEND_THEME_List2",res.data)
+            })
+        },
+        getUserThemeArticleList ({ commit,getters }: { commit: Commit, getters: any }, _data:{themeIdx:string, pageIdx:number, pageSize:number}) {
+            axios({
+                url: rest.Feed.userThemeArticleList(_data.themeIdx),
+                method: 'get',
+                headers: getters.authHeader,
+                params: {
+                    pageIdx: _data.pageIdx,
+                    pageSize: _data.pageSize
+                }
+            })
+                .then((res) => {
+                console.log("유저테마게시글목록")
+                console.log(res.data)
+                commit("SET_USER_THEME_ARTICLE_LIST",res.data.data)
             })
         },
         searchPlacesList({ commit }: { commit: Commit }, _list: Array<Object>) {

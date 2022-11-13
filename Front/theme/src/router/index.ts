@@ -1,11 +1,12 @@
 import { createWebHistory, createRouter } from "vue-router";
-import MainPage from "@/components/main/MainPage.vue"
+import MainPage from "@/components/main/MainPage.vue";
 import ThemeListPage from "@/components/theme/ThemeList.vue";
-import ProfilePage from "@/components/profile/ProfilePage.vue"
-import SearchPage from "@/components/search/SearchPage.vue"
-import CreateArticlePage from "@/components/articles/CreateArticlePage.vue"
-import PlusThemePage from "@/components/theme/PlusThemePage.vue"
-import ThemeDetail from "@/components/theme/ThemeDetail.vue"
+import ProfilePage from "@/components/profile/ProfilePage.vue";
+import SearchPage from "@/components/search/SearchPage.vue";
+import CreateArticlePage from "@/components/articles/CreateArticlePage.vue";
+import PlusThemePage from "@/components/theme/PlusThemePage.vue";
+import ThemeDetail from "@/components/theme/ThemeDetail.vue";
+import UserThemeDetail from "@/components/profile/UserThemeDetail.vue";
 import SearchProfile from "@/components/search/SearchProfile.vue";
 import SearchTheme from "@/components/search/SearchTheme.vue";
 import FirebaseTestVue from "@/components/FirebaseTest.vue";
@@ -63,6 +64,11 @@ const routes = [
     component: ProfilePage,
   },
   {
+    path: "/profile/theme/:userThemeIdx/:publicThemeIdx",
+    name: "UserTheme",
+    component: UserThemeDetail,
+  },
+  {
     path: "/test",
     name: "Test",
     component: FirebaseTestVue,
@@ -71,12 +77,12 @@ const routes = [
     path: "/maptest",
     name: "MapTest",
     component: KakaoMapTestVue,
-  }
-]
+  },
+];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes,
-  });
+  history: createWebHistory(),
+  routes,
+});
 
 export default router;
