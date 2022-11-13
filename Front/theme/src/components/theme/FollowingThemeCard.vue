@@ -5,8 +5,8 @@
                 <div>{{theme.emoticon}}</div>
                     <div class="ms-2">{{theme.name}}</div>
                     <div v-if="!state.isSame">
-                        <button v-if="!state.isFollow" class="btn position-absolute top-0 end-0">🤍</button>
-                        <button v-if="state.isFollow" class="btn position-absolute top-0 end-0">💙</button>
+                        <button v-if="!state.isFollow" @click="addFollow" class="btn position-absolute top-0 end-0">🤍</button>
+                        <button v-if="state.isFollow" @click="cancelFollow" class="btn position-absolute top-0 end-0">💙</button>
                     </div>
                 </div>
             </div>
@@ -64,17 +64,25 @@ export default {
             userIdx : props.theme.userIdx,
             themeIdx: props.theme.userThemeIdx})
             
-
         console.log(state.isFollow);
     }
 
-    test()
-      const check = () => {
-        console.log("들어오나?")
+    const cancelFollow = () => {
+      store.dispatch("cancelFollow", props.theme.userThemeIdx)
+      state.isFollow = !state.isFollow
+    }
 
-      }
+    const addFollow = () => {
+      console.log(props.theme.userThemeIdx)
+      console.log(props.theme.userIdx)
+      store.dispatch("followTheme", { themeId : props.theme.userThemeIdx, targetUserId : props.theme.userIdx})
+      
+    }
+
+    test()
+      
         
-      return {isSame, selectedUser, loginUser, check, state}
+    return {isSame, selectedUser, loginUser,  state, cancelFollow, addFollow}
     }
 }
 </script>

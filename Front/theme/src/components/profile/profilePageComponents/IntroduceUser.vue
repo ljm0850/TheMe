@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="d-flex justify-content-end">
-        <button type="button" data-bs-toggle="modal" data-bs-target="#settingModal">🛠</button>
+        <button v-if="state.isProfileMine" type="button" data-bs-toggle="modal" data-bs-target="#settingModal">🛠</button>
     </div>
     <!-- 세팅 모달 -->
     <SettingModalVue :userInfo="selectedUser"/>
@@ -21,11 +21,11 @@
             </div>
             <div class="inroduce-margin">
                 <div>Follower</div>
-                <div>{{selectedUser.follower}}</div>
+                <div>{{selectedUser.following}}</div>
             </div>
             <div class="inroduce-margin">
                 <div>Following</div>
-                <div>{{selectedUser.following}}</div>
+                <div>{{selectedUser.follower}}</div>
             </div>
         </div>
     </div>
@@ -35,6 +35,7 @@
 <script lang="ts">
 import SettingModalVue from './SettingModal.vue'
 // import { useRoute } from 'vue-router'
+import { reactive } from "vue";
 import { useStore } from "vuex";
 import { computed } from '@vue/runtime-core';
 export default {
@@ -42,7 +43,9 @@ export default {
         SettingModalVue
     },
     setup() {
-        
+        const state = reactive({
+            isProfileMine : false
+        })
         // 추후에 nickname으로 selectedUser 갱신
         // const route = useRoute();
         // let nickname: string | string[] = route.params.nickname
@@ -52,8 +55,13 @@ export default {
         const loginUser = computed(() => store.getters.loginUser)
         const selectedUser = computed(()=>store.getters.selectedUser)
 
+        const test = async () => {
+            state.isProfileMine = await store.dispatch("isProfileMine")
+        }
+        
+        test()
 
-        return { loginUser, selectedUser }
+        return { loginUser, selectedUser, state }
     },
 }
 </script>

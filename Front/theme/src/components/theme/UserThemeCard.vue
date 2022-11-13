@@ -5,8 +5,8 @@
                 <div>{{theme.emoticon}}</div>
                     <div class="ms-2">{{theme.name}}</div>
                     <div v-if="!state.isSame">
-                        <button v-if="!state.isFollow" class="btn position-absolute top-0 end-0">🤍</button>
-                        <button v-if="state.isFollow" class="btn position-absolute top-0 end-0">💙</button>
+                        <button v-if="!state.isFollow" @click="addFollow" class="btn position-absolute top-0 end-0">🤍</button>
+                        <button v-if="state.isFollow" @click="cancelFollow" class="btn position-absolute top-0 end-0">💙</button>
                     </div>
                     
                 </div>
@@ -56,14 +56,10 @@ export default {
 
     const test = async () => {
         state.isSame = await store.dispatch("isSame", props.theme.userIdx)
-        
-        console.log(props.theme)
+  
         state.isFollow = await store.dispatch("isFollow", { 
             userIdx : props.theme.userIdx,
-            themeIdx: props.theme.themeIdx})
-            
-
-        console.log(state.isFollow);
+            themeIdx: props.theme.userThemeIdx})
     }
 
     test()
@@ -71,8 +67,17 @@ export default {
     const selectedUser = computed(()=>store.getters.selectedUser)
     const loginUser = computed(()=>store.getters.loginUser)
       
-        
-    return { selectedUser, loginUser, state }
+  
+    const cancelFollow = () => {
+      store.dispatch("cancelFollow", props.theme.userThemeIdx)
+      state.isFollow = !state.isFollow
+    }
+
+    const addFollow = () => {
+      store.dispatch("followTheme", { themeId : props.theme.userThemeIdx, targetUserId : props.theme.userIdx})
+      state.isFollow = !state.isFollow
+    }
+    return { selectedUser, loginUser, state, cancelFollow, addFollow }
     }
 }
 </script>
