@@ -187,7 +187,7 @@ public class UserServiceImpl implements UserService {
                     .themeIdx(userThemeListDtos.get(i).getThemeIdx())
                     .pictures(boardInfoForUserDto.getPictures())
                     .userIdx(userThemeListDtos.get(i).getUserIdx())
-                    .userThemeIdx(userThemeListDtos.get(i).getThemeIdx())
+                    .userThemeIdx(userThemeListDtos.get(i).getIdx())
                     .build();
             userThemeListDtoLists.add(userThemeListDto);
         }
