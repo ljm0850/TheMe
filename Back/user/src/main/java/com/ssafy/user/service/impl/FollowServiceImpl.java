@@ -45,8 +45,9 @@ public class FollowServiceImpl implements FollowService
     }
 
     @Override
-    public void cancelFollow(int follow_id) { // 테마 팔로우 취소
-        Follow targetFollow = followRepository.findById(follow_id)
+    public void cancelFollow(int theme_idx, int user_id) { // 테마 팔로우 취소
+        Optional<User> user = userRepository.findById(user_id);
+        Follow targetFollow = followRepository.findByThemeIdxAndFollowUser(theme_idx, user.get())
                 .orElseThrow(IllegalAccessError::new);
 
         followRepository.delete(targetFollow);

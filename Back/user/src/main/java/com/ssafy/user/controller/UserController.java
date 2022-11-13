@@ -64,13 +64,13 @@ public class UserController {
         return new ResponseEntity<>(result,status);
     }
 
-    @DeleteMapping("/follow/{follow_id}")
-    public ResponseEntity<?> cancelFollow(@PathVariable int follow_id) {
+    @DeleteMapping("/follow/{userTheme_idx}")
+    public ResponseEntity<?> cancelFollow(HttpServletRequest request, @PathVariable int userTheme_idx) {
         Map<String, Object> result = new HashMap<>();
 
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try{
-            followService.cancelFollow(follow_id);
+            followService.cancelFollow(userTheme_idx, Integer.parseInt(request.getHeader("userIdx")));
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {

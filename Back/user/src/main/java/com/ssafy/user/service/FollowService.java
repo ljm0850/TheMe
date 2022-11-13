@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FollowService {
     int followTheme(int theme_id, int user_id, int target_user_id);
-    void cancelFollow(int follow_id);
+    void cancelFollow(int user_theme_id, int user_id);
     List<Integer> getFollowingThemeList(int user_id);
     List<String> getFollowingList(int user_id);
     List<String> getFollowerList(int user_id);
