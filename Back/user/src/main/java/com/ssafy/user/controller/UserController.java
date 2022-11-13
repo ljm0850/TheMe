@@ -52,7 +52,7 @@ public class UserController {
         int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            followService.followTheme(theme_id, userIdx, target_user_id);
+            result.put("followIdx" , followService.followTheme(theme_id, userIdx, target_user_id));
             result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {

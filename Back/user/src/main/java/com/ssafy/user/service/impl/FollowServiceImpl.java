@@ -24,7 +24,7 @@ public class FollowServiceImpl implements FollowService
     }
 
     @Override
-    public void followTheme(int theme_id, int user_id, int target_user_id) { // 테마 팔로우
+    public int followTheme(int theme_id, int user_id, int target_user_id) { // 테마 팔로우
         User followingUser = userRepository.findById(target_user_id)
                 .orElseThrow(IllegalAccessError::new);
 
@@ -40,7 +40,8 @@ public class FollowServiceImpl implements FollowService
                 .themeIdx(theme_id)
                 .build();
 
-        followRepository.save(addFollow);
+        Follow save = followRepository.save(addFollow);
+        return save.getIdx();
     }
 
     @Override
