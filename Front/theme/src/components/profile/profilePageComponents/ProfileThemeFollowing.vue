@@ -34,8 +34,6 @@ export default {
         const store = useStore();
         
         const selectedUser = computed(() => store.getters.selectedUser)
-        console.log("여기아래 집중")
-        console.log(selectedUser)
         // console.log("selectedUser")
         
         const state = reactive({vueTarget : true});
