@@ -12,7 +12,8 @@ export default {
         searchPersonInfo : {},
         duplicationnickname : false,
         liveSearchPerson : [],
-        recommandPersonList :[],
+        recommandPersonList: [],
+        isProfileMine : false,
     },
     
     getters: {
@@ -38,6 +39,12 @@ export default {
     actions: {
         isSame({getters}:{getters:any},_themeUserIdx : number) {
             return getters.loginUser.userIdx == _themeUserIdx;
+        },
+        isProfileMine({ getters }: { getters: any }) {
+            console.log(getters.loginUser.userIdx)
+            console.log(getters.selectedUser.userIdx)
+            console.log(getters.selectedUser.userIdx == getters.loginUser.userIdx)
+            return getters.loginUser.userIdx == getters.selectedUser.userIdx
         },
         getRecommendPersonList({ commit,getters }:{commit:Commit,getters:any}) {
             axios({
@@ -117,7 +124,7 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
-                    console.log("dasfasdfsadf")
+                    console.log("유저정보")
                     console.log(res.data)
                     commit('SET_SELECTED_USER',res.data.userInfo)
                     //commit('SET_LOGIN_USER',res.data.userInfo)
@@ -186,21 +193,23 @@ export default {
                 console.log(err)
             })
         },
-        followTheme({ commit, getters }: { commit: Commit, getters: any }, _params :{ themeId: string, userId: string, targetUserId: string }) {
-            axios({
-                url: rest.User.followtheme(_params.themeId, _params.userId, _params.targetUserId),
+        followTheme({ commit, getters }: { commit: Commit, getters: any }, _params: { themeId: string, targetUserId: string }) {
+            return axios({
+                url: rest.User.followtheme(_params.themeId, _params.targetUserId),
                 method: 'post',
                 headers: getters.authHeader
             })
                 .then((res) => {
                     // 뭔가 패치를 해야겠는데 확인해 봐야겠다.
+                    console.log("팔로우하기")
                     console.log(res)
+                    return(res.data.followIdx)
                 })
         },
 
-        cancelFollow({ dispatch,getters }: { dispatch: Dispatch,getters:any }, _followId: string) {
+        cancelFollow({ dispatch,getters }: { dispatch: Dispatch,getters:any }, _userThemeIdx: string) {
             axios({
-                url: rest.User.cancelFollow(_followId),
+                url: rest.User.cancelFollow(_userThemeIdx),
                 method: 'delete',
                 headers: getters.authHeader
             })
@@ -266,8 +275,7 @@ export default {
                 headers:getters.authHeader
             })
                 .then((res) => {
-                    console.log("결과값")
-                    console.log(res)
+                    
                     return res.data
                 })
             }

@@ -36,11 +36,19 @@ import UserThemeCard from "@/components/theme/UserThemeCard.vue";
 export default {
   components: {
     FollowingThemeCard,
-    UserThemeCard,
-  },
-  setup() {
-    const store = useStore();
-    const router = useRouter();
+    UserThemeCard
+},
+    setup() {
+        const store = useStore();
+        const router = useRouter();
+        
+        const selectedUser = computed(() => store.getters.selectedUser)
+        // console.log("selectedUser")
+        
+        const state = reactive({vueTarget : true});
+        const changeViewMode = (type : boolean) => {
+            state.vueTarget = type;
+        }
 
     const selectedUser = computed(() => store.getters.selectedUser);
     console.log("여기아래 집중");
