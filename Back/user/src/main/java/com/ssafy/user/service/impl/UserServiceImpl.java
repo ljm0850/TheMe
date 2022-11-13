@@ -166,9 +166,13 @@ public class UserServiceImpl implements UserService {
 
         List<UserThemeDto> userThemeListDtos = themeClient.followThemeList(userThemeIdxDto);
         List<UserThemeListDto> userThemeListDtoLists = new ArrayList<>(); // 테마 리스트 관련 정보 넣기
+
         for(int i=0;i<userThemeListDtos.size();i++){
             boolean isfollow = true;
             BoardInfoForUserDto boardInfoForUserDto = boardInfoForUser(userThemeListDtos.get(i).getThemeIdx(),pageUserIdx);
+            Optional<User> followingUser = userRepository.findById(userThemeListDtos.get(i).getUserIdx());
+            Optional<Follow> byFollowUserAndFollowingUserAndThemeIdx = followRepository.findByFollowUserAndFollowingUserAndThemeIdx(user, followingUser.get(), userThemeListDtos.get(i).getIdx());
+
             UserThemeListDto userThemeListDto = UserThemeListDto.builder()
                     .allChallengeCount(boardInfoForUserDto.getAllBoardCount())
                     .boardCount(boardInfoForUserDto.getBoardCount())
@@ -188,6 +192,7 @@ public class UserServiceImpl implements UserService {
                     .pictures(boardInfoForUserDto.getPictures())
                     .userIdx(userThemeListDtos.get(i).getUserIdx())
                     .userThemeIdx(userThemeListDtos.get(i).getIdx())
+                    .followIdx(byFollowUserAndFollowingUserAndThemeIdx.get().getIdx())
                     .build();
             userThemeListDtoLists.add(userThemeListDto);
         }

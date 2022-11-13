@@ -31,11 +31,13 @@ public class UserThemeListDto { // 유저 테마 dto
     private int allChallengeCount; // 총 챌린지 수
     private int currentChallengeCount; // 현재 참여한 챌린지 수
     private boolean isMy; // 본인인지 아닌지 확인
+
+    private int followIdx;
     @Builder
     public UserThemeListDto(int idx, int userThemeIdx, int userIdx, int themeIdx, int openType, LocalDateTime createTime, LocalDateTime modifyTime,
                             boolean challenge, String description, String name, String emoticon, String[] pictures, int personCount,
                             int boardCount, int commentCount, boolean follow, int allChallengeCount, int currentChallengeCount,
-                            boolean isMy) {
+                            boolean isMy, int followIdx) {
         this.idx = idx;
         this.userThemeIdx = userThemeIdx;
         this.userIdx = userIdx;
@@ -55,6 +57,7 @@ public class UserThemeListDto { // 유저 테마 dto
         this.allChallengeCount = allChallengeCount;
         this.currentChallengeCount = currentChallengeCount;
         this.isMy = isMy;
+        this.followIdx = followIdx;
     }
 }
 
