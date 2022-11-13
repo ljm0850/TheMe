@@ -190,13 +190,12 @@ public class ThemeController {
     }
 
     @GetMapping("/live/search")
-    public ResponseEntity<?> liveSearchTheme(HttpServletResponse response, @RequestParam(name = "value") String value) {
+    public ResponseEntity<?> liveSearchTheme(HttpServletRequest request, @RequestParam(name = "value") String value) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        System.out.println(value);
-
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            List<String> themeList = themeService.liveSearchTheme(value);
+            List<LiveThemeDto> themeList = themeService.liveSearchTheme(value,userIdx);
             result.put("themeList", themeList);
             result.put("message", OK);
             status = HttpStatus.OK;

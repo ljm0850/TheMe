@@ -257,12 +257,21 @@ public class ThemeServiceImpl implements ThemeService {
         }
         return publicThemeDtoList;
     }
-    public List<String> liveSearchTheme(String value) {
+    public List<LiveThemeDto> liveSearchTheme(String value,int userIdx) {
+        List<LiveThemeDto> liveThemeDtos = new ArrayList<>();
         List<String> strings = themeRepository.liveSearchByName(value);
         for(int i=0;i<strings.size();i++) {
-            System.out.println(strings.get(i));
+            boolean isMy = false;
+            Optional<Theme> theme = themeRepository.findByName(strings.get(i));
+            Optional<UserTheme> userTheme = userThemeRepository.findByThemeAndUserIdx(theme.get(),userIdx);
+            if(userTheme.isPresent()) isMy = true;
+            LiveThemeDto liveThemeDto = LiveThemeDto.builder()
+                    .name(strings.get(i))
+                    .isMy(isMy)
+                    .build();
+            liveThemeDtos.add(liveThemeDto);
         }
-        return strings;
+        return liveThemeDtos;
     }
     @Override
     public String getThemeName(int theme_idx) {
