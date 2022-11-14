@@ -3,8 +3,8 @@
   <div class="card-body" style="padding: 0px;">
     <div class="d-flex">
       <img :src="person.picture" alt="" class="user-profile">
-      <div class="mt-1">{{person.nickname}}</div>
-      <button class="btn position-absolute top-0 end-0">🤍</button>
+      <div class="mt-1">{{person.nickname}}&nbsp;  🤍</div>
+      
     </div>
   </div>
   <div class="d-flex card-total">
