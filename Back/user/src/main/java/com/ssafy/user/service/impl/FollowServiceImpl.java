@@ -127,10 +127,10 @@ public class FollowServiceImpl implements FollowService
     public List<UserFollowThemeDto> getUserFollowTheme(int userIdx) {
         List<UserFollowThemeDto> userFollowThemeDtoList = new ArrayList<>();
         Optional<User> user = userRepository.findById(userIdx);
-        List<Follow> followList = followRepository.findByFollowingUser(user.get());
+        List<Follow> followList = followRepository.findByFollowUser(user.get());
         for(int i=0;i<followList.size();i++){
             UserFollowThemeDto userFollowThemeDto = UserFollowThemeDto.builder()
-                    .followUserIdx(followList.get(i).getFollowUser().getIdx())
+                    .followUserIdx(followList.get(i).getFollowingUser().getIdx())
                     .followThemeIdx(followList.get(i).getThemeIdx())
                     .build();
             userFollowThemeDtoList.add(userFollowThemeDto);
