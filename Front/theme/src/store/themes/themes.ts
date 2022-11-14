@@ -19,7 +19,7 @@ export default {
        },
     getters: {
         searchThemeList: (state: { searchThemeList: Array<object> }) => state.searchThemeList,
-        isSearchThemeList: (state: { searchThemeList: Array<object> }) => !_.isEmpty(state.searchThemeList),
+        isSearchThemeList: (state: { liveSearchTheme: Array<object> }) => !_.isEmpty(state.liveSearchTheme),
         selectedThemeIdxForCreate: (state: { selectedThemeIdxForCreate: number}) => state.selectedThemeIdxForCreate,
         isSelectedThemeIdxForCreate: (state: { selectedThemeIdxForCreate: number}) => !(state.selectedThemeIdxForCreate==0),
         selectedThemeNameForCreate: (state: { selectedThemeNameForCreate: string}) => state.selectedThemeNameForCreate,
@@ -60,11 +60,13 @@ export default {
                 params:{value:_target},
                 method: 'get',
                 headers: getters.authHeader
-            })
+                })
                 .then((res) => {
-                    console.log("liveSearchTheme : ",res.data)
-                commit("LIVE_SEARCH_THEME_LIST",res.data.themeList)
-            })
+                    commit("LIVE_SEARCH_THEME_LIST",res.data.themeList)
+                })
+            
+            
+            
         },
         searchThemeInfo({ commit,getters }: {commit:Commit, getters:any},_value:string) {
             axios({
@@ -163,7 +165,6 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
-                    console.log("검색 결과 : ",res.data)
                     commit('SET_SEARCH_THEME_LIST',res.data.themeDtos)
             })
         },
@@ -200,8 +201,24 @@ export default {
         selectedThemeIdxForCreate({ commit }: { commit: Commit },_idx:number) {
             commit('SET_SELECTED_THEME_IDX_FOR_CREATE',_idx)
         },
-        selectedThemeNameForCreate({ commit }: { commit: Commit },_name:string) {
-            commit('SET_SELECTED_THEME_NAME_FOR_CREATE',_name)
+
+        selectedThemeNameForCreate({ commit,dispatch,getters }: { commit: Commit, dispatch:Dispatch, getters:any },_name:string) {
+            commit('SET_SELECTED_THEME_NAME_FOR_CREATE', _name)
+            axios({
+                url: rest.Theme.searchTheme(_name),
+                method: 'get',
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                    console.log("선택 검색 결과: ", res.data.themeDtos)
+                    for (const data of res.data.themeDtos) {
+                        if (data.name == _name) {
+                            dispatch('selectedThemeIdxForCreate',data.themeIdx)
+                            dispatch('selectedThemeEmoticonForCreate', data.emoticon)
+                            console.log("정확한 데이터: ",data)
+                        }
+                    }
+            })
         },
         selectedThemeEmoticonForCreate({ commit }: { commit: Commit }, _emoticon: string) {
             commit('SET_SELECTED_THEME_EMOTICON_FOR_CREATE',_emoticon)
