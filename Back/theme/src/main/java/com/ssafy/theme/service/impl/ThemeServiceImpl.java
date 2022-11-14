@@ -61,7 +61,7 @@ public class ThemeServiceImpl implements ThemeService {
                 .createTime(userThemeRegistDto.getCreateTime())
                 .challenge(userThemeRegistDto.isChallenge())
                 .description(userThemeRegistDto.getDescription())
-                .modifyTime(userThemeRegistDto.getModifyTime())
+                .modifyTime(userThemeRegistDto.getCreateTime())
                 .openType(userThemeRegistDto.getOpenType())
                 .build();
         UserTheme save = userThemeRepository.save(userTheme);
