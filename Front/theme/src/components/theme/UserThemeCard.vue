@@ -39,6 +39,7 @@ import { reactive } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRouter } from 'vue-router'
+import { useRoute} from "vue-router";
 
 export default {
     props:{
@@ -49,7 +50,8 @@ export default {
     setup(props:any) {
       const store = useStore();
       const router = useRouter();
-
+      const route = useRoute();
+    
       const state = reactive({
       searchValue: "",
       isSame: false,
@@ -73,11 +75,15 @@ export default {
     const cancelFollow = () => {
       store.dispatch("cancelFollow", props.theme.userThemeIdx)
       state.isFollow = !state.isFollow
+      const userNickname = route.params.nickname;
+      store.dispatch("getUserInfoByNickname",userNickname);
     }
 
     const addFollow = () => {
       store.dispatch("followTheme", { themeId : props.theme.userThemeIdx, targetUserId : props.theme.userIdx})
       state.isFollow = !state.isFollow
+      const userNickname = route.params.nickname;
+      store.dispatch("getUserInfoByNickname",userNickname);
     }
     const clickTheme = (userThemeIdx: string, publicThemeIdx: string) => {
       router.push({

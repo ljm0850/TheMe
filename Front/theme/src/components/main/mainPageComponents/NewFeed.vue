@@ -1,7 +1,8 @@
 <template>
     <div>
-        <div v-for="Feed in FeedList" :key="Feed">
-            <ArticleDetailVue :article="Feed" />
+        <ArticleDetailVue :article="tempArticle" />
+        <div v-for="Feed,idx in FeedList" :key="Feed">
+            <ArticleDetailVue :article="Feed" :feedIdx="idx" />
             <br>
         </div>
         <!-- 피드가 없을시 보이는 내용 -->
@@ -49,7 +50,13 @@ export default {
         const selectCity = (e : any) => {
             store.dispatch("getFeedTheme",e.target.value)
         }
-        return {FeedList,selectCity}
+
+        const tempArticle = {
+            themeName: "피드 없어서 임시 하드 코딩",
+            nickname: "가라사대",
+
+        }
+        return {FeedList,selectCity,tempArticle}
     }
 }
 </script>
@@ -78,7 +85,7 @@ select::-ms-expand {
     margin-bottom: 100px;
     padding-bottom: 100px;
     left: 340px;
-    bottom: -150px;
+    bottom: -140px;
 }
 .card-body{
     padding-bottom:0px !important;

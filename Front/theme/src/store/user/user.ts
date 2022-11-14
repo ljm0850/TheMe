@@ -123,7 +123,7 @@ export default {
         },
 
         // 확인
-        getUserInfoByNickname({ commit,getters }: { commit: Commit,getters:any }, _userNickname: string) {
+        getUserInfoByNickname({ commit,getters }: {commit: Commit,getters:any }, _userNickname: string) {
             axios({
                 url: rest.User.userInfo(_userNickname),
                 method: 'get',
@@ -132,6 +132,7 @@ export default {
                 .then((res) => {
                     console.log("유저정보")
                     console.log(res.data)
+                    
                     commit('SET_SELECTED_USER',res.data.userInfo)
                     //commit('SET_LOGIN_USER',res.data.userInfo)
                 })
@@ -161,7 +162,6 @@ export default {
             })
                 .then((res) => {
                     dispatch('getUserInfoByNickname',_data.nickname)
-                    
                     console.log(res)
                 })
         },

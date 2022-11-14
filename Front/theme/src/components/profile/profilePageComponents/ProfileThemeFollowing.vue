@@ -1,20 +1,20 @@
 <template>
   <div>
     <div>
-      <button @click="changeViewMode(true)">Themes</button>
-      <button @click="changeViewMode(false)">Following</button>
+      <button class="btn btn-light type-button border" @click="changeViewMode(true)">Themes</button>
+      <button class="btn btn-light type-button border" @click="changeViewMode(false)">Following</button>
     </div>
     <br />
-    <ul v-if="state.vueTarget">
-      <li v-for="item in selectedUser.themeDtoList" :key="item">
+    <ul v-if="state.vueTarget" class="paddingZero">
+      <li v-for="item in selectedUser.themeDtoList" :key="item" >
         <UserThemeCard
           :theme="item"
           class="themeCard"
         />
       </li>
     </ul>
-    <ul v-if="!state.vueTarget">
-      <li v-for="item in selectedUser.followingDtoList" :key="item">
+    <ul v-if="!state.vueTarget" class="paddingZero">
+      <li v-for="item in selectedUser.followingDtoList" :key="item" >
         <FollowingThemeCard
           :theme="item"
           class="themeCard"
@@ -62,6 +62,9 @@ export default {
 </script>
 
 <style lang="scss">
+.paddingZero {
+  padding-left: 0;
+}
 ul {
   list-style: none;
   padding-left: 0px;
@@ -69,5 +72,6 @@ ul {
 
 .themeCard {
   margin-bottom: 10px;
+  margin-left : 0px;
 }
 </style>

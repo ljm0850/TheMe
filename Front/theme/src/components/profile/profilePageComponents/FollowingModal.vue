@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div v-for="following in followingList" :key="following" :value="following">
+                <div v-for="following in followingList" :key="following" :value="following" data-bs-dismiss="modal">
                     <div @click="moveProfile(following.nickname)">
                         <img :src="following.picture" alt="" class="user-profile">
                         {{following.nickname}}
@@ -54,6 +54,7 @@ export default {
                     nickname : nickname,
                 } 
             })
+            store.dispatch("getUserInfoByNickname",nickname);
         } 
         return {  selectedUser, followingList, moveProfile}
     }

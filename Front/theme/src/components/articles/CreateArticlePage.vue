@@ -41,7 +41,6 @@
         <button @click.prevent="createArticle()">게시물 등록</button>
       </div>
     </form>
-    {{ themeList }}
   </div>
 </template>
 
@@ -69,6 +68,7 @@ export default {
       searchValue: "",
       description: "",
     });
+    
     const isSelectFile = computed(() => !_.isEmpty(state.selectFile));
     const imageUrls: string[] = [];
     const store = useStore();

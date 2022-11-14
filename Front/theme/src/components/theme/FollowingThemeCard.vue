@@ -169,6 +169,11 @@ export default {
     width: 56px;
     height: 56px;
   }
+
+  .themeCard {
+    z-index: 10;
+    position: absolute;
+  }
 }
 
 </style>

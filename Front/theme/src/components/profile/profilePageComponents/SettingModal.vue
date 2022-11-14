@@ -7,6 +7,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div>프로필 사진</div>
+                <div id="profileImage">
+                    <img :src="selectedUser.picture" alt="" class="test">
+                </div>
+                <!-- <img v-if="!state.profileChanged"  :src="selectedUser.picture" alt="" class="test"> -->
+                <input type="file" accept="image/*" @change="fileChange"/>
+
                 <div>닉네임<input type="text" class="form-control" id="" :placeholder="selectedUser.nickname"  @input="getDuplicateNickname"></div>
                 
                 <div v-if="state.inputNicknameText.length  >= 1">
@@ -41,6 +48,7 @@ import { reactive } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRouter } from 'vue-router'
+import { profileImageUpload } from "@/store/firebase/firebase";
 export default {
     props:{
         userInfo:Object
@@ -50,13 +58,16 @@ export default {
     setup() {
         const store = useStore();
         const router = useRouter();
-        const state = reactive({
+        const state : any= reactive({
             inputNicknameText : "",
             inputDescriptionText : "",
             isChanged : false,
             nickname : "",
+            selectFile : {},
+            url : "",
+            profileChanged : false,
         });
-
+        
         const isPossible = computed(()=>store.getters.duplicationnickname)
         const selectedUser = computed(()=>store.getters.selectedUser)
         
@@ -73,7 +84,8 @@ export default {
         }
 
         const updateUserInfo = () => {
-            store.dispatch("updateUserInfo", {description: state.inputDescriptionText, nickname : state.inputNicknameText, picture : "https://velog.velcdn.com/images%2Fjini_eun%2Fpost%2F107f5cfb-e97c-4c4c-b997-06098062e5b3%2Fimage.png"})
+            console.log(state.inputNicknameText)
+            store.dispatch("updateUserInfo", {description: state.inputDescriptionText, nickname : state.inputNicknameText, picture : state.url})
             router.push({
                 name: "Profile", 
                 params: { 
@@ -88,7 +100,39 @@ export default {
                 name:"Main"
             })
         }
-        return { state,getDuplicateNickname, isPossible, updateUserInfo, selectedUser, updateDescription, logout}
+        
+        const fileChange = (e: any) => {
+        // console.log(e.target.files)
+        state.selectFile = e.target.files;
+        
+            for (let i = 0; i < state.selectFile.length; i++) {
+                let reader = new FileReader();
+                reader.onload = (e: any) => {
+                    createPreview(e.target?.result);
+                };
+                reader.readAsDataURL(state.selectFile[i]);
+            }
+
+            state.url = profileImageUpload(e.target.files[0].name, e.target.files[0]);
+        
+            state.selectFile = e.target.files;
+            state.profileChanged = true
+            state.isChanged = true
+        };
+
+        const createPreview = (_img: string) => {
+            console.log("여기옴?")
+            let imageDiv = document.querySelector('#profileImage')
+            while (imageDiv?.firstChild) {
+                console.log("?????")
+                imageDiv.firstChild.remove();
+            }
+            const newImg = document.createElement('img')
+            newImg.src = _img
+            imageDiv?.append(newImg)
+        };   
+        
+        return { state,getDuplicateNickname, isPossible, updateUserInfo, selectedUser, updateDescription, logout, fileChange}
     }
 }
 </script>
