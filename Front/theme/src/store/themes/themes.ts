@@ -62,6 +62,7 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
+                    console.log("liveSearchTheme : ",res.data)
                 commit("LIVE_SEARCH_THEME_LIST",res.data.themeList)
             })
         },
@@ -87,7 +88,7 @@ export default {
             })
         },
         
-        registTheme({ dispatch,commit, getters }: { dispatch:Dispatch,commit: Commit, getters: any }, _data:{emoticon:string, name:string, openType:number}) {
+        registTheme({ dispatch,commit, getters }: { dispatch:Dispatch,commit: Commit, getters: any }, _data:{emoticon:string, name:string, openType:number, challenge:boolean}) {
             axios({
                 url: rest.Theme.registTheme(),
                 method: 'post',
@@ -101,16 +102,16 @@ export default {
                     console.log("공용테마 등록",res.data)
                     const themeIdx = res.data.idx
                     commit('SET_SELECTED_THEME_IDX_FOR_CREATE',themeIdx)
-                    dispatch('createUserTheme',_data.openType)
+                    dispatch('createUserTheme', { openType:_data.openType, challenge:_data.challenge })
             })
         },
-        createUserTheme({ getters }: { getters: any }, _openType:number) {
+        createUserTheme({ getters }: { getters: any }, _data: { openType:number, challenge:boolean}) {
             const data = {
-                challenge: true,
+                challenge: _data.challenge,
                 createTime: new Date(),
                 description: "",
                 modifyTime: "",
-                openType: _openType,
+                openType: _data.openType,
                 themeIdx: getters.selectedThemeIdxForCreate,
                 userIdx: getters.loginUser.userIdx
             }
@@ -151,7 +152,7 @@ export default {
                 headers:getters.authHeader
             })
                 .then((res) => {
-                    console.log(res.data.recommendList)
+                    console.log("추천 테마 : ",res.data)
                     commit('SET_RECOMMEND_THEME_LIST',res.data.recommendList)
             })
         },
@@ -162,6 +163,7 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
+                    console.log("검색 결과 : ",res.data)
                     commit('SET_SEARCH_THEME_LIST',res.data.themeDtos)
             })
         },

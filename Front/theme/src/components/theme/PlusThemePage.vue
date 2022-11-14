@@ -50,8 +50,8 @@ export default {
     const searchTheme = (e:any) => {
       state.searchValue = e.target.value
       if (state.searchValue.length >= 2) {
-        console.log(state.searchValue)
-        store.dispatch("searchTheme",state.searchValue)
+        store.dispatch("searchTheme", state.searchValue)
+        store.dispatch("liveSearchTheme",state.searchValue)
       }
     }
     const isSearchThemeList = computed(()=> store.getters.isSearchThemeList)

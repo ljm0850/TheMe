@@ -62,6 +62,7 @@ export default {
       store.dispatch('registTheme',{ 
         openType: state.type,
         emoticon: state.emoticon,
+        challenge: false,
         })
     }
     

@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{theme}}
      <div class="d-flex theme-style justify-content-between" v-if="theme">
       <div class="form-control form-custom col-8">{{theme.name}}</div>
       <button type="button" class="btn btn-outline-secondary white-add-button col-3" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
