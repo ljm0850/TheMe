@@ -10,7 +10,7 @@
                 <div>3년전</div>
             </div>
             <!-- 사진 -->
-            <ArticleImageVue :pictures="tempPicture" :carouselId ="article.nickname"/>
+            <ArticleImageVue :pictures="article.picture" :carouselId ="articleCarouseId"/>
             <!-- 사진 끝 -->
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
@@ -51,15 +51,9 @@ export default {
         const displayComment = ()=>{
             state.commentFlag = true;
         }
-        console.log(props.article)
+        const articleCarouseId = `picture${props.article.boardIdx}-${props.article.themeIdx}-${props.article.userIdx}`
 
-        const tempPicture = [
-            "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2F1536724809274.jpg%2B112?alt=media&token=e84fd445-0c53-4e69-80cb-8e091b4846d7",
-            "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2F20191230_133301.jpg%2B111?alt=media&token=349c40b1-32c2-4f52-993b-979149a7b7a8",
-            "https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2FSDC12246.JPG1?alt=media&token=6b27b194-28a1-418f-b9d3-286626a13bb5"
-        ]
-
-        return {state,displayComment,tempPicture}
+        return {state,displayComment, articleCarouseId}
     }
 }
 </script>
