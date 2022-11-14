@@ -6,46 +6,23 @@
       :key="article"
       :article="article"
     />
-    <!-- 모달 -->
-    <!-- <ArticleListModalVue /> -->
   </div>
 </template>
 
 <script lang="ts">
 import ArticleItemVue from "./ArticleItem.vue";
-// import ArticleListModalVue from './ArticleListModal.vue';
-import { computed, reactive } from "vue";
-import { useStore } from "vuex";
 export default {
   components: {
     ArticleItemVue,
     // ArticleListModalVue,
   },
   props: {
-    themeDetail: String,
+    articleList: Object,
     page: String,
   },
-  setup(props: any) {
-    const state = reactive({
-      themeIdx: props.themeDetail,
-      pageSize: 10,
-      pageIdx: 0,
-    });
-
-    const store = useStore();
-    let articleList = null;
+  setup() {
     
-    console.log(props.page);
-
-    if (props.page == "publicTheme") {
-      store.dispatch("themeArticleList", state);
-      articleList = computed(() => store.getters.publicThemeArticleList);
-    } else {
-      store.dispatch("getUserThemeArticleList", state);
-      articleList = computed(() => store.getters.userThemeArticleList);
-    }
-
-    return { articleList };
+    return { };
   },
 };
 </script>

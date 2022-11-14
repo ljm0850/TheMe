@@ -10,7 +10,6 @@
         <UserThemeCard
           :theme="item"
           class="themeCard"
-          @click="clickTheme(item.userThemeIdx, item.themeIdx)"
         />
       </li>
     </ul>
@@ -19,7 +18,6 @@
         <FollowingThemeCard
           :theme="item"
           class="themeCard"
-          @click="clickTheme(item.userThemeIdx, item.themeIdx)"
         />
       </li>
     </ul>
@@ -28,7 +26,6 @@
 
 <script lang="ts">
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import { computed } from "@vue/runtime-core";
 import { reactive } from "@vue/reactivity";
 import FollowingThemeCard from "@/components/theme/FollowingThemeCard.vue";
@@ -40,7 +37,6 @@ export default {
 },
     setup() {
         const store = useStore();
-        const router = useRouter();
         
         const selectedUser = computed(() => store.getters.selectedUser)
         // console.log("selectedUser")
@@ -59,17 +55,8 @@ export default {
     // const changeViewMode = (type: boolean) => {
     //   state.vueTarget = type;
     // };
-    const clickTheme = (userThemeIdx: string, publicThemeIdx: string) => {
-      router.push({
-        name: "UserTheme",
-        params: {
-          userThemeIdx: userThemeIdx,
-          publicThemeIdx: publicThemeIdx,
-        },
-      });
-    };
 
-    return { selectedUser, state, clickTheme, changeViewMode };
+    return { selectedUser, state, changeViewMode };
   },
 };
 </script>

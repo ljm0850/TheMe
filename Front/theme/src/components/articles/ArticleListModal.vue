@@ -1,13 +1,14 @@
 <template>
 <div class="modal fade" id="articleListModal" tabindex="-1" aria-labelledby="articleListModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog modal-fullsize">
+        <div class="modal-content modal-fullsize">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="articleListModalLabel">리디파인</h1>
+                <h1 class="modal-title fs-5" id="articleListModalLabel">{{ articleName }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ArticleDetailVue/>
+                <ArticleDetailVue :article="article" class="article-detail"/>
+                <!-- <ArticleDetailVue v-for="article in boardList" :key="article" :article="article"/> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -20,17 +21,42 @@
 
 <script lang="ts">
 import ArticleDetailVue from './ArticleDetail.vue';
-// import { useStore } from "vuex";
+import { reactive } from "vue";
 export default {
     components: {
         ArticleDetailVue,
     },
-    setup() {
+    props: {
+        articleName: String,
+        boardList:Object,
+    },
+    setup(props:any) {
+        console.log(props.boardList);
+        const article = reactive({
+            themeName:"코딩카페",
+            profile:"",
+            nickname:"joe",
+            picture:""
+        });
+        return { article }
     }
 }
 </script>
 
-<style lang="scss`">
-
+<style>
+.modal-dialog.modal-fullsize {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.modal-content.modal-fullsize {
+  height: auto;
+  min-height: 100%;
+  border-radius: 0; 
+}
+.modal-body{
+    padding: 0 !important;
+}
 
 </style>

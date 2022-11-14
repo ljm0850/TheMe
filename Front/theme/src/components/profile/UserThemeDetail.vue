@@ -2,33 +2,24 @@
   <div>
     <div class="theme-header">
       <div class="theme-title-box">
-        <div v-if="!state.isMarked" class="bookmark" @click="clickBookmark()">
-          <img
-            src="@/assets/image/emptyBookmark.png"
-            alt=""
-            class="emtpyBookmark"
-          />
+        <!-- <div>
+          <div v-if="state.isMine" @click="clickSetting()" class="unfollowbutton">💙</div>
+        </div> -->
+        <div>
+          <div v-show="!state.isMine" v-if="!state.isFollow" @click="clickFollow()" class="followbutton">🤍</div>
         </div>
-        <div v-if="state.isMarked" class="bookmark" @click="clickBookmark()">
-          <img
-            src="@/assets/image/fillBookmark.png"
-            alt=""
-            class="fillBookmark"
-          />
+        <div>
+          <div v-show="!state.isMine" v-if="state.isFollow" @click="clickFollow()" class="unfollowbutton">💙</div>
         </div>
         <div class="theme-title-text">{{ themeDetail.emoticon }}</div>
         <div class="theme-title-text">{{ themeDetail.name }}</div>
       </div>
-      <!-- <div class="theme-sort">
-                <button>인기순</button>
-                <button>최신순</button>
-            </div> -->
     </div>
     <KakaoMapVue class="kakao-map" />
     <ArticleListVue
       class="article-list"
       page="userTheme"
-      :themeDetail="userThemeIdx"
+      :articleList="articleList"
     />
   </div>
 </template>
@@ -48,37 +39,53 @@ export default {
     const store = useStore();
     const route = useRoute();
 
-    let theme_idx = route.params.publicThemeIdx;
+    // const theme_idx = route.params.publicThemeIdx;
     const userThemeIdx = route.params.userThemeIdx;
 
-    store.dispatch("detailTheme", theme_idx);
+    store.dispatch("detailUserTheme", userThemeIdx);
 
-    const themeDetail = computed(() => store.getters.publicThemeDetail);
+    const themeDetail = computed(() => store.getters.userThemeDetail);
 
-    const state = reactive({
-      isMarked: false,
+    const param = reactive({
+      themeIdx: userThemeIdx,
+      pageSize: 10,
+      pageIdx: 0,
     });
 
-    const clickBookmark = () => {
-      if (state.isMarked) {
-        // 북마크 취소
-        store.dispatch("unScrapTheme", theme_idx);
+    // console.log(themeDetail.value);
+
+    store.dispatch("getUserThemeArticleList", param);
+    const articleList = computed(() => store.getters.userThemeArticleList);
+
+    const state = reactive({
+      isFollow: false,
+      isMine : false,
+    });
+
+    const clickFollow = () => {
+      if (state.isFollow) {
+        // 팔로우 취소
+        store.dispatch("cancelFollow", userThemeIdx);
       } else {
-        // 북마크 하기
-        store.dispatch("scrapTheme", theme_idx);
+        // 팔로우 하기
+        const follow_param = reactive({
+          themeId: userThemeIdx,
+          targetUserId: articleList.value[0].userIdx,
+        });
+        store.dispatch("followTheme", follow_param);
       }
-      state.isMarked = !state.isMarked;
-      console.log(state.isMarked);
+      state.isFollow = !state.isFollow;
+      // console.log(state.isFollow);
     };
 
-    const isBookmarked = () => {
-      state.isMarked = themeDetail.value.bookmarked;
+    const isfollow = () => {
+      state.isFollow = themeDetail.value.follow;
+      state.isMine = themeDetail.value.mine;
     };
-    setTimeout(() => isBookmarked(), 100);
 
-    console.log(state.isMarked);
+    setTimeout(() => isfollow(), 100);
 
-    return { themeDetail, state, clickBookmark, userThemeIdx };
+    return { themeDetail, state, clickFollow, userThemeIdx, articleList };
   },
 };
 </script>
@@ -88,7 +95,7 @@ export default {
   position: relative;
   top: 25px;
   z-index: 1;
-  width: 200px;
+  width: 220px;
   height: 60px;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
@@ -116,7 +123,12 @@ export default {
   height: 19px;
 }
 
-.bookmark {
+.followbutton {
+  position: absolute;
+  top: 18px;
+  left: 8px;
+}
+.unfollowbutton {
   position: absolute;
   top: 18px;
   left: 8px;
