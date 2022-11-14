@@ -10,12 +10,14 @@ import java.util.List;
 
 @FeignClient(name = "theme")
 public interface ThemeClient {
+    @GetMapping("/theme/userThemename/{theme_idx}")
+    String getUserThemeName(@PathVariable(name = "theme_idx") int theme_idx);
     @GetMapping("/theme/name/{theme_idx}")
     String getThemeName(@PathVariable(name = "theme_idx") int theme_idx);
     @GetMapping("/theme/userList/{theme_idx}/{user_idx}")
     List<UserThemeDtoWithMSA> getThemeUserList(@PathVariable(name = "theme_idx") int theme_idx,@PathVariable(name = "user_idx") int user_idx);
-    @GetMapping("/theme/openType/{follow_user_idx}/{follow_theme_idx}")
-    int getThemeOpenType(@PathVariable(name = "follow_user_idx") int followUserIdx
+    @GetMapping("/theme/openType/{following_user_idx}/{follow_theme_idx}")
+    int getThemeOpenType(@PathVariable(name = "following_user_idx") int followUserIdx
             , @PathVariable(name = "follow_theme_idx") int followThemeIdx);
     @PostMapping("/theme/isUserTheme/{user_idx}/{theme_idx}")
     int isUserTheme(@PathVariable(name = "user_idx") int userIdx

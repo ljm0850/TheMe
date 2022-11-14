@@ -15,7 +15,7 @@ public interface FeedService {
     List<BoardSimpleListDto> themeBoardList(int theme_idx, String name, int pageIdx, int pageSize,int userIdx);
     List<BoardSimpleListDto> feedByRegion(int userIdx, int region, int pageIdx, int pageSize);
     List<UserFollowThemeDto> getUserFollowTheme(int userIdx);
-    int getThemeOpenType(int followUserIdx, int followThemeIdx);
+    int getThemeOpenType(int followingUserIdx, int followThemeIdx);
     String getThemeName(int themeIdx);
     List<BoardDto> getUserBoardList(int user_idx);
 
@@ -23,4 +23,5 @@ public interface FeedService {
     int whoUserIdx(int userThemeIdx);
     boolean isScrap(int userIdx, int themeIdx);
     List<UserThemeDtoWithMSA> getUserThemeUserList(int theme_idx, int user_idx);
+    String getUserThemeName(int themeIdx);
 }

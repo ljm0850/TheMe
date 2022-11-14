@@ -19,6 +19,7 @@ import com.ssafy.feed.repository.LikeRepository;
 import com.ssafy.feed.repository.PictureRepository;
 import com.ssafy.feed.service.FeedService;
 import io.swagger.models.auth.In;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -164,7 +165,7 @@ public class FeedServiceImpl implements FeedService {
                             .nickname(userInfo.getNickname())
                             .picture(pictures)
                             .themeIdx(boardList.get(j).getThemeIdx())
-                            .themeName(themeClient.getThemeName(boardList.get(j).getThemeIdx()))
+                            .themeName(themeClient.getUserThemeName(boardList.get(j).getThemeIdx()))
                             .profile(userInfo.getPicture())
                             .userIdx(boardList.get(j).getUserIdx())
                             .build();
@@ -181,12 +182,17 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public int getThemeOpenType(int followUserIdx, int followThemeIdx) { // 해당 테마의 공개 여부 확인하기
-        return themeClient.getThemeOpenType(followUserIdx,followThemeIdx);
+    public int getThemeOpenType(int followingUserIdx, int followThemeIdx) { // 해당 테마의 공개 여부 확인하기
+        return themeClient.getThemeOpenType(followingUserIdx,followThemeIdx);
     }
     @Override
     public String getThemeName(int themeIdx) { // 테마 idx로 이름 받아오기
         String themeInfo = themeClient.getThemeName(themeIdx);
+        return themeInfo;
+    }
+    @Override
+    public String getUserThemeName(int themeIdx) {
+        String themeInfo = themeClient.getUserThemeName(themeIdx);
         return themeInfo;
     }
     public List<BoardDto> getUserBoardList(int user_idx) {
