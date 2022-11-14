@@ -7,7 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div v-for="follower in followerList" :key="follower" :value="follower">
+                <div v-for="follower in followerList" :key="follower" :value="follower" data-bs-dismiss="modal">
                     <div @click = "moveProfile(follower.nickname)" >
                         <img :src="follower.picture" alt="" class="user-profile">
                         {{follower.nickname}}
@@ -47,12 +47,14 @@ export default {
         const followerList = computed(()=> store.getters.followerList)
 
         const moveProfile= (nickname:string) => {
+            
             router.push({
                 name: "Profile", 
                 params: { 
                     nickname : nickname,
                 } 
             })
+            store.dispatch("getUserInfoByNickname",nickname);
         } 
         return {  selectedUser, followerList, moveProfile}
     }

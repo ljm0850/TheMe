@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <div>{{theme.emoticon}}</div>
                     <div class="ms-2">{{theme.name}}</div>
-                    <div v-if="!state.isSame">
+                    <div v-if="!state.isSame" >
                         <button v-if="!state.isFollow" @click="addFollow" class="btn position-absolute top-0 end-0">🤍</button>
                         <button v-if="state.isFollow" @click="cancelFollow" class="btn position-absolute top-0 end-0">💙</button>
                     </div>
@@ -157,6 +157,11 @@ export default {
   .view-info{
     width: 56px;
     height: 56px;
+  }
+
+  .themeCard {
+    z-index: 10;
+    position: absolute;
   }
 }
 
