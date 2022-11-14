@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserThemeRepository extends JpaRepository<UserTheme,Integer> {
+    Optional<UserTheme> findByIdx(int theme_idx);
     List<UserTheme> findByUserIdx(int user_idx);
     @Query("SELECT new PublicThemeDto(t.theme.idx, t.theme.name, t.theme.emoticon, t.theme.createTime, count(t.theme.idx)) " +
             "FROM UserTheme t " +

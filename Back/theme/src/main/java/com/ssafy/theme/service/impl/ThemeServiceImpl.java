@@ -483,12 +483,14 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public int isUserTheme(int userIdx, int themeIdx) {
-        Theme theme = themeRepository.findByIdx(themeIdx);
-        Optional<UserTheme> userTheme = userThemeRepository.findByThemeAndUserIdx(theme,userIdx);
+        Optional<UserTheme> userTheme = userThemeRepository.findByIdx(themeIdx);
+
+        System.out.println(userTheme.toString());
+        System.out.println(userTheme.get());
         if(!userTheme.isPresent()){
             UserTheme addUserTheme = UserTheme.builder()
-                    .theme(theme)
-                    .description(theme.getName())
+                    .theme(userTheme.get().getTheme())
+                    .description(userTheme.get().getTheme().getName())
                     .modifyTime(LocalDateTime.now())
                     .createTime(LocalDateTime.now())
                     .challenge(false)
