@@ -13,7 +13,9 @@ export default {
         duplicationnickname : false,
         liveSearchPerson : [],
         recommandPersonList: [],
-        isProfileMine : false,
+        isProfileMine: false,
+        followerList: [],
+        followingList: []
     },
     
     getters: {
@@ -26,6 +28,8 @@ export default {
         duplicationnickname : (state: { duplicationnickname : boolean}) => state.duplicationnickname,
         liveSearchPerson: (state: { liveSearchPerson: Array<String> }) => state.liveSearchPerson,
         recommandPersonList: (state: { recommandPersonList: Array<String> }) => state.recommandPersonList,
+        followerList: (state: { followerList: Array<Object> }) => state.followerList,
+        followingList : (state: { followingList: Array<Object> }) => state.followingList,
     },
     mutations: {
         SET_TOKEN: (state: { token: string; }, _token:string) => state.token = _token,
@@ -35,6 +39,8 @@ export default {
         SET_DUPLICATIONNICKNAME : (state: { duplicationnickname:boolean}, _duplicationnickname:boolean) => state.duplicationnickname = _duplicationnickname ,
         LIVE_SEARCH_PERSON_LIST: (state: { liveSearchPerson: Array<String> }, _liveSearchPerson: Array<String>) => state.liveSearchPerson = _liveSearchPerson,
         SET_RECOMMAND_PERSON_LIST: (state: { recommandPersonList: Array<Object> }, _recommandPersonList: Array<Object>) => state.recommandPersonList = _recommandPersonList,
+        SET_FOLLOWER_LIST: (state: { followerList: Array<Object> }, _followerList: Array<Object>) => state.followerList = _followerList,
+        SET_FOLLOWING_LIST: (state: { followingList: Array<Object> }, followingList: Array<Object>) => state.followingList = followingList,
     },
     actions: {
         isSame({getters}:{getters:any},_themeUserIdx : number) {
@@ -235,7 +241,9 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
-                    console.log(res)
+                    //console.log(res.data)
+                    commit('SET_FOLLOWER_LIST', res.data.followerList)
+                    console.log(res.data.followerList)
                 })
         },
         getFollowingList({ commit,getters }: { commit: Commit,getters:any }, _userId: string) {
@@ -245,7 +253,8 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
-                    console.log(res)
+                    commit('SET_FOLLOWING_LIST', res.data.followingList)
+                    console.log(res.data.followingList)
                 })
         },
         userUnfollow({ commit,getters }: {commit : Commit,getters:any},_targetUserIdx:string,_userIdx:string) {

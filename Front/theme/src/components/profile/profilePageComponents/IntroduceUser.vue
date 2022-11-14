@@ -19,13 +19,21 @@
                 <div>Themes</div>
                 <div>{{selectedUser.themes}}</div>
             </div>
-            <div class="inroduce-margin">
+            <div class="inroduce-margin" @click="FollowerList">
                 <div>Follower</div>
-                <div>{{selectedUser.following}}</div>
+                <div>
+                    {{selectedUser.following}} <button type="button" data-bs-toggle="modal" data-bs-target="#followerModal">🔍</button>
+                </div>
+                <FollowerModalVue :userInfo="selectedUser"/>
+                
             </div>
+            
             <div class="inroduce-margin">
                 <div>Following</div>
-                <div>{{selectedUser.follower}}</div>
+                <div>
+                    {{selectedUser.follower}} <button type="button" data-bs-toggle="modal" data-bs-target="#followingModal">🔍</button>
+                </div> 
+                <FollowingModalVue :userInfo="selectedUser"/>
             </div>
         </div>
     </div>
@@ -34,23 +42,29 @@
 
 <script lang="ts">
 import SettingModalVue from './SettingModal.vue'
+import FollowerModalVue from './FollowerModal.vue'
+import FollowingModalVue from './FollowingModal.vue'
 // import { useRoute } from 'vue-router'
 import { reactive } from "vue";
 import { useStore } from "vuex";
 import { computed } from '@vue/runtime-core';
+
 export default {
     components: {
-        SettingModalVue
+        SettingModalVue,
+        FollowerModalVue,
+        FollowingModalVue
     },
     setup() {
         const state = reactive({
-            isProfileMine : false
+            isProfileMine : false,
+            isOpenFollower : false
         })
         // 추후에 nickname으로 selectedUser 갱신
         // const route = useRoute();
         // let nickname: string | string[] = route.params.nickname
         const store = useStore();
-   
+        
         // const selectedUser = computed(() => store.getters.selectedUser)
         const loginUser = computed(() => store.getters.loginUser)
         const selectedUser = computed(()=>store.getters.selectedUser)
@@ -61,7 +75,15 @@ export default {
         
         test()
 
-        return { loginUser, selectedUser, state }
+        const FollowerList = () => {
+            state.isOpenFollower = true
+        }
+
+        const closeFollowerList = () => {
+            state.isOpenFollower = false
+        }
+
+        return { loginUser, selectedUser, state,FollowerList,closeFollowerList }
     },
 }
 </script>
