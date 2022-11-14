@@ -19,19 +19,21 @@
                 <div>Themes</div>
                 <div>{{selectedUser.themes}}</div>
             </div>
-            <div class="inroduce-margin" @click="FollowerList">
+            <div class="inroduce-margin"  data-bs-toggle="modal" data-bs-target="#followerModal">
                 <div>Follower</div>
                 <div>
-                    {{selectedUser.following}} <button type="button" data-bs-toggle="modal" data-bs-target="#followerModal">🔍</button>
+                    {{selectedUser.following}} 
+                    <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#followerModal">🔍</button> -->
                 </div>
                 <FollowerModalVue :userInfo="selectedUser"/>
                 
             </div>
             
-            <div class="inroduce-margin">
+            <div class="inroduce-margin" data-bs-toggle="modal" data-bs-target="#followingModal">
                 <div>Following</div>
                 <div>
-                    {{selectedUser.follower}} <button type="button" data-bs-toggle="modal" data-bs-target="#followingModal">🔍</button>
+                    {{selectedUser.follower}} 
+                    <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#followingModal">🔍</button> -->
                 </div> 
                 <FollowingModalVue :userInfo="selectedUser"/>
             </div>
@@ -75,15 +77,9 @@ export default {
         
         test()
 
-        const FollowerList = () => {
-            state.isOpenFollower = true
-        }
+        
 
-        const closeFollowerList = () => {
-            state.isOpenFollower = false
-        }
-
-        return { loginUser, selectedUser, state,FollowerList,closeFollowerList }
+        return { loginUser, selectedUser, state }
     },
 }
 </script>
