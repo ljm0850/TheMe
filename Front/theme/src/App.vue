@@ -33,6 +33,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+
 .router-view-setting {
   // 추후에 100vh - 네브바 높이로 하자
   min-height: 90vh;

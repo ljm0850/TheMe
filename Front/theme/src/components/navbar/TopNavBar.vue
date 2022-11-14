@@ -24,7 +24,8 @@ export default {
   height: 55px; 
   text-align: center;
   padding-top: 10px;
-  /* margin-top: 10px; */
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 .The{
   color : #E89A3D

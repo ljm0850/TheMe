@@ -78,7 +78,7 @@ select::-ms-expand {
     margin-bottom: 100px;
     padding-bottom: 100px;
     left: 340px;
-    bottom: -150px;
+    bottom: -140px;
 }
 .card-body{
     padding-bottom:0px !important;
