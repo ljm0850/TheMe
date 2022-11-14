@@ -41,7 +41,6 @@
         <button @click.prevent="createArticle()">게시물 등록</button>
       </div>
     </form>
-    {{ themeList }}
   </div>
 </template>
 

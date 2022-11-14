@@ -1,5 +1,4 @@
 <template>
-    {{ article }}
     <div class="card custom-card d-flex justify-content-center">
         <div class="card-body" v-if="article">
             <div class="theme-name">{{article.themeName}}</div>

@@ -6,15 +6,19 @@
         <input class="form-control" type="text" v-model="searchValue" >
         <button @click.prevent="searchPlace">검색</button>
     </div>
-    <div class="map-area">
-        <div>
-            <div v-for="place in places" :key="place.id" @click="showOnMap(place)">
-                <h3>{{ place.place_name }}</h3>
-                <h3>{{ place.address_name }}</h3>
+    <div class="map-area" v-if="searchFlag">
+        <div v-if="placesFlag">
+            <div v-for="place in places" :key="place.id">
+                <div @click="showOnMap(place)" class="place-custom">
+                    <h3>{{ place.place_name }}</h3>
+                    <div class="place-location">{{ place.address_name }}</div>
+                </div>
+                <br>
             </div>
         </div>
-        <!-- <KakaoMapVue v-show="state" ref="kmap" class="kmap" :options="mapOption" /> -->
-        <KakaoMapVue v-show="state" ref="kmap" class="kmap" :options="mapOption" />
+        <button v-if="!mapFlag" @click.prevent="displayMap()">지도 보기</button>
+        <button v-if="mapFlag" @click.prevent="displayMap()">지도 숨기기</button>
+        <KakaoMapVue v-show="mapFlag" ref="kmap" class="kmap" :options="mapOption" />
     </div>
 </div>
 </template>
@@ -39,7 +43,9 @@ export default {
                 level: 3,
             },
             markers: null,
-            mapFlag: false
+            mapFlag: false,
+            searchFlag: false,
+            placesFlag: true
         }
     },
     
@@ -79,6 +85,8 @@ export default {
                     return { lat: place.lat, lng: place.lng };
                 })
             })
+            this.onSearchFlag()
+            this.placesFlag = true
         },
         showOnMap(place) {
             this.$store.dispatch('selectedPlace',place)
@@ -86,7 +94,19 @@ export default {
                 lat: place.y,
                 lng: place.x
             }
-        }
+            // this.offSearchFlag()
+            this.placesFlag = false
+            this.searchValue = place.place_name 
+        },
+        displayMap() {
+            this.mapFlag = !this.mapFlag
+        },
+        onSearchFlag() {
+            this.searchFlag = true
+        },
+        offSearchFlag() {
+            this.searchFlag = false
+        },
     }
 
 };
@@ -96,5 +116,14 @@ export default {
 .kmap {
     width: 100%;
     height: 390px;
+}
+
+.place-custom {
+    background-color: white;
+    border-radius: 10px;
+}
+.place-location {
+    font-size: 14px;
+    /* color: ; */
 }
 </style>
