@@ -1,5 +1,6 @@
 <template>
     <div>
+        {{FeedList}}
         <ArticleDetailVue :article="tempArticle" />
         <div v-for="Feed,idx in FeedList" :key="Feed">
             <ArticleDetailVue :article="Feed" :feedIdx="idx" />
@@ -49,6 +50,7 @@ export default {
         const FeedList = computed(() => store.getters.getFeedTheme)
         const selectCity = (e : any) => {
             store.dispatch("getFeedTheme",e.target.value)
+            
         }
 
         const tempArticle = {

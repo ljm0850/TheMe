@@ -3,9 +3,8 @@
         <div class="card-body" style="padding: 0px;">
             <div class="d-flex">
                 <div>{{theme.emoticon}}</div>
-                    <div class="ms-2">{{theme.name}}</div>
-                    <button v-if="isSame" @click="check()" class="btn position-absolute top-0 end-0">🤍</button>
-                </div>
+                <div class="ms-2">{{theme.name}}</div>
+              </div>
             </div>
             <div class="d-flex card-total">
                 <img src="https://hobbyen.co.kr/news/data/20190923/p179512992441679_996.png" alt="" class="best-img">
@@ -30,11 +29,8 @@
 </template>
 
 <script lang="ts">
-// import { useStore } from "vuex";
-// import { reactive } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
-// import { useRouter } from 'vue-router'
 
 export default {
     props:{
@@ -42,19 +38,14 @@ export default {
     },
     components: {
     },
-    setup(props:any) {
+    setup( ) {
+
       const store = useStore();
-    
-      const isSame = computed(()=>store.getters.isSame(props.theme.userIdx))
       const selectedUser = computed(()=>store.getters.selectedUser)
       const loginUser = computed(()=>store.getters.loginUser)
       
-      const check = () => {
-        console.log()
-        console.log()
-      }
         
-      return {isSame, selectedUser, loginUser, check}
+      return { selectedUser, loginUser}
     }
 }
 </script>
