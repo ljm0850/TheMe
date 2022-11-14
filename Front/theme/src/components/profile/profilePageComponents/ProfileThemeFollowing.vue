@@ -50,15 +50,15 @@ export default {
             state.vueTarget = type;
         }
 
-    const selectedUser = computed(() => store.getters.selectedUser);
-    console.log("여기아래 집중");
-    console.log(selectedUser);
-    // console.log("selectedUser")
+    // const selectedUser = computed(() => store.getters.selectedUser);
+    // console.log("여기아래 집중");
+    // console.log(selectedUser);
+    // // console.log("selectedUser")
 
-    const state = reactive({ vueTarget: true });
-    const changeViewMode = (type: boolean) => {
-      state.vueTarget = type;
-    };
+    // const state = reactive({ vueTarget: true });
+    // const changeViewMode = (type: boolean) => {
+    //   state.vueTarget = type;
+    // };
     const clickTheme = (userThemeIdx: string, publicThemeIdx: string) => {
       router.push({
         name: "UserTheme",
