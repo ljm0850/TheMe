@@ -54,7 +54,9 @@ export default {
                 
             })
         },
-        liveSearchTheme({ commit, getters }: {commit:Commit,getters:any},_target:string) {
+        liveSearchTheme({ commit, getters }: { commit: Commit, getters: any }, _target: string) {
+            console.log("검색어 : ", _target)
+            console.log("헤더 :", getters.authHeader)
             axios({
                 url: rest.Theme.liveSearchTheme(),
                 params:{value:_target},

@@ -29,7 +29,8 @@
     </div>
     <div class="modal-footer">
       <div class="d-flex justify-content-center">
-        <button @click="registTheme()" class="white-add-button item">테마 추가</button>
+        <button v-if="emoticon"  @click="createTheme()" class="white-add-button item">테마 추가</button>
+        <button v-if="!emoticon" @click="registTheme()" class="white-add-button item">테마 추가</button>
       </div>
       <button type="button" class="white-add-button item" data-bs-dismiss="modal">Close</button>
     </div>
@@ -56,7 +57,7 @@ export default {
     const store = useStore();
     
     const createTheme = () => {
-      store.dispatch('createUserTheme',state.type)
+      store.dispatch('createUserTheme', { openType: state.type, challenge: false })
     }
     const registTheme = () => {
       store.dispatch('registTheme',{ 
