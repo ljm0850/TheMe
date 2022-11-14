@@ -11,6 +11,7 @@ import com.ssafy.theme.repository.ThemeRepository;
 import com.ssafy.theme.repository.UserThemeRepository;
 import com.ssafy.theme.service.ThemeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -556,6 +557,14 @@ public class ThemeServiceImpl implements ThemeService {
             }
         }
         return userThemeDtoList;
+    }
+
+    @Override
+    public String getUserThemeName(int theme_idx) {
+        Optional<UserTheme> userTheme = userThemeRepository.findByIdx(theme_idx);
+        int publicThemeIdx = userTheme.get().getTheme().getIdx();
+        Theme theme = themeRepository.findByIdx(publicThemeIdx);
+        return theme.getName();
     }
 
 }

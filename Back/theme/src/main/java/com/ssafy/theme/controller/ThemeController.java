@@ -300,5 +300,8 @@ public class ThemeController {
     public boolean isScrap(@PathVariable(name = "user_idx") int userIdx,@PathVariable(name = "theme_idx") int themeIdx) {
         return themeService.isScrap(userIdx,themeIdx);
     }
-
+    @GetMapping("/userThemename/{theme_idx}")
+    String getUserThemeName(@PathVariable(name = "theme_idx") int theme_idx) {
+        return themeService.getUserThemeName(theme_idx);
+    }
 }

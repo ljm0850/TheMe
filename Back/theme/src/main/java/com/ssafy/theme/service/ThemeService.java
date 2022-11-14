@@ -53,4 +53,6 @@ public interface ThemeService {
 
     boolean isScrap(int userIdx, int themeIdx);
     List<UserThemeDtoWithMSA> getUserThemeUserList(int userThemeIdx,int user_idx);
+
+    String getUserThemeName(int theme_idx);
 }
