@@ -5,7 +5,7 @@
       <div>테마 생성 페이지</div>
       <div class="mb-3">
         <input type="text" class="form-control" id="searchTheme" placeholder="원하는 테마를 검색해주세요."
-          :value="state.searchValue" @input="searchTheme">
+          :value="state.searchValue" @input="searchTheme" maxlength="20">
       </div>
       <!-- 추천 테마 -->
       <div v-if="!isSearchThemeList && !state.searchValue">
