@@ -457,6 +457,31 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
+    public UserThemeDetailDto getUserThemeDetail(int user_idx, int theme_idx) {
+
+        UserTheme userTheme = userThemeRepository.findById(theme_idx)
+                .orElseThrow(IllegalArgumentException::new);
+
+        Theme theme = themeRepository.findById(userTheme.getTheme().getIdx())
+                .orElseThrow(IllegalArgumentException::new);
+
+        UserThemeDetailDto userThemeDetailDto = UserThemeDetailDto.builder()
+                .emoticon(theme.getEmoticon())
+                .themeIdx(theme.getIdx())
+                .userThemeIdx(userTheme.getUserIdx())
+                .name(theme.getName())
+                .build();
+
+        if(userTheme.getUserIdx()==user_idx){
+            userThemeDetailDto.setMine(true);
+        } else {
+            userThemeDetailDto.setFollow(isFollow(user_idx, userTheme.getUserIdx(), theme_idx));
+        }
+
+        return userThemeDetailDto;
+    }
+
+    @Override
     public int isUserTheme(int userIdx, int themeIdx) {
         Theme theme = themeRepository.findByIdx(themeIdx);
         Optional<UserTheme> userTheme = userThemeRepository.findByThemeAndUserIdx(theme,userIdx);

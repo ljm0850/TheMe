@@ -19,7 +19,7 @@ public interface UserClient {
     List<UserThemeDto> getThemeUserList(@PathVariable(name = "theme_idx") int theme_idx);
     @GetMapping("/user/follow/recommend")
     List<Integer> getRecommendThemeList();
-    @GetMapping("/isFollow/{user_idx}/{target_user_idx}/{theme_idx}")
+    @GetMapping("/user/isFollow/{user_idx}/{target_user_idx}/{theme_idx}")
     boolean isFollow(@PathVariable(name = "user_idx") int user_idx,
                      @PathVariable(name = "target_user_idx") int target_user_idx,
                      @PathVariable(name = "theme_idx") int theme_idx);

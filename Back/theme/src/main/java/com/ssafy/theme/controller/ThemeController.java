@@ -184,6 +184,25 @@ public class ThemeController {
         return new ResponseEntity<>(result, status);
     }
 
+    @GetMapping("/userTheme/detail/{userTheme_idx}")
+    public ResponseEntity<?> getUserThemeDetail(HttpServletRequest request, @PathVariable(name = "userTheme_idx") int usertheme_idx) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
+
+        try {
+            UserThemeDetailDto userThemeDetail= themeService.getUserThemeDetail(userIdx, usertheme_idx);
+            result.put("userThemeDetail", userThemeDetail);
+            result.put("message",OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            result.put("message", FAIL);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(result, status);
+    }
+
     @PostMapping("/follow")
     public List<UserThemeDto> followThemeList(@RequestBody UserThemeIdxDto userThemeIdxDto) {
         return themeService.followThemeList(userThemeIdxDto);
