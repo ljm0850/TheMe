@@ -10,13 +10,13 @@
       <div class="text-style-custom">이모티콘</div>
       <div class="input-group-text d-flex justify-content-center">
         <div v-if="emoticon">{{emoticon}}</div>
-        <input type="text" class="form-control input-text" v-if="!emoticon" v-model="state.emoticon">
+        <input type="text" class="form-control input-text" v-if="!emoticon" v-model="state.emoticon" maxlength="1">
       </div>
       <br>
       <div class="text-style-custom">테마제목</div>
       <div class="input-group-text d-flex justify-content-center">
         <div v-if="themeName">{{themeName}}</div>
-        <input type="text" class="form-control input-text" v-if="!themeName" v-model="state.name">
+        <input type="text" class="form-control input-text" v-if="!themeName" v-model="state.name" maxlength="20">
       </div>
       <br>
       <div class="text-style-custom">공개 여부 설정</div>
@@ -29,7 +29,8 @@
     </div>
     <div class="modal-footer">
       <div class="d-flex justify-content-center">
-        <button @click="registTheme()" class="white-add-button item">테마 추가</button>
+        <button v-if="emoticon" @click="createTheme()" class="white-add-button item" data-bs-dismiss="modal">테마 추가</button>
+        <button v-if="!emoticon" @click="registTheme()" class="white-add-button item" data-bs-dismiss="modal">테마 추가</button>
       </div>
       <button type="button" class="white-add-button item" data-bs-dismiss="modal">Close</button>
     </div>
@@ -56,12 +57,13 @@ export default {
     const store = useStore();
     
     const createTheme = () => {
-      store.dispatch('createUserTheme',state.type)
+      store.dispatch('createUserTheme', { openType: state.type, challenge: false })
     }
     const registTheme = () => {
-      store.dispatch('registTheme',{ 
-        openType: state.type,
-        emoticon: state.emoticon,
+        store.dispatch('registTheme', { 
+          openType: state.type,
+          emoticon: state.emoticon,
+          challenge: false,
         })
     }
     
@@ -73,7 +75,7 @@ export default {
         state.type = _numer
     }
     
-    return { state, createTheme, changeType, themeIdx, themeName, emoticon, isThemeIdx, registTheme }
+    return { state, changeType, themeIdx, themeName, emoticon, isThemeIdx, registTheme,createTheme }
   }
 }
 </script>

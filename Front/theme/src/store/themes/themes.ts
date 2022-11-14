@@ -1,4 +1,4 @@
-// import router from '@/router'
+import router from '@/router'
 import rest from '@/API/rest'
 import axios from "axios";
 import { Commit, Dispatch } from 'vuex';
@@ -20,7 +20,7 @@ export default {
        },
     getters: {
         searchThemeList: (state: { searchThemeList: Array<object> }) => state.searchThemeList,
-        isSearchThemeList: (state: { searchThemeList: Array<object> }) => !_.isEmpty(state.searchThemeList),
+        isSearchThemeList: (state: { liveSearchTheme: Array<object> }) => !_.isEmpty(state.liveSearchTheme),
         selectedThemeIdxForCreate: (state: { selectedThemeIdxForCreate: number}) => state.selectedThemeIdxForCreate,
         isSelectedThemeIdxForCreate: (state: { selectedThemeIdxForCreate: number}) => !(state.selectedThemeIdxForCreate==0),
         selectedThemeNameForCreate: (state: { selectedThemeNameForCreate: string}) => state.selectedThemeNameForCreate,
@@ -57,16 +57,21 @@ export default {
                 
             })
         },
-        liveSearchTheme({ commit, getters }: {commit:Commit,getters:any},_target:string) {
+        liveSearchTheme({ commit, getters }: { commit: Commit, getters: any }, _target: string) {
+            console.log("검색어 : ", _target)
+            console.log("헤더 :", getters.authHeader)
             axios({
                 url: rest.Theme.liveSearchTheme(),
                 params:{value:_target},
                 method: 'get',
                 headers: getters.authHeader
-            })
+                })
                 .then((res) => {
-                commit("LIVE_SEARCH_THEME_LIST",res.data.themeList)
-            })
+                    commit("LIVE_SEARCH_THEME_LIST",res.data.themeList)
+                })
+            
+            
+            
         },
         searchThemeInfo({ commit,getters }: {commit:Commit, getters:any},_value:string) {
             axios({
@@ -90,7 +95,7 @@ export default {
             })
         },
         
-        registTheme({ dispatch,commit, getters }: { dispatch:Dispatch,commit: Commit, getters: any }, _data:{emoticon:string, name:string, openType:number}) {
+        registTheme({ dispatch,commit, getters }: { dispatch:Dispatch,commit: Commit, getters: any }, _data:{emoticon:string, name:string, openType:number, challenge:boolean}) {
             axios({
                 url: rest.Theme.registTheme(),
                 method: 'post',
@@ -104,16 +109,16 @@ export default {
                     console.log("공용테마 등록",res.data)
                     const themeIdx = res.data.idx
                     commit('SET_SELECTED_THEME_IDX_FOR_CREATE',themeIdx)
-                    dispatch('createUserTheme',_data.openType)
+                    dispatch('createUserTheme', { openType:_data.openType, challenge:_data.challenge })
             })
         },
-        createUserTheme({ getters }: { getters: any }, _openType:number) {
+        createUserTheme({ getters }: { getters: any }, _data: { openType:number, challenge:boolean}) {
             const data = {
-                challenge: true,
+                challenge: _data.challenge,
                 createTime: new Date(),
                 description: "",
                 modifyTime: "",
-                openType: _openType,
+                openType: _data.openType,
                 themeIdx: getters.selectedThemeIdxForCreate,
                 userIdx: getters.loginUser.userIdx
             }
@@ -124,6 +129,7 @@ export default {
                 data: data
             })
                 .then((res) => {
+                    router.push({name: 'UserTheme', params: { userThemeIdx:res.data.idx, publicThemeIdx:getters.selectedThemeIdxForCreate }})
                     console.log("유저 테마 생성 완료")
                     console.log(res.data)
             })
@@ -154,7 +160,7 @@ export default {
                 headers:getters.authHeader
             })
                 .then((res) => {
-                    console.log(res.data.recommendList)
+                    console.log("추천 테마 : ",res.data)
                     commit('SET_RECOMMEND_THEME_LIST',res.data.recommendList)
             })
         },
@@ -212,8 +218,24 @@ export default {
         selectedThemeIdxForCreate({ commit }: { commit: Commit },_idx:number) {
             commit('SET_SELECTED_THEME_IDX_FOR_CREATE',_idx)
         },
-        selectedThemeNameForCreate({ commit }: { commit: Commit },_name:string) {
-            commit('SET_SELECTED_THEME_NAME_FOR_CREATE',_name)
+
+        selectedThemeNameForCreate({ commit,dispatch,getters }: { commit: Commit, dispatch:Dispatch, getters:any },_name:string) {
+            commit('SET_SELECTED_THEME_NAME_FOR_CREATE', _name)
+            axios({
+                url: rest.Theme.searchTheme(_name),
+                method: 'get',
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                    console.log("선택 검색 결과: ", res.data.themeDtos)
+                    for (const data of res.data.themeDtos) {
+                        if (data.name == _name) {
+                            dispatch('selectedThemeIdxForCreate',data.themeIdx)
+                            dispatch('selectedThemeEmoticonForCreate', data.emoticon)
+                            console.log("정확한 데이터: ",data)
+                        }
+                    }
+            })
         },
         selectedThemeEmoticonForCreate({ commit }: { commit: Commit }, _emoticon: string) {
             commit('SET_SELECTED_THEME_EMOTICON_FOR_CREATE',_emoticon)

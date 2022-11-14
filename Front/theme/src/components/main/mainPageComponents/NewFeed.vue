@@ -1,6 +1,5 @@
 <template>
     <div>
-        <ArticleDetailVue :article="tempArticle" />
         <div v-for="Feed,idx in FeedList" :key="Feed">
             <ArticleDetailVue :article="Feed" :feedIdx="idx" />
             <br>
@@ -42,21 +41,13 @@ export default {
     },
     setup() {
         const store = useStore();
-        // const state = reactive({
-            
-        // });
         store.dispatch("getFeedTheme",0)
         const FeedList = computed(() => store.getters.getFeedTheme)
         const selectCity = (e : any) => {
             store.dispatch("getFeedTheme",e.target.value)
         }
 
-        const tempArticle = {
-            themeName: "피드 없어서 임시 하드 코딩",
-            nickname: "가라사대",
-
-        }
-        return {FeedList,selectCity,tempArticle}
+        return {FeedList,selectCity}
     }
 }
 </script>

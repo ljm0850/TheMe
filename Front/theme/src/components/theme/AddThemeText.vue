@@ -2,12 +2,12 @@
   <div>
      <div class="d-flex theme-style justify-content-between" v-if="theme">
       <div class="form-control form-custom col-8">{{theme.name}}</div>
-      <button type="button" class="btn btn-outline-secondary white-add-button col-3" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
+      <button v-if="!theme.my" type="button" class="btn btn-outline-secondary white-add-button col-3" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
         추가
       </button>
-      <!-- <button v-if="theme.openType==0" type="button" class="btn btn-outline-secondary white-button col-3" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
+      <button v-if="theme.my" type="button" class="btn btn-outline-secondary can-not-select-button col-3" style="background-color: gray;">
         추가
-      </button> -->
+      </button>
     </div>
     <hr>
   </div>
@@ -24,9 +24,9 @@ export default {
   setup(props:any) {
     const store = useStore();
     const selectTheme = () => {
-      store.dispatch("selectedThemeIdxForCreate", props.theme.themeIdx)
       store.dispatch("selectedThemeNameForCreate", props.theme.name)
-      store.dispatch("selectedThemeEmoticonForCreate", props.theme.emoticon)
+      // store.dispatch("selectedThemeIdxForCreate", props.theme.themeIdx)
+      // store.dispatch("selectedThemeEmoticonForCreate", props.theme.emoticon)
     };
 
     return {selectTheme}
