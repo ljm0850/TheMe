@@ -11,7 +11,7 @@ import ProfileThemeFollowingVue from './profilePageComponents/ProfileThemeFollow
 import { useStore } from "vuex";
 	
 import { useRoute} from "vue-router";
-import { computed } from '@vue/runtime-core';
+// import { computed } from '@vue/runtime-core';
 // import { useStore } from "vuex";
 
 export default {
@@ -24,11 +24,13 @@ export default {
     const route = useRoute();
 
     const userNickname = route.params.nickname;
+    console.log(userNickname)
     store.dispatch("getUserInfoByNickname",userNickname);
-    const selectedUser = computed(()=>store.getters.selectedUser)
+    // const selectedUser = computed(()=>store.getters.selectedUser)
 
+    
 
-    return { selectedUser, userNickname }
+    return {  userNickname }
   },
 };
 </script>
