@@ -68,6 +68,7 @@ export default {
       searchValue: "",
       description: "",
     });
+    
     const isSelectFile = computed(() => !_.isEmpty(state.selectFile));
     const imageUrls: string[] = [];
     const store = useStore();

@@ -8,7 +8,6 @@
     <ul v-if="state.vueTarget" class="paddingZero">
       <li v-for="item in selectedUser.themeDtoList" :key="item" >
         <UserThemeCard
-          
           :theme="item"
           @click="clickTheme(item.userThemeIdx, item.themeIdx)"
         />
@@ -17,7 +16,6 @@
     <ul v-if="!state.vueTarget" class="paddingZero">
       <li v-for="item in selectedUser.followingDtoList" :key="item" >
         <FollowingThemeCard
-          
           :theme="item"
           @click="clickTheme(item.userThemeIdx, item.themeIdx)"
         />
