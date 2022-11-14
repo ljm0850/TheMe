@@ -1,4 +1,4 @@
-// import router from '@/router'
+import router from '@/router'
 import rest from '@/API/rest'
 import axios from "axios";
 import { Commit, Dispatch } from 'vuex';
@@ -126,6 +126,7 @@ export default {
                 data: data
             })
                 .then((res) => {
+                    router.push({name: 'UserTheme', params: { userThemeIdx:res.data.idx, publicThemeIdx:getters.selectedThemeIdxForCreate }})
                     console.log("유저 테마 생성 완료")
                     console.log(res.data)
             })
