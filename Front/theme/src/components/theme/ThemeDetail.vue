@@ -29,7 +29,7 @@
     <ArticleListVue
       class="article-list"
       page="publicTheme"
-      :themeDetail="theme_idx"
+      :articleList="articleList"
     />
   </div>
 </template>
@@ -54,6 +54,15 @@ export default {
     store.dispatch("detailTheme", theme_idx);
 
     const themeDetail = computed(() => store.getters.publicThemeDetail);
+
+    const param = reactive({
+      themeIdx: theme_idx,
+      pageSize: 10,
+      pageIdx: 0,
+    });
+
+    store.dispatch("themeArticleList", param);
+    const articleList = computed(() => store.getters.publicThemeArticleList);
 
     const state = reactive({
       isMarked: themeDetail.value.bookmarked,
@@ -88,7 +97,7 @@ export default {
     };
     console.log(themeDetail.value);
 
-    return { themeDetail, state, clickBookmark, goCreateArticle, theme_idx };
+    return { themeDetail, state, clickBookmark, goCreateArticle, theme_idx, articleList };
   },
 };
 </script>

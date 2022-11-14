@@ -16,6 +16,7 @@ export default {
         selectedUserThemeList: [],
         publicThemeList :[],
         publicThemeDetail :[],
+        userThemeDetail:[],
        },
     getters: {
         searchThemeList: (state: { searchThemeList: Array<object> }) => state.searchThemeList,
@@ -29,6 +30,7 @@ export default {
         selectedUserThemeList: (state: { selectedUserThemeList:Array<Object> }) => state.selectedUserThemeList,
         publicThemeList : (state: {publicThemeList:Array<Object>}) => state.publicThemeList,
         publicThemeDetail:(state: {publicThemeDetail:Object}) => state.publicThemeDetail,
+        userThemeDetail:(state: {userThemeDetail:Object}) => state.userThemeDetail,
     },
     mutations: {
         SET_SEARCH_THEME_LIST: (state: { searchThemeList: Array<object> }, _searchThemeList: Array<object>) => state.searchThemeList = _searchThemeList,
@@ -39,7 +41,8 @@ export default {
         LIVE_SEARCH_THEME_LIST: (state: { liveSearchTheme: Array<String> }, _liveThemeList: Array<String>) => state.liveSearchTheme = _liveThemeList,
         SET_SELECTED_USER_THEME_LIST:(state: {selectedUserThemeList:Array<Object>}, _themeList:Array<Object>)=> state.selectedUserThemeList = _themeList,
         SET_PUBLIC_THEME_LIST: (state:{ publicThemeList: Array<object>}, _publicThemeList:Array<Object>) => state.publicThemeList = _publicThemeList,
-        SET_PUBLIC_THEME_DETAIL : (state:{ publicThemeDetail: Object}, _publicThemeDetail:Object) => state.publicThemeDetail = _publicThemeDetail,
+        SET_PUBLIC_THEME_DETAIL: (state:{ publicThemeDetail: Object}, _publicThemeDetail:Object) => state.publicThemeDetail = _publicThemeDetail,
+        SET_USER_THEME_DETAIL: (state:{ userThemeDetail: Object}, _userThemeDetail:Object) => state.userThemeDetail = _userThemeDetail,
     },
     actions: {
         getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
@@ -195,6 +198,17 @@ export default {
                 commit("SET_PUBLIC_THEME_DETAIL", res.data.themeDetail)
             })
         },
+        detailUserTheme({ commit, getters }: { commit: Commit, getters: any }, _userThemeIdx: string) {
+            axios({
+                url: rest.Theme.getUserThemeDetail(_userThemeIdx),
+                method: 'get',
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                commit("SET_USER_THEME_DETAIL", res.data.userThemeDetail)
+            })
+        },
+
         selectedThemeIdxForCreate({ commit }: { commit: Commit },_idx:number) {
             commit('SET_SELECTED_THEME_IDX_FOR_CREATE',_idx)
         },

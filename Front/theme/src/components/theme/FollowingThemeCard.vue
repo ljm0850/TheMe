@@ -3,14 +3,14 @@
         <div class="card-body" style="padding: 0px;">
             <div class="d-flex">
                 <div>{{theme.emoticon}}</div>
-                    <div class="ms-2">{{theme.name}}</div>
-                    <div v-if="!state.isSame" >
+                    <div class="ms-2" @click="clickTheme(theme.userThemeIdx, theme.themeIdx)">{{theme.name}}</div>
+                    <div v-if="!state.isSame">
                         <button v-if="!state.isFollow" @click="addFollow" class="btn position-absolute top-0 end-0">🤍</button>
                         <button v-if="state.isFollow" @click="cancelFollow" class="btn position-absolute top-0 end-0">💙</button>
                     </div>
                 </div>
             </div>
-            <div class="d-flex card-total">
+            <div class="d-flex card-total" @click="clickTheme(theme.userThemeIdx, theme.themeIdx)">
                 <img src="https://hobbyen.co.kr/news/data/20190923/p179512992441679_996.png" alt="" class="best-img">
                 <div class="d-flex">
                     <div class='row'>
@@ -37,7 +37,7 @@
 import { reactive } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export default {
     props:{
@@ -47,6 +47,8 @@ export default {
     },
     setup(props:any) {
       const store = useStore();
+      const router = useRouter();
+
       const state = reactive({
       searchValue: "",
       isSame: false,
@@ -80,9 +82,18 @@ export default {
     }
 
     test()
+    const clickTheme = (userThemeIdx: string, publicThemeIdx: string) => {
+      router.push({
+        name: "UserTheme",
+        params: {
+          userThemeIdx: userThemeIdx,
+          publicThemeIdx: publicThemeIdx,
+        },
+      });
+    };
       
         
-    return {isSame, selectedUser, loginUser,  state, cancelFollow, addFollow}
+    return {isSame, selectedUser, loginUser,  state, cancelFollow, addFollow, clickTheme}
     }
 }
 </script>

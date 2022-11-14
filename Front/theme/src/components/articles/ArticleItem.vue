@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#articleListModal">
         <div>
             <div>{{article.name}}</div>
             <div>{{article.place}}</div>
@@ -7,19 +7,35 @@
         </div>
         <div>{{article.boardCount}}</div>
     </div>
+    <!-- 모달 -->
+    <ArticleListModalVue :article="article" :boardList="boardList"/>
     <hr>
 </template>
 
 <script lang="ts">
-// import { useStore } from "vuex";
+import ArticleListModalVue from './ArticleListModal.vue';
+import { useStore } from "vuex";
+import { computed, reactive } from "vue";
 export default {
     components: {
+        ArticleListModalVue,
     },
     props:{
         article:Object
     },
     setup(props:any) {
-        console.log(props.article)
+        const store = useStore();
+        const param = reactive({
+            themeIdx: props.article.themeIdx,
+            name: props.article.name,
+            pageSize: 10,
+            pageIdx: 0,
+        });
+        store.dispatch("placeArticleList", param);
+
+        const boardList = computed(() => store.getters.placeArtilceList);
+
+        return { boardList }
     }
 }
 </script>
