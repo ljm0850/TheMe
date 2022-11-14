@@ -85,44 +85,46 @@ public class FeedServiceImpl implements FeedService {
         Pageable pageable = PageRequest.of(pageIdx, pageSize);
         for(UserThemeDtoWithMSA theme : themeUserList){
             openUserList.add(theme.getUserIdx());
-        }
-        List<Board> boardGroupListDto = boardRepository.getBoardListWithJPA(openUserList,theme_idx,name,pageable);
 
-        for(Board board : boardGroupListDto){
-            System.out.println(board.getIdx());
-            Integer commentCount = commentRepository.findByBoard(board).size();
-            List<Likes> likeCount = likeRepository.findByBoard(board);
-            System.out.println("1");
-            UserInfoByIdDto userInfo = userClient.getUserInfo(board.getUserIdx());
-            List<Picture> pictureList = pictureRepository.findByBoard(board);
-            String themeName = themeClient.getThemeName(theme_idx);
-            boolean isWriter = false;
-            System.out.println("2");
-            String []  pictures= new String[pictureList.size()];
-            for(int i=0;i<pictureList.size();i++){
-                pictures[i] = (pictureList.get(i).getPicture());
+            List<Board> boardGroupListDto = boardRepository.getBoardListWithJPA(openUserList,theme.getUserThemeIdx(),name,pageable);
+
+            for(Board board : boardGroupListDto){
+                System.out.println(board.getIdx());
+                Integer commentCount = commentRepository.findByBoard(board).size();
+                List<Likes> likeCount = likeRepository.findByBoard(board);
+                System.out.println("1");
+                UserInfoByIdDto userInfo = userClient.getUserInfo(board.getUserIdx());
+                List<Picture> pictureList = pictureRepository.findByBoard(board);
+                String themeName = themeClient.getThemeName(theme_idx);
+                boolean isWriter = false;
+                System.out.println("2");
+                String []  pictures= new String[pictureList.size()];
+                for(int i=0;i<pictureList.size();i++){
+                    pictures[i] = (pictureList.get(i).getPicture());
+                }
+                if(board.getUserIdx() == userIdx) isWriter = true;
+                System.out.println("3");
+                BoardSimpleListDto boardSimpleListDto = BoardSimpleListDto.builder()
+                        .boardIdx(board.getIdx())
+                        .alertCount(board.getAlertCount())
+                        .city(board.getCity())
+                        .commentCount(commentCount)
+                        .isWriter(isWriter)
+                        .likeCount(0)
+                        .modifyTime(board.getModifyTime())
+                        .name(board.getName())
+                        .nickname(userInfo.getNickname())
+                        .picture(pictures)
+                        .themeIdx(board.getThemeIdx())
+                        .themeName(themeName)
+                        .profile(userInfo.getPicture())
+                        .userIdx(userInfo.getUserIdx())
+                        .build();
+                System.out.println(boardGroupListDto.toArray());
+                boardSimpleListDtoList.add(boardSimpleListDto);
             }
-            if(board.getUserIdx() == userIdx) isWriter = true;
-            System.out.println("3");
-            BoardSimpleListDto boardSimpleListDto = BoardSimpleListDto.builder()
-                    .boardIdx(board.getIdx())
-                    .alertCount(board.getAlertCount())
-                    .city(board.getCity())
-                    .commentCount(commentCount)
-                    .isWriter(isWriter)
-                    .likeCount(0)
-                    .modifyTime(board.getModifyTime())
-                    .name(board.getName())
-                    .nickname(userInfo.getNickname())
-                    .picture(pictures)
-                    .themeIdx(board.getThemeIdx())
-                    .themeName(themeName)
-                    .profile(userInfo.getPicture())
-                    .userIdx(userIdx)
-                    .build();
-            System.out.println(boardGroupListDto.toArray());
-            boardSimpleListDtoList.add(boardSimpleListDto);
         }
+
         return boardSimpleListDtoList;
     }
 

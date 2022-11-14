@@ -225,9 +225,9 @@ class BoardApplicationTests {
     }
     @Test
     void 해당주소에대한게시글목록(){
-        String name = "컴포즈";
-        int themeIdx = 1;
-        int pageIdx = 0;
+//        String name = "컴포즈";
+//        int themeIdx = 1;
+//        int pageIdx = 0;
 //        int pageSize = 3;
 //        List<UserThemeDtoWithMSA> themeUserList = themeClient.getThemeUserList(themeIdx);
 //        List<Integer> openUserList = new ArrayList<>();
