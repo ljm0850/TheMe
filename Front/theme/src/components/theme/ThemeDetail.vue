@@ -24,7 +24,7 @@
                 <button>최신순</button>
             </div> -->
     </div>
-    <KakaoMapVue class="kakao-map" />
+    <KakaoMapVue class="kakao-map" :articleList="articleList"/>
     <button @click="goCreateArticle()" class="theme-plus-button">+</button>
     <ArticleListVue
       class="article-list"
@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import ArticleListVue from "@/components/articles/ArticleList.vue";
-import KakaoMapVue from "../map/KakaoMap.vue";
+import KakaoMapVue from "../map/ThemeMap.vue";
 import { computed, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
