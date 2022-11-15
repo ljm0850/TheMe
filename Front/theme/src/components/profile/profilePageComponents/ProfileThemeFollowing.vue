@@ -45,7 +45,7 @@ export default {
         const changeViewMode = (type : boolean) => {
             state.vueTarget = type;
         }
-
+      
     // const selectedUser = computed(() => store.getters.selectedUser);
     // console.log("여기아래 집중");
     // console.log(selectedUser);

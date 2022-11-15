@@ -25,8 +25,9 @@
                     </div>
                     
                 </div>
+                {{boardinfoByUserTheme}}
                 <div class="view-info">
-                    <div class="default-img btn-type"><div class="view-info-img"><br><br>💬</div> <div class="view-info-text">&nbsp;&nbsp;{{theme.boardCount}}</div></div>
+                    <div class="default-img btn-type"><div class="view-info-img"><br><br>💬</div> <div class="view-info-text">&nbsp;&nbsp;{{boardInfoByUserTheme.boardCount}}</div></div>
                 </div>
             </div>
         </div>
@@ -57,6 +58,10 @@ export default {
       isSame: false,
       isFollow : false
     })
+
+
+    store.dispatch("getBoardInfoByUserTheme", props.theme.userThemeIdx)
+    const boardInfoByUserTheme = computed(()=>store.getters.boardInfoByUserTHeme)
 
     const test = async () => {
         state.isSame = await store.dispatch("isSame", props.theme.userIdx)
@@ -94,7 +99,7 @@ export default {
         },
       });
     };
-    return { selectedUser, loginUser, state, cancelFollow, addFollow, clickTheme }
+    return { selectedUser, loginUser, state, cancelFollow, addFollow, clickTheme, boardInfoByUserTheme }
     }
 }
 </script>

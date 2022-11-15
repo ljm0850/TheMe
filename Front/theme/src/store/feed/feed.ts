@@ -16,6 +16,7 @@ export default {
         selectedThemeforArticle: [],
         userThemeArticleList: [],
         placeArtilceList: [], 
+        boardInfoByUserTheme: {},
     },
     getters: {
         getFeedArticleList: (state: { feedArticleList: Array<object> }) => state.feedArticleList,
@@ -28,6 +29,7 @@ export default {
         selectedThemeforArticle: (state: { selectedThemeforArticle: Object }) => state.selectedThemeforArticle,
         userThemeArticleList: (state: { userThemeArticleList: Object }) => state.userThemeArticleList,
         placeArtilceList: (state: { placeArtilceList: Array<Object> }) => state.placeArtilceList,
+        boardInfoByUserTHeme : (state: {boardInfoByUserTheme : Object}) => state.boardInfoByUserTheme
     },
     mutations: {
         SET_FEED_ARTICLE_LIST: (state: {feedArticleList : Array<object>}, _list:Array<object>) => state.feedArticleList = _list,
@@ -40,6 +42,7 @@ export default {
         SET_SELECTED_THEME_FOR_ARTICLE: (state: { selectedThemeforArticle: Object }, _selectedThemeforArticle: Object) => state.selectedThemeforArticle = _selectedThemeforArticle,
         SET_USER_THEME_ARTICLE_LIST: (state: { userThemeArticleList: Object }, _userThemeArticleList: Object) => state.userThemeArticleList = _userThemeArticleList,
         SET_PLACE_ARTICLE_LIST :  (state:{placeArtilceList:Object}, _placeArtilceList:Array<Object>) => state.placeArtilceList = _placeArtilceList,
+        SET_BOARD_INFO_BY_USERTHEME : (state : {boardInfoByUserTheme:Object}, _boardInfoByUserTheme:Object) => state.boardInfoByUserTheme = _boardInfoByUserTheme,
     },
     actions: {
         // board-controller
@@ -230,7 +233,6 @@ export default {
             })
         },
         placeArticleList({ commit, getters }: { commit: Commit, getters: any }, _data:{themeIdx:string, name:string, pageIdx:number, pageSize:number}) {
-            
             axios({
                 url: rest.Feed.placeArticleList(_data.themeIdx),
                 method: 'get',
@@ -244,6 +246,18 @@ export default {
                 .then((res => {
                 console.log(res.data.data)
                 commit("SET_PLACE_ARTICLE_LIST", res.data.data)
+            }))
+        },
+        getBoardInfoByUserTheme({commit, getters} : { commit: Commit, getters: any }, userThemeIdx:string) {
+            
+            axios({
+                url:rest.Feed.boardInfoByUserTheme(userThemeIdx),
+                method:'get',
+                headers:getters.authHeader,
+            })
+            .then((res => {
+                
+                commit("SET_BOARD_INFO_BY_USERTHEME", res.data)
             }))
         },
         searchPlacesList({ commit }: { commit: Commit }, _list: Array<Object>) {
