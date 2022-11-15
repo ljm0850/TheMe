@@ -18,22 +18,22 @@
     
     <div class="d-flex flex-row bg-white bottomeNav" >
       <router-link @mousedown.left ="mouseLeft" :to="{ name: 'Main' }"> 
-        <button type="button" class="button-size"><img src="@/assets/image/homeIcon.png" alt="" class="icon"></button>
+        <button type="button" class="button-size"><img src="@/assets/image/homeIcon.svg" alt="" class="icon"></button>
         
       </router-link>  
       
       <router-link @mousedown.left ="mouseLeft" :to="{ name: 'ThemeList' }">
-        <button type="button" class="button-size"><img src="@/assets/image/mapIcon.png" alt="" class="icon"></button>
+        <button type="button" class="button-size"><img src="@/assets/image/mapIcon.svg" alt="" class="icon"></button>
       </router-link>
     
-      <button type="button" @click.prevent="togglePlusButton()" class="button-size "><img src="@/assets/image/plusIcon.png" alt="" class="icon"></button>
+      <button type="button" @click.prevent="togglePlusButton()" class="button-size "><img src="@/assets/image/plusIcon.svg" alt="" class="icon"></button>
     
       <router-link @mousedown.left ="mouseLeft" :to="{ name: 'Search' }">
-        <button type="button" class="button-size"><img src="@/assets/image/searchIcon.png" alt="" class="icon"></button>
+        <button type="button" class="button-size"><img src="@/assets/image/searchIcon.svg" alt="" class="icon"></button>
       </router-link>
     
       <router-link @mousedown.left ="mouseLeft"  ter-link :to="{ name: 'Profile', params: { nickname: myNickname } }">
-        <button type="button" class="button-size"><img src="@/assets/image/profileIcon.png" alt="" class="icon"></button>
+        <button type="button" class="button-size" ><img src="@/assets/image/profileIcon.svg" alt="" class="icon"></button>
       </router-link>
     </div>
   </nav>
@@ -99,7 +99,9 @@ export default {
     height: 20px;
   }
   .bottomeNav .router-link-active button{
-    // border: 3px solid #61D85B;
-    background-color: #dcdcdc;
+    background-color: #fbe9d2;
+  }
+  .bottomeNav .router-link-active button .icon{
+    filter: invert(79%) sepia(36%) saturate(3460%) hue-rotate(335deg) brightness(100%) contrast(83%);
   }
 </style>

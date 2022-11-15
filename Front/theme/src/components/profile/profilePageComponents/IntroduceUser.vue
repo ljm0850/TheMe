@@ -82,6 +82,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+.test{
+    border-radius: 200px;
+}
 </style>
