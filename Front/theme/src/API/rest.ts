@@ -64,8 +64,9 @@ export default {
         deleteComment: (_comment_idx: string) => HOST + COMMENT + `${_comment_idx}`,
         reportComment:(_comment_idx:string) => HOST + FEED + COMMENT + `/alert/${_comment_idx}`,
         recommendTheme:() => HOST + FEED + '/recommend', 
-      feedList: () => HOST + FEED + '/region',
-      userThemeArticleList: (_userTheme_idx: string) => HOST + FEED + MAP + `/userTheme/${_userTheme_idx}`,
+        feedList: () => HOST + FEED + '/region',
+        userThemeArticleList: (_userTheme_idx: string) => HOST + FEED + MAP + `/userTheme/${_userTheme_idx}`,
+        boardInfoByUserTheme: (_userThemeIdx: string) => HOST + FEED + BOARD + `/themeList/${_userThemeIdx}`
     },
 
 }

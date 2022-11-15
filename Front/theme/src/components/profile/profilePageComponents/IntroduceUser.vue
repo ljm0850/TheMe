@@ -70,7 +70,8 @@ export default {
         // const selectedUser = computed(() => store.getters.selectedUser)
         const loginUser = computed(() => store.getters.loginUser)
         const selectedUser = computed(()=>store.getters.selectedUser)
-
+        
+        
         const test = async () => {
             state.isProfileMine = await store.dispatch("isProfileMine")
         }
