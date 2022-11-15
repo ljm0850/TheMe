@@ -23,6 +23,7 @@ export default {
         authHeader: (state: { token: string }) => ({ Authorization: state.token }),
         loginUser: (state: {loginUser:Object}) => state.loginUser,
         selectedUser: (state: { selectedUser: Object }) => state.selectedUser,
+        sameUser:(state:{ loginUser: { userIdx : number }, selectedUser: { userIdx : number} }) => state.loginUser.userIdx == state.selectedUser.userIdx,
         postCnt : (state : { postCnt : number}) => state.postCnt,
         searchPersonInfo : (state: { searchPersonInfo: Object }) => state.searchPersonInfo,
         duplicationnickname : (state: { duplicationnickname : boolean}) => state.duplicationnickname,
