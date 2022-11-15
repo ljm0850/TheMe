@@ -5,10 +5,10 @@
           <div class="d-flex">
             <div class=" logo"  @click="selectSearch(0)"> 👨‍👦 </div>
             <input type="text" class="form-control" id="" placeholder="누구를 찾고 있나요?"    @input="searchUser">
-            <button class="btn btn-light type-button border"  @click="getSerchPerson(state.inputPersonText)">검색</button>
+            <button class="btn btn-light type-button border btn-size-38"  @click="getSerchPerson(state.inputPersonText)">검색</button>
           </div>
         </div>
-        <button  v-if="!state.isClicked" class="btn btn-light type-button border" @click="selectSearch(1)">🎨테마</button>
+        <button  v-if="!state.isClicked" class="btn btn-light type-button border btn-size-38" @click="selectSearch(1)">🎨테마</button>
         <div v-if="state.isClicked && state.inputValue==1">
           <div class="d-flex">
             <div class=" logo"  @click="selectSearch(1)"> 🎨 </div>
@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style>
-.top-box{
+.btn-size-38 .top-box{
   height: 38px;
 }
 .search-theme-card{

@@ -1,5 +1,6 @@
 <template>
   <div v-if="person">
+    <!-- {{person}} -->
     <div :class="[person.isSame ? 'isSame card' : 'card']" @click="moveProfile()">
       <div class="card-body" style="padding: 0px;">
         <div class="d-flex">
@@ -13,33 +14,32 @@
         <div class="d-flex">
           <div class='row'>
             <div class='col-sm-6' style="padding: 0px;">
-              <img v-if="person.pictures[1]"
-                :src="person.pictures[1]"
-                alt="" class="default-img">
-              <img v-if="person.pictures[2]"
-                :src="person.pictures[2]"
-                alt="" class="default-img">
+              <img v-if="person.pictures[1]" :src="person.pictures[1]" alt="" class="default-img">
+              <img v-if="person.pictures[2]" :src="person.pictures[2]" alt="" class="default-img">
             </div>
             <div class='col-sm-6' style="padding: 0px; ">
-              <img v-if="person.pictures[3]"
-                :src="person.pictures[3]"
-                alt="" class="default-img">
-              <img v-if="person.pictures[4]"
-                :src="person.pictures[4]"
-                alt="" class="default-img">
+              <img v-if="person.pictures[3]" :src="person.pictures[3]" alt="" class="default-img">
+              <span v-if="person.pictures.length >= 5">
+                <img v-if="person.pictures[4]" :src="person.pictures[4]" alt="" class="more-img default-img">
+                <div class="more-size">+{{ person.pictures.length }}</div>
+              </span>
+              <span v-else>
+                <img v-if="person.pictures[4]" :src="person.pictures[4]" alt="" class="default-img" />
+              </span>
             </div>
+
           </div>
         </div>
         <div class="view-info">
-        <div class="default-img btn-type">
-          <div class="view-info-img">👨‍👦</div>
-          <div class="view-info-text">&nbsp;&nbsp;{{ person.followCount }}</div>
+          <div class="default-img btn-type">
+            <div class="view-info-img">👨‍👦</div>
+            <div class="view-info-text">&nbsp;&nbsp;{{ person.followCount }}</div>
+          </div>
+          <div class="default-img btn-type">
+            <div class="view-info-img">💬</div>
+            <div class="view-info-text">&nbsp;&nbsp;{{ person.commentCount }}</div>
+          </div>
         </div>
-        <div class="default-img btn-type">
-          <div class="view-info-img">💬</div>
-          <div class="view-info-text">&nbsp;&nbsp;{{ person.commentCount }}</div>
-        </div>
-      </div>
       </div>
       <div v-else>
         등록된 게시글이 없습니다.
@@ -80,6 +80,22 @@ export default {
 </script>
 
 <style lang="scss">
+.more-size {
+  transform: translate(-50%, -50%);
+  text-align: center;
+  position: absolute;
+  top: 80%;
+  left: 65%;
+  color: white;
+  font-size: 30px;
+  -webkit-text-stroke: 1px rgb(182, 182, 182);
+}
+
+.more-img {
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+}
+
 .isSame {
   border: 3px solid #bddaff !important;
 
