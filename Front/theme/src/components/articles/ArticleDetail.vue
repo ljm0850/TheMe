@@ -1,26 +1,28 @@
 <template>
     <div class="card custom-card d-flex justify-content-center">
         <div class="card-body" v-if="article">
+            <!-- {{article}} -->
             <div class="theme-name">{{article.themeName}}</div>
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
                     <img :src="article.profile" class="profile-img"/>
                     <div>{{article.nickname}}</div>
                 </div>
-                <div>3년전</div>
+                <div>{{article.modifyTime}}</div>
             </div>
             <!-- 사진 -->
             <ArticleImageVue :pictures="article.picture" :carouselId ="articleCarouseId"/>
             <!-- 사진 끝 -->
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
-                    <div>❤ 1111</div>
-                    <div>🧾 2222</div>
+                    <div>❤ {{article.commentCount}}</div>
+                    <div>🧾 {{article.likeCount}}</div>
                 </div>
                 <div class="d-flex">
-                    <div>❗</div>
+                    <!-- <div>❗</div>
                     <div>❌</div>
-                    <div>❓</div>
+                    <div>❓</div> -->
+                    <div class="article-name">{{article.name}}</div>
                 </div>
             </div>
             <span @click="displayComment()" v-if="!state.commentFlag">더보기</span>
@@ -59,6 +61,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.article-name{
+    color: gray;
+}
 .profile-img{
     width: 32px;
     height: 32px;

@@ -1,5 +1,4 @@
 <template>
-{{ carouselId}}
 <div v-if="pictures" :id="`${carouselId}`" class="carousel slide" data-bs-ride="true">
     <div class="carousel-indicators">
         <button type="button" :data-bs-target="`#${carouselId}`" data-bs-slide-to="0" class="active"
