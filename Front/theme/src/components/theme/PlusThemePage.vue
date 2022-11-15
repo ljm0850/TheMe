@@ -19,7 +19,7 @@
           <div>{{ state.searchValue }}</div>
           <div>검색 결과 해당 테마가 존재하지 않습니다.</div>
           <div>추가 버튼을 눌러 새로운 테마를 만들어 주세요!!</div>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createThemeModal"
+          <button type="button" class="btn btn-outline-secondary white-add-button" data-bs-toggle="modal" data-bs-target="#createThemeModal"
             @click="newArticle()">
             추가
           </button>

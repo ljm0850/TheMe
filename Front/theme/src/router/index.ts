@@ -4,6 +4,7 @@ import ThemeListPage from "@/components/theme/ThemeList.vue";
 import ProfilePage from "@/components/profile/ProfilePage.vue";
 import SearchPage from "@/components/search/SearchPage.vue";
 import CreateArticlePage from "@/components/articles/CreateArticlePage.vue";
+import CreateARticlePageByPublicVue from "@/components/articles/CreateARticlePageByPublic.vue";
 import PlusThemePage from "@/components/theme/PlusThemePage.vue";
 import ThemeDetail from "@/components/theme/ThemeDetail.vue";
 import UserThemeDetail from "@/components/profile/UserThemeDetail.vue";
@@ -56,6 +57,11 @@ const routes = [
     path: "/createArticle",
     name: "CreateArticle",
     component: CreateArticlePage,
+  },
+  {
+    path: "/createThemeArticle/",
+    name: "CreateThemeArticle",
+    component: CreateARticlePageByPublicVue,
   },
   //프로필
   {

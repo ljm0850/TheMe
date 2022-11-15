@@ -4,6 +4,7 @@ import rest from '@/API/rest'
 import { Commit, Dispatch } from 'vuex';
 
 import axios from "axios"
+import router from '@/router';
 export default {
     state: {
         feedArticleList: [{ themeName: "tttasdgfa" }, { themeName: "임시2" }],
@@ -13,7 +14,7 @@ export default {
         searchPlacesList: [],
         selectedPlace: {},
         publicThemeArticleList : [],
-        selectedThemeforArticle: [],
+        selectedThemeforArticle: {},
         userThemeArticleList: [],
         placeArtilceList: [], 
         boardInfoByUserTheme: {},
@@ -46,7 +47,7 @@ export default {
     },
     actions: {
         // board-controller
-        createArticle({ commit, getters }: { commit: Commit, getters: any }, _data: { description:string, pictures:Array<string>,themeIdx:number}) {
+        createArticle({ commit, getters }: { commit: Commit, getters: any }, _data: { description:string, pictures:Array<string>,themeIdx:number, publicThemeIdx:number}) {
             const dt = {
                 description: _data.description,
                 name: getters.selectedPlace.place_name,
@@ -57,7 +58,7 @@ export default {
                 logitude : getters.selectedPlace.x,
                 latitude : getters.selectedPlace.y,
             }
-            console.log(dt)
+            // console.log(dt)
 
             axios({
                 url: rest.Feed.createArticle(),
@@ -66,7 +67,8 @@ export default {
                 data: dt
             })
                 .then((res) => {
-                console.log(res.data)
+                    // console.log(res.data)
+                    router.push({name: 'UserTheme', params: { userThemeIdx:_data.themeIdx, publicThemeIdx:_data.publicThemeIdx }})
             })
         },
         detailArticle({ commit, getters }: { commit: Commit, getters: any }, _boardIdx: string) {
@@ -266,8 +268,36 @@ export default {
         selectedPlace({ commit }: { commit: Commit }, _place: Object) {
             commit("SET_SELECTED_PLACE",_place)
         },
-        selectedThemeForArticle({ commit }: { commit: Commit }, _themeDetail: Object) {
-            commit("SET_SELECTED_THEME_FOR_ARTICLE",_themeDetail)
+        selectedThemeForArticle({ commit, getters,dispatch }: { commit: Commit, getters: any, dispatch:Dispatch }, _themeDetail: {name:string, idx:number}) {
+            commit("SET_SELECTED_THEME_FOR_ARTICLE", _themeDetail)
+            // console.log("feed.ts // 선택한 공용 테마 idx",_themeDetail.idx)
+            dispatch('selectedThemeIdxForCreate',_themeDetail.idx)  // 공용테마 IDX 저장
+            axios({
+                url: rest.Theme.liveSearchTheme(),
+                params:{value:_themeDetail.name},
+                method: 'get',
+                headers: getters.authHeader
+                })
+            .then((res) => {
+                const searchList = res.data.themeList
+                for (let idx = 0; idx < searchList.length; idx++){
+                    if (searchList[idx].name == _themeDetail.name) {
+                        // 이미 가지고 있으면
+                        if (searchList[idx].my) {
+                            dispatch('getMyThemeIdx', _themeDetail.idx)
+                            // router.push({name: 'CreateThemeArticle'})
+                            
+                        }  
+                        // 안가지고 있어서 개인테마 생성
+                        else {   
+                            dispatch('createUserTheme', {
+                                openType:0, challenge:false, component:true
+                            })
+                        }
+                    }
+                }
+            })
+            
         },
 
     }

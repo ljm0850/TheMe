@@ -14,7 +14,7 @@
           >
             <option selected>테마 선택</option>
             <!-- 현재 유저 테마의 idx가 선택되어 있음 -->
-            <option v-for="theme in themeList" :key="theme" :value="theme.idx">
+            <option v-for="theme in themeList" :key="theme" :value="{ 'public':theme.themeIdx ,'user':theme.idx }">
               {{ theme.name }}
             </option>
           </select>
@@ -38,9 +38,12 @@
             v-model="state.description"
           ></textarea>
         </div>
-        <button @click.prevent="createArticle()">게시물 등록</button>
+        <button @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button">등록</button>
       </div>
     </form>
+    <br>
+    <br>
+    <br>
   </div>
 </template>
 
@@ -60,7 +63,8 @@ export default {
   },
   setup() {
     const state: any = reactive({
-      theme: 0,
+      // theme: 0,
+      theme: { public: 0, user: 0},
       coordinate_x: 0,
       coordinate_y: 0,
       selectFile: {},
@@ -80,10 +84,12 @@ export default {
         );
         imageUrls.push(url);
       }
+      console.log("올라갈 사진 url",imageUrls)
       store.dispatch("createArticle", {
         description: state.description,
         pictures: imageUrls,
-        themeIdx: state.theme,
+        themeIdx: state.theme.user,
+        publicThemeIdx: state.theme.public
       });
     };
     store.dispatch("getMyThemeList");
@@ -97,11 +103,9 @@ export default {
       while (body?.firstChild) {
         body.firstChild.remove();
       }
-
       for (let i = 0; i < state.selectFile.length; i++) {
         let reader = new FileReader();
         reader.onload = (e: any) => {
-          console.log("e.target.result:",e.target.result)
           createPreview(e.target?.result, i);
         };
         reader.readAsDataURL(state.selectFile[i]);
@@ -124,18 +128,6 @@ export default {
     };
 
     // 공용테마에서 글쓰러 왔을 때
-    const themeDetail = computed(() => store.getters.selectedThemeforArticle);
-
-    const setTheme = () => {
-      if (themeDetail.value != null) {
-        state.theme = themeDetail.value.idx;
-      }
-    };
-
-    setTheme();
-
-    console.log(state.theme);
-
     return {
       state,
       createArticle,
