@@ -83,6 +83,7 @@ export default {
   // color: #E89A3D;
   color: #48bd42;
   margin-bottom: 4px;
+  border-radius: 100px;
 }
 .bottomeNav{
   border-top: 1px solid #EEEEEE;
