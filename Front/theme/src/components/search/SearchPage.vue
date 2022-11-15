@@ -22,7 +22,7 @@
     <div v-if="!state.isSerched && (state.inputThemeText.length < 1 && state.inputPersonText.length < 1)" >
       &nbsp; 🔥 현재인기있는 사람들
       <br>
-      <SearchProfileCardVue v-for="person in getRecommandPersonList" :key="person" :person="person"/>
+      <SearchMainPageVue v-for="person in getRecommandPersonList" :key="person" :person="person"/>
     </div>
     <div v-else-if="state.isSerched && state.inputThemeText.length >= 1">
       <SearchThemeCardVue v-for="theme in getSerchThemeList" :key="theme" :theme="theme" />
@@ -43,6 +43,7 @@
 </template>
 
 <script lang="ts">
+import SearchMainPageVue from "@/components/profile/SearchMainPage.vue"
 import SearchProfileCardVue from "@/components/profile/SearchProfileCard.vue"
 import SearchThemeCardVue from '../theme/SearchThemeCard.vue';
 import { computed } from "@vue/reactivity";
@@ -51,6 +52,7 @@ import { useStore } from "vuex";
 export default {
   components: {
     SearchProfileCardVue,
+    SearchMainPageVue,
     SearchThemeCardVue
   },
   setup() {
