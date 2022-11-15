@@ -60,7 +60,7 @@ export default {
     setup() {
         const state = reactive({
             isProfileMine : false,
-            isOpenFollower : false
+            isOpenFollower : false,
         })
         // 추후에 nickname으로 selectedUser 갱신
         // const route = useRoute();
@@ -76,9 +76,6 @@ export default {
         }
         
         test()
-
-        
-
         return { loginUser, selectedUser, state }
     },
 }

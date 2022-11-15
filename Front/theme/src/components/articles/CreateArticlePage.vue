@@ -68,6 +68,7 @@ export default {
       searchValue: "",
       description: "",
     });
+    
     const isSelectFile = computed(() => !_.isEmpty(state.selectFile));
     const imageUrls: string[] = [];
     const store = useStore();
@@ -100,6 +101,7 @@ export default {
       for (let i = 0; i < state.selectFile.length; i++) {
         let reader = new FileReader();
         reader.onload = (e: any) => {
+          console.log("e.target.result:",e.target.result)
           createPreview(e.target?.result, i);
         };
         reader.readAsDataURL(state.selectFile[i]);

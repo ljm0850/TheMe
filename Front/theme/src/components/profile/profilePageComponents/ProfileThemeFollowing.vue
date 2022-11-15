@@ -8,18 +8,16 @@
     <ul v-if="state.vueTarget" class="paddingZero">
       <li v-for="item in selectedUser.themeDtoList" :key="item" >
         <UserThemeCard
-          
           :theme="item"
-          @click="clickTheme(item.userThemeIdx, item.themeIdx)"
+          class="themeCard"
         />
       </li>
     </ul>
     <ul v-if="!state.vueTarget" class="paddingZero">
       <li v-for="item in selectedUser.followingDtoList" :key="item" >
         <FollowingThemeCard
-          
           :theme="item"
-          @click="clickTheme(item.userThemeIdx, item.themeIdx)"
+          class="themeCard"
         />
       </li>
     </ul>
@@ -28,7 +26,6 @@
 
 <script lang="ts">
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import { computed } from "@vue/runtime-core";
 import { reactive } from "@vue/reactivity";
 import FollowingThemeCard from "@/components/theme/FollowingThemeCard.vue";
@@ -40,7 +37,6 @@ export default {
 },
     setup() {
         const store = useStore();
-        const router = useRouter();
         
         const selectedUser = computed(() => store.getters.selectedUser)
         // console.log("selectedUser")
@@ -59,17 +55,8 @@ export default {
     // const changeViewMode = (type: boolean) => {
     //   state.vueTarget = type;
     // };
-    const clickTheme = (userThemeIdx: string, publicThemeIdx: string) => {
-      router.push({
-        name: "UserTheme",
-        params: {
-          userThemeIdx: userThemeIdx,
-          publicThemeIdx: publicThemeIdx,
-        },
-      });
-    };
 
-    return { selectedUser, state, clickTheme, changeViewMode };
+    return { selectedUser, state, changeViewMode };
   },
 };
 </script>

@@ -50,6 +50,7 @@ export default {
         searchTheme: (_target:string)=>HOST + THEME + SEARCH + `/${_target}`,
         scrapTheme: (_theme_idx:string)=>HOST + THEME + `/bookmark/${_theme_idx}`,
         getThemeDetail:(_theme_idx:string)=> HOST + THEME + '/detail' + `/${_theme_idx}`,
+        getUserThemeDetail:(_userThemeIdx:string)=> HOST + THEME + 'userTheme/detail' + `/${_userThemeIdx}`,
     },
     
     Feed: {
@@ -58,7 +59,7 @@ export default {
         LikeArticle:(_board_id:string) => HOST + FEED + BOARD + `/like/${_board_id}`,
         reportArticle: (_board_idx: string,) => HOST + FEED + BOARD + `/alert/${_board_idx}`,
         themeArticleList:(_theme_idx:string) => HOST + FEED + MAP + THEME + `/${_theme_idx}`,
-        placeArticleList:() => HOST + FEED + MAP + '/place',    
+        placeArticleList:(_theme_idx:string) => HOST + FEED + MAP + `/place/${_theme_idx}`,
         comment: (_board_idx: string) => HOST + FEED + COMMENT + `/${_board_idx}`,
         deleteComment: (_comment_idx: string) => HOST + COMMENT + `${_comment_idx}`,
         reportComment:(_comment_idx:string) => HOST + FEED + COMMENT + `/alert/${_comment_idx}`,

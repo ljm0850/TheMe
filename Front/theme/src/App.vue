@@ -33,7 +33,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-
 .router-view-setting {
   // 추후에 100vh - 네브바 높이로 하자
   min-height: 90vh;
@@ -51,6 +50,15 @@ export default defineComponent({
   border-color: #cdcdcd !important;
   border-radius: 5px;
 }
+.can-not-select-button{
+  width: 80px !important;
+  color: black !important;
+  // background-color: white !important;
+  outline-color: black !important;
+  border-color: #cdcdcd !important;
+  border-radius: 5px;
+}
+
 .preview-img-size {
   width: 360px;
   height: 360px;
