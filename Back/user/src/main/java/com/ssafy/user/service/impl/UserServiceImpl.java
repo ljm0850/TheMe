@@ -128,6 +128,7 @@ public class UserServiceImpl implements UserService {
         userInfoDto.setThemes(userThemeDtoList.size());
         List<UserThemeListDto> userThemeListDtoList = new ArrayList<>(); // 테마 리스트 관련 정보 넣기
         for(int i=0;i<userThemeDtoList.size();i++){
+            if(!followUser.isPresent()) continue;
             Optional<Follow> userFollow = followRepository.findByFollowingUserAndFollowUserAndThemeIdx(user,followUser.get(),userThemeDtoList.get(i).getThemeIdx());
             boolean isfollow = false;
             BoardInfoForUserDto boardInfoForUserDto = boardInfoForUser(userThemeDtoList.get(i).getThemeIdx(),userIdx);
@@ -172,8 +173,9 @@ public class UserServiceImpl implements UserService {
             boolean isfollow = true;
             BoardInfoForUserDto boardInfoForUserDto = boardInfoForUser(userThemeListDtos.get(i).getThemeIdx(),pageUserIdx);
             Optional<User> followingUser = userRepository.findById(userThemeListDtos.get(i).getUserIdx());
+            if(!followingUser.isPresent()) continue;
             Optional<Follow> byFollowUserAndFollowingUserAndThemeIdx = followRepository.findByFollowUserAndFollowingUserAndThemeIdx(user, followingUser.get(), userThemeListDtos.get(i).getIdx());
-
+            if(!byFollowUserAndFollowingUserAndThemeIdx.isPresent()) continue;
             UserThemeListDto userThemeListDto = UserThemeListDto.builder()
                     .allChallengeCount(boardInfoForUserDto.getAllBoardCount())
                     .boardCount(boardInfoForUserDto.getBoardCount())
