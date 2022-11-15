@@ -21,19 +21,22 @@ export default {
         ArticleListModalVue,
     },
     props:{
-        article:Object
+        article:Object,
+        publicTheme:String
     },
     setup(props:any) {
         const store = useStore();
         const param = reactive({
-            themeIdx: props.article.themeIdx,
+            themeIdx: props.publicTheme,
             name: props.article.name,
             pageSize: 10,
             pageIdx: 0,
         });
+        
         store.dispatch("placeArticleList", param);
-
         const boardList = computed(() => store.getters.placeArtilceList);
+
+        // console.log(boardList.value);
 
         return { boardList }
     }

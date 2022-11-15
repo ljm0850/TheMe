@@ -28,7 +28,7 @@
     <button @click="goCreateArticle()" class="theme-plus-button">+</button>
     <ArticleListVue
       class="article-list"
-      page="publicTheme"
+      :publicThemeIdx="publicThemeIdx"
       :articleList="articleList"
     />
   </div>
@@ -50,13 +50,13 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    const theme_idx = route.params.themeIdx;
-    store.dispatch("detailTheme", theme_idx);
+    const publicThemeIdx = route.params.themeIdx;
+    store.dispatch("detailTheme", publicThemeIdx);
 
     const themeDetail = computed(() => store.getters.publicThemeDetail);
 
     const param = reactive({
-      themeIdx: theme_idx,
+      themeIdx: publicThemeIdx,
       pageSize: 10,
       pageIdx: 0,
     });
@@ -71,10 +71,10 @@ export default {
     const clickBookmark = () => {
       if (state.isMarked) {
         // 북마크 취소
-        store.dispatch("unScrapTheme", theme_idx);
+        store.dispatch("unScrapTheme", publicThemeIdx);
       } else {
         // 북마크 하기
-        store.dispatch("scrapTheme", theme_idx);
+        store.dispatch("scrapTheme", publicThemeIdx);
       }
       state.isMarked = !state.isMarked;
       console.log(state.isMarked);
@@ -97,7 +97,7 @@ export default {
     };
     console.log(themeDetail.value);
 
-    return { themeDetail, state, clickBookmark, goCreateArticle, theme_idx, articleList };
+    return { themeDetail, state, clickBookmark, goCreateArticle, publicThemeIdx, articleList };
   },
 };
 </script>

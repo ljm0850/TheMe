@@ -39,7 +39,7 @@ export default {
         SET_PUBLIC_THEME_ARTICLE_LIST: (state:{publicThemeArticleList:Object}, _publicThemeArticleList:Array<Object>) => state.publicThemeArticleList = _publicThemeArticleList,
         SET_SELECTED_THEME_FOR_ARTICLE: (state: { selectedThemeforArticle: Object }, _selectedThemeforArticle: Object) => state.selectedThemeforArticle = _selectedThemeforArticle,
         SET_USER_THEME_ARTICLE_LIST: (state: { userThemeArticleList: Object }, _userThemeArticleList: Object) => state.userThemeArticleList = _userThemeArticleList,
-        SET_PLACE_ARTICLE_LIST :  (state:{placeArtilceList:Object}, _placeArtilceList:Array<Object>) => state.placeArtilceList = _placeArtilceList,
+        SET_PLACE_ARTICLE_LIST :  (state:{placeArtilceList:Array<Object>}, _placeArtilceList:Array<Object>) => state.placeArtilceList = _placeArtilceList,
     },
     actions: {
         // board-controller
@@ -242,8 +242,8 @@ export default {
                 }
             })
                 .then((res => {
-                console.log(res.data.data)
-                commit("SET_PLACE_ARTICLE_LIST", res.data.data)
+                    // console.log(res.data.data)
+                    commit("SET_PLACE_ARTICLE_LIST", res.data.data)
             }))
         },
         searchPlacesList({ commit }: { commit: Commit }, _list: Array<Object>) {
