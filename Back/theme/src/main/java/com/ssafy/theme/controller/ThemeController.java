@@ -35,8 +35,33 @@ public class ThemeController {
         int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
             int idx = themeService.registTheme(themeRegistDto,userIdx);
+            if(idx == -1){
+                result.put("message",FAIL);
+            }else{
+                result.put("message",OK);
+            }
             result.put("idx", idx);
-            result.put("message",OK);
+            status = HttpStatus.OK;
+        }catch (Exception e){
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            result.put("message",FAIL);
+            System.out.println(e);
+        }
+        return new ResponseEntity<>(result,status);
+    }
+    @PutMapping("")
+    public ResponseEntity<?> modifyTheme(HttpServletRequest request, @RequestBody HashMap<String, Object> hashMap){
+        Map<String,Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
+        try {
+            int idx = themeService.modifyTheme((Integer) hashMap.get("themeIdx"), (Integer) hashMap.get("openType"),userIdx);
+            if(idx == -1){
+                result.put("message",FAIL);
+            }else{
+                result.put("message",OK);
+            }
+            result.put("idx", idx);
             status = HttpStatus.OK;
         }catch (Exception e){
             status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -44,7 +69,27 @@ public class ThemeController {
         }
         return new ResponseEntity<>(result,status);
     }
-
+    @DeleteMapping("")
+    public ResponseEntity<?> deleteTheme(HttpServletRequest request, @RequestBody HashMap<String, Object> hashMap){
+        Map<String,Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
+        try {
+            int idx = themeService.deleteTheme((Integer) hashMap.get("themeIdx"),userIdx);
+            if(idx == -1){
+                result.put("message",FAIL);
+            }else{
+                result.put("message",OK);
+            }
+            result.put("idx", idx);
+            status = HttpStatus.OK;
+        }catch (Exception e){
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            result.put("message",FAIL);
+            System.out.println(e);
+        }
+        return new ResponseEntity<>(result,status);
+    }
     @PostMapping("/userTheme")
     public ResponseEntity<?> createUserTheme(HttpServletRequest request, @RequestBody UserThemeRegistDto userThemeRegistDto) {
         Map<String, Object> result = new HashMap<>();

@@ -38,4 +38,8 @@ public class UserTheme {
         this.challenge = challenge;
         this.description = description;
     }
+    public void updateOpenType(int openType) {
+        this.openType = openType;
+    }
+
 }

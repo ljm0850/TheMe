@@ -44,14 +44,17 @@ public class ThemeServiceImpl implements ThemeService {
     }
     @Override
     public int registTheme(ThemeRegistDto themeRegistDto,int userIdx) {
-        //builder 사용법
-        Theme theme = Theme.builder()
-                .name(themeRegistDto.getName())
-                .emoticon(themeRegistDto.getEmoticon())
-                .createTime(LocalDateTime.now())
-                .build();
-        themeRepository.save(theme);
-        return theme.getIdx();
+        Optional<Theme> searchTheme = themeRepository.findByName(themeRegistDto.getName());
+        if(!searchTheme.isPresent()){ //공용 테마에 이름이 없다면
+                Theme theme = Theme.builder()
+                        .name(themeRegistDto.getName())
+                        .emoticon(themeRegistDto.getEmoticon())
+                        .createTime(LocalDateTime.now())
+                        .build();
+                themeRepository.save(theme);
+                return theme.getIdx();
+        }
+        return -1;
     }
     @Override
     public int createUserTheme(int userIdx, UserThemeRegistDto userThemeRegistDto) {
@@ -565,6 +568,28 @@ public class ThemeServiceImpl implements ThemeService {
         int publicThemeIdx = userTheme.get().getTheme().getIdx();
         Theme theme = themeRepository.findByIdx(publicThemeIdx);
         return theme.getName();
+    }
+
+    @Override
+    public int modifyTheme(Integer themeIdx, Integer openType, int userIdx) {
+        Optional<UserTheme> userTheme = userThemeRepository.findByIdxAndUserIdx(themeIdx, userIdx);
+        if(userTheme.isPresent()){
+            userTheme.get().updateOpenType(openType);
+
+            userThemeRepository.save(userTheme.get());
+            return 1;
+        }
+        return -1;
+    }
+
+    @Override
+    public int deleteTheme(Integer themeIdx, int userIdx) {
+        Optional<UserTheme> userTheme = userThemeRepository.findByIdxAndUserIdx(themeIdx, userIdx);
+        if(userTheme.isPresent()){
+            userThemeRepository.delete(userTheme.get());
+            return 1;
+        }
+        return -1;
     }
 
 }

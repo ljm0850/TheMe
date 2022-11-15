@@ -55,4 +55,8 @@ public interface ThemeService {
     List<UserThemeDtoWithMSA> getUserThemeUserList(int userThemeIdx,int user_idx);
 
     String getUserThemeName(int theme_idx);
+
+    int modifyTheme(Integer themeIdx, Integer openType, int userIdx);
+
+    int deleteTheme(Integer themeIdx, int userIdx);
 }
