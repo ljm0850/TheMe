@@ -38,7 +38,8 @@
 import ArticleListVue from "@/components/articles/ArticleList.vue";
 import KakaoMapVue from "../map/KakaoMap.vue";
 import { computed, reactive } from "vue";
-import { useRoute, useRouter } from "vue-router";
+// import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 export default {
   components: {
@@ -48,7 +49,7 @@ export default {
   setup() {
     const store = useStore();
     const route = useRoute();
-    const router = useRouter();
+    // const router = useRouter();
 
     const publicThemeIdx = route.params.themeIdx;
     store.dispatch("detailTheme", publicThemeIdx);
@@ -87,13 +88,16 @@ export default {
 
     console.log(state.isMarked);
 
+    // 초기화
+    store.commit("SET_SELECTED_THEME_FOR_ARTICLE", {})
     const goCreateArticle = () => {
-      // 글쓰러가는 테마 정보 state에 올려놓기
+      // console.log(themeDetail.value)
+      // 글쓰러가는 테마 정보 state에 올려놓기, 여기서 router 이동
       store.dispatch("selectedThemeForArticle", themeDetail.value);
       // 글쓰는 페이지로 넘어가기
-      router.push({
-        name: "CreateArticle",
-      });
+      // router.push({
+      //   name: "CreateArticle",
+      // });
     };
     console.log(themeDetail.value);
 

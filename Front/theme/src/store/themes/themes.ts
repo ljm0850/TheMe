@@ -16,7 +16,8 @@ export default {
         selectedUserThemeList: [],
         publicThemeList :[],
         publicThemeDetail :[],
-        userThemeDetail:[],
+        userThemeDetail: [],
+        selectedUserThemeIdx:0,
        },
     getters: {
         searchThemeList: (state: { searchThemeList: Array<object> }) => state.searchThemeList,
@@ -25,7 +26,8 @@ export default {
         isSelectedThemeIdxForCreate: (state: { selectedThemeIdxForCreate: number}) => !(state.selectedThemeIdxForCreate==0),
         selectedThemeNameForCreate: (state: { selectedThemeNameForCreate: string}) => state.selectedThemeNameForCreate,
         selectedThemeEmoticonForCreate: (state: { selectedThemeEmoticonForCreate: string }) => state.selectedThemeEmoticonForCreate,
-        getRecommendThemeList: (state: {getRecommendThemeList:Array<Object> }) => state.getRecommendThemeList,
+        selectedUserThemeIdx:(state: {selectedUserThemeIdx:number})=> state.selectedUserThemeIdx,
+        getRecommendThemeList: (state: { getRecommendThemeList: Array<Object> }) => state.getRecommendThemeList,
         liveSearchTheme: (state: { liveSearchTheme: Array<String> }) => state.liveSearchTheme,
         selectedUserThemeList: (state: { selectedUserThemeList:Array<Object> }) => state.selectedUserThemeList,
         publicThemeList : (state: {publicThemeList:Array<Object>}) => state.publicThemeList,
@@ -42,7 +44,8 @@ export default {
         SET_SELECTED_USER_THEME_LIST:(state: {selectedUserThemeList:Array<Object>}, _themeList:Array<Object>)=> state.selectedUserThemeList = _themeList,
         SET_PUBLIC_THEME_LIST: (state:{ publicThemeList: Array<object>}, _publicThemeList:Array<Object>) => state.publicThemeList = _publicThemeList,
         SET_PUBLIC_THEME_DETAIL: (state:{ publicThemeDetail: Object}, _publicThemeDetail:Object) => state.publicThemeDetail = _publicThemeDetail,
-        SET_USER_THEME_DETAIL: (state:{ userThemeDetail: Object}, _userThemeDetail:Object) => state.userThemeDetail = _userThemeDetail,
+        SET_USER_THEME_DETAIL: (state: { userThemeDetail: Object }, _userThemeDetail: Object) => state.userThemeDetail = _userThemeDetail,
+        SET_SELECTED_USER_THEME_IDX: (state: {selectedUserThemeIdx:number},_selectedUserThemeIdx:number) => state.selectedUserThemeIdx = _selectedUserThemeIdx,
     },
     actions: {
         getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
@@ -112,12 +115,12 @@ export default {
                     dispatch('createUserTheme', { openType:_data.openType, challenge:_data.challenge })
             })
         },
-        createUserTheme({ getters }: { getters: any }, _data: { openType:number, challenge:boolean}) {
+        createUserTheme({ getters,commit }: { getters: any,commit:Commit }, _data: { openType:number, challenge:boolean, component:boolean|undefined}) {
             const data = {
                 challenge: _data.challenge,
                 createTime: new Date(),
                 description: "",
-                modifyTime: "",
+                modifyTime: new Date(),
                 openType: _data.openType,
                 themeIdx: getters.selectedThemeIdxForCreate,
                 userIdx: getters.loginUser.userIdx
@@ -129,9 +132,16 @@ export default {
                 data: data
             })
                 .then((res) => {
-                    router.push({name: 'UserTheme', params: { userThemeIdx:res.data.idx, publicThemeIdx:getters.selectedThemeIdxForCreate }})
-                    console.log("유저 테마 생성 완료")
-                    console.log(res.data)
+                    if (_data.component) {
+                        commit('SET_SELECTED_USER_THEME_IDX', res.data.idx)
+                        router.push({ name: 'CreateThemeArticle' })
+                        
+                    }
+                    else {
+                        router.push({name: 'UserTheme', params: { userThemeIdx:res.data.idx, publicThemeIdx:getters.selectedThemeIdxForCreate }})
+                        console.log("유저 테마 생성 완료")
+                        console.log(res.data)
+                    }
             })
         },
         getUserThemeList({ commit, getters }: { commit: Commit, getters: any }, _userIdx:string) {
@@ -147,12 +157,25 @@ export default {
             })
         },
         getMyThemeList({ dispatch, getters}: { dispatch: Dispatch, getters: any }) {
-            console.log("머임")
-            console.log(getters.loginUser)
-            console.log(getters.loginUser.userIdx)
-            console.log(typeof(getters.loginUser))
             dispatch("getUserThemeList",getters.loginUser.userIdx)
         },
+        getMyThemeIdx({ commit,getters }: { commit: Commit,getters:any }, _publicThemeIdx: number) {
+            axios({
+                url: rest.Theme.getUerThemeList(getters.loginUser.userIdx),
+                method: 'get',
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                    const target = res.data.themeList
+                    for (let i = 0; i < target.length; i++){
+                        if (target[i].themeIdx == _publicThemeIdx) {
+                            commit('SET_SELECTED_USER_THEME_IDX', target[i].idx)
+                            router.push({name: 'CreateThemeArticle'})
+                        }
+                    }
+            })
+        },
+
         getRecommendThemeList({ commit,getters }:{commit:Commit,getters:any}) {
             axios({
                 url: rest.Theme.recommendThemeList(),
@@ -232,7 +255,8 @@ export default {
                         if (data.name == _name) {
                             dispatch('selectedThemeIdxForCreate',data.themeIdx)
                             dispatch('selectedThemeEmoticonForCreate', data.emoticon)
-                            console.log("정확한 데이터: ",data)
+                            console.log("정확한 데이터: ", data)
+                            break
                         }
                     }
             })

@@ -61,7 +61,7 @@ export default {
         state.plusButton = false
       }
     }
-    return { state, togglePlusButton,myNickname ,mouseLeft}
+    return { state, togglePlusButton, myNickname, mouseLeft}
   }
 }
 </script>

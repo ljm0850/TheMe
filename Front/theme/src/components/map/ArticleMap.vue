@@ -2,9 +2,9 @@
 <div>
     <br>
     <div class="input-group mb-3">
-        <label class="input-group-text">장소 검색</label>
+        <label class="input-group-text">장소</label>
         <input class="form-control" type="text" v-model="searchValue" >
-        <button @click.prevent="searchPlace">검색</button>
+        <button @click.prevent="searchPlace" class="btn btn-outline-secondary white-add-button">검색</button>
     </div>
     <div class="map-area" v-if="searchFlag">
         <div v-if="placesFlag">
@@ -16,8 +16,8 @@
                 <br>
             </div>
         </div>
-        <button v-if="!mapFlag" @click.prevent="displayMap()">지도 보기</button>
-        <button v-if="mapFlag" @click.prevent="displayMap()">지도 숨기기</button>
+        <button v-if="!mapFlag" @click.prevent="displayMap()" class="btn btn-outline-secondary white-add-button">지도</button>
+        <!-- <button v-if="mapFlag" @click.prevent="displayMap()" class="btn btn-outline-secondary white-add-button">지도</button> -->
         <KakaoMapVue v-show="mapFlag" ref="kmap" class="kmap" :options="mapOption" />
     </div>
 </div>

@@ -6,7 +6,7 @@
         추가
       </button>
       <button v-if="theme.my" type="button" class="btn btn-outline-secondary can-not-select-button col-3" style="background-color: gray;">
-        추가
+        보유중
       </button>
     </div>
     <hr>
