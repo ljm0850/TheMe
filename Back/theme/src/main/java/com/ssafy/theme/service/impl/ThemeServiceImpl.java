@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -59,17 +60,22 @@ public class ThemeServiceImpl implements ThemeService {
     @Override
     public int createUserTheme(int userIdx, UserThemeRegistDto userThemeRegistDto) {
         Theme theme = themeRepository.findByIdx(userThemeRegistDto.getThemeIdx());
-        UserTheme userTheme = UserTheme.builder()
-                .theme(theme)
-                .userIdx(userIdx)
-                .createTime(userThemeRegistDto.getCreateTime())
-                .challenge(userThemeRegistDto.isChallenge())
-                .description(userThemeRegistDto.getDescription())
-                .modifyTime(userThemeRegistDto.getCreateTime())
-                .openType(userThemeRegistDto.getOpenType())
-                .build();
-        UserTheme save = userThemeRepository.save(userTheme);
-        return save.getIdx();
+        if(!userThemeRepository.findByThemeAndUserIdx(theme, userIdx).isPresent()){// 유저 테마 보유한지 확인하기
+
+            UserTheme userTheme = UserTheme.builder()
+                    .theme(theme)
+                    .userIdx(userIdx)
+                    .createTime(userThemeRegistDto.getCreateTime())
+                    .challenge(userThemeRegistDto.isChallenge())
+                    .description(userThemeRegistDto.getDescription())
+                    .modifyTime(userThemeRegistDto.getCreateTime())
+                    .openType(userThemeRegistDto.getOpenType())
+                    .build();
+            UserTheme save = userThemeRepository.save(userTheme);
+            return save.getIdx();
+        }
+        return -1;
+
     }
     @Override
     public List<UserThemeDto> getThemeList(int user_id) {
@@ -103,6 +109,11 @@ public class ThemeServiceImpl implements ThemeService {
         ResponseEntity<?> userInfo = userClient.getUserInfo(nickname);
 
         return userInfo;
+    }
+
+    @Override
+    public String deleteBoardAndComment(int theme_idx) {
+        return feedClient.deleteBoardAndComment(theme_idx);
     }
 
     @Override
@@ -519,6 +530,11 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
+    public String deleteFollowUserTheme(int theme_idx) {
+        return userClient.deleteFollowUserTheme(theme_idx);
+    }
+
+    @Override
     public boolean isScrap(int userIdx, int themeIdx) {
         Theme theme = themeRepository.findByIdx(themeIdx);
         Optional<Scrap> scrap = scrapRepository.findByThemeAndUserIdx(theme,userIdx);
@@ -583,10 +599,13 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
+    @Transactional
     public int deleteTheme(Integer themeIdx, int userIdx) {
         Optional<UserTheme> userTheme = userThemeRepository.findByIdxAndUserIdx(themeIdx, userIdx);
         if(userTheme.isPresent()){
-            userThemeRepository.delete(userTheme.get());
+            feedClient.deleteBoardAndComment(themeIdx); // 게시글, 댓글, 좋아요, 사진 삭제하기
+            userClient.deleteFollowUserTheme(themeIdx);  // 팔로우 정보 삭제하기
+            userThemeRepository.delete(userTheme.get()); // 유저 테마 삭제하기
             return 1;
         }
         return -1;

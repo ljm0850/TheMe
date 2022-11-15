@@ -3,6 +3,7 @@ package com.ssafy.theme.client;
 import com.ssafy.theme.dto.theme.UserThemeDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -23,4 +24,6 @@ public interface UserClient {
     boolean isFollow(@PathVariable(name = "user_idx") int user_idx,
                      @PathVariable(name = "target_user_idx") int target_user_idx,
                      @PathVariable(name = "theme_idx") int theme_idx);
+    @DeleteMapping("/user/deleteFollowUserTheme/{theme_idx}")
+    String deleteFollowUserTheme(@PathVariable(name = "theme_idx") int theme_idx);
 }

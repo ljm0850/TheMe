@@ -15,6 +15,7 @@ public interface ThemeService {
     int createUserTheme(int userIdx, UserThemeRegistDto userThemeRegistDto);
     List<UserThemeDto> getThemeList(int user_id);
     ResponseEntity<?> getUserInfo(String nickname);
+    String deleteBoardAndComment(@PathVariable(name = "theme_idx") int theme_idx);
 
     ResponseEntity<?> getUserIdxInfo(int userIdx);
 
@@ -50,7 +51,7 @@ public interface ThemeService {
 
     int whoUserIdx(int userThemeIdx);
     boolean isFollow(int user_idx, int target_user_idx, int theme_idx);
-
+    String deleteFollowUserTheme(@PathVariable(name = "theme_idx") int theme_idx);
     boolean isScrap(int userIdx, int themeIdx);
     List<UserThemeDtoWithMSA> getUserThemeUserList(int userThemeIdx,int user_idx);
 

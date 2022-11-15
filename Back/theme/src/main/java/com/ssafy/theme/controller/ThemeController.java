@@ -49,7 +49,7 @@ public class ThemeController {
         }
         return new ResponseEntity<>(result,status);
     }
-    @PutMapping("")
+    @PutMapping("/userTheme")
     public ResponseEntity<?> modifyTheme(HttpServletRequest request, @RequestBody HashMap<String, Object> hashMap){
         Map<String,Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -69,7 +69,7 @@ public class ThemeController {
         }
         return new ResponseEntity<>(result,status);
     }
-    @DeleteMapping("")
+    @DeleteMapping("/userTheme")
     public ResponseEntity<?> deleteTheme(HttpServletRequest request, @RequestBody HashMap<String, Object> hashMap){
         Map<String,Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -97,8 +97,12 @@ public class ThemeController {
         int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
             int idx = themeService.createUserTheme(userIdx, userThemeRegistDto);
+            if(idx == -1){
+                result.put("message",FAIL);
+            }else{
+                result.put("message",OK);
+            }
             result.put("idx",idx);
-            result.put("message",OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
