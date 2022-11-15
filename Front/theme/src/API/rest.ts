@@ -50,7 +50,7 @@ export default {
         searchTheme: (_target:string)=>HOST + THEME + SEARCH + `/${_target}`,
         scrapTheme: (_theme_idx:string)=>HOST + THEME + `/bookmark/${_theme_idx}`,
         getThemeDetail:(_theme_idx:string)=> HOST + THEME + '/detail' + `/${_theme_idx}`,
-        getUserThemeDetail:(_userThemeIdx:string)=> HOST + THEME + 'userTheme/detail' + `/${_userThemeIdx}`,
+        getUserThemeDetail:(_userThemeIdx:string)=> HOST + THEME + '/userTheme/detail' + `/${_userThemeIdx}`,
     },
     
     Feed: {

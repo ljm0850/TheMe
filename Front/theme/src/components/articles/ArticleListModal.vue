@@ -7,8 +7,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <ArticleDetailVue :article="article" class="article-detail"/>
-                <!-- <ArticleDetailVue v-for="article in boardList" :key="article" :article="article"/> -->
+                <!-- <ArticleDetailVue :article="article" class="article-detail"/> -->
+                <ArticleDetailVue v-for="article in boardList" :key="article" :article="article"/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
