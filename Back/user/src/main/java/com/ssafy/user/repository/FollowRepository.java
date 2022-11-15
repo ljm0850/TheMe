@@ -31,7 +31,7 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
     Optional<Follow> findByFollowUserAndFollowingUserAndThemeIdx(User FollowUser, User FollowingUser, int themeIdx);
 
 
-    @Query("Select F.followUser From Follow F group by F.followUser order by (count(F.followUser)) desc")
+    @Query("Select F.followingUser From Follow F group by F.followingUser order by (count(F.followingUser)) desc")
     List<User> searchRecommned();
 
     List<Follow> findByFollowingUser(User user);
