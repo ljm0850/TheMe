@@ -36,4 +36,6 @@ public interface BoardService {
     BoardInfoForUserDto boardInfoForUser(int themeIdx,int userIdx);
 
     int isUserTheme(int userIdx, int themeIdx);
+
+    void deleteBoardAndComment(int theme_idx);
 }

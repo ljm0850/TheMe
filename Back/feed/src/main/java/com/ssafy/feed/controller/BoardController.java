@@ -160,4 +160,13 @@ public class BoardController {
     public BoardInfoForUserDto boardInfoForUser(@PathVariable(name = "theme_idx") int themeIdx,@PathVariable(name = "user_idx") int userIdx){ // 해당 테마 번호로 게시물,댓글,챌린지 정보 받기
         return boardService.boardInfoForUser(themeIdx,userIdx);
     }
+    @DeleteMapping("/deleteBoardAndComment/{theme_idx}")
+    String deleteBoardAndComment(@PathVariable(name = "theme_idx") int theme_idx){
+        try {
+            boardService.deleteBoardAndComment(theme_idx);
+        } catch (Exception e){
+            return FAIL;
+        }
+        return OK;
+    }
 }

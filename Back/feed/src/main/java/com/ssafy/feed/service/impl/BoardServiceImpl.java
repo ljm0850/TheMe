@@ -11,6 +11,7 @@ import com.ssafy.feed.service.BoardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -313,5 +314,31 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int isUserTheme(int userIdx, int themeIdx){
         return themeClient.isUserTheme(userIdx,themeIdx);
+    }
+
+    @Override
+    @Transactional
+    public void deleteBoardAndComment(int theme_idx) {
+        List<Board> boardList = boardRepository.findByThemeIdx(theme_idx);
+        for(Board board : boardList){
+            // 게시글 삭제하기
+            boardRepository.delete(board);
+            // 댓글 삭제하기
+            List<Comment> commentList = commentRepository.findByBoard(board);
+            for(Comment comment : commentList){
+                commentRepository.delete(comment);
+            }
+            // 좋아요 삭제하기
+            List<Likes> likesList = likeRepository.findByBoard(board);
+            for(Likes likes : likesList){
+                likeRepository.delete(likes);
+            }
+            // 사진 삭제하기
+            List<Picture> pictureList = pictureRepository.findByBoard(board);
+            for(Picture picture : pictureList){
+                pictureRepository.delete(picture);
+            }
+
+        }
     }
 }

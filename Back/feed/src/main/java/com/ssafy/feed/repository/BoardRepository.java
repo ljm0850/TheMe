@@ -27,4 +27,6 @@ public interface BoardRepository extends JpaRepository<Board,Integer> {
     List<Board> findByThemeIdxAndUserIdxGroupByPlace(int themeIdx,int userIdx);
     @Query("select b from Board b group by b.userIdx having b.themeIdx=?1")
     List<Board> findByThemeIdxGroupByUserIdx(int themeIdx);
+
+    List<Board> findByThemeIdx(int theme_idx);
 }
