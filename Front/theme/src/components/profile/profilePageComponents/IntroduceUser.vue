@@ -1,8 +1,5 @@
 <template>
 <div>
-    <!-- {{ loginUser }}
-    {{ selectedUser}}
-    {{isMyProfile}} -->
     <div class="d-flex justify-content-end">
         <button v-if="isMyProfile" type="button" data-bs-toggle="modal" data-bs-target="#settingModal">🛠</button>
     </div>
