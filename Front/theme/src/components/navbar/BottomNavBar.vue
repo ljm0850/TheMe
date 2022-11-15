@@ -26,7 +26,7 @@
         <button type="button" class="button-size"><img src="@/assets/image/mapIcon.png" alt="" class="icon"></button>
       </router-link>
     
-      <button type="button" @click.prevent="togglePlusButton()" class="button-size "><img src="@/assets/image/plusIcon.png" alt="" class="plus-icon"></button>
+      <button type="button" @click.prevent="togglePlusButton()" class="button-size "><img src="@/assets/image/plusIcon.png" alt="" class="icon"></button>
     
       <router-link @mousedown.left ="mouseLeft" :to="{ name: 'Search' }">
         <button type="button" class="button-size"><img src="@/assets/image/searchIcon.png" alt="" class="icon"></button>
@@ -67,10 +67,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.plus-icon{
-  width: 30px;
-  height: 30px;
-}
+
 .btn-lg{
   border: 0px solid #E89A3D;
   background-color: #fbe9d2;
@@ -103,6 +100,6 @@ export default {
   }
   .bottomeNav .router-link-active button{
     // border: 3px solid #61D85B;
-    background-color: #e4ffed;
+    background-color: #dcdcdc;
   }
 </style>

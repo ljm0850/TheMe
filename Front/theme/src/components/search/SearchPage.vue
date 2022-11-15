@@ -5,10 +5,10 @@
           <div class="d-flex">
             <div class=" logo"  @click="selectSearch(0)"> 👨‍👦 </div>
             <input type="text" class="form-control" id="" placeholder="누구를 찾고 있나요?"    @input="searchUser">
-            <button class="btn btn-light type-button border"  @click="getSerchPerson(state.inputPersonText)">검색</button>
+            <button class="btn btn-light type-button border btn-size-38"  @click="getSerchPerson(state.inputPersonText)">검색</button>
           </div>
         </div>
-        <button  v-if="!state.isClicked" class="btn btn-light type-button border" @click="selectSearch(1)">🎨테마</button>
+        <button  v-if="!state.isClicked" class="btn btn-light type-button border btn-size-38" @click="selectSearch(1)">🎨테마</button>
         <div v-if="state.isClicked && state.inputValue==1">
           <div class="d-flex">
             <div class=" logo"  @click="selectSearch(1)"> 🎨 </div>
@@ -18,10 +18,11 @@
         </div>
     </div>
     <br>
+    
     <div v-if="!state.isSerched && (state.inputThemeText.length < 1 && state.inputPersonText.length < 1)" >
       &nbsp; 🔥 현재인기있는 사람들
       <br>
-      <SearchProfileCardVue v-for="person in getRecommandPersonList" :key="person" :person="person" />
+      <SearchProfileCardVue v-for="person in getRecommandPersonList" :key="person" :person="person"/>
     </div>
     <div v-else-if="state.isSerched && state.inputThemeText.length >= 1">
       <SearchThemeCardVue v-for="theme in getSerchThemeList" :key="theme" :theme="theme" />
@@ -30,8 +31,8 @@
       <SearchProfileCardVue v-for="person in getSerchPersonList" :key="person" :person="person" />
     </div>
     <div v-else-if="!state.isSerched && state.inputThemeText.length >= 1" class="search-theme">
-      <div v-for="theme in liveSearchTheme" :key="theme" class="search-theme-card" @click="getSerchTheme(theme)">
-        {{theme}}
+      <div v-for="theme in liveSearchTheme" :key="theme.name" class="search-theme-card" @click="getSerchTheme(theme.name)">
+        {{theme.name}}
       </div>
     </div>
     <div v-else-if="!state.isSerched && state.inputPersonText.length >= 1 "  class="search-person">
@@ -56,6 +57,7 @@ export default {
     
     let liveSearchTheme :any;
     let liveSearchPerson :any;
+    
     const store = useStore();
     const state = reactive({
       isClicked : false,
@@ -64,6 +66,7 @@ export default {
       inputThemeText : "",
       inputPersonText : "",
     });
+    
     store.dispatch("getRecommendPersonList")
     // 카테고리 선택 시
     const selectSearch = (clickIdx : number) => {
@@ -119,7 +122,7 @@ export default {
 </script>
 
 <style>
-.top-box{
+.btn-size-38 .top-box{
   height: 38px;
 }
 .search-theme-card{

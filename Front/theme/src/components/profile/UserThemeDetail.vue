@@ -18,7 +18,7 @@
     <KakaoMapVue class="kakao-map" />
     <ArticleListVue
       class="article-list"
-      page="userTheme"
+      :publicThemeIdx="publicThemeIdx"
       :articleList="articleList"
     />
   </div>
@@ -39,7 +39,7 @@ export default {
     const store = useStore();
     const route = useRoute();
 
-    // const theme_idx = route.params.publicThemeIdx;
+    const publicThemeIdx = route.params.publicThemeIdx;
     const userThemeIdx = route.params.userThemeIdx;
 
     store.dispatch("detailUserTheme", userThemeIdx);
@@ -58,8 +58,8 @@ export default {
     const articleList = computed(() => store.getters.userThemeArticleList);
 
     const state = reactive({
-      isFollow: false,
-      isMine : false,
+      isFollow: themeDetail.value.follow,
+      isMine : themeDetail.value.mine,
     });
 
     const clickFollow = () => {
@@ -83,9 +83,9 @@ export default {
       state.isMine = themeDetail.value.mine;
     };
 
-    setTimeout(() => isfollow(), 100);
+    setTimeout(() => isfollow(), 200);
 
-    return { themeDetail, state, clickFollow, userThemeIdx, articleList };
+    return { themeDetail, state, clickFollow, userThemeIdx, articleList, publicThemeIdx };
   },
 };
 </script>
