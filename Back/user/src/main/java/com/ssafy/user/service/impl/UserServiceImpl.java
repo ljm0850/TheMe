@@ -420,8 +420,10 @@ public class UserServiceImpl implements UserService {
                     .build();
             result.add(userDto);
         }
+
         List<User> users = userRepository.searchByTarget(value);
         for(int i=0;i<users.size();i++) {
+            pictureArr = new ArrayList<>();
             User user = users.get(i);
             if(user.getIdx()!=sameUserIdx){
                 int boardCount = 0;
