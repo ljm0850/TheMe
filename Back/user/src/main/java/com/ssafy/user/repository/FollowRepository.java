@@ -44,4 +44,5 @@ public interface FollowRepository extends JpaRepository<Follow, Integer> {
     Optional<Follow> findByThemeIdxAndFollowUser(int theme_idx, User FollowUser);
     List<Follow> findByFollowUser(User followUser);
 
+    List<Follow> findByThemeIdx(int theme_idx);
 }

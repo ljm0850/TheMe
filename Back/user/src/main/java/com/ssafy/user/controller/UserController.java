@@ -295,4 +295,13 @@ public class UserController {
                      @PathVariable(name = "theme_idx") int theme_idx){
         return followService.isFollow(user_idx,target_user_idx,theme_idx);
     }
+    @DeleteMapping("/deleteFollowUserTheme/{theme_idx}")
+    String deleteFollowUserTheme(@PathVariable(name = "theme_idx") int theme_idx){
+        try {
+            userService.deleteFollowUserTheme(theme_idx);
+        } catch (Exception e){
+            return FAIL;
+        }
+        return OK;
+    }
 }

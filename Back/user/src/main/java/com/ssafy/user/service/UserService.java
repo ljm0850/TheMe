@@ -20,4 +20,6 @@ public interface UserService {
 
     Map<String, Object> searchThemeInfo(String value);
     BoardInfoForUserDto boardInfoForUser(int themeIdx, int userIdx);
+
+    void deleteFollowUserTheme(int theme_idx);
 }

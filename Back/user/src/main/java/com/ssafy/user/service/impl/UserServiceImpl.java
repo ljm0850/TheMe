@@ -489,4 +489,12 @@ public class UserServiceImpl implements UserService {
     public BoardInfoForUserDto boardInfoForUser(int themeIdx, int userIdx){
         return feedClient.boardInfoForUser(themeIdx,userIdx);
     }
+
+    @Override
+    public void deleteFollowUserTheme(int theme_idx) {
+        List<Follow>followList =  followRepository.findByThemeIdx(theme_idx);
+        for(Follow follow : followList){
+            followRepository.delete(follow);
+        }
+    }
 }
