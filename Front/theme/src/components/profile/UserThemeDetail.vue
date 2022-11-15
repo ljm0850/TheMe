@@ -2,9 +2,9 @@
   <div>
     <div class="theme-header">
       <div class="theme-title-box">
-        <!-- <div>
-          <div v-if="state.isMine" @click="clickSetting()" class="unfollowbutton">💙</div>
-        </div> -->
+        <div data-bs-toggle="modal" data-bs-target="#settingThemeModal">
+          <div v-if="state.isMine" class="settingbutton">⚙</div>
+        </div>
         <div>
           <div v-show="!state.isMine" v-if="!state.isFollow" @click="clickFollow()" class="followbutton">🤍</div>
         </div>
@@ -15,7 +15,8 @@
         <div class="theme-title-text">{{ themeDetail.name }}</div>
       </div>
     </div>
-    <KakaoMapVue class="kakao-map" />
+    <SettingThemeModalVue :themeDetail="themeDetail"/>
+    <KakaoMapVue class="kakao-map" :articleList="articleList"/>
     <ArticleListVue
       class="article-list"
       :publicThemeIdx="publicThemeIdx"
@@ -26,7 +27,8 @@
 
 <script lang="ts">
 import ArticleListVue from "@/components/articles/ArticleList.vue";
-import KakaoMapVue from "../map/KakaoMap.vue";
+import KakaoMapVue from "../map/ThemeMap.vue";
+import SettingThemeModalVue from "@/components/theme/SettingThemeModal.vue";
 import { computed, reactive } from "vue";
 import { useRoute} from "vue-router";
 import { useStore } from "vuex";
@@ -34,6 +36,7 @@ export default {
   components: {
     ArticleListVue,
     KakaoMapVue,
+    SettingThemeModalVue
   },
   setup() {
     const store = useStore();
@@ -57,6 +60,9 @@ export default {
     store.dispatch("getUserThemeArticleList", param);
     const articleList = computed(() => store.getters.userThemeArticleList);
 
+    console.log(articleList.value);
+    console.log(themeDetail.value);
+
     const state = reactive({
       isFollow: themeDetail.value.follow,
       isMine : themeDetail.value.mine,
@@ -78,6 +84,10 @@ export default {
       // console.log(state.isFollow);
     };
 
+    const clickSetting = () => {
+      
+    };
+
     const isfollow = () => {
       state.isFollow = themeDetail.value.follow;
       state.isMine = themeDetail.value.mine;
@@ -85,7 +95,7 @@ export default {
 
     setTimeout(() => isfollow(), 200);
 
-    return { themeDetail, state, clickFollow, userThemeIdx, articleList, publicThemeIdx };
+    return { themeDetail, state, clickFollow, userThemeIdx, articleList, publicThemeIdx, clickSetting };
   },
 };
 </script>
@@ -103,7 +113,7 @@ export default {
 }
 .theme-title-text {
   display: inline;
-  margin: 10px;
+  margin: 5px;
   font-size: 17px;
 }
 
@@ -132,6 +142,13 @@ export default {
   position: absolute;
   top: 18px;
   left: 8px;
+}
+
+.settingbutton{
+  position: absolute;
+  top: 18px;
+  left: 8px;
+  font-size: 20px;
 }
 
 .theme-sort {

@@ -2,12 +2,12 @@
 <div>
   <div class="d-flex justify-content-between">
     <div>
-      <button class="filter-button" @click="setisMarked(0)">전체 테마</button>
-      <button class="filter-button" @click="setisMarked(1)">북마크</button>
+      <button :class="{bold:state.isMarked==0}" class = "filter-button" @click="setisMarked(0)">전체 테마</button>
+      <button :class="{bold:state.isMarked==1}" class = "filter-button" @click="setisMarked(1)">북마크</button>
     </div>
     <div>
-      <button class="sort-button" @click="setSort(0)">인기순</button>
-      <button class="sort-button" @click="setSort(1)">최신순</button>
+      <button v-show="state.isMarked==0" :class="{bold:state.sort==0}" class="sort-button" @click="setSort(0)">인기순</button>
+      <button v-show="state.isMarked==0" :class="{bold:state.sort==1}" class="sort-button" @click="setSort(1)">최신순</button>
     </div>
   </div>
   <div class="d-flex card-list">
@@ -49,7 +49,7 @@ export default {
 
     //북마크 하기
 
-    return {publicThemeList, setisMarked, setSort}
+    return {publicThemeList, setisMarked, setSort, state}
   }
 }
 </script>
@@ -68,6 +68,10 @@ export default {
   font-size: 14px;
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid #C7C7C7;
+}
+
+.bold{
+  border : 2px solid #aaa9a9 !important;
 }
 
 .sort-button {

@@ -238,6 +238,40 @@ export default {
             })
         },
 
+        updateUserTheme({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _data: { openType:number ,themeIdx: string}) {
+            
+            const data = {
+                openType : _data.openType,
+                themeIdx : parseInt(_data.themeIdx)
+            }
+            
+            axios({
+                url: rest.Theme.createUserTheme(),
+                method: 'put',
+                data: data,
+                headers:getters.authHeader
+            })
+                .then((res) => {
+                    console.log(res.data)
+                })
+        },
+        
+        deleteUserTheme({ commit, getters }: { commit: Commit, getters: any }, _data: { themeIdx: string}) {
+            const data = {
+                themeIdx :parseInt(_data.themeIdx)
+            }
+
+            axios({
+                url: rest.Theme.createUserTheme(),
+                method: 'delete',
+                data: data,
+                headers: getters.authHeader
+            })
+                .then((res) => {
+                    console.log(res.data)
+                })
+        },
+
         selectedThemeIdxForCreate({ commit }: { commit: Commit },_idx:number) {
             commit('SET_SELECTED_THEME_IDX_FOR_CREATE',_idx)
         },
