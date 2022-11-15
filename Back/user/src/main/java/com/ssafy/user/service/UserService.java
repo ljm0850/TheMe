@@ -14,7 +14,7 @@ public interface UserService {
     void deleteUser(String nickname);
     UserInfoByIdDto getUserInfoById(int userIdx);
     void alertUser(int userIdx);
-    List<UserDto> searchRecommend();
+    List<UserListDto> searchRecommend();
 
     List<String> liveSearchUser(String value);
 

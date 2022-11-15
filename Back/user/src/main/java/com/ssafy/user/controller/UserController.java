@@ -222,12 +222,12 @@ public class UserController {
     }
 
     @GetMapping("/search/recommend")
-    public List<UserDto> searchRecommend() {
+    public List<UserListDto> searchRecommend() {
         Map<String, Object> result = new HashMap<>();
 
         HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
 
-        List<UserDto> userDtos = userService.searchRecommend();
+        List<UserListDto> userDtos = userService.searchRecommend();
 
        return userDtos;
     }

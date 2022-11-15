@@ -339,14 +339,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> searchRecommend() {
+    public List<UserListDto> searchRecommend() {
         List<User> followRank = followRepository.searchRecommned();
-
-        List<UserDto> rankList = new ArrayList<>();
+        List<String> pictureArr = new ArrayList<>();
+        List<UserListDto> rankList = new ArrayList<>();
         for(int i=0;i<followRank.size();i++) {
             User user = followRank.get(i);
-
-            UserDto userDto = UserDto.builder()
+            int boardCount = 0;
+            int commentCount = 0;
+            List<Integer> followList = followRepository.findFollowerByUser(user);
+            List<UserThemeDto> userThemeDtoList = themeClient.getUserThemeByUserIdx(user.getIdx());
+            for(int j=0;j<userThemeDtoList.size();j++){
+                BoardInfoForUserDto boardInfoForUserDto;
+                try {
+                    boardInfoForUserDto = feedClient.boardInfoForUser(userThemeDtoList.get(j).getIdx(), user.getIdx());
+                    boardCount += boardInfoForUserDto.getBoardCount();
+                    commentCount += boardInfoForUserDto.getCommentCount();
+                }
+                catch (Exception e){
+                    continue;
+                }
+                if(userThemeDtoList.get(j).getOpenType()==0) { // 전체공개인 경우만 사진 받아오기
+                    if(boardInfoForUserDto.getPictures().length>0){
+                        String[] arr = boardInfoForUserDto.getPictures();
+                        pictureArr.add(arr[0]);
+                    }
+                }
+            }
+            String[] pictureArray = new String[pictureArr.size()];
+            for(int j=0;j< pictureArr.size();j++){
+                pictureArray[j] = pictureArr.get(j);
+            }
+            UserListDto userDto = UserListDto.builder()
                     .nickname(user.getNickname())
                     .description(user.getDescription())
                     .picture(user.getPicture())
@@ -355,6 +379,10 @@ public class UserServiceImpl implements UserService {
                     .email(user.getEmail())
                     .id(user.getId())
                     .alertCount(user.getAlertCount())
+                    .followCount(followList.size())
+                    .boardCount(boardCount)
+                    .commentCount(commentCount)
+                    .pictures(pictureArray)
                     .build();
 
             rankList.add(userDto);
