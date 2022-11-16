@@ -4,14 +4,15 @@
             <ArticleDetailVue :article="Feed" :feedIdx="idx" />
             <br>
         </div>
+        <ScrollObserverVue @triggerIntersected="loadMore"/>
         <!-- 피드가 없을시 보이는 내용 -->
-        <div class="card">
+        <div v-if="state.flag" class="card" style="margin:0">
             <div class="card-body">
                 <div>피드가 더이상 없습니다.</div>
                 <div>검색 페이지에서</div>
                 <div>원하는 테마를 팔로우 해보세요!</div>
-                <button class="btn btn-gray">전체 테마 보기</button>
-                <button class="btn btn-gray">검색하러 가기</button>
+                <!-- <button class="btn btn-gray">전체 테마 보기</button>
+                <button class="btn btn-gray">검색하러 가기</button> -->
             </div>
         </div>
         <br>
@@ -32,23 +33,39 @@
 
 <script lang="ts">
 import { useStore } from "vuex";
-// import { reactive } from "vue";
+import ScrollObserverVue from "@/components/ScrollObserver.vue";
+import { reactive } from "vue";
 import ArticleDetailVue from '@/components/articles/ArticleDetail.vue';
 import { computed } from '@vue/runtime-core';
 export default {
     components: {
         ArticleDetailVue,
+        ScrollObserverVue,
     },
     setup() {
+        const state = reactive({
+            flag: false,
+        })
+
         const store = useStore();
         store.dispatch("getFeedTheme",0)
-        const FeedList = computed(() => store.getters.getFeedTheme)
+        const FeedList = computed(() => store.getters.displayFeedTheme)
         const selectCity = (e : any) => {
             store.dispatch("getFeedTheme",e.target.value)
-            
         }
-        
-        return {FeedList,selectCity}
+
+        const loadMore = () => {
+            if (!state.flag) {
+                const before = store.getters.displayFeedTheme.length
+                store.dispatch("displayFeedTheme")
+                const after = store.getters.displayFeedTheme.length
+                if (before == after) {
+                    state.flag = true
+                }
+            }
+        }
+
+        return { FeedList, selectCity, loadMore, state }
     }
 }
 </script>

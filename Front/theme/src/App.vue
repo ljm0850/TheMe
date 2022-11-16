@@ -39,24 +39,34 @@ export default defineComponent({
   // max-width: 380px !important;
 }
 .create-page {
-  background-color: #CDCDCD;
+  // background-color: black;
   border-radius: 10px;
+  border: 1px;
 }
 .white-add-button {
   width: 80px !important;
   color: black !important;
-  background-color: white !important;
-  outline-color: black !important;
+  // background-color: white !important;
+  background-color: #d3f6d1 !important;
+  // outline-color: black !important;
   border-color: #cdcdcd !important;
   border-radius: 5px;
 }
 .can-not-select-button{
   width: 80px !important;
   color: black !important;
-  // background-color: white !important;
+  background-color: #fbe9d2 !important;
   outline-color: black !important;
   border-color: #cdcdcd !important;
   border-radius: 5px;
+}
+.block-button{
+  width: 80px !important;
+    color: black !important;
+    background-color: rgb(151, 149, 149) !important;
+    outline-color: black !important;
+    border-color: #cdcdcd !important;
+    border-radius: 5px;
 }
 
 .preview-img-size {
