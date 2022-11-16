@@ -7,11 +7,12 @@
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-      <div class="text-style-custom">이모티콘</div>
+      <div class="text-style-custom">이모지</div>
       <div class="input-group-text d-flex justify-content-center">
         <div v-if="emoticon">{{emoticon}}</div>
-        <input type="text" class="form-control input-text" v-if="!emoticon" v-model="state.emoticon" maxlength="1">
+        <input type="text" class="form-control input-text" v-if="!emoticon" v-model="state.emoticon" maxlength="5">
       </div>
+      <button @click="checkEmoji(state.emoticon)">이모지 체크 임시</button>
       <br>
       <div class="text-style-custom">테마제목</div>
       <div class="input-group-text d-flex justify-content-center">
@@ -32,7 +33,6 @@
         <button v-if="emoticon" @click="createTheme()" class="white-add-button item" data-bs-dismiss="modal">테마 추가</button>
         <button v-if="!emoticon" @click="registTheme()" class="white-add-button item" data-bs-dismiss="modal">테마 추가</button>
       </div>
-      <button type="button" class="white-add-button item" data-bs-dismiss="modal">Close</button>
     </div>
   </div>
 </div>
@@ -53,7 +53,16 @@ export default {
         type: 0,
 
       })
-
+    const emojiRegex = /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g;
+    console.log("이모지",emojiRegex)
+    const checkEmoji = (_text:string) => {
+      console.log("text : ", _text)
+      for (let alpha of _text) {
+        const t = alpha.search(emojiRegex)
+        console.log(t)
+      }
+    }
+    
     const store = useStore();
     
     const createTheme = () => {
@@ -75,7 +84,7 @@ export default {
         state.type = _numer
     }
     
-    return { state, changeType, themeIdx, themeName, emoticon, isThemeIdx, registTheme,createTheme }
+    return { state, changeType, themeIdx, themeName, emoticon, isThemeIdx, registTheme, createTheme, checkEmoji }
   }
 }
 </script>
