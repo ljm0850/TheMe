@@ -212,7 +212,6 @@ export default {
                 .then((res) => {
                     console.log("피드 데이터 : ",res.data.data,typeof(res.data.data))
                     commit("SET_FEED_THEME", res.data.data)
-                    // dispatch("displayFeedTheme")
             })
         },
         
