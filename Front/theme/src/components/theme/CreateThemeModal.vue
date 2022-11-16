@@ -10,9 +10,9 @@
       <div class="text-style-custom">이모지</div>
       <div class="input-group-text d-flex justify-content-center">
         <div v-if="emoticon">{{emoticon}}</div>
-        <input type="text" class="form-control input-text" v-if="!emoticon" v-model="state.emoticon" maxlength="5">
+        <input type="text" class="form-control input-text" v-if="!emoticon" v-model="state.emoticon" maxlength="5" @input="checkEmoji">
       </div>
-      <button @click="checkEmoji">이모지 체크 임시</button>
+      <div v-if="state.emoticon && !state.emoticonCheck && !emoticon" class="danger-text">이모지만 입력해 주세요</div>
       <br>
       <div class="text-style-custom">테마제목</div>
       <div class="input-group-text d-flex justify-content-center">
@@ -30,8 +30,14 @@
     </div>
     <div class="modal-footer">
       <div class="d-flex justify-content-center">
-        <button v-if="emoticon" @click="createTheme()" class="white-add-button item" data-bs-dismiss="modal">테마 추가</button>
-        <button v-if="!emoticon" @click="registTheme()" class="white-add-button item" data-bs-dismiss="modal">테마 추가</button>
+        <div v-if="emoticon">
+          <!-- <button v-if="state.emoticonCheck" @click="createTheme()" class="white-add-button item" data-bs-dismiss="modal">테마 추가</button> -->
+          <button @click="createTheme()" class="white-add-button" data-bs-dismiss="modal">테마 추가</button>
+        </div>
+        <div v-if="!emoticon">
+          <button v-if="state.emoticon&&state.emoticonCheck&&state.type != -1" @click="registTheme()" class="white-add-button item" data-bs-dismiss="modal">테마 추가</button>
+          <button v-else class="block-buttonn" data-bs-dismiss="modal">테마 추가</button>
+        </div>
       </div>
     </div>
   </div>
@@ -51,14 +57,23 @@ export default {
       const state = reactive({
         emoticon: store.getters.selectedThemeEmoticonForCreate,
         name: "",
-        type: 0,
-
+        type: -1,
+        emoticonCheck: false,
       })
     const emojiRegex = /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g;
     const checkEmoji = () => {
+      let check = false
       for (let alpha of state.emoticon) {
         const t = alpha.search(emojiRegex)
-        console.log(t)
+        if (t == -1) {
+          state.emoticonCheck = false
+          check = false
+          break
+        }
+        else {check = true}
+      }
+      if (check) {
+        state.emoticonCheck = true
       }
     }
     
@@ -103,6 +118,11 @@ export default {
   margin: 5px;
 }
 .input-text {
+  text-align: center;
+}
+
+.danger-text {
+  color: red;
   text-align: center;
 }
 </style>

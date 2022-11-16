@@ -60,6 +60,14 @@ export default defineComponent({
   border-color: #cdcdcd !important;
   border-radius: 5px;
 }
+.block-button{
+  width: 80px !important;
+    color: black !important;
+    background-color: rgb(151, 149, 149) !important;
+    outline-color: black !important;
+    border-color: #cdcdcd !important;
+    border-radius: 5px;
+}
 
 .preview-img-size {
   width: 360px;
