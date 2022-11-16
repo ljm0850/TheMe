@@ -317,6 +317,7 @@ public class ThemeServiceImpl implements ThemeService {
                     .pictures(boardInfoDto.getPictures())
                     .emoticon(theme.getEmoticon())
                     .name(theme.getName())
+                    .themeIdx(theme.getIdx())
                     .build();
             result.add(themeListDto);
         }
@@ -336,6 +337,7 @@ public class ThemeServiceImpl implements ThemeService {
                             .pictures(boardInfoDto.getPictures())
                             .emoticon(themes.get(i).getEmoticon())
                             .name(themes.get(i).getName())
+                            .themeIdx(themes.get(i).getIdx())
                             .build();
                     result.add(themeListDto);
                 }

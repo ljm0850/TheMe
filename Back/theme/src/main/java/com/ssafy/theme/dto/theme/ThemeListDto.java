@@ -19,8 +19,9 @@ public class ThemeListDto {
     private int boardCount; // 총 게시물 수
     private int personCount; // 참여한 사람의 수
     private String[] pictures; // 대표 사진
+    private int themeIdx;
     @Builder
-    public ThemeListDto(String name, LocalDateTime createTime, String emoticon, boolean isBookMarked, int boardCount, int personCount, String[] pictures) {
+    public ThemeListDto(String name, LocalDateTime createTime, String emoticon, boolean isBookMarked, int boardCount, int personCount, String[] pictures, int themeIdx) {
         this.name = name;
         this.createTime = createTime;
         this.emoticon = emoticon;
@@ -28,5 +29,6 @@ public class ThemeListDto {
         this.boardCount = boardCount;
         this.personCount = personCount;
         this.pictures = pictures;
+        this.themeIdx = themeIdx;
     }
 }
