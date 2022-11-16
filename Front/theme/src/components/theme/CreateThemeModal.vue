@@ -2,20 +2,20 @@
 <div class="modal fade" id="createThemeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog">
   <div class="modal-content">
-    <div class="modal-header">
-      <h1 class="modal-title fs-5" id="exampleModalLabel">테마 생성</h1>
+    <div class="modal-header" style="text-align: center;">
+      <h1 class="modal-title fs-5" id="exampleModalLabel">테마 추가</h1>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-      <div class="text-style-custom">이모지</div>
-      <div class="input-group-text d-flex justify-content-center">
+      <div class="text-style-custom">이모티콘</div>
+      <div class="input-group-text d-flex justify-content-center" style="margin-left: 30px; margin-right: 30px;">
         <div v-if="emoticon">{{emoticon}}</div>
         <input type="text" class="form-control input-text" v-if="!emoticon" v-model="state.emoticon" maxlength="5" @input="checkEmoji">
       </div>
       <div v-if="state.emoticon && !state.emoticonCheck && !emoticon" class="danger-text">이모지만 입력해 주세요</div>
       <br>
       <div class="text-style-custom">테마제목</div>
-      <div class="input-group-text d-flex justify-content-center">
+      <div class="input-group-text d-flex justify-content-center" style="margin-left: 30px; margin-right: 30px;">
         <div v-if="themeName">{{themeName}}</div>
         <input type="text" class="form-control input-text" v-if="!themeName" v-model="state.name" maxlength="20">
       </div>
@@ -29,7 +29,7 @@
       
     </div>
     <div class="modal-footer">
-      <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center" style="margin-top: 15px; margin-bottom: 15px;">
         <div v-if="emoticon">
           <!-- <button v-if="state.emoticonCheck" @click="createTheme()" class="white-add-button item" data-bs-dismiss="modal">테마 추가</button> -->
           <button @click="createTheme()" class="white-add-button" data-bs-dismiss="modal">테마 추가</button>
@@ -124,5 +124,10 @@ export default {
 .danger-text {
   color: red;
   text-align: center;
+}
+.modal-dialog{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 </style>

@@ -96,8 +96,14 @@ select::-ms-expand {
     left: 340px;
     bottom: -140px;
 }
+.card{  
+    margin-left: 5px;
+    margin-right: 5px;
+}
 .card-body{
     padding-bottom:0px !important;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 </style>

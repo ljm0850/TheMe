@@ -2,13 +2,12 @@
     <div v-if="person">
       <!-- {{person}} -->
       <div :class="[person.isSame ? 'isSame card' : 'card']" @click="moveProfile()">
-        <div class="card-body" style="padding: 0px;">
-          <div class="d-flex">
-            <img :src="person.picture" alt="" class="user-profile">
-            <div class="mt-1">{{ person.nickname }}
-                <span class="position-absolute end-0 follow-count">👨‍👦{{ person.followCount }}</span>
-                <span class="position-absolute end-0 board-count">📜{{ person.boardCount }}</span>
-            </div>
+        <div class="card-body d-flex">
+          <img :src="person.picture" alt="" class="user-profile">
+          <div class="content">
+            {{ person.nickname }} 
+            <span class="position-absolute end-0 follow-count">👨‍👦{{ person.followCount }}</span>
+            <span class="position-absolute end-0 board-count">📜{{ person.boardCount }}</span>
           </div>
         </div>
         
@@ -46,6 +45,10 @@
   </script>
   
   <style lang="scss" scoped>
+  .content{
+    margin-top: 8px;
+    margin-left: 8px;
+  }
   .follow-count{
     margin-right: 45px;
   }
@@ -89,15 +92,12 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
   
-  .col-sm-6 {
-    text-align: center;
-  
-  }
   
   .card-body {
     margin-top: 8px;
     margin-left: 8px;
     margin-bottom: 8px;
+    padding: 0px;
   }
   
   @media screen {
@@ -150,6 +150,9 @@
     .view-info {
       width: 56px;
       height: 56px;
+    }
+    .mt-1{
+      vertical-align: center !important;
     }
   }
   </style>

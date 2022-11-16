@@ -61,7 +61,7 @@ export default {
         themeArticleList:(_theme_idx:string) => HOST + FEED + MAP + THEME + `/${_theme_idx}`,
         placeArticleList:(_theme_idx:string) => HOST + FEED + MAP + `/place/${_theme_idx}`,
         comment: (_board_idx: string) => HOST + FEED + COMMENT + `/${_board_idx}`,
-        deleteComment: (_comment_idx: string) => HOST + COMMENT + `${_comment_idx}`,
+        deleteComment: (_comment_idx: string) => HOST + FEED +COMMENT + `/${_comment_idx}`,
         reportComment:(_comment_idx:string) => HOST + FEED + COMMENT + `/alert/${_comment_idx}`,
         recommendTheme:() => HOST + FEED + '/recommend', 
         feedList: () => HOST + FEED + '/region',
