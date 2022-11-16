@@ -30,8 +30,8 @@ export default {
         const state : any= reactive({
             boardIdx : props.article.boardIdx,
             content : "",
+            commentList : [],
         });
-        
         console.log(props.commentList)
 
         // 댓글 입력받기
@@ -48,7 +48,7 @@ export default {
             // const articleDetail = computed(() => store.getters.detailArticle)
             
         }
-        
+
         return { state, updateComment, createComment }
     }
 }

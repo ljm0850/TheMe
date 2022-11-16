@@ -59,7 +59,7 @@ export default {
         
         store.commit("detailArticle",props.article.boardIdx)
         
-        props.commentList = state.test
+        // props.commentList = state.test
         const articleCarouseId = `picture${props.article.boardIdx}-${props.article.themeIdx}-${props.article.userIdx}`
         return {state,displayComment, articleCarouseId }
     }
