@@ -146,7 +146,10 @@ public class FeedServiceImpl implements FeedService {
                 for(int j=0;j<boardList.size();j++) {
                     UserInfoByIdDto userInfo = userClient.getUserInfo(boardList.get(j).getUserIdx()); // 해당 게시글을 작성한 유저의 정보 받기
                     Optional<Board> board = boardRepository.findById(boardList.get(j).getIdx()); // 해당 게시글
-                    List<Likes> likeList = likeRepository.findByBoard(board.get()); // 해당 게시글의 좋아요
+                    List<Likes> likeList = likeRepository.findByBoard(board.get()); // 해당 게시글의 좋아요 갯수
+                    Likes likeMy = likeRepository.findByUserIdxAndBoard(userIdx,board.get()); // 해당 게시글에 본인이 좋아했는지 조회
+                    boolean likeMyBoolean = false;
+                    if(likeMy != null) likeMyBoolean = true;
                     List<Comment> commentList = commentRepository.findByBoard(board.get()); // 해당 게시글의 댓글
                     List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 해당 게시글의 사진
                     String[] pictures = new String[pictureList.size()];
@@ -170,6 +173,7 @@ public class FeedServiceImpl implements FeedService {
                             .themeName(themeClient.getUserThemeName(boardList.get(j).getThemeIdx()))
                             .profile(userInfo.getPicture())
                             .userIdx(boardList.get(j).getUserIdx())
+                            .likeMy(likeMyBoolean)
                             .build();
                     boardSimpleListDtoList.add(boardSimpleListDto);
                 }

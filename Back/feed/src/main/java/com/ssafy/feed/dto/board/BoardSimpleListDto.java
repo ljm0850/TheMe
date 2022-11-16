@@ -24,8 +24,10 @@ public class BoardSimpleListDto {
     boolean isWriter; // 작성자 여부
     int likeCount;
     int commentCount;
+
+    boolean likeMy;
     @Builder
-    public BoardSimpleListDto(int boardIdx, int themeIdx, int userIdx, int alertCount, String themeName, String nickname, String name, LocalDateTime modifyTime, String profile, String city, String[] picture, boolean isWriter, int likeCount, int commentCount) {
+    public BoardSimpleListDto(int boardIdx, int themeIdx, int userIdx, int alertCount, String themeName, String nickname, String name, LocalDateTime modifyTime, String profile, String city, String[] picture, boolean isWriter, int likeCount, int commentCount,boolean likeMy) {
         this.boardIdx = boardIdx;
         this.themeIdx = themeIdx;
         this.userIdx = userIdx;
@@ -40,5 +42,6 @@ public class BoardSimpleListDto {
         this.isWriter = isWriter;
         this.likeCount = likeCount;
         this.commentCount = commentCount;
+        this.likeMy = likeMy;
     }
 }
