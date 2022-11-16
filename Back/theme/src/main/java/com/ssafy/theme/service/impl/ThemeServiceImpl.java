@@ -247,6 +247,7 @@ public class ThemeServiceImpl implements ThemeService {
                     .modifyTime(userTheme.getModifyTime())
                     .openType(userTheme.getOpenType())
                     .idx(userTheme.getIdx())
+                    .emoticon(userTheme.getTheme().getEmoticon())
                     .build();
 
             result.add(userThemeDto);
