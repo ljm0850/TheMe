@@ -141,7 +141,7 @@ public class FeedServiceImpl implements FeedService {
             if(openType!=2){
                 // 해당 사람이 해당 테마로 작성한 글들 불러오기
                 List<Board> boardList;
-                if(region == 0) boardList = boardRepository.findByUserIdxAndThemeIdx(followUserIdx,followThemeIdx);
+                if(region == 0) boardList = boardRepository.findByUserIdxAndThemeIdx(followUserIdx,followThemeIdx,pageable);
                 else boardList = boardRepository.findByUserIdxAndThemeIdxAndCity(followUserIdx,followThemeIdx,regionList[region],pageable);// 지역별로 나눠서 확인해야함 - 받은 지역 확인하기
                 for(int j=0;j<boardList.size();j++) {
                     UserInfoByIdDto userInfo = userClient.getUserInfo(boardList.get(j).getUserIdx()); // 해당 게시글을 작성한 유저의 정보 받기
