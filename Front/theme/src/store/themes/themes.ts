@@ -86,12 +86,15 @@ export default {
                 }
             })
                 .then((res) => {
-                    if(res.data.isSame) {//true 라면
-                        res.data.themeList[0].isSame = true
-                    }else{
-                        res.data.themeList[0].isSame = false
+                    if(res.data.themeList.length > 0){
+                        if(res.data.isSame) {//true 라면
+                            res.data.themeList[0].isSame = true
+                        }else{
+                            res.data.themeList[0].isSame = false
+                        }
                     }
                     commit("SET_SEARCH_THEME_LIST",res.data.themeList)
+                    
                 })
                 .catch((err) => {
                 console.log(err)
