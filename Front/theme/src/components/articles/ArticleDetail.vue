@@ -27,35 +27,41 @@
             </div>
             <span @click="displayComment()" v-if="!state.commentFlag">더보기</span>
             <!-- 댓글 -->
-            <CommentListVue v-if="state.commentFlag"/>
+            <CommentListVue v-if="state.commentFlag" :commentList ="commentList"/>
             <!-- 댓글 끝 -->
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { reactive } from '@vue/reactivity'
+import {   reactive } from '@vue/reactivity'
+import { useStore } from 'vuex'
 import ArticleImageVue from "./ArticleImage.vue"
 import CommentListVue from "./comment/CommentList.vue"
-// import { useStore } from "vuex";
 export default {
     props: {
-      article:Object
+      article:Object,
+      commentList : Object,
     },
     components: {
         ArticleImageVue,
         CommentListVue,
     },
-    setup(props:any) {
+     setup(props:any) {
+        const store = useStore();
         const state = reactive({
             commentFlag : false,
+            test : store.getters.detailArticle
         })
         const displayComment = ()=>{
             state.commentFlag = true;
         }
+        
+        store.commit("detailArticle",props.article.boardIdx)
+        
+        props.commentList = state.test
         const articleCarouseId = `picture${props.article.boardIdx}-${props.article.themeIdx}-${props.article.userIdx}`
-
-        return {state,displayComment, articleCarouseId}
+        return {state,displayComment, articleCarouseId }
     }
 }
 </script>
