@@ -182,7 +182,7 @@ public class BoardServiceImpl implements BoardService {
                 .picture(pictures)
                 .themeIdx(board.get().getThemeIdx())
                 .userIdx(board.get().getUserIdx())
-                .themeName(getThemeName(board.get().getThemeIdx()))
+                .themeName(getUserThemeName(board.get().getThemeIdx()))
                 .build();
         return boardListDto;
     }
@@ -218,8 +218,8 @@ public class BoardServiceImpl implements BoardService {
         return userInfo;
     }
     @Override
-    public String getThemeName(int themeIdx) { // 테마 idx로 이름 받아오기
-        String themeInfo = themeClient.getThemeName(themeIdx);
+    public String getUserThemeName(int themeIdx) { // 테마 idx로 이름 받아오기
+        String themeInfo = themeClient.getUserThemeName(themeIdx);
         return themeInfo;
     }
 
