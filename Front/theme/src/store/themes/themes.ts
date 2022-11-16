@@ -2,7 +2,7 @@ import router from '@/router'
 import rest from '@/API/rest'
 import axios from "axios";
 import { Commit, Dispatch } from 'vuex';
-import _ from "lodash"
+import _, { each } from "lodash"
 
 
 export default {
@@ -18,6 +18,7 @@ export default {
         publicThemeDetail :[],
         userThemeDetail: [],
         selectedUserThemeIdx:0,
+        myUserTheme:[],
        },
     getters: {
         searchThemeList: (state: { searchThemeList: Array<object> }) => state.searchThemeList,
@@ -33,6 +34,7 @@ export default {
         publicThemeList : (state: {publicThemeList:Array<Object>}) => state.publicThemeList,
         publicThemeDetail:(state: {publicThemeDetail:Object}) => state.publicThemeDetail,
         userThemeDetail:(state: {userThemeDetail:Object}) => state.userThemeDetail,
+        myUserTheme : (state:{ myUserTheme: Array<number>}) => state.myUserTheme
     },
     mutations: {
         SET_SEARCH_THEME_LIST: (state: { searchThemeList: Array<object> }, _searchThemeList: Array<object>) => state.searchThemeList = _searchThemeList,
@@ -46,6 +48,7 @@ export default {
         SET_PUBLIC_THEME_DETAIL: (state:{ publicThemeDetail: Object}, _publicThemeDetail:Object) => state.publicThemeDetail = _publicThemeDetail,
         SET_USER_THEME_DETAIL: (state: { userThemeDetail: Object }, _userThemeDetail: Object) => state.userThemeDetail = _userThemeDetail,
         SET_SELECTED_USER_THEME_IDX: (state: {selectedUserThemeIdx:number},_selectedUserThemeIdx:number) => state.selectedUserThemeIdx = _selectedUserThemeIdx,
+        SET_MY_USER_THEME: (state: {myUserTheme:Array<number>},_myUserTheme:Array<number>) => state.myUserTheme = _myUserTheme
     },
     actions: {
         getPublicThemeList({ commit,getters }:{commit:Commit,getters:any},_params:object) {
@@ -183,8 +186,14 @@ export default {
                 headers:getters.authHeader
             })
                 .then((res) => {
-                    console.log("추천 테마 : ",res.data)
-                    commit('SET_RECOMMEND_THEME_LIST',res.data.recommendList)
+                    // console.log("추천 테마 : ",res.data)
+                    const tempArray:Object[] = []
+                    res.data.recommendList.forEach((element: {themeIdx:number}) => {
+                        tempArray.push({
+                            ...element,
+                            my:getters.myUserTheme.includes(element.themeIdx)})
+                    });
+                    commit('SET_RECOMMEND_THEME_LIST',tempArray)
             })
         },
         searchTheme({ commit, getters }: { commit: Commit, getters: any },_target:string) {
@@ -295,9 +304,25 @@ export default {
                     }
             })
         },
-        selectedThemeEmoticonForCreate({ commit }: { commit: Commit }, _emoticon: string) {
+        selectedThemeEmoticonForCreate({ commit }: { commit: Commit}, _emoticon: string) {
             commit('SET_SELECTED_THEME_EMOTICON_FOR_CREATE',_emoticon)
         },
+        myUserTheme({commit, getters}:{commit:Commit, getters:any}){
+            axios({
+                url: rest.User.userInfo(getters.loginUser.nickname),
+                method: 'get',
+                headers: getters.authHeader
+            })
+            .then((res)=>{
+                const data:number[] = [];
+                const themeArray = res.data.userInfo.themeDtoList
+                themeArray.forEach((element:{themeIdx:number}) => {
+                    data.push(element.themeIdx)
+                    
+                });
+                commit('SET_MY_USER_THEME',data)
+            })
+        }
 
     }
 }

@@ -66,6 +66,11 @@ export default {
     }
     store.dispatch("getRecommendThemeList")
     store.commit('SET_SEARCH_THEME_LIST', [])
+    
+    // 테스트중
+    store.dispatch('myUserTheme')
+
+
     const recommendList = computed(() => store.getters.getRecommendThemeList)
     console.log(store.getters.loginUer)
     return { state, searchTheme, liveSearchTheme, newArticleFlag, newArticle, recommendList, isSearchThemeList }
