@@ -6,6 +6,7 @@ import com.ssafy.feed.dto.board.BoardDto;
 import com.ssafy.feed.dto.board.BoardGroupListDto;
 import com.ssafy.feed.dto.board.BoardGroupShowListDto;
 import com.ssafy.feed.dto.board.BoardSimpleListDto;
+import com.ssafy.feed.dto.comment.CommentListDto;
 import com.ssafy.feed.dto.theme.UserThemeDtoWithMSA;
 import com.ssafy.feed.dto.user.UserFollowThemeDto;
 import com.ssafy.feed.dto.user.UserInfoByIdDto;
@@ -151,12 +152,31 @@ public class FeedServiceImpl implements FeedService {
                     boolean likeMyBoolean = false;
                     if(likeMy != null) likeMyBoolean = true;
                     List<Comment> commentList = commentRepository.findByBoard(board.get()); // 해당 게시글의 댓글
+                    boolean isWriter = true;
+                    List<CommentListDto> commentListDtoList = new ArrayList<>();
+                    for(int k=0;k<commentList.size();k++) {
+                        UserInfoByIdDto userInfoByIdDto = userClient.getUserInfo(commentList.get(k).getUserIdx());
+                        if(commentList.get(k).getUserIdx()!=userIdx) isWriter = false;
+                        else isWriter = true;
+                        Comment targetComment = commentList.get(k);
+                        CommentListDto commentListDto = CommentListDto.builder()
+                                .commentIdx(targetComment.getIdx())
+                                .alertCount(targetComment.getAlertCount())
+                                .content(targetComment.getContent())
+                                .userIdx(targetComment.getUserIdx())
+                                .isWriter(isWriter)
+                                .profile(userInfoByIdDto.getPicture())
+                                .boardIdx(board.get().getIdx())
+                                .nickname(userInfoByIdDto.getNickname())
+                                .build();
+                        commentListDtoList.add(commentListDto);
+                    }
                     List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 해당 게시글의 사진
                     String[] pictures = new String[pictureList.size()];
                     for(int k=0;k<pictureList.size();k++){
                         pictures[k] = (pictureList.get(k).getPicture());
                     }
-                    boolean isWriter = true;
+                    isWriter = true;
                     if(boardList.get(j).getUserIdx()!=userIdx) isWriter = false;
                     BoardSimpleListDto boardSimpleListDto = BoardSimpleListDto.builder()
                             .boardIdx(boardList.get(j).getIdx())
@@ -174,6 +194,7 @@ public class FeedServiceImpl implements FeedService {
                             .profile(userInfo.getPicture())
                             .userIdx(boardList.get(j).getUserIdx())
                             .likeMy(likeMyBoolean)
+                            .commentListDtoList(commentListDtoList)
                             .build();
                     boardSimpleListDtoList.add(boardSimpleListDto);
                 }
