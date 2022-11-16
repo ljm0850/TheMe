@@ -4,7 +4,7 @@
       <div class="create-page container"  style="background-color: #fbe9d2;">
         <br>
         <div class="title-text-custom" style=" font-size:large; margin-top: -10px;" >게시글 생성 페이지</div>
-        <div style="text-align: center; font-size:small;" >원하는 테마에 장소를 등록해보세요</div>
+        <div style="text-align: center; font-size:small; margin-top: 5px;" >원하는 테마에 장소를 등록해보세요</div>
         <div class="title-text-custom" style=" font-size:medium; margin-top: 20px;" >보유한 테마 선택</div>
         <div  style="text-align:center; font-size:small; margin-bottom: 5px;" >✦ 현재 가지고 있는 테마들을 한눈에 볼 수 있어요 ✦</div>
         <div class="input-group mb-3">

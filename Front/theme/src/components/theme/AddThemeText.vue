@@ -5,7 +5,7 @@
       <button v-if="!theme.my" type="button" class="btn btn-outline-secondary white-add-button col-3" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
         추가
       </button>
-      <button v-if="theme.my" type="button" class="btn btn-outline-secondary can-not-select-button col-3" style="background-color: gray;">
+      <button v-if="theme.my" type="button" class="btn btn-outline-secondary can-not-select-button col-3" style="background-color: #cdcdcd; color: gray !important;">
         보유중
       </button>
     </div>
