@@ -4,6 +4,7 @@
             <ArticleDetailVue :article="Feed" :feedIdx="idx" />
             <br>
         </div>
+        <ScrollObserverVue @triggerIntersected="loadMore"/>
         <!-- 피드가 없을시 보이는 내용 -->
         <div class="card">
             <div class="card-body">
@@ -32,14 +33,20 @@
 
 <script lang="ts">
 import { useStore } from "vuex";
-// import { reactive } from "vue";
+import ScrollObserverVue from "@/components/ScrollObserver.vue";
+import { reactive } from "vue";
 import ArticleDetailVue from '@/components/articles/ArticleDetail.vue';
 import { computed } from '@vue/runtime-core';
 export default {
     components: {
         ArticleDetailVue,
+        ScrollObserverVue,
     },
     setup() {
+        const state = reactive({
+            page: 1,
+        })
+
         const store = useStore();
         store.dispatch("getFeedTheme",0)
         const FeedList = computed(() => store.getters.getFeedTheme)
@@ -48,7 +55,13 @@ export default {
             
         }
 
-        return {FeedList,selectCity}
+        const loadMore = async () => {
+            // store.dispatch("getFeedTheme", state.page)
+            state.page += 1
+            console.log("스크롤 작동됨!")
+        }
+
+        return { FeedList, selectCity, loadMore }
     }
 }
 </script>

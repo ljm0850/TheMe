@@ -1,60 +1,179 @@
 <template>
     <div>
-        <input type="file" multiple accept="image/*" @change="fileChange" />
-        <!-- <p>
-            upload 이미지 :{{file}} ({{file.size}}) / {{file.type}}
-          </p> -->
-        <div v-if="state.selectFile">{{ state.selectFile }}</div>
-        <button @click="test()">test</button>
-        <button @click="test2()">이미지 주소 찍어보자</button>
-        <hr>
-        <button @click="call()">만능 버튼</button>
-        <!-- <img v-if="" src="" alt=""> -->
+        <div ref="notification-list" class="list" @scroll="handleNotificationListScroll">
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
+        <div>더미 디브</div>
     </div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+    <div>끝</div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+</div>
 </template>
 
 <script lang="ts">
-import { reactive } from '@vue/reactivity'
-import { useStore } from "vuex";
-// import { storage } from '@/store/firebase/firebase';
-// import firebase from "firebase/compat/app";
-import "firebase/compat/storage"
-import "firebase/compat/auth";
-import { articleImageUpload, getImageUrl } from "@/store/firebase/firebase"
-
+// import { reactive } from '@vue/reactivity'
+// import { useStore } from "vuex";
 export default {
     components: {
     },
     setup() {
-        const store = useStore();
-        const state = reactive({
-            selectFile: [],
-            previewImgUrl: null
-        });
-
-        let file = ''
-        const fileChange = (e: any) => {
-            console.log(e.target.files)
-            file = e.target.files[0];
-            state.selectFile = e.target.files
-        }
-        
-        const test = () => {
-            const url = articleImageUpload("sss", state.selectFile[0])
-            console.log(url)
+        const handleNotificationListScroll = (e:any) => {
+            const { scrollHeight, scrollTop, clientHeight } = e.target;
+            const isAtTheBottom = scrollHeight == scrollTop + clientHeight;
+            // 일정 한도 밑으로 내려오면 함수 실행
+            console.log("ㅇㅇㅇㅇ")
+            if (isAtTheBottom) {
+                console.log("z")
+                handleLoadMore()
+            }
         }
 
-        const test2 = ()=>{
-            getImageUrl('article','test')
+        const handleLoadMore = () => {
+            console.log("도착")
         }
 
-        const call = () => {
-            console.log("getUserInfoByNickname")
-            store.dispatch('getUserInfoByNickname',"결혼한 해커")
-        } 
-
-        // return { file, fileChange, state, test, auth_obj}
-        return { file, fileChange, state, test,test2, call}
+        return { handleNotificationListScroll }
     }
 }
 </script>
