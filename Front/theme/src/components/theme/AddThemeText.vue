@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="hr">
      <div class="d-flex theme-style justify-content-between" v-if="theme">
       <div class="form-control form-custom col-8">{{theme.name}}</div>
       <button v-if="!theme.my" type="button" class="btn btn-outline-secondary white-add-button col-3" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
@@ -9,7 +9,6 @@
         보유중
       </button>
     </div>
-    <hr>
   </div>
 </template>
 
@@ -53,5 +52,8 @@ export default {
   //   border-color: #cdcdcd;
   //   margin-left: 1vw;
   // }
+  .hr{
+    margin-bottom: 2px;
+  }
 }
 </style>

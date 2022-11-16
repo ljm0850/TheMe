@@ -1,10 +1,9 @@
 <template>
-    <div>
-        <form action="">
-            <h1 class="" style="text-align: center">게시글 등록</h1>
-            <div class="create-page container">
-                <br />
-                <div class="title-text-custom">테마 선택</div>
+  <div class="modal-dialog">
+        <!-- <form action=""> -->
+            <div class="create-page container"  style="background-color: #fbe9d2;">
+                <br>
+                <div class="title-text-custom" style="margin-top: -10px; ">테마 선택</div>
                 <div class="input-group mb-3">
                     <!-- <label class="input-group-text">테마 선택</label> -->
                     <select class="form-select" id="inputGroupSelect01" v-model="state.theme" disabled>
@@ -31,7 +30,7 @@
                 </div>
                 <button @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button">등록</button>
             </div>
-        </form>
+        <!-- </form> -->
         <br>
         <br>
         <br>
@@ -153,5 +152,9 @@ export default {
 .preview-img-size {
     width: 360px;
     height: 360px;
+}
+.modal-dialog{
+  margin-left: 10px;
+  margin-right: 10px;
 }
 </style>

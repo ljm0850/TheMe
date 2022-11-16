@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <form action="">
-      <h1 class="" style="text-align: center">게시글 등록</h1>
-      <div class="create-page container">
-        <br />
-        <div class="title-text-custom">테마 선택</div>
+  <div class="modal-dialog">
+    <!-- <form action=""> -->
+      <div class="create-page container"  style="background-color: #fbe9d2;">
+        <br>
+        <div class="title-text-custom" style=" font-size:large; margin-top: -10px;" >게시글 생성 페이지</div>
+        <div style="text-align: center; font-size:small;" >원하는 테마에 장소를 등록해보세요</div>
+        <div class="title-text-custom" style=" font-size:medium; margin-top: 20px;" >보유한 테마 선택</div>
+        <div  style="text-align:center; font-size:small; margin-bottom: 5px;" >✦ 현재 가지고 있는 테마들을 한눈에 볼 수 있어요 ✦</div>
         <div class="input-group mb-3">
           <!-- <label class="input-group-text">테마 선택</label> -->
           <select
@@ -25,9 +27,10 @@
         <PreviewImageVue v-if="isSelectFile" />
         <br />
         <!-- 지도 -->
+        <div style="margin-top:10px; margin-bottom: -20px; text-align: center;">장소 등록</div>
         <ArticleMapVue />
         <!-- 내용 -->
-        <div class="mb-3">
+        <div class="mb-3" style="text-align: center;" >
           <label for="exampleFormControlTextarea1" class="form-label"
             >내용</label
           >
@@ -38,9 +41,11 @@
             v-model="state.description"
           ></textarea>
         </div>
-        <button @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button">등록</button>
+        <div  style="text-align: center;" >
+        <button @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button"  style="margin-bottom: 10px;">등록</button>
+        </div>
       </div>
-    </form>
+    <!-- </form> -->
     <br>
     <br>
     <br>
@@ -148,5 +153,9 @@ export default {
 .preview-img-size {
   width: 360px;
   height: 360px;
+}
+.modal-dialog{
+  margin-left: 10px;
+  margin-right: 10px;
 }
 </style>
