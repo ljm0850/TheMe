@@ -34,7 +34,7 @@
 <script lang="ts">
 import { useStore } from "vuex";
 import ScrollObserverVue from "@/components/ScrollObserver.vue";
-import { reactive } from "vue";
+// import { reactive } from "vue";
 import ArticleDetailVue from '@/components/articles/ArticleDetail.vue';
 import { computed } from '@vue/runtime-core';
 export default {
@@ -43,22 +43,21 @@ export default {
         ScrollObserverVue,
     },
     setup() {
-        const state = reactive({
-            page: 1,
-        })
+        // const state = reactive({
+        //     page: 1,
+        // })
 
         const store = useStore();
         store.dispatch("getFeedTheme",0)
-        const FeedList = computed(() => store.getters.getFeedTheme)
+        const FeedList = computed(() => store.getters.displayFeedTheme)
         const selectCity = (e : any) => {
             store.dispatch("getFeedTheme",e.target.value)
-            
         }
 
         const loadMore = async () => {
             // store.dispatch("getFeedTheme", state.page)
-            state.page += 1
-            console.log("스크롤 작동됨!")
+            // state.page += 1
+            store.dispatch("displayFeedTheme")
         }
 
         return { FeedList, selectCity, loadMore }

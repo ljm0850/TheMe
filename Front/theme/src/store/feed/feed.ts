@@ -9,6 +9,7 @@ export default {
     state: {
         feedArticleList: [{ themeName: "tttasdgfa" }, { themeName: "임시2" }],
         feedTheme: [],
+        displayFeedTheme: { num: 0, list: {} },    // feedTheme는 너무 커서 잘라서 사용
         feedRecommendThemeList1: [{title:"코딩하기 좋은 까페"},{title:"낮잠자기 좋은 까페"},{title:"짧"}],
         feedRecommendThemeList2: [{ title: "프로젝트 하기 좋은 싸피" }, { title: "수완지구 분위기 있는 레스토랑" }, { title: "다" }],
         searchPlacesList: [],
@@ -22,6 +23,7 @@ export default {
     getters: {
         getFeedArticleList: (state: { feedArticleList: Array<object> }) => state.feedArticleList,
         getFeedTheme: (state: { feedTheme: Array<object>; }) => state.feedTheme,
+        displayFeedTheme: (state: { displayFeedTheme: {list:Object} }) => state.displayFeedTheme.list,
         getFeedRecommendThemeList1: (state: { feedRecommendThemeList1 : Array<object>}) => state.feedRecommendThemeList1,
         getFeedRecommendThemeList2: (state: { feedRecommendThemeList2: Array<object> }) => state.feedRecommendThemeList2,
         searchPlacesList: (state: { searchPlacesList: Array<Object> }) => state.searchPlacesList,
@@ -35,6 +37,8 @@ export default {
     mutations: {
         SET_FEED_ARTICLE_LIST: (state: {feedArticleList : Array<object>}, _list:Array<object>) => state.feedArticleList = _list,
         SET_FEED_THEME: (state: { feedTheme: Array<object>; }, _feedTheme: Array<object>) => state.feedTheme = _feedTheme,
+        SET_DISPLAY_FEED_THEME_LIST: (state: { displayFeedTheme: { list:Object} },_displayFeedTheme:Object)=>state.displayFeedTheme.list = _displayFeedTheme,
+        SET_DISPLAY_FEED_THEME_NUM: (state: { displayFeedTheme: { num:number} },_num:number)=>state.displayFeedTheme.num = _num,
         SET_FEED_RECOMMEND_THEME_List1: (state: { feedRecommendThemeList1: Array<object>}, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList1 = _feedRecommendThemeList,
         SET_FEED_RECOMMEND_THEME_List2: (state: { feedRecommendThemeList2: Array<object> }, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList2 = _feedRecommendThemeList,
         SET_SEARCH_PLACES_LIST: (state: {searchPlacesList:Array<Object>}, _searchPlacesList:Array<Object>) => state.searchPlacesList = _searchPlacesList,
@@ -195,17 +199,20 @@ export default {
 
 
         // 
-        getFeedTheme({ commit, getters }: { commit: Commit, getters: any }, _region: number) {
-            console.log("지역 : ",_region)
+        getFeedTheme({ commit, getters, dispatch }: { commit: Commit, getters: any, dispatch:Dispatch }, _region: number) {
+            console.log("지역 : ", _region)
+            commit("SET_DISPLAY_FEED_THEME_LIST", [])
+            commit("SET_DISPLAY_FEED_THEME_NUM",0)
             axios({
                 url: rest.Feed.feedList(),
                 method: 'get',
                 headers: getters.authHeader,
-                params: { region: 3,  pageIdx:0, pageSize : 2 }
+                params: { region: 3,  pageIdx:0, pageSize : 2147483647 }
             })
                 .then((res) => {
-                    console.log("피드 데이터 : ",res.data.data)
-                    commit("SET_FEED_THEME",res.data.data)    
+                    console.log("피드 데이터 : ",res.data.data,typeof(res.data.data))
+                    commit("SET_FEED_THEME", res.data.data)
+                    // dispatch("displayFeedTheme")
             })
         },
         
@@ -301,6 +308,16 @@ export default {
             })
             
         },
+        displayFeedTheme({ commit, state, getters }: { commit: Commit, state: any, getters: any }) {
+            const before = { ...state.displayFeedTheme.list }
+            for (let i = state.displayFeedTheme.num; i < state.displayFeedTheme.num + 3; i++){
+                if (i < getters.getFeedTheme.length) {
+                    before[i] = getters.getFeedTheme[i]
+                }
+            }
+            commit("SET_DISPLAY_FEED_THEME_LIST", before)
+            commit("SET_DISPLAY_FEED_THEME_NUM", state.displayFeedTheme.num + 3)
+        }
 
     }
 }
