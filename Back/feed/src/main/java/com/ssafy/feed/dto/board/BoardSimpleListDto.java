@@ -1,12 +1,14 @@
 package com.ssafy.feed.dto.board;
 
+import com.ssafy.feed.dto.comment.CommentListDto;
+import com.ssafy.feed.entity.Comment;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @ToString
 @NoArgsConstructor
 public class BoardSimpleListDto {
@@ -25,9 +27,12 @@ public class BoardSimpleListDto {
     int likeCount;
     int commentCount;
 
+    List<CommentListDto> commentListDtoList;
+
+
     boolean likeMy;
     @Builder
-    public BoardSimpleListDto(int boardIdx, int themeIdx, int userIdx, int alertCount, String themeName, String nickname, String name, LocalDateTime modifyTime, String profile, String city, String[] picture, boolean isWriter, int likeCount, int commentCount,boolean likeMy) {
+    public BoardSimpleListDto(int boardIdx, int themeIdx, int userIdx, int alertCount, String themeName, String nickname, String name, LocalDateTime modifyTime, String profile, String city, String[] picture, boolean isWriter, int likeCount, int commentCount,boolean likeMy, List<CommentListDto> commentListDtoList) {
         this.boardIdx = boardIdx;
         this.themeIdx = themeIdx;
         this.userIdx = userIdx;
@@ -43,5 +48,6 @@ public class BoardSimpleListDto {
         this.likeCount = likeCount;
         this.commentCount = commentCount;
         this.likeMy = likeMy;
+        this.commentListDtoList = commentListDtoList;
     }
 }
