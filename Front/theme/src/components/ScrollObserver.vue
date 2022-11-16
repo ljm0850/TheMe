@@ -2,7 +2,8 @@
     <div ref="trigger"></div>
 </template>
 <script>
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
+// import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 
 export default defineComponent({
     setup(props, { emit }) {
@@ -27,9 +28,9 @@ export default defineComponent({
             }
         });
 
-        onUnmounted(() => {
-            observer.value.disconnect();
-        });
+        // onUnmounted(() => {
+        //     observer.value.disconnect();
+        // });
 
         return {
             trigger

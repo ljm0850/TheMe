@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="create-page container">
+    <div class="create-page card container">
       <br>
       <div>테마 생성 페이지</div>
       <div class="mb-3">

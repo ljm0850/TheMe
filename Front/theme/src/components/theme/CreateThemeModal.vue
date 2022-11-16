@@ -12,7 +12,7 @@
         <div v-if="emoticon">{{emoticon}}</div>
         <input type="text" class="form-control input-text" v-if="!emoticon" v-model="state.emoticon" maxlength="5">
       </div>
-      <button @click="checkEmoji(state.emoticon)">이모지 체크 임시</button>
+      <button @click="checkEmoji">이모지 체크 임시</button>
       <br>
       <div class="text-style-custom">테마제목</div>
       <div class="input-group-text d-flex justify-content-center">
@@ -22,9 +22,9 @@
       <br>
       <div class="text-style-custom">공개 여부 설정</div>
       <div class="d-flex justify-content-around">
-          <button @click="changeType(0)" class="white-add-button">공개</button>
-          <button @click="changeType(1)" class="white-add-button">팔로우</button>
-          <button @click="changeType(2)" class="white-add-button">비공개</button>
+          <button @click="changeType(0)" class="white-add-button" id="Type0">공개</button>
+          <button @click="changeType(1)" class="white-add-button" id="Type1">팔로우</button>
+          <button @click="changeType(2)" class="white-add-button" id="Type2">비공개</button>
       </div>
       
     </div>
@@ -47,23 +47,21 @@ export default {
   components: {
   },
   setup (){
+    const store = useStore();
       const state = reactive({
-        emoticon: "",
+        emoticon: store.getters.selectedThemeEmoticonForCreate,
         name: "",
         type: 0,
 
       })
     const emojiRegex = /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g;
-    console.log("이모지",emojiRegex)
-    const checkEmoji = (_text:string) => {
-      console.log("text : ", _text)
-      for (let alpha of _text) {
+    const checkEmoji = () => {
+      for (let alpha of state.emoticon) {
         const t = alpha.search(emojiRegex)
         console.log(t)
       }
     }
     
-    const store = useStore();
     
     const createTheme = () => {
       store.dispatch('createUserTheme', { openType: state.type, challenge: false })
@@ -80,8 +78,17 @@ export default {
     const themeIdx = computed(() => store.getters.selectedThemeIdxForCreate)
     const themeName = computed(() => store.getters.selectedThemeNameForCreate)
     const emoticon = computed(()=>store.getters.selectedThemeEmoticonForCreate)
-    const changeType = (_numer:number)=>{
-        state.type = _numer
+    const changeType = (_number:number)=>{
+      state.type = _number
+      for (let i = 0; i <= 2; i++){
+        const btn = document.querySelector(`#Type${i}`)
+        if (btn && i == _number) {
+          btn.className = 'can-not-select-button'
+        }
+        else if(btn) {
+          btn.className = 'white-add-button'
+        }
+      }
     }
     
     return { state, changeType, themeIdx, themeName, emoticon, isThemeIdx, registTheme, createTheme, checkEmoji }
