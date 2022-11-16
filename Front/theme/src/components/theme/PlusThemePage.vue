@@ -70,9 +70,10 @@ export default {
       store.dispatch("selectedThemeNameForCreate", state.searchValue)
       store.dispatch("selectedThemeEmoticonForCreate", "")
     }
-    store.dispatch("getRecommendThemeList")
-    store.commit('SET_SEARCH_THEME_LIST', [])
-    store.dispatch('myUserTheme')
+    store.dispatch("getRecommendThemeList") //추천 리스트 받아오기
+    store.commit('SET_SEARCH_THEME_LIST', []) // 컴포넌트 로딩시 
+    store.dispatch('myUserTheme') // selected 유저를 나로 만듬 => 보유 테마 리스트 확보용
+    store.commit('LIVE_SEARCH_THEME_LIST',[]) // 검색 기록 없애서 추천 테마 보기 위함
 
 
     const recommendList = computed(() => store.getters.getRecommendThemeList)

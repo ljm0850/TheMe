@@ -47,7 +47,7 @@ export default defineComponent({
   width: 80px !important;
   color: black !important;
   // background-color: white !important;
-  background-color: #d3f6d1 !important;
+  // background-color: #d3f6d1 !important;
   // outline-color: black !important;
   border-color: #cdcdcd !important;
   border-radius: 5px;
