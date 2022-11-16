@@ -1,5 +1,5 @@
 <template>
-  <div v-if="theme" :class="[theme.isSame ? 'isSame card' : 'card']">
+  <div v-if="theme" :class="[theme.isSame ? 'isSame card' : 'card']" @click="moveTheme( theme.themeIdx)">
     <div class="card-body" style="padding: 0px;">
       <div class="d-flex">
         <div>{{ theme.emoticon }}</div>
@@ -44,6 +44,7 @@
 
 <script lang="ts">
 import { computed } from "@vue/reactivity";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 export default {
@@ -52,14 +53,25 @@ export default {
   },
   components: {
   },
-  setup() {
+  setup(props : any) {
 
     const store = useStore();
+    const router = useRouter();
     const selectedUser = computed(() => store.getters.selectedUser)
     const loginUser = computed(() => store.getters.loginUser)
+    const moveTheme = ( themeIdx: string) => {
+      console.log(themeIdx)
+      router.push({
+        name: "PublicTheme",
+        params: {
+          themeIdx: themeIdx,
+        },
+      });
 
+    store.dispatch("getUserInfoByNickname", props.person.nickname);
+  }
 
-    return { selectedUser, loginUser }
+    return { selectedUser, loginUser,moveTheme }
   }
 }
 </script>

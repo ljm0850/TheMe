@@ -188,10 +188,12 @@ export default {
                 }
             })
                 .then((res) => {
-                    if(res.data.isSame) {//true 라면
-                        res.data.userList[0].isSame = true
-                    }else{
-                        res.data.userList[0].isSame = false
+                    if(res.data.userList.length > 0){
+                        if(res.data.isSame) {//true 라면
+                            res.data.userList[0].isSame = true
+                        }else{
+                            res.data.userList[0].isSame = false
+                        }   
                     }
                 commit('SET_SEARCH_PERSON_INFO',res.data.userList)
                 })
