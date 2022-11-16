@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="d-flex justify-content-end">
-        <button v-if="state.isProfileMine" type="button" data-bs-toggle="modal" data-bs-target="#settingModal">🛠</button>
+        <button v-if="isMyProfile" type="button" data-bs-toggle="modal" data-bs-target="#settingModal">🛠</button>
     </div>
     <!-- 세팅 모달 -->
     <SettingModalVue :userInfo="selectedUser"/>
@@ -70,14 +70,14 @@ export default {
         // const selectedUser = computed(() => store.getters.selectedUser)
         const loginUser = computed(() => store.getters.loginUser)
         const selectedUser = computed(()=>store.getters.selectedUser)
-        
+        const isMyProfile = computed(()=>store.getters.sameUser)
         
         const test = async () => {
             state.isProfileMine = await store.dispatch("isProfileMine")
         }
         
         test()
-        return { loginUser, selectedUser, state }
+        return { loginUser, selectedUser, state,isMyProfile }
     },
 }
 </script>

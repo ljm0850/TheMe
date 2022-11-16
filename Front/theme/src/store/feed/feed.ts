@@ -18,6 +18,7 @@ export default {
         userThemeArticleList: [],
         placeArtilceList: [], 
         boardInfoByUserTheme: {},
+        detailArticle: {},
     },
     getters: {
         getFeedArticleList: (state: { feedArticleList: Array<object> }) => state.feedArticleList,
@@ -30,7 +31,8 @@ export default {
         selectedThemeforArticle: (state: { selectedThemeforArticle: Object }) => state.selectedThemeforArticle,
         userThemeArticleList: (state: { userThemeArticleList: Object }) => state.userThemeArticleList,
         placeArtilceList: (state: { placeArtilceList: Array<Object> }) => state.placeArtilceList,
-        boardInfoByUserTHeme : (state: {boardInfoByUserTheme : Object}) => state.boardInfoByUserTheme
+        boardInfoByUserTHeme : (state: {boardInfoByUserTheme : Object}) => state.boardInfoByUserTheme,
+        detailArticle: (state: {detailArticle : Object}) => state.detailArticle,
     },
     mutations: {
         SET_FEED_ARTICLE_LIST: (state: {feedArticleList : Array<object>}, _list:Array<object>) => state.feedArticleList = _list,
@@ -44,6 +46,7 @@ export default {
         SET_USER_THEME_ARTICLE_LIST: (state: { userThemeArticleList: Object }, _userThemeArticleList: Object) => state.userThemeArticleList = _userThemeArticleList,
         SET_BOARD_INFO_BY_USERTHEME : (state : {boardInfoByUserTheme:Object}, _boardInfoByUserTheme:Object) => state.boardInfoByUserTheme = _boardInfoByUserTheme,
         SET_PLACE_ARTICLE_LIST :  (state:{placeArtilceList:Array<Object>}, _placeArtilceList:Array<Object>) => state.placeArtilceList = _placeArtilceList,
+        SET_DETAIL_ARTICLE : (state : {detailArticle:Object}, _detailArticle:Object) => state.detailArticle = _detailArticle,
     },
     actions: {
         // board-controller
@@ -71,6 +74,7 @@ export default {
                     router.push({name: 'UserTheme', params: { userThemeIdx:_data.themeIdx, publicThemeIdx:_data.publicThemeIdx }})
             })
         },
+
         detailArticle({ commit, getters }: { commit: Commit, getters: any }, _boardIdx: string) {
             axios({
                 url: rest.Feed.fetchArticle(_boardIdx),
@@ -78,9 +82,11 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
-                console.log(res)
+                    console.log(res.data.comment)
+                    commit("SET_DETAIL_ARTICLE", res.data.comment)
             })
         },
+
         updateArticle({ commit, getters }: { commit: Commit, getters: any }, _boardIdx: string, _data:object) {
             axios({
                 url: rest.Feed.fetchArticle(_boardIdx),
@@ -140,13 +146,14 @@ export default {
 
 
         //comment-controller
-        createComment({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _boardIdx: string, _content: string) {
+        createComment({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _data:{ boardIdx: string, content : string }) {
+            console.log(_data);
             axios({
-                url: rest.Feed.comment(_boardIdx),
+                url: rest.Feed.comment(_data.boardIdx),
                 method: 'post',
                 headers: getters.authHeader,
                 params: {
-                    contnet: _content
+                    content : _data.content 
                 }
             })
                 .then((res) => {

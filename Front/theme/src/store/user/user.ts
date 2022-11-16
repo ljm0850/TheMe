@@ -23,6 +23,7 @@ export default {
         authHeader: (state: { token: string }) => ({ Authorization: state.token }),
         loginUser: (state: {loginUser:Object}) => state.loginUser,
         selectedUser: (state: { selectedUser: Object }) => state.selectedUser,
+        sameUser:(state:{ loginUser: { userIdx : number }, selectedUser: { userIdx : number} }) => state.loginUser.userIdx == state.selectedUser.userIdx,
         postCnt : (state : { postCnt : number}) => state.postCnt,
         searchPersonInfo : (state: { searchPersonInfo: Object }) => state.searchPersonInfo,
         duplicationnickname : (state: { duplicationnickname : boolean}) => state.duplicationnickname,
@@ -47,9 +48,9 @@ export default {
             return getters.loginUser.userIdx == _themeUserIdx;
         },
         isProfileMine({ getters }: { getters: any }) {
-            console.log(getters.loginUser.userIdx)
-            console.log(getters.selectedUser.userIdx)
-            console.log(getters.selectedUser.userIdx == getters.loginUser.userIdx)
+            // console.log(getters.loginUser.userIdx)
+            // console.log(getters.selectedUser.userIdx)
+            // console.log(getters.selectedUser.userIdx == getters.loginUser.userIdx)
             return getters.loginUser.userIdx == getters.selectedUser.userIdx
         },
         getRecommendPersonList({ commit,getters }:{commit:Commit,getters:any}) {
@@ -130,10 +131,32 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
+                    axios({
+                        url: rest.User.getFollowerList(res.data.userInfo.userIdx),
+                        method: 'get',
+                        headers: getters.authHeader
+                    })
+                        .then((res) => {
+                            //console.log(res.data)
+                            commit('SET_FOLLOWER_LIST', res.data.followerList)
+                            console.log("팔로워 리스트")
+                            console.log(res.data.followerList)
+                        })
+                    axios({
+                        url: rest.User.getFollowingList(res.data.userInfo.userIdx),
+                        method: 'get',
+                        headers: getters.authHeader
+                    })
+                        .then((res) => {
+                            commit('SET_FOLLOWING_LIST', res.data.followingList)
+                            console.log("팔로잉 리스트")
+                            console.log(res.data.followingList)
+                        })    
                     console.log("유저정보")
                     console.log(res.data)
                     
                     commit('SET_SELECTED_USER',res.data.userInfo)
+                    
                     //commit('SET_LOGIN_USER',res.data.userInfo)
                 })
         },
@@ -243,6 +266,7 @@ export default {
                 .then((res) => {
                     //console.log(res.data)
                     commit('SET_FOLLOWER_LIST', res.data.followerList)
+                    console.log("팔로워 리스트")
                     console.log(res.data.followerList)
                 })
         },
@@ -254,6 +278,7 @@ export default {
             })
                 .then((res) => {
                     commit('SET_FOLLOWING_LIST', res.data.followingList)
+                    console.log("팔로잉 리스트")
                     console.log(res.data.followingList)
                 })
         },

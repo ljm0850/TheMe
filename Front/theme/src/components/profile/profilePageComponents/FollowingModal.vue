@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div v-for="following in followingList" :key="following" :value="following" data-bs-dismiss="modal">
-                    <div @click="moveProfile(following.nickname, following.idx)">
+                    <div @click="moveProfile(following.nickname)">
                         <img :src="following.picture" alt="" class="user-profile">
                         {{following.nickname}}
                     </div>
@@ -39,24 +39,24 @@ export default {
     },
     components: {
     },
-    setup(props:any) {
+    setup() {
         const store = useStore();
         const router = useRouter();
         const selectedUser = computed(()=>store.getters.selectedUser)
-        store.dispatch("getFollowingList", props.userInfo.userIdx)
+        // store.dispatch("getFollowingList", props.userInfo.userIdx)
         
         const followingList = computed(()=> store.getters.followingList)
 
-        const moveProfile= (nickname:string, followingIdx:number) => {
+        const moveProfile= (nickname:string) => {
             router.push({
                 name: "Profile", 
                 params: { 
                     nickname : nickname,
                 } 
             })
-            store.dispatch("getUserInfoByNickname",nickname)
-            store.dispatch("getFollowerList", followingIdx)
-            store.dispatch("getFollowingList", followingIdx)
+            // store.dispatch("getUserInfoByNickname",nickname)
+            // store.dispatch("getFollowerList", followingIdx)
+            // store.dispatch("getFollowingList", followingIdx)
         } 
         return {  selectedUser, followingList, moveProfile}
     }
