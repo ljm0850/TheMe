@@ -30,7 +30,7 @@
             </div>
             <span @click="displayComment()" v-if="!state.commentFlag">더보기</span>
             <!-- 댓글 -->
-            <CommentListVue v-if="state.commentFlag" :commentList ="commentList"/>
+            <CommentListVue v-if="state.commentFlag" :commentList ="article.commentListDtoList" />
             <!-- 댓글 끝 -->
         </div>
     </div>
@@ -41,11 +41,10 @@ import {   reactive } from '@vue/reactivity'
 import { useStore } from 'vuex'
 import ArticleImageVue from "./ArticleImage.vue"
 import CommentListVue from "./comment/CommentList.vue"
-import { useStore } from "vuex";
+// import { useStore } from "vuex";
 export default {
     props: {
       article:Object,
-      commentList : Object,
     },
     components: {
         ArticleImageVue,
@@ -62,7 +61,7 @@ export default {
         const displayComment = () => {
             state.commentFlag = true;
         }
-        store.commit("detailArticle",props.article.boardIdx)
+       
         const likeClick = () => {
             store.dispatch("likeArticle",props.article.boardIdx)
             state.likeFlag = !state.likeFlag

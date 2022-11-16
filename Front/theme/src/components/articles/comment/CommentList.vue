@@ -7,7 +7,7 @@
             </div>
             <button class="commentBtn" @click.prevent="createComment()">작성</button>
         </div>
-        <CommentItemVue v-for="comment in commnetList" :key="comment.title" :comment="comment" />
+        <CommentItemVue v-for="comment in commentList" :key="comment.title" :comment="comment" />
     </div>
 </template>
 
@@ -21,18 +21,15 @@ export default {
         CommentItemVue,
     },
     props: {
-      article:Object,
-      commnetList : Object,
+      commentList : Object,
     },
     setup(props:any) {
         const store = useStore(); 
-
         const state : any= reactive({
-            boardIdx : props.article.boardIdx,
+            boardIdx : props.commentList.boardIdx,
             content : "",
-            commentList : [],
         });
-        console.log(props.commentList)
+      
 
         // 댓글 입력받기
         const updateComment = (e:any) => {
