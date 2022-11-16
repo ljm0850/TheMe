@@ -544,7 +544,21 @@ public class ThemeServiceImpl implements ThemeService {
     public List<UserThemeDtoWithMSA> getUserThemeUserList(int userThemeIdx,int user_idx) {
         Optional<UserTheme> userTheme = userThemeRepository.findById(userThemeIdx);
         List<UserThemeDtoWithMSA> userThemeDtoList = new ArrayList<>();
-        if(userTheme.get().getOpenType()==0){
+        if ( userTheme.get().getUserIdx() == user_idx) { // 내가 작성한 테마라면
+            UserThemeDtoWithMSA userThemeDto = UserThemeDtoWithMSA.builder()
+                    .idx(userTheme.get().getTheme().getIdx())
+                    .userThemeIdx(userTheme.get().getIdx())
+                    .userIdx(userTheme.get().getUserIdx())
+                    .themeEmoticon(userTheme.get().getTheme().getEmoticon())
+                    .themeTitle(userTheme.get().getTheme().getName())
+                    .description(userTheme.get().getDescription())
+                    .openType(userTheme.get().getOpenType())
+                    .createTime(userTheme.get().getCreateTime())
+                    .modifyTime(userTheme.get().getModifyTime())
+                    .build();
+            userThemeDtoList.add(userThemeDto);
+        }
+        else if(userTheme.get().getOpenType()==0){
             UserThemeDtoWithMSA userThemeDto = UserThemeDtoWithMSA.builder()
                     .idx(userTheme.get().getTheme().getIdx())
                     .userThemeIdx(userTheme.get().getIdx())
