@@ -9,7 +9,6 @@
         <div class="title-text-custom" style=" font-size:medium; margin-top: 20px;" >보유한 테마 선택</div>
         <div  style="text-align:center; font-size:small; margin-bottom: 5px;" >✦ 현재 가지고 있는 테마들을 한눈에 볼 수 있어요 ✦</div>
         <div class="input-group mb-3">
-          <!-- <label class="input-group-text">테마 선택</label> -->
           <select
             class="form-select"
             id="inputGroupSelect01"
