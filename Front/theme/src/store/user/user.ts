@@ -311,7 +311,6 @@ export default {
                 headers:getters.authHeader
             })
                 .then((res) => {
-                    
                     return res.data
                 })
             }
