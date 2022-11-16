@@ -115,7 +115,7 @@ export default {
                 console.log(res)
             })
         },
-        likeArticle({ dispatch, getters }: { dispatch: Dispatch, getters: any },_boardIdx:string) {
+        likeArticle({ commit, dispatch, getters }: { commit: Commit, dispatch: Dispatch, getters: any },_boardIdx:string) {
             axios({
                 url: rest.Feed.LikeArticle(_boardIdx),
                 method: 'post',
@@ -123,9 +123,10 @@ export default {
             })
                 .then((res) => {
                 console.log(res)
+                commit("SET_LIKE_ARTICLE_MY",true)  
             })
         },
-        unlikeArticle({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _boardIdx: string) {
+        unlikeArticle({commit, dispatch, getters }: { commit : Commit ,dispatch: Dispatch, getters: any }, _boardIdx: string) {
             axios({
                 url: rest.Feed.LikeArticle(_boardIdx),
                 method: 'delete',
@@ -133,6 +134,7 @@ export default {
             })
                 .then((res) => {
                 console.log(res)
+                commit("SET_LIKE_ARTICLE_MY",false)  
             })
         },
 
