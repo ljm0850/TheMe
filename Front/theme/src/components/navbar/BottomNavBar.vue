@@ -79,11 +79,13 @@ export default {
   border: 0px solid #E89A3D;
   // background-color: #fbe9d2;
   background-color: #d3f6d1;
-  font-size: 14px;
+  font-size: 16px;
   // color: #E89A3D;
-  color: #48bd42;
+  color: #3f9f3a;
   margin-bottom: 4px;
   border-radius: 100px;
+  border: 1px solid #d3f6d1;
+  box-shadow: 0px 3px 3px #cdcdcd;
 }
 .bottomeNav{
   border-top: 1px solid #EEEEEE;

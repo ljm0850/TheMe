@@ -42,7 +42,7 @@
           ></textarea>
         </div>
         <div  style="text-align: center;" >
-        <button @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button"  style="margin-bottom: 10px;">등록</button>
+        <button @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button add-button"  style="margin-bottom: 10px;">등록</button>
         </div>
       </div>
     <!-- </form> -->
@@ -157,5 +157,8 @@ export default {
 .test2{
   margin-left: 10px;
   margin-right: 10px;
+}
+.add-button{
+  background-color: white;
 }
 </style>

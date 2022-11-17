@@ -4,19 +4,19 @@
     <div class="input-group mb-3">
         <label class="input-group-text">장소</label>
         <input class="form-control" type="text" v-model="searchValue" >
-        <button @click.prevent="searchPlace" class="btn btn-outline-secondary white-add-button">검색</button>
+        <button @click.prevent="searchPlace" class="btn btn-outline-secondary white-add-button add-button">검색</button>
     </div>
     <div class="map-area" v-if="searchFlag">
         <div v-if="placesFlag">
-            <div v-for="place in places" :key="place.id">
+            <div v-for="place in places" :key="place.id" class="all-place">
                 <div @click="showOnMap(place)" class="place-custom">
-                    <h3>{{ place.place_name }}</h3>
+                    <h3 class="place-name">{{ place.place_name }}</h3>
                     <div class="place-location">{{ place.address_name }}</div>
                 </div>
                 <br>
             </div>
         </div>
-        <button v-if="!mapFlag" @click.prevent="displayMap()" class="btn btn-outline-secondary white-add-button">지도</button>
+        <button v-if="!mapFlag" @click.prevent="displayMap()" class="btn btn-outline-secondary white-add-button add-button ">지도 보기</button>
         <!-- <button v-if="mapFlag" @click.prevent="displayMap()" class="btn btn-outline-secondary white-add-button">지도</button> -->
         <KakaoMapVue v-show="mapFlag" ref="kmap" class="kmap" :options="mapOption" />
     </div>
@@ -112,7 +112,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .kmap {
     width: 100%;
     height: 390px;
@@ -122,8 +122,20 @@ export default {
     background-color: white;
     border-radius: 10px;
 }
+.place-name{
+    font-size: 20px;
+    margin-left: 10px;
+}
 .place-location {
     font-size: 14px;
+    margin-left: 10px;
+    margin-top: 0px;
     /* color: ; */
+}
+.add-button{
+    background-color: white;
+}
+.all-place{
+    margin-bottom: -15px;
 }
 </style>
