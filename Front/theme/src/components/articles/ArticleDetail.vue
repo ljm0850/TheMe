@@ -77,19 +77,20 @@ export default {
         const timeValue = new Date(props.article.modifyTime);
 
         const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+
         if (betweenTime < 1) state.changeTime =  '방금 전';
-        if (betweenTime < 60) {
+        else if (betweenTime < 60) {
             state.changeTime =  `${betweenTime}분 전`;
         }
 
-        const betweenTimeHour = Math.floor(betweenTime / 60);
-        if (betweenTimeHour < 24) {
-            state.changeTime =  `${betweenTimeHour}시간 전`;
+        // const betweenTimeHour = Math.floor(betweenTime / 60);
+        else if (betweenTime < 24*60) {
+            state.changeTime =  `${Math.floor(betweenTime/60)}시간 전`;
         }
 
-        const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-        if (betweenTimeDay < 365) {
-            state.changeTime =  `${betweenTimeDay}일 전`;
+        // const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+        else if (betweenTime < 365*60*24) {
+            state.changeTime =  `${Math.floor(betweenTime/60/24)}일 전`;
         }
         
         const articleCarouseId = `picture${props.article.boardIdx}-${props.article.themeIdx}-${props.article.userIdx}`
