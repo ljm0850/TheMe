@@ -22,7 +22,7 @@
     </div>
   </div> 
 
-  <div v-if="!state.isSerched && (state.inputThemeText.length < 1 && state.inputPersonText.length < 1)">
+  <div v-if="!state.isSerched && (state.inputThemeText.length < 1 && state.inputPersonText.length < 1)" class="popular-title">
     &nbsp; 🔥 현재인기있는 사람들
     <br>
     <SearchMainPageVue v-for="person in getRecommandPersonList" :key="person" :person="person" />
@@ -31,9 +31,9 @@
     <div v-if="getSerchThemeList.length != 0">
       <SearchThemeCardVue v-for="theme in getSerchThemeList" :key="theme" :theme="theme" />
     </div>
-    <div v-else class="no-search">검색한 테마가 없는 것 같아요. <br> 테마 등록 버튼을 통해 만들어볼까요? <br> 다른 사람들도 함께 참여할 수 있어요! <br>
+    <div v-else class="no-search content-tap">검색한 테마가 없는 것 같아요. <br> 테마 등록 버튼을 통해 만들어볼까요? <br> 다른 사람들도 함께 참여할 수 있어요! <br>
       <router-link :to="{ name: 'PlusTheme' }">
-        <button type="button" class="btn btn-light">&nbsp;테마등록&nbsp;</button>
+        <button type="button" class="btn btn-light theme-add-button">&nbsp;테마등록&nbsp;</button>
       </router-link> 
     </div>
   </div>
@@ -41,7 +41,7 @@
     <div v-if="getSerchPersonList.length != 0">
       <SearchProfileCardVue v-for="person in getSerchPersonList" :key="person" :person="person" />
     </div>
-    <div v-else class="no-search">검색한 사람이 없는 것 같아요...</div>
+    <div v-else class="no-search content-tap">검색한 사람이 없는 것 같아요...</div>
 
   </div>
   <div v-else-if="!state.isSerched && state.inputThemeText.length >= 1" class="search-theme">
@@ -55,7 +55,7 @@
       {{ person }}
     </div>
   </div>
-  <div v-else class="no-search"> 검색어를 입력해주세요!</div>
+  <div v-else class="no-search content-tap"> 검색어를 입력해주세요!</div>
 </template>
 
 <script lang="ts">
@@ -177,5 +177,17 @@ export default {
   margin: 0px;
   font-size: 3vh;
   height: 38px;
+}
+.popular-title{
+  margin-top: 10px;
+}
+.content-tap{
+  margin-top: 10px;
+  margin-left: 50px;
+}
+.theme-add-button{
+  margin-top: 3px;
+  background-color: #fbe9d2;
+  color: #E89A3D;
 }
 </style>
