@@ -1,15 +1,16 @@
 <template>
   <div>
     <div>
-      <button class="btn btn-light type-button border" @click="changeViewMode(true)">Themes</button>
-      <button class="btn btn-light type-button border"  @click="changeViewMode(false)">Following</button>
+      <button class="btn btn-light type-button border marginLeft" @click="changeViewMode(true)">Themes</button>
+      <button class="btn btn-light type-button border marginRight"  @click="changeViewMode(false)">Following</button>
     </div>
-    <br />
+    
     <ul v-if="state.vueTarget" class="paddingZero">
       <li v-for="item in selectedUser.themeDtoList" :key="item" >
         <UserThemeCard
           :theme="item"
           class="themeCard"
+          style="margin-left: 0;"
         />
       </li>
     </ul>
@@ -18,6 +19,7 @@
         <FollowingThemeCard
           :theme="item"
           class="themeCard"
+          style="margin-left: 0;"
         />
       </li>
     </ul>
@@ -72,10 +74,14 @@ ul {
 
 .themeCard {
   margin-bottom: 10px;
-  margin-left : 0px;
+  width: 100%;
+  
 }
 
 .type-button {
-  width: 45%;
+  width: 50%;
 }
+
+
+
 </style>

@@ -119,7 +119,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .isSame {
   border: 3px solid #bddaff !important;
 
@@ -137,7 +137,6 @@ export default {
 .card {
   border-radius: 12px !important;
   width: 360px;
-  margin-left: 15px;
   margin-top: 10px;
   background: #FAFAFA;
   border: 1px solid #CDCDCD;

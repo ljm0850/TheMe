@@ -78,23 +78,25 @@ export default {
     width:10px
 }
 select {
+    width: 50px;
+    height: 30px;
     -webkit-appearance:none;
     moz-appearance:none;
     color: #E89A3D;
     appearance:none;
-    background:#fff;
+    background: #fbe9d2;
     text-align: center;
-    border-color: #E89A3D;
-    border-radius: 10px ;
+    border-color:  #fbe9d2;
+    border-radius: 10px;
 }
 select::-ms-expand {
     opacity:0;
 }
 .select-btn{
     position: fixed;
-    margin-bottom: 100px;
+    margin-bottom: 100px;   
     padding-bottom: 100px;
-    left: 340px;
+    left: 327px;
     bottom: -140px;
 }
 .card{  

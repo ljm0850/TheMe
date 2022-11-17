@@ -19,10 +19,6 @@
         <div class="theme-title-text">{{ themeDetail.emoticon }}</div>
         <div class="theme-title-text">{{ themeDetail.name }}</div>
       </div>
-      <!-- <div class="theme-sort">
-                <button>인기순</button>
-                <button>최신순</button>
-            </div> -->
     </div>
     <KakaoMapVue class="kakao-map" :articleList="articleList"/>
     <button @click="goCreateArticle()" class="theme-plus-button">+</button>
@@ -159,7 +155,7 @@ export default {
   font-size: 15px;
 }
 .kakao-map {
-  top: -40px;
+  top: -30px;
   position: relative;
   z-index: -1;
 }
@@ -175,8 +171,5 @@ export default {
   border-radius: 50%;
   border: 1px solid #cdcdcd;
 }
-.article-list {
-  position: relative;
-  top: -40px;
-}
+
 </style>

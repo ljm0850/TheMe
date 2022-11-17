@@ -1,15 +1,19 @@
 <template>
-    <div class="d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#articleListModal">
+    <div class="article-wrap d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#articleListModal">
         <div>
-            <div>{{article.name}}</div>
+            <div class="article-name">{{article.name}}</div>
             <div>{{article.place}}</div>
-            <div>{{article.nickname}}</div>
+            <!-- <div>{{article.nickname}}</div> -->
         </div>
-        <div>{{article.boardCount}}</div>
+        <div class="article-count">
+            <div class="">게시글</div>
+            <div>{{article.boardCount}}</div>
+        </div>
     </div>
+    <hr>
     <!-- 모달 -->
     <ArticleListModalVue :article="article" :boardList="boardList"/>
-    <hr>
+    
 </template>
 
 <script lang="ts">
@@ -45,5 +49,13 @@ export default {
 
 <style lang="scss">
 
+.article-wrap{
+    padding : 0 0 5px 5px;;
+    margin: 0 10px 10px 10px;
+}
+
+.article-count{
+    text-align: center;
+}
 
 </style>
