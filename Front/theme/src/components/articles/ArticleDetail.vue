@@ -10,18 +10,18 @@
                 <div class="center-view">{{ article.modifyTime }}</div>
             </div>
             <!-- 사진 -->
-            <ArticleImageVue :pictures="article.picture" :carouselId="articleCarouseId" />
+            <ArticleImageVue :pictures="article.picture" :carouselId="articleCarouseId" class="term"/>
             <!-- 사진 끝 -->
             <div class="d-flex justify-content-between">
-                <div class="d-flex">
+                <div class="d-flex term">
                     <!-- {{article}}  -->
                     <div v-if="!state.likeFlag" @click="likeClick" class="">🤍
                         {{ state.likeCnt }}</div>
                         <div v-if="state.likeFlag" @click="likeCancle" class="">💙
                             {{ state.likeCnt }}</div>
-                    <div>🧾 {{ article.commentCount }}</div>
+                    <div class="comment-term">🧾 {{ article.commentCount }}</div>
                 </div>
-                <div class="d-flex">
+                <div class="d-flex term">
                     <!-- <div>❗</div>
                     <div>❌</div>
                     <div>❓</div> -->
@@ -104,7 +104,13 @@ export default {
     }
 }
 .center-view{
-    margin-top: 3px;
+    margin-top: 4px;
+    margin-left: 5px;
+}
+.term{
+    margin-top: 5px;
+}
+.comment-term{
     margin-left: 5px;
 }
 </style>

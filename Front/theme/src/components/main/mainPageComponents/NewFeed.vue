@@ -6,7 +6,7 @@
         </div>
         <ScrollObserverVue @triggerIntersected="loadMore"/>
         <!-- 피드가 없을시 보이는 내용 -->
-        <div v-if="state.flag" class="card" style="margin:0">
+        <div v-if="state.flag" class="card">
             <div class="card-body">
                 <div>피드가 더이상 없습니다.</div>
                 <div>검색 페이지에서</div>
@@ -97,13 +97,14 @@ select::-ms-expand {
     bottom: -140px;
 }
 .card{  
-    margin-left: 5px;
-    margin-right: 5px;
+    width: 370px;
+    margin-left: 10px;
 }
 .card-body{
-    padding-bottom:0px !important;
+    /* padding-bottom:0px !important; */
     margin-left: 5px;
     margin-right: 5px;
+    text-align: center;
 }
 .div-class{
     margin-bottom: 5px !important;
