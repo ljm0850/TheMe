@@ -127,7 +127,6 @@ export default {
 .card {
   border-radius: 12px !important;
   width: 360px;
-  margin-left: 15px;
   margin-top: 10px;
   background: #FAFAFA;
   border: 1px solid #CDCDCD;
