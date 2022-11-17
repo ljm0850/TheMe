@@ -7,6 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <span style="line-height:50%"><br></span>
                 <div id="profileImage">프로필 사진</div>
                 <span style="line-height:50%"><br></span>
                 <div id="profileImage">
