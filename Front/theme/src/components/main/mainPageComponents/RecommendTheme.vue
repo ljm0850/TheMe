@@ -1,7 +1,7 @@
 <template>
 <div id="recommandTheme" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
   <div class="carousel-inner" v-if =" recommendThemeList.length > 0">
-    <div class="carousel-item active">
+    <div class="carousel-item active" style="margin-bottom: 5px;">
         <div class="d-flex justify-content-around">
           <ThemeMiniCardVue page="main" :theme="recommendThemeList[0]" :key="recommendThemeList[0]"/>  
           <ThemeMiniCardVue page="main" :theme="recommendThemeList[1]" :key="recommendThemeList[1]"/> 
@@ -74,7 +74,7 @@ components: {
 }
 </script>
 
-<style>
+<style scoped>
 .carousel-control-next-icon, .carousel-control-prev-icon{
   background-color: rgb(205, 204, 204);
 }

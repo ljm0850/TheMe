@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div v-for="Feed,idx in FeedList" :key="Feed">
+        <div v-for="Feed,idx in FeedList" :key="Feed" >
             <ArticleDetailVue :article="Feed" :feedIdx="idx" />
-            <br>
+            <div class="div-class"></div>
         </div>
         <ScrollObserverVue @triggerIntersected="loadMore"/>
         <!-- 피드가 없을시 보이는 내용 -->
@@ -39,9 +39,9 @@ import ArticleDetailVue from '@/components/articles/ArticleDetail.vue';
 import { computed } from '@vue/runtime-core';
 export default {
     components: {
-        ArticleDetailVue,
-        ScrollObserverVue,
-    },
+    ArticleDetailVue,
+    ScrollObserverVue,
+},
     setup() {
         const state = reactive({
             flag: false,
@@ -105,5 +105,7 @@ select::-ms-expand {
     margin-left: 5px;
     margin-right: 5px;
 }
-
+.div-class{
+    margin-bottom: 5px !important;
+}
 </style>

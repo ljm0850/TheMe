@@ -1,6 +1,6 @@
 <template>
   <!-- <div class="modal-dialog"> -->
-  <div class="">
+  <div class="test2">
     <!-- <form action=""> -->
       <div class="create-page container"  style="background-color: #fbe9d2;">
         <br>
@@ -154,7 +154,7 @@ export default {
   width: 360px;
   height: 360px;
 }
-.modal-dialog{
+.test2{
   margin-left: 10px;
   margin-right: 10px;
 }

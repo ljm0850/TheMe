@@ -1,13 +1,13 @@
 <template>
     <div class="card custom-card d-flex justify-content-center">
-        <div class="card-body" v-if="article">
-            <div class="theme-name">{{ article.themeName }}</div>
+        <div class="card-body" v-if="article" >
+            <div class="theme-name" style="margin-top: -5px; margin-bottom:10px;">{{ article.themeName }}</div>
             <div class="d-flex justify-content-between">
                 <div class="d-flex">
                     <img :src="article.profile" class="profile-img" />
-                    <div>{{ article.nickname }}</div>
+                    <div class="center-view">{{ article.nickname }}</div>
                 </div>
-                <div>{{ article.modifyTime }}</div>
+                <div class="center-view">{{ article.modifyTime }}</div>
             </div>
             <!-- 사진 -->
             <ArticleImageVue :pictures="article.picture" :carouselId="articleCarouseId" />
@@ -92,13 +92,19 @@ export default {
 }
 
 .custom-card {
-    width: 380px;
+    width: 370px;
+    margin-left: 10px !important;
     border-radius: 10px !important;
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 15px !important; 
     .theme-name {
         font-size: large;
         font-weight: bold;
         text-align: center;
     }
+}
+.center-view{
+    margin-top: 3px;
+    margin-left: 5px;
 }
 </style>
