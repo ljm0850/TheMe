@@ -17,8 +17,8 @@
             </div>
         </div>
         <button v-if="!mapFlag" @click.prevent="displayMap()" class="btn btn-outline-secondary white-add-button add-button ">지도 보기</button>
-        <!-- <button v-if="mapFlag" @click.prevent="displayMap()" class="btn btn-outline-secondary white-add-button">지도</button> -->
-        <KakaoMapVue v-show="mapFlag" ref="kmap" class="kmap" :options="mapOption" />
+        <button v-else @click.prevent="displayMap()" class="btn btn-outline-secondary white-add-button add-button">지도 보기</button>
+        <KakaoMapVue v-if="mapFlag" ref="kmap" class="kmap" :options="mapOption" />
     </div>
 </div>
 </template>
