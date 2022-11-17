@@ -96,7 +96,7 @@ export default {
   justify-content: center;
   // flex-wrap: wrap;
   margin: 5px;
-  width: 185px;
+  width: 180px;
   height: 100px !important;
   background: #ffffff;
   border: 1px solid rgba(205, 205, 205, 0.81);
