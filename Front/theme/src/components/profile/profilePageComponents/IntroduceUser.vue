@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="d-flex justify-content-end">
-        <button v-if="isMyProfile" type="button" data-bs-toggle="modal" data-bs-target="#settingModal" class="button">🛠</button>
+        
     </div>
     <!-- 세팅 모달 -->
     <SettingModalVue :userInfo="selectedUser"/>
@@ -9,7 +9,7 @@
     <div class="d-flex flex-column align-items-center">
         <img :src="selectedUser.picture" alt="" class="test">
         <span style="line-height:50%"><br></span>
-        <div class="nickname"><b>{{ selectedUser.nickname }}</b></div>
+        <div class="nickname"><b>{{ selectedUser.nickname }} <button v-if="isMyProfile" type="button" data-bs-toggle="modal" data-bs-target="#settingModal" class="button">⚙️</button></b></div>
         <div>{{ selectedUser.description }}</div>
         <div class="d-flex flex-row">
             <div class="inroduce-margin">
@@ -90,16 +90,13 @@ export default {
     background-color:transparent;
     border: 0;
     outline: 0;
+    font-size: 12px;
+    
 }
 .number {
     text-align : center;
 }
 .nickname{
   font-size: larger;
-}
-.canClick {
-  
-  
-  
 }
 </style>
