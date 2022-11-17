@@ -2,7 +2,7 @@
   <div>
     <div>
       <button class="btn btn-light type-button border" @click="changeViewMode(true)">Themes</button>
-      <button class="btn btn-light type-button border" @click="changeViewMode(false)">Following</button>
+      <button class="btn btn-light type-button border"  @click="changeViewMode(false)">Following</button>
     </div>
     <br />
     <ul v-if="state.vueTarget" class="paddingZero">
@@ -61,7 +61,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .paddingZero {
   padding-left: 0;
 }
@@ -73,5 +73,9 @@ ul {
 .themeCard {
   margin-bottom: 10px;
   margin-left : 0px;
+}
+
+.type-button {
+  width: 45%;
 }
 </style>
