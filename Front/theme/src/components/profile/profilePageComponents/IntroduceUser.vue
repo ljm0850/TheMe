@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="d-flex justify-content-end">
-        <button v-if="isMyProfile" type="button" data-bs-toggle="modal" data-bs-target="#settingModal">🛠</button>
+        <button v-if="isMyProfile" type="button" data-bs-toggle="modal" data-bs-target="#settingModal" class="button">🛠</button>
     </div>
     <!-- 세팅 모달 -->
     <SettingModalVue :userInfo="selectedUser"/>
@@ -85,5 +85,10 @@ export default {
 <style lang="scss" scoped>
 .test{
     border-radius: 200px;
+}
+.button {
+    background-color:transparent;
+    border: 0;
+    outline: 0;
 }
 </style>
