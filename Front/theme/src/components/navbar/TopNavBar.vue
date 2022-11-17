@@ -1,10 +1,13 @@
-<template>
+<template>      
   <div class="nav-header">
+<router-link :to="{ name: 'Main' }"> 
     <img src="@/assets/image/logoLeft.png" alt="TheMe" class="img-size">
     <span class="The">The</span>
     <span class="Me">Me</span>
     <img src="@/assets/image/logoRight.png" alt="TheMe" class="img-size">
-  </div>
+  </router-link>  
+</div>
+  
     
 </template>
 
@@ -34,7 +37,6 @@ span{
   font-size: 30px;
 }
 .Me{
-  
   color: #61D85B;
 }
 .img-size {
@@ -45,6 +47,8 @@ span{
   /* margin-top: 10px; */
   /* display: block; */
 }
-
+a {
+  text-decoration: none;
+}
 
 </style>
