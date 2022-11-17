@@ -13,22 +13,32 @@
   <div class="d-flex card-list">
     <ThemeMiniCardVue page="themeList" v-for="theme in publicThemeList" :key="theme" :theme="theme"/>
   </div>
+  <!-- 무한스크롤용 -->
+  <ScrollObserverVue @triggerIntersected="loadMore" />
+  <br>
+  <br>
 </div>
 
 </template>
 
 <script lang="ts">
 import ThemeMiniCardVue from './ThemeMiniCard.vue';
+import ScrollObserverVue from '../ScrollObserver.vue';
 import { computed, reactive } from "vue";
 import { useStore } from "vuex";
 export default {
   components: {
-    ThemeMiniCardVue
+    ThemeMiniCardVue,
+    ScrollObserverVue,
   },
   setup() {
     // 테마 전체 목록 불러오기
     const store = useStore()
-    store.commit("SET_PUBLIC_THEME_LIST",[])
+    // 초기화
+    store.commit("SET_PUBLIC_THEME_LIST", [])
+    store.commit('SET_PUBLIC_THEME_LIST_PART', {})
+    store.commit('SET_PUBLIC_THEME_LIST_PART_NUM', 0)
+
     const state = reactive({
       isMarked: 0,
       sort: 0,
@@ -45,11 +55,16 @@ export default {
         store.dispatch("getPublicThemeList", state)
     }
     store.dispatch("getPublicThemeList", state)
-    const publicThemeList = computed(() => store.getters.publicThemeList)
+    const publicThemeList = computed(() => store.getters.publicThemeListPart)
 
     //북마크 하기
 
-    return {publicThemeList, setisMarked, setSort, state}
+    const loadMore = () => {
+      console.log("작동")
+      store.dispatch('publicThemeListPart')
+    }
+
+    return { publicThemeList, setisMarked, setSort, state, loadMore }
   }
 }
 </script>

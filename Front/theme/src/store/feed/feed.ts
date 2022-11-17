@@ -318,13 +318,13 @@ export default {
         },
         displayFeedTheme({ commit, state, getters }: { commit: Commit, state: any, getters: any }) {
             const before = { ...state.displayFeedTheme.list }
-            for (let i = state.displayFeedTheme.num; i < state.displayFeedTheme.num + 3; i++){
+            for (let i = state.displayFeedTheme.num; i < state.displayFeedTheme.num + 14; i++){
                 if (i < getters.getFeedTheme.length) {
                     before[i] = getters.getFeedTheme[i]
                 }
             }
             commit("SET_DISPLAY_FEED_THEME_LIST", before)
-            commit("SET_DISPLAY_FEED_THEME_NUM", state.displayFeedTheme.num + 3)
+            commit("SET_DISPLAY_FEED_THEME_NUM", state.displayFeedTheme.num + 14)
         }
 
     }
