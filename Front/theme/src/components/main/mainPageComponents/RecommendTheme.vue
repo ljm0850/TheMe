@@ -43,7 +43,7 @@ components: {
       pageIdx: 0
     })
     
-    store.dispatch("getPublicThemeList", state)
+    store.dispatch("getPublicThemeListForMain", state)
     const recommendThemeList = computed(()=>store.getters.publicThemeList);
     let tempIdx = []
     for (let i = 2; i < store.getters.publicThemeList.length; i+=2){ //6

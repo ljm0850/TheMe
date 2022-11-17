@@ -26,6 +26,7 @@ import ThemeMiniCardVue from './ThemeMiniCard.vue';
 import ScrollObserverVue from '../ScrollObserver.vue';
 import { computed, reactive } from "vue";
 import { useStore } from "vuex";
+import _ from "lodash"
 export default {
   components: {
     ThemeMiniCardVue,
@@ -36,8 +37,6 @@ export default {
     const store = useStore()
     // 초기화
     store.commit("SET_PUBLIC_THEME_LIST", [])
-    store.commit('SET_PUBLIC_THEME_LIST_PART', {})
-    store.commit('SET_PUBLIC_THEME_LIST_PART_NUM', 0)
 
     const state = reactive({
       isMarked: 0,
@@ -47,21 +46,34 @@ export default {
     })
     // 클릭했을 때 state 값 변하고 난 후에 다시 리스트 불러오기
     const setisMarked = (clickIdx : number) => {
-        state.isMarked = clickIdx
-        store.dispatch("getPublicThemeList", state)
+      state.isMarked = clickIdx
+      state.pageIdx = 0
+      store.commit("SET_PUBLIC_THEME_LIST", {})
+      store.dispatch("getPublicThemeList", state) //스크롤에 의해 작동이 됨
     }
     const setSort = (clickIdx : number) => {
-        state.sort = clickIdx
-        store.dispatch("getPublicThemeList", state)
+      state.sort = clickIdx
+      state.pageIdx = 0
+      store.commit("SET_PUBLIC_THEME_LIST", {})
+      store.dispatch("getPublicThemeList", state)
     }
-    store.dispatch("getPublicThemeList", state)
-    const publicThemeList = computed(() => store.getters.publicThemeListPart)
+    // store.dispatch("getPublicThemeList", state)
+    // const publicThemeList = computed(() => store.getters.publicThemeListPart)
+    const publicThemeList = computed(() => store.getters.publicThemeList)
 
     //북마크 하기
 
     const loadMore = () => {
-      console.log("작동")
-      store.dispatch('publicThemeListPart')
+      if (_.isEmpty(publicThemeList)) {
+        return
+      }
+      store.dispatch("getPublicThemeList", {
+        isMarked: state.isMarked,
+        sort: state.sort,
+        pageSize: state.pageSize,
+        pageIdx: state.pageIdx
+      })
+      state.pageIdx += 1
     }
 
     return { publicThemeList, setisMarked, setSort, state, loadMore }

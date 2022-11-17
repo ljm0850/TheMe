@@ -14,9 +14,9 @@ export default {
         getRecommendThemeList:[],
         liveSearchTheme: [],
         selectedUserThemeList: [],
-        publicThemeList: [],
-        publicThemeListPart: {},
-        publicThemeListPartNum: 0,
+        publicThemeList: {num:0},
+        // publicThemeListPart: {},
+        // publicThemeListPartNum: 0,
         publicThemeDetail :[],
         userThemeDetail: [],
         selectedUserThemeIdx:0,
@@ -34,8 +34,8 @@ export default {
         liveSearchTheme: (state: { liveSearchTheme: Array<String> }) => state.liveSearchTheme,
         selectedUserThemeList: (state: { selectedUserThemeList:Array<Object> }) => state.selectedUserThemeList,
         publicThemeList: (state: { publicThemeList: Array<Object> }) => state.publicThemeList,
-        publicThemeListPart: (state: {publicThemeListPart:Array<Object>}) => state.publicThemeListPart,
-        publicThemeListPartNum: (state: {publicThemeListPartNum:number}) => state.publicThemeListPartNum,
+        // publicThemeListPart: (state: {publicThemeListPart:Array<Object>}) => state.publicThemeListPart,
+        // publicThemeListPartNum: (state: {publicThemeListPartNum:number}) => state.publicThemeListPartNum,
         publicThemeDetail:(state: {publicThemeDetail:Object}) => state.publicThemeDetail,
         userThemeDetail:(state: {userThemeDetail:Object}) => state.userThemeDetail,
         myUserTheme : (state:{ myUserTheme: Array<number>}) => state.myUserTheme
@@ -49,15 +49,15 @@ export default {
         LIVE_SEARCH_THEME_LIST: (state: { liveSearchTheme: Array<String> }, _liveThemeList: Array<String>) => state.liveSearchTheme = _liveThemeList,
         SET_SELECTED_USER_THEME_LIST:(state: {selectedUserThemeList:Array<Object>}, _themeList:Array<Object>)=> state.selectedUserThemeList = _themeList,
         SET_PUBLIC_THEME_LIST: (state:{ publicThemeList: Array<object>}, _publicThemeList:Array<Object>) => state.publicThemeList = _publicThemeList,
-        SET_PUBLIC_THEME_LIST_PART : (state:{ publicThemeListPart : Object},_publicThemeListPart:Object) => state.publicThemeListPart = _publicThemeListPart,
-        SET_PUBLIC_THEME_LIST_PART_NUM : (state:{ publicThemeListPartNum : number},_num:number) => state.publicThemeListPartNum = _num,
+        // SET_PUBLIC_THEME_LIST_PART : (state:{ publicThemeListPart : Object},_publicThemeListPart:Object) => state.publicThemeListPart = _publicThemeListPart,
+        // SET_PUBLIC_THEME_LIST_PART_NUM : (state:{ publicThemeListPartNum : number},_num:number) => state.publicThemeListPartNum = _num,
         SET_PUBLIC_THEME_DETAIL: (state: { publicThemeDetail: Object }, _publicThemeDetail: Object) => state.publicThemeDetail = _publicThemeDetail,
         SET_USER_THEME_DETAIL: (state: { userThemeDetail: Object }, _userThemeDetail: Object) => state.userThemeDetail = _userThemeDetail,
         SET_SELECTED_USER_THEME_IDX: (state: {selectedUserThemeIdx:number},_selectedUserThemeIdx:number) => state.selectedUserThemeIdx = _selectedUserThemeIdx,
         SET_MY_USER_THEME: (state: {myUserTheme:Array<number>},_myUserTheme:Array<number>) => state.myUserTheme = _myUserTheme
     },
     actions: {
-        getPublicThemeList({ commit,getters,dispatch }:{commit:Commit,getters:any, dispatch:Dispatch},_params:object) {
+        getPublicThemeListForMain({ commit,getters }: { commit: Commit,getters:any },_params: object) {
             axios({
                 url: rest.Theme.getPublicThemeList(),
                 method: 'get',
@@ -66,7 +66,25 @@ export default {
             })
                 .then((res) => {
                     commit("SET_PUBLIC_THEME_LIST", res.data.themeList)
-                    dispatch("publicThemeListPart")
+            })
+        },
+        getPublicThemeList({ commit, getters, dispatch, state }: { commit: Commit, getters: any, dispatch: Dispatch, state: any }, _params: object) {
+            console.log(_params)
+            axios({
+                url: rest.Theme.getPublicThemeList(),
+                method: 'get',
+                headers: getters.authHeader,
+                params: _params
+            })
+                .then((res) => {
+                    console.log()
+                    const newObj = { ...getters.publicThemeList }
+                    const beforeLength = Object.keys(state.publicThemeList).length
+                    for (let i = 0; i < res.data.themeList.length; i++){
+                        newObj[beforeLength + i] = res.data.themeList[i]
+                    }
+                    console.log("넣을 값 : ",newObj)
+                    commit("SET_PUBLIC_THEME_LIST", newObj)
             })
         },
         liveSearchTheme({ commit, getters }: { commit: Commit, getters: any }, _target: string) {
@@ -333,18 +351,21 @@ export default {
             })
         },
 
-        publicThemeListPart({ commit, getters }: { commit: Commit, getters: any }) {
-            const data = { ...getters.publicThemeListPart }
-            if (getters.publicThemeListPartNum == getters.publicThemeList.length) {
-                return
-            }
-            const num = Math.min(getters.publicThemeListPartNum + 20, getters.publicThemeList.length)
-            for (let i = getters.publicThemeListPartNum; i < num; i++){
-                data[i] = getters.publicThemeList[i]
-            }
-            commit('SET_PUBLIC_THEME_LIST_PART', data)
-            commit('SET_PUBLIC_THEME_LIST_PART_NUM',num)
-        }
+        // publicThemeListPart({ commit, getters }: { commit: Commit, getters: any }) {
+        //     const data = { ...getters.publicThemeListPart }
+        //     console.log("이전 : ", data)
+        //     if (getters.publicThemeListPartNum == getters.publicThemeList.length) {
+        //         return
+        //     }
+        //     const num = Math.min(getters.publicThemeListPartNum + 20, getters.publicThemeList.length)
+        //     for (let i = getters.publicThemeListPartNum; i < num; i++){
+        //         data[i] = getters.publicThemeList[i]
+        //     }
+        //     console.log("이후 : ", data)
+        //     console.log(num)
+        //     commit('SET_PUBLIC_THEME_LIST_PART', data)
+        //     commit('SET_PUBLIC_THEME_LIST_PART_NUM',num)
+        // }
 
     }
 }
