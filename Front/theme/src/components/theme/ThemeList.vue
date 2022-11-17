@@ -10,7 +10,7 @@
       <button v-show="state.isMarked==0" :class="{bold:state.sort==1}" class="sort-button" @click="setSort(1)">최신순</button>
     </div>
   </div>
-  <div class="d-flex card-list">
+  <div class="d-flex card-list theme-all-card-list">
     <ThemeMiniCardVue page="themeList" v-for="theme in publicThemeList" :key="theme" :theme="theme"/>
   </div>
   <!-- 무한스크롤용 -->
@@ -99,5 +99,8 @@ export default {
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid #C7C7C7;
 }
-
+.theme-all-card-list{
+  margin-left: 5px;
+  margin-right: 5px;
+}
 </style>

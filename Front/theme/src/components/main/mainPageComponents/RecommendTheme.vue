@@ -1,16 +1,16 @@
 <template>
 <div id="recommandTheme" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
   <div class="carousel-inner" v-if =" recommendThemeList.length > 0">
-    <div class="carousel-item active">
+    <div class="carousel-item active" style="margin-bottom: 5px;">
         <div class="d-flex justify-content-around">
-          <ThemeMiniCardVue page="main" :theme="recommendThemeList[0]" :key="recommendThemeList[0]"/>  
-          <ThemeMiniCardVue page="main" :theme="recommendThemeList[1]" :key="recommendThemeList[1]"/> 
+          <ThemeMiniCardVue page="main" :theme="recommendThemeList[0]" :key="recommendThemeList[0]" class="left-card"/>  
+          <ThemeMiniCardVue page="main" :theme="recommendThemeList[1]" :key="recommendThemeList[1]" class="right-card"/> 
         </div>
     </div>
     <div class="carousel-item" v-for="idx in tempIdx" :key="idx">
-      <div class="d-flex justify-content-around">
-        <ThemeMiniCardVue page="main" :theme="recommendThemeList[idx]" :key="recommendThemeList[idx]"/>
-        <ThemeMiniCardVue page="main" :theme="recommendThemeList[idx+1]" :key="recommendThemeList[idx+1]"/>
+      <div class="d-flex justify-content-around"  style="margin-bottom: 5px;">
+        <ThemeMiniCardVue page="main" :theme="recommendThemeList[idx]" :key="recommendThemeList[idx]" class="left-card"/>
+        <ThemeMiniCardVue page="main" :theme="recommendThemeList[idx+1]" :key="recommendThemeList[idx+1]" class="right-card"/>
       </div>
     </div>
   </div>
@@ -74,9 +74,14 @@ components: {
 }
 </script>
 
-<style>
+<style scoped>
 .carousel-control-next-icon, .carousel-control-prev-icon{
   background-color: rgb(205, 204, 204);
 }
-
+.left-card{
+  margin-left: 10px;
+}
+.right-card{
+  margin-right: 10px;
+}
 </style>

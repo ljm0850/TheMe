@@ -1,6 +1,6 @@
 <template>
   <!-- <div class="modal-dialog"> -->
-  <div class="">
+  <div class="test2">
     <!-- <form action=""> -->
       <div class="create-page container"  style="background-color: #fbe9d2;">
         <br>
@@ -42,7 +42,7 @@
           ></textarea>
         </div>
         <div  style="text-align: center;" >
-        <button @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button"  style="margin-bottom: 10px;">등록</button>
+        <button @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button add-button"  style="margin-bottom: 10px;">등록</button>
         </div>
       </div>
     <!-- </form> -->
@@ -154,8 +154,11 @@ export default {
   width: 360px;
   height: 360px;
 }
-.modal-dialog{
+.test2{
   margin-left: 10px;
   margin-right: 10px;
+}
+.add-button{
+  background-color: white;
 }
 </style>

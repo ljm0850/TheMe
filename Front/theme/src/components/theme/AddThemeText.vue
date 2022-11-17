@@ -2,10 +2,10 @@
   <div class="hr">
      <div class="d-flex theme-style justify-content-between" v-if="theme">
       <div class="form-control form-custom col-8">{{theme.name}}</div>
-      <button v-if="!theme.my" type="button" class="btn btn-outline-secondary white-add-button col-3" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
+      <button v-if="!theme.my" type="button" class="btn btn-outline-secondary white-add-button col-3 add-button" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
         추가
       </button>
-      <button v-if="theme.my" type="button" class="btn btn-outline-secondary can-not-select-button col-3" style="background-color: #cdcdcd; color: gray !important;">
+      <button v-if="theme.my" type="button" class="btn btn-outline-secondary can-not-select-button col-3 have-button" >
         보유중
       </button>
     </div>
@@ -55,5 +55,12 @@ export default {
   .hr{
     margin-bottom: 2px;
   }
+}
+.have-button{
+  background-color: #cdcdcd !important; 
+  color: grey !important;
+}
+.add-button{
+  background-color: white;
 }
 </style>
