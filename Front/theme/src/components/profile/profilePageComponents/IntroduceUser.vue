@@ -20,7 +20,7 @@
                 <div>Themes</div>
                 <div class="number">{{selectedUser.themes}}</div>
             </div>
-            <div class="inroduce-margin"  data-bs-toggle="modal" data-bs-target="#followerModal">
+            <div class="inroduce-margin canClick"  data-bs-toggle="modal" data-bs-target="#followerModal">
                 <div>Follower</div>
                 <div class="number">
                     {{selectedUser.following}} 
@@ -29,7 +29,7 @@
                 <FollowerModalVue :userInfo="selectedUser"/>
             </div>
             
-            <div class="inroduce-margin" data-bs-toggle="modal" data-bs-target="#followingModal">
+            <div class="inroduce-margin canClick" data-bs-toggle="modal" data-bs-target="#followingModal">
                 <div>Following</div>
                 <div class="number">
                     {{selectedUser.follower}} 
@@ -96,6 +96,10 @@ export default {
 }
 .nickname{
   font-size: larger;
+}
+.canClick {
+  
+  
   
 }
 </style>

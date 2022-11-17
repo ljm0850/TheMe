@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div v-for="follower in followerList" :key="follower" :value="follower" data-bs-dismiss="modal">
-                    <div @click = "moveProfile(follower.nickname)" >
+                    <div class="follower" @click = "moveProfile(follower.nickname)" >
                         <img :src="follower.picture" alt="" class="user-profile">
                         {{follower.nickname}}
                     </div>
@@ -63,5 +63,9 @@ export default {
 </script>
 
 <style lang="scss">
-
+.follower {
+    margin-bottom: 5px;
+    margin-left:10px;
+    margin-right:10px;
+}
 </style>
