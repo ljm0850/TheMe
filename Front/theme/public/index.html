@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong
-        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+
+<head>
+  <meta name="naver-site-verification" content="69a198179531af006829940bd10c5b28c3a204f3" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+  <meta name="description" content="안녕하세요! 나만의 테마를 만들어 나만의 브랜드를 만들어가는 사이트 TheMe 입니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TheMe">
+  <meta property="og:description" content="안녕하세요! 나만의 테마를 만들어 나만의 브랜드를 만들어가는 사이트 TheMe 입니다.">
+  <!-- <meta property="og:image" content="http://www.mysite.com/myimage.jpg"> -->
+  <meta property="og:url" content="https://k7c2031.p.ssafy.io/">
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
         properly without JavaScript enabled. Please enable it to
-        continue.</strong
-      >
-    </noscript>
-    <div
-      id="app"
-      style="max-width: 390px; max-height: 844px; margin: auto"
-    ></div>
-    <!-- built files will be auto injected -->
-    <script
-      src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js"
-      integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL"
-      crossorigin="anonymous"
-    ></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7a491241bbbfebc9a44447884a9c394e&libraries=services"></script>
-    <!-- <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+        continue.</strong>
+  </noscript>
+  <div id="app" style="max-width: 390px; max-height: 844px; margin: auto"></div>
+  <!-- built files will be auto injected -->
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js"
+    integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7a491241bbbfebc9a44447884a9c394e&libraries=services"></script>
+  <!-- <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>window.Kakao.init("7a491241bbbfebc9a44447884a9c394e");</script> -->
-  </body>
+</body>
+
 </html>
