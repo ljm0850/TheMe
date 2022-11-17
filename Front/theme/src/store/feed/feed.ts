@@ -210,17 +210,15 @@ export default {
 
         // 
         getFeedTheme({ commit, getters, dispatch }: { commit: Commit, getters: any, dispatch:Dispatch }, _region: number) {
-            console.log("지역 : ", _region)
             commit("SET_DISPLAY_FEED_THEME_LIST", [])
             commit("SET_DISPLAY_FEED_THEME_NUM",0)
             axios({
                 url: rest.Feed.feedList(),
                 method: 'get',
                 headers: getters.authHeader,
-                params: { region: 3,  pageIdx:0, pageSize : 2147483647 }
+                params: { region: _region,  pageIdx:0, pageSize : 2147483647 }
             })
                 .then((res) => {
-                    console.log("피드 데이터 : ",res.data.data,typeof(res.data.data))
                     commit("SET_FEED_THEME", res.data.data)
             })
         },

@@ -51,6 +51,7 @@ export default {
         store.dispatch("getFeedTheme",0)
         const FeedList = computed(() => store.getters.displayFeedTheme)
         const selectCity = (e : any) => {
+            console.log(e.target.value)
             store.dispatch("getFeedTheme",e.target.value)
         }
 
