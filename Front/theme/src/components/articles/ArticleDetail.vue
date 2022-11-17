@@ -30,7 +30,7 @@
             </div>
             <span @click="displayComment()" v-if="!state.commentFlag">더보기</span>
             <!-- 댓글 -->
-            <CommentListVue v-if="state.commentFlag" :commentList ="article.commentListDtoList" />
+            <CommentListVue v-if="state.commentFlag" :article="article" :commentList ="article.commentListDtoList" />
             <!-- 댓글 끝 -->
         </div>
     </div>

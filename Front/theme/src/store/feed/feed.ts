@@ -112,13 +112,13 @@ export default {
                 console.log(res)
             })
         },
-        reportArticle({ commit, getters }: { commit: Commit, getters: any },_boardIdx:string, _content:string) {
+        reportArticle({ commit, getters }: { commit: Commit, getters: any }, _data:{boardIdx:string, content:string}) {
             axios({
-                url: rest.Feed.reportArticle(_boardIdx),
+                url: rest.Feed.reportArticle(_data.boardIdx),
                 method: 'post',
                 headers: getters.authHeader,
                 params: {
-                    content: _content
+                    content: _data.content
                 }
             })
                 .then((res) => {
@@ -174,13 +174,14 @@ export default {
                 console.log(res)
             })
         },
-        reportComment({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _commentIdx: string,_content:string) {
+        reportComment({ dispatch, getters }: { dispatch: Dispatch, getters: any }, _data:{commentIdx:string, content:string}) {
+            console.log(_data)
             axios({
-                url: rest.Feed.reportComment(_commentIdx),
+                url: rest.Feed.reportComment(_data.commentIdx),
                 method: 'post',
                 headers: getters.authHeader,
                 params: {
-                    content:_content
+                    content: _data.content
                 }
             })
                 .then((res) => {
