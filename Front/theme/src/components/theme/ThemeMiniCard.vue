@@ -111,6 +111,7 @@ export default {
 .fillBookmark {
   width: 22px;
   height: 19px;
+  margin-left: -3px;
 }
 
 .bookmark {
