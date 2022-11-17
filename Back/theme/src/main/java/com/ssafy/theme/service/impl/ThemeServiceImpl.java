@@ -127,7 +127,7 @@ public class ThemeServiceImpl implements ThemeService {
     public List<PublicThemeListDto> getPublicThemeList(int userIdx,int sort, int pageSize, int pageIdx) {
         List<PublicThemeListDto> resultList = new ArrayList<>();
         Slice<PublicThemeDto> themeList;
-        Pageable pageable = PageRequest.of(pageIdx, pageSize);
+        PageRequest pageable = PageRequest.of(pageIdx, pageSize);
             if (sort == 0) { // 인기순
                 themeList = userThemeRepository.getPopularAllThemeListWithJPA( pageable);
             } else if(sort == 1) {//최신순

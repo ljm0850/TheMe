@@ -108,7 +108,7 @@ class ThemeApplicationTests {
 	void 공용테마목록조회_전체_인기순(){
 		int pageSize = 1;
 		int pageIdx = 0;
-		Pageable pageable = PageRequest.of(pageIdx, pageSize);
+		PageRequest pageable = PageRequest.of(pageIdx, pageSize);
 		Slice<PublicThemeDto> themeList = userThemeRepository.getPopularAllThemeListWithJPA( pageable);
 		for(PublicThemeDto publicThemeDto : themeList){
 			System.out.println(publicThemeDto.getName());
@@ -118,7 +118,7 @@ class ThemeApplicationTests {
 	void 공용테마목록조회_전체_시간순(){
 		int pageSize = 1;
 		int pageIdx = 0;
-		Pageable pageable = PageRequest.of(pageIdx, pageSize);
+		PageRequest pageable = PageRequest.of(pageIdx, pageSize);
 		Slice<PublicThemeDto> themeList = userThemeRepository.getRecnetAllThemeListWithJPA( pageable);
 		for(PublicThemeDto publicThemeDto : themeList){
 			System.out.println(publicThemeDto.getName());
