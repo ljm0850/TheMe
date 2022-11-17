@@ -7,27 +7,32 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div>프로필 사진</div>
+                <div id="profileImage">프로필 사진</div>
+                <span style="line-height:50%"><br></span>
                 <div id="profileImage">
                     <img :src="selectedUser.picture" alt="" class="test">
                 </div>
                 <!-- <img v-if="!state.profileChanged"  :src="selectedUser.picture" alt="" class="test"> -->
+                <span style="line-height:50%"><br></span>
                 <input type="file" accept="image/*" @change="fileChange"/>
+                
+                <span style="line-height:50%"><br></span>
+                <span style="line-height:50%"><br></span>
 
-                <div>닉네임<input type="text" class="form-control" id="" :placeholder="selectedUser.nickname"  @input="getDuplicateNickname"></div>
+                <div id="profileImage">닉네임<input type="text" class="form-control" id="" :placeholder="selectedUser.nickname"  @input="getDuplicateNickname"></div>
                 
                 <div v-if="state.inputNicknameText.length  >= 1">
-                    <div v-if="state.inputNicknameText == selectedUser.nickname">
+                    <div class="redColor" v-if="state.inputNicknameText == selectedUser.nickname">
                         기존 닉네임과 같습니다.
                     </div>
-                    <div v-else-if = isPossible>
+                    <div class="blueColor" v-else-if = isPossible>
                         사용 가능한 닉네임입니다.
                     </div>
-                    <div v-else-if = !isPossible >
+                    <div class = "redColor" v-else-if = !isPossible >
                         사용 불가능한 닉네임입니다.
                     </div>
                 </div>
-
+                <span style="line-height:50%"><br></span>
             <!-- v-if문으로 띄우기 눌렀느지 안눌렀는지는 여기 스테이트에서 처리 설정버튼 눌렀을때 false로초기화-->
                 <div>자기 소개 <input type="text" class="form-control" id="" :placeholder="selectedUser.description" @input="updateDescription"></div>
             </div>
@@ -138,5 +143,18 @@ export default {
 </script>
 
 <style lang="scss">
+.test{
+    border-radius: 200px;
+    
+}
+#profileImage {
+    text-align: center;
+}
 
+.redColor {
+    color: red;
+}
+.blueColor {
+    color:blue
+}
 </style>

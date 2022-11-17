@@ -4,7 +4,7 @@
       <button class="btn btn-light type-button border" @click="changeViewMode(true)">Themes</button>
       <button class="btn btn-light type-button border"  @click="changeViewMode(false)">Following</button>
     </div>
-    <br />
+    
     <ul v-if="state.vueTarget" class="paddingZero">
       <li v-for="item in selectedUser.themeDtoList" :key="item" >
         <UserThemeCard
@@ -72,10 +72,10 @@ ul {
 
 .themeCard {
   margin-bottom: 10px;
-  margin-left : 0px;
+  // margin-left : 0px;
 }
 
 .type-button {
-  width: 45%;
+  width: 50%;
 }
 </style>

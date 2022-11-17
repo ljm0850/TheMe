@@ -8,30 +8,30 @@
     <!-- 모달 끝 -->
     <div class="d-flex flex-column align-items-center">
         <img :src="selectedUser.picture" alt="" class="test">
-        <div class="">{{ selectedUser.nickname }}</div>
+        <span style="line-height:50%"><br></span>
+        <div class="nickname"><b>{{ selectedUser.nickname }}</b></div>
         <div>{{ selectedUser.description }}</div>
         <div class="d-flex flex-row">
             <div class="inroduce-margin">
                 <div>Post</div>
-                <div>{{selectedUser.posts}}</div>
+                <div class="number">{{selectedUser.posts}}</div>
             </div>
             <div class="inroduce-margin">
                 <div>Themes</div>
-                <div>{{selectedUser.themes}}</div>
+                <div class="number">{{selectedUser.themes}}</div>
             </div>
-            <div class="inroduce-margin"  data-bs-toggle="modal" data-bs-target="#followerModal">
+            <div class="inroduce-margin canClick"  data-bs-toggle="modal" data-bs-target="#followerModal">
                 <div>Follower</div>
-                <div>
+                <div class="number">
                     {{selectedUser.following}} 
                     <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#followerModal">🔍</button> -->
                 </div>
                 <FollowerModalVue :userInfo="selectedUser"/>
-                
             </div>
             
-            <div class="inroduce-margin" data-bs-toggle="modal" data-bs-target="#followingModal">
+            <div class="inroduce-margin canClick" data-bs-toggle="modal" data-bs-target="#followingModal">
                 <div>Following</div>
-                <div>
+                <div class="number">
                     {{selectedUser.follower}} 
                     <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#followingModal">🔍</button> -->
                 </div> 
@@ -90,5 +90,16 @@ export default {
     background-color:transparent;
     border: 0;
     outline: 0;
+}
+.number {
+    text-align : center;
+}
+.nickname{
+  font-size: larger;
+}
+.canClick {
+  
+  
+  
 }
 </style>
