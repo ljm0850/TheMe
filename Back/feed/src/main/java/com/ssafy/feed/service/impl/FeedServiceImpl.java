@@ -66,7 +66,6 @@ public class FeedServiceImpl implements FeedService {
                         .isFollow(false)
                         .isMy(false)
                         .latitude(boardGroupListDtos.get(i).getLatitude())
-                        .boardIdx(boardGroupListDtos.get(i).getBoardIdx())
                         .longitude(boardGroupListDtos.get(i).getLongitude())
                         .themeIdx(boardGroupListDtos.get(i).getThemeIdx())
                         .city(boardGroupListDtos.get(i).getCity())
