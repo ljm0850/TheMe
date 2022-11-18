@@ -6,8 +6,8 @@
       <button :class="{bold:state.isMarked==1}" class = "filter-button" @click="setisMarked(1)">북마크</button>
     </div>
     <div>
-      <button v-show="state.isMarked==0" :class="{bold:state.sort==0}" class="sort-button" @click="setSort(0)">인기순</button>
-      <button v-show="state.isMarked==0" :class="{bold:state.sort==1}" class="sort-button" @click="setSort(1)">최신순</button>
+      <button v-show="state.isMarked==0" :class="{boldsort:state.sort==0}" class="sort-button" @click="setSort(0)">인기순</button>
+      <button :class="{boldsort:state.sort==1 || state.isMarked==1}" class="sort-button" @click="setSort(1)">최신순</button>
     </div>
   </div>
   <div class="d-flex card-list theme-all-card-list">
@@ -98,7 +98,11 @@ export default {
 }
 
 .bold{
-  border : 2px solid #aaa9a9 !important;
+  border : 2px solid #E89A3D !important;
+}
+
+.boldsort{
+  border : 2px solid #82d67d !important;
 }
 
 .sort-button {
