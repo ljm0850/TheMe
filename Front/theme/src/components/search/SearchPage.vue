@@ -204,7 +204,7 @@ export default {
 }
 
 .btn-size-38 .top-box {
-  height: 38px;
+  height: 38px !important;
 }
 
 .search-theme-card,
