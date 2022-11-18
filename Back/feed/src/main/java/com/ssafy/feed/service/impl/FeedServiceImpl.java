@@ -91,21 +91,17 @@ public class FeedServiceImpl implements FeedService {
             List<Board> boardGroupListDto = boardRepository.getBoardListWithJPA(openUserList,theme.getUserThemeIdx(),name,pageable);
 
             for(Board board : boardGroupListDto){
-                System.out.println(board.getIdx());
                 Integer commentCount = commentRepository.findByBoard(board).size();
                 List<Likes> likeCount = likeRepository.findByBoard(board);
-                System.out.println("1");
                 UserInfoByIdDto userInfo = userClient.getUserInfo(board.getUserIdx());
                 List<Picture> pictureList = pictureRepository.findByBoard(board);
                 String themeName = themeClient.getThemeName(theme_idx);
                 boolean isWriter = false;
-                System.out.println("2");
                 String []  pictures= new String[pictureList.size()];
                 for(int i=0;i<pictureList.size();i++){
                     pictures[i] = (pictureList.get(i).getPicture());
                 }
                 if(board.getUserIdx() == userIdx) isWriter = true;
-                System.out.println("3");
                 BoardSimpleListDto boardSimpleListDto = BoardSimpleListDto.builder()
                         .boardIdx(board.getIdx())
                         .alertCount(board.getAlertCount())
@@ -121,8 +117,8 @@ public class FeedServiceImpl implements FeedService {
                         .themeName(themeName)
                         .profile(userInfo.getPicture())
                         .userIdx(userInfo.getUserIdx())
+                        .boardIdx(board.getIdx())
                         .build();
-                System.out.println(boardGroupListDto.toArray());
                 boardSimpleListDtoList.add(boardSimpleListDto);
             }
         }
