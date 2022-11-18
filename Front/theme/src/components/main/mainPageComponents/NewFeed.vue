@@ -6,6 +6,7 @@
     </div>
     <ScrollObserverVue @triggerIntersected="loadMore" />
     <!-- 피드가 없을시 보이는 내용 -->
+
     <div v-if="FeedList.length == 0" class="card">
       <div class="card-body">
         <div>해당 지역 피드가 없습니다.</div>
