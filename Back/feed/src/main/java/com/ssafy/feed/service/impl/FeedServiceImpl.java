@@ -238,6 +238,7 @@ public class FeedServiceImpl implements FeedService {
                 if(commentList.get(k).getUserIdx()!=userIdx) isWriter = false;
                 else isWriter = true;
                 Comment targetComment = commentList.get(k);
+
                 CommentListDto commentListDto = CommentListDto.builder()
                         .commentIdx(targetComment.getIdx())
                         .alertCount(targetComment.getAlertCount())
