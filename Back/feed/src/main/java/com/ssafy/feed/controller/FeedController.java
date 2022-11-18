@@ -46,12 +46,12 @@ public class FeedController {
         return new ResponseEntity<>(result, status);
     }
     @GetMapping("/board/detail/{board_idx}")
-    public ResponseEntity<?> detailBoard(@RequestParam(name = "theme_idx") int theme_idx, HttpServletRequest request ) {
+    public ResponseEntity<?> detailBoard(@RequestParam(name = "board_idx") int board_idx, HttpServletRequest request ) {
         Map<String, Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         int userIdx = Integer.parseInt(request.getHeader("userIdx"));
         try {
-            BoardSimpleListDto data = feedService.detailBoard(userIdx,theme_idx); // 불러와야해요 리스트
+            BoardSimpleListDto data = feedService.detailBoard(userIdx,board_idx); // 불러와야해요 리스트
             result.put("data",data);
             result.put("message", OK);
             status = HttpStatus.OK;
