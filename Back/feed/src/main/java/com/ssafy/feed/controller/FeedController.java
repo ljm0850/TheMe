@@ -45,6 +45,22 @@ public class FeedController {
         }
         return new ResponseEntity<>(result, status);
     }
+    @GetMapping("/board/detail/{board_idx}")
+    public ResponseEntity<?> detailBoard(@RequestParam(name = "theme_idx") int theme_idx, HttpServletRequest request ) {
+        Map<String, Object> result = new HashMap<>();
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        int userIdx = Integer.parseInt(request.getHeader("userIdx"));
+        try {
+            BoardSimpleListDto data = feedService.detailBoard(userIdx,theme_idx); // 불러와야해요 리스트
+            result.put("data",data);
+            result.put("message", OK);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            result.put("message", FAIL);
+        }
+        return new ResponseEntity<>(result, status);
+    }
     @GetMapping("/map/theme/{theme_idx}")
     @ApiOperation(value = "해당 테마에 대한 게시글 목록" , notes = "테마 번호를 토대로 게시글 목록을 리스팅")
     public ResponseEntity<?> themeBoardGroup(HttpServletRequest request,@PathVariable(name = "theme_idx") int theme_idx,@RequestParam(name="pageSize") int pageSize, @RequestParam(name ="pageIdx")int pageIdx) {

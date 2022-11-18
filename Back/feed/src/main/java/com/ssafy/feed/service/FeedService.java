@@ -24,4 +24,6 @@ public interface FeedService {
     boolean isScrap(int userIdx, int themeIdx);
     List<UserThemeDtoWithMSA> getUserThemeUserList(int theme_idx, int user_idx);
     String getUserThemeName(int themeIdx);
+
+    BoardSimpleListDto detailBoard(int userIdx, int theme_idx);
 }

@@ -222,6 +222,66 @@ public class FeedServiceImpl implements FeedService {
         String themeInfo = themeClient.getUserThemeName(themeIdx);
         return themeInfo;
     }
+
+    @Override
+    public BoardSimpleListDto detailBoard(int userIdx, int board_idx) {
+        Optional<Board> board = boardRepository.findById(board_idx);
+        if(board.isPresent()){
+            UserInfoByIdDto userInfo = userClient.getUserInfo(board.get().getUserIdx()); // 해당 게시글을 작성한 유저의 정보 받기
+            List<Likes> likeList = likeRepository.findByBoard(board.get()); // 해당 게시글의 좋아요 갯수
+            Likes likeMy = likeRepository.findByUserIdxAndBoard(userIdx,board.get()); // 해당 게시글에 본인이 좋아했는지 조회
+            boolean likeMyBoolean = false;
+            if(likeMy != null) likeMyBoolean = true;
+            List<Comment> commentList = commentRepository.findByBoard(board.get()); // 해당 게시글의 댓글
+            boolean isWriter = true;
+            List<CommentListDto> commentListDtoList = new ArrayList<>();
+            for(int k=0;k<commentList.size();k++) {
+                UserInfoByIdDto userInfoByIdDto = userClient.getUserInfo(commentList.get(k).getUserIdx());
+                if(commentList.get(k).getUserIdx()!=userIdx) isWriter = false;
+                else isWriter = true;
+                Comment targetComment = commentList.get(k);
+                CommentListDto commentListDto = CommentListDto.builder()
+                        .commentIdx(targetComment.getIdx())
+                        .alertCount(targetComment.getAlertCount())
+                        .content(targetComment.getContent())
+                        .userIdx(targetComment.getUserIdx())
+                        .isWriter(isWriter)
+                        .profile(userInfoByIdDto.getPicture())
+                        .boardIdx(board.get().getIdx())
+                        .nickname(userInfoByIdDto.getNickname())
+                        .build();
+                commentListDtoList.add(commentListDto);
+            }
+            List<Picture> pictureList = pictureRepository.findByBoard(board.get()); // 해당 게시글의 사진
+            String[] pictures = new String[pictureList.size()];
+            for(int k=0;k<pictureList.size();k++){
+                pictures[k] = (pictureList.get(k).getPicture());
+            }
+            isWriter = true;
+            if(board.get().getUserIdx()!=userIdx) isWriter = false;
+            BoardSimpleListDto boardSimpleListDto = BoardSimpleListDto.builder()
+                    .boardIdx(board.get().getIdx())
+                    .alertCount(board.get().getAlertCount())
+                    .city(board.get().getCity())
+                    .commentCount(commentList.size())
+                    .isWriter(isWriter)
+                    .likeCount(likeList.size())
+                    .modifyTime(board.get().getModifyTime())
+                    .name(board.get().getName())
+                    .nickname(userInfo.getNickname())
+                    .picture(pictures)
+                    .themeIdx(board.get().getThemeIdx())
+                    .themeName(themeClient.getUserThemeName(board.get().getThemeIdx()))
+                    .profile(userInfo.getPicture())
+                    .userIdx(board.get().getUserIdx())
+                    .likeMy(likeMyBoolean)
+                    .commentListDtoList(commentListDtoList)
+                    .build();
+            return boardSimpleListDto;
+        }
+        return null;
+    }
+
     public List<BoardDto> getUserBoardList(int user_idx) {
         List<Board> userBoardList = boardRepository.findByUserIdx(user_idx);
 
