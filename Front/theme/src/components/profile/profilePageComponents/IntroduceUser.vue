@@ -91,6 +91,7 @@ export default {
     border: 0;
     outline: 0;
     font-size: 12px;
+    padding:0;
     
 }
 .number {
