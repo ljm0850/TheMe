@@ -1,5 +1,5 @@
 <template>
-    <div class="article-wrap d-flex justify-content-between" data-bs-toggle="modal" data-bs-target="#articleListModal">
+    <div class="article-wrap d-flex justify-content-between" data-bs-toggle="modal" :data-bs-target="`#articleListModal${idx}`">
         <div>
             <div class="article-name">{{article.name}}</div>
             <div>{{article.place}}</div>
@@ -12,7 +12,8 @@
     </div>
     <hr>
     <!-- 모달 -->
-    <ArticleListModalVue :article="article" :boardList="boardList"/>
+    <!-- {{article}} -->
+    <ArticleListModalVue :article="article" :boardList="boardList" :idx="idx"/>
     
 </template>
 
@@ -26,7 +27,8 @@ export default {
     },
     props:{
         article:Object,
-        publicTheme:String
+        publicTheme:String,
+        idx:Number
     },
     setup(props:any) {
         const store = useStore();
