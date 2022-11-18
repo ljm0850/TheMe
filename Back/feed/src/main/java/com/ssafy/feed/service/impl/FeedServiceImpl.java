@@ -72,6 +72,7 @@ public class FeedServiceImpl implements FeedService {
                         .name(boardGroupListDtos.get(i).getName())
                         .place(boardGroupListDtos.get(i).getPlace())
                         .userIdx(boardGroupListDtos.get(i).getUserIdx())
+                        .boardIdx(boardGroupListDtos.get(i).getIdx())
                         .build();
                 result.add(boardGroupShowListDto);
             }
