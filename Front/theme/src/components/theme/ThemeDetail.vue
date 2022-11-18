@@ -20,7 +20,10 @@
         <div class="theme-title-text">{{ themeDetail.name }}</div>
       </div>
     </div>
-    <KakaoMapVue class="kakao-map" :articleList="articleList"/>
+    <br>
+    <div>
+      <KakaoMapVue :articleList="articleList"/>
+    </div>
     <button @click="goCreateArticle()" class="theme-plus-button">+</button>
     <ArticleListVue
       class="article-list"
@@ -123,6 +126,7 @@ export default {
   text-align: center;
   padding-top: 20px;
   padding-left: 10px;
+  z-index: -1;
 }
 
 .emtpyBookmark {

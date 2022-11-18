@@ -8,8 +8,7 @@
                 </div>
                 <div class="modal-body">
                     <!-- <ArticleDetailVue :article="article" class="article-detail"/> -->
-                    {{ article }}
-                    <ArticleDetailVue :article="article"/>
+                    <ArticleDetailVue :article="newArticle"/>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -23,6 +22,8 @@
 <script lang="ts">
 import ArticleDetailVue from './ArticleDetail.vue';
 // import { reactive } from "vue";
+import { useStore } from "vuex";
+import { computed } from '@vue/runtime-core';
 export default {
     components: {
         ArticleDetailVue,
@@ -34,16 +35,15 @@ export default {
         idx:Number
     },
     setup(props:any) {
-        console.log(props.boardList);
+        // console.log(props.boardList);
         // const article = reactive({
         //     themeName:"코딩카페",
         //     profile:"",
         //     nickname:"joe",
         //     picture:""
         // });
-        const newArticle = {
-
-        }
+        const store = useStore();
+        const newArticle = computed(()=>store.getters.themeArticleListDetail[props.article.boardIdx])
 
         return { newArticle }
     }

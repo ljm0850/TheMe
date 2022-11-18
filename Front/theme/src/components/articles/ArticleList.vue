@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- {{articleList}} -->
     <!-- <div>아티클 리스트 목록</div>-->
     <ArticleItemVue
       :publicTheme = "publicTheme"
