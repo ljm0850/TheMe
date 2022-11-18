@@ -29,7 +29,8 @@ export default {
     props:{
         article:Object,
         publicTheme:String,
-        idx:String
+        idx:String,
+        page:String
     },
     setup(props:any) {
         const store = useStore();
@@ -39,7 +40,6 @@ export default {
             pageSize: 10,
             pageIdx: 0,
         });
-        
         store.dispatch("placeArticleList", param);
         const boardList = computed(() => store.getters.placeArtilceList);
 

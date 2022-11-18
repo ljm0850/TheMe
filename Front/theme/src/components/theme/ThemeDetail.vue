@@ -127,6 +127,7 @@ export default {
   padding-top: 20px;
   padding-left: 10px;
   z-index: -1;
+  width: 380px;
 }
 
 .emtpyBookmark {

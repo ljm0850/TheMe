@@ -247,7 +247,7 @@ export default {
                 // commit("SET_FEED_RECOMMEND_THEME_List2",res.data)
             })
         },
-        getUserThemeArticleList ({ commit,getters }: { commit: Commit, getters: any }, _data:{themeIdx:string, pageIdx:number, pageSize:number}) {
+        getUserThemeArticleList ({ commit,getters,dispatch }: { commit: Commit, getters: any, dispatch:Dispatch }, _data:{themeIdx:string, pageIdx:number, pageSize:number}) {
             axios({
                 url: rest.Feed.userThemeArticleList(_data.themeIdx),
                 method: 'get',
@@ -260,7 +260,11 @@ export default {
                 .then((res) => {
                 // console.log("유저테마게시글목록")
                 // console.log(res.data)
-                commit("SET_USER_THEME_ARTICLE_LIST",res.data.data)
+                const data = res.data.data
+                commit("SET_USER_THEME_ARTICLE_LIST",data)
+                data.forEach((element:{boardIdx:number}) => {
+                    dispatch('detailBoard',element.boardIdx)
+                })
             })
         },
         placeArticleList({ commit, getters }: { commit: Commit, getters: any }, _data:{themeIdx:string, name:string, pageIdx:number, pageSize:number}) {
