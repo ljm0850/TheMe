@@ -10,6 +10,14 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+    metrics:
+      tags:
+        application: ${spring.application.name}
 
 spring :
   application :
