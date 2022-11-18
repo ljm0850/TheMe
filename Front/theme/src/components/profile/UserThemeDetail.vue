@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="themeDetail-wrap">
     <div class="theme-header">
       <div class="theme-title-box">
         <div data-bs-toggle="modal" data-bs-target="#settingThemeModal">
@@ -15,13 +15,17 @@
         <div class="theme-title-text">{{ themeDetail.name }}</div>
       </div>
     </div>
+    <br>
     <SettingThemeModalVue :themeDetail="themeDetail"/>
-    <KakaoMapVue class="kakao-map" :articleList="articleList"/>
+    <KakaoMapVue :articleList="articleList"/>
+    <br>
+    <br>
     <ArticleListVue
       class="article-list"
       :publicThemeIdx="publicThemeIdx"
       :articleList="articleList"
     />
+    <br>
   </div>
 </template>
 
@@ -100,12 +104,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.themeDetail-wrap{
+  position: relative !important;
+  top: -25px !important;
+}
+
 .theme-header {
   position: relative;
   top: 25px;
   z-index: 1;
-  width: 220px;
   height: 60px;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
@@ -113,14 +121,16 @@ export default {
 }
 .theme-title-text {
   display: inline;
+  position:relative;
+  left:12px !important;
   margin: 5px;
   font-size: 17px;
 }
 
 .theme-title-box {
-  text-align: center;
   padding-top: 20px;
   padding-left: 10px;
+  z-index: -1;
 }
 
 .emtpyBookmark {
@@ -183,6 +193,6 @@ export default {
 }
 .article-list {
   position: relative;
-  top: -40px;
+  top: -15px !important;
 }
 </style>
