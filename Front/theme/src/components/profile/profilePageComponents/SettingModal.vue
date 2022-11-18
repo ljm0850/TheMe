@@ -6,12 +6,16 @@
                 <h1 class="modal-title fs-5" id="settingModalLabel">프로필</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <span v-if="!state.profilePictureChanged" style="line-height:50%"><br></span>
+            <div id="profileImage" v-if="!state.profilePictureChanged">프로필 사진</div>
+            <span v-if="!state.profilePictureChanged" style="line-height:50%"><br></span>
             <div class="modal-body">
                 <span style="line-height:50%"><br></span>
                 <div id="profileImage">프로필 사진</div>
+                
                 <span style="line-height:50%"><br></span>
                 <div id="profileImage">
-                    <img :src="selectedUser.picture" alt="" class="test">
+                    <img :src="selectedUser.picture" alt="" class="test" v-if="state.profilePictureChanged">
                 </div>
                 <!-- <img v-if="!state.profileChanged"  :src="selectedUser.picture" alt="" class="test"> -->
                 <span style="line-height:50%"><br></span>
@@ -72,6 +76,7 @@ export default {
             selectFile : {},
             url : "",
             profileChanged : false,
+            profilePictureChanged : true,
         });
         
         const isPossible = computed(()=>store.getters.duplicationnickname)
@@ -134,8 +139,11 @@ export default {
                 imageDiv.firstChild.remove();
             }
             const newImg = document.createElement('img')
+            newImg.setAttribute("id","profileImage")
+            newImg.setAttribute("class","test")
             newImg.src = _img
             imageDiv?.append(newImg)
+            state.profilePictureChanged = !state.profilePictureChanged
         };   
         
         return { state,getDuplicateNickname, isPossible, updateUserInfo, selectedUser, updateDescription, logout, fileChange}

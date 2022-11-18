@@ -74,6 +74,7 @@ export default {
 .paddingZero {
   padding-left: 0;
 }
+
 ul {
   list-style: none;
   margin-left: 16px;
