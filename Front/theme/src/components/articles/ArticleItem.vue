@@ -13,7 +13,7 @@
     <hr>
     <!-- 모달 -->
     <!-- {{article}} -->
-    <ArticleListModalVue :article="article" :boardList="boardList" :idx="idx"/>
+    <ArticleListModalVue v-if="isArticle" :article="article" :boardList="boardList" :idx="idx"/>
     
 </template>
 
@@ -21,6 +21,7 @@
 import ArticleListModalVue from './ArticleListModal.vue';
 import { useStore } from "vuex";
 import { computed, reactive } from "vue";
+import _ from "lodash"
 export default {
     components: {
         ArticleListModalVue,
@@ -43,8 +44,9 @@ export default {
         const boardList = computed(() => store.getters.placeArtilceList);
 
         // console.log(boardList.value);
-
-        return { boardList }
+        // const newArticle = computed(()=>store.getters.themeArticleListDetail[props.article.boardIdx])
+        const isArticle = computed(()=>!_.isEmpty(store.getters.themeArticleListDetail[props.article.boardIdx]))
+        return { boardList,isArticle }
     }
 }
 </script>
