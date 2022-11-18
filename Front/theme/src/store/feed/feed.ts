@@ -47,7 +47,7 @@ export default {
         SET_FEED_RECOMMEND_THEME_List2: (state: { feedRecommendThemeList2: Array<object> }, _feedRecommendThemeList: Array<object>) => state.feedRecommendThemeList2 = _feedRecommendThemeList,
         SET_SEARCH_PLACES_LIST: (state: {searchPlacesList:Array<Object>}, _searchPlacesList:Array<Object>) => state.searchPlacesList = _searchPlacesList,
         SET_SELECTED_PLACE: (state:{selectedPlace:Object}, _selectedPlace:Array<Object>) => state.selectedPlace = _selectedPlace,
-        SET_PUBLIC_THEME_ARTICLE_LIST: (state:{publicThemeArticleList:Object}, _publicThemeArticleList:Array<Object>) => state.publicThemeArticleList = _publicThemeArticleList,
+        SET_PUBLIC_THEME_ARTICLE_LIST: (state:{publicThemeArticleList:Object}, _publicThemeArticleList:Object) => state.publicThemeArticleList = _publicThemeArticleList,
         SET_SELECTED_THEME_FOR_ARTICLE: (state: { selectedThemeforArticle: Object }, _selectedThemeforArticle: Object) => state.selectedThemeforArticle = _selectedThemeforArticle,
         SET_THEME_ARTICLE_LIST_DETAIL: (state: { themeArticleListDetail: Object},_themeArticleListDetail:Object) => state.themeArticleListDetail = _themeArticleListDetail,
         SET_USER_THEME_ARTICLE_LIST: (state: { userThemeArticleList: Object }, _userThemeArticleList: Object) => state.userThemeArticleList = _userThemeArticleList,
@@ -89,7 +89,7 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
-                    console.log(res.data.comment)
+                    // console.log(res.data.comment)
                     commit("SET_DETAIL_ARTICLE", res.data.comment)
             })
         },
@@ -194,7 +194,8 @@ export default {
 
         // feed-controller
         themeArticleList({ commit, getters,dispatch }: { commit: Commit, getters: any, dispatch:Dispatch }, _data:{themeIdx:string, pageIdx:number, pageSize:number}) {
-            console.log("아티클 리스트를 보여줘")
+            console.log("themeArticleList작동됨, 조건은 맵에서 클릭했을때로 알고 있음")
+            console.log("아티클 리스트를 보여줘",_data)
             axios({
                 url: rest.Feed.themeArticleList(_data.themeIdx),
                 method: 'get',
@@ -206,10 +207,9 @@ export default {
             })
                 .then((res => {
                 const data = res.data.data
-                    console.log("정보 : ",data)
                 commit("SET_PUBLIC_THEME_ARTICLE_LIST", data)
+                // console.log("끝")
                 data.forEach((element:{boardIdx:number}) => {
-                    console.log("boardIdx : ",element.boardIdx)
                     dispatch('detailBoard',element.boardIdx)
                 })
                 .catch((err:any)=>{
@@ -340,7 +340,6 @@ export default {
         },
 
         detailBoard({getters,commit}:{getters:any,commit:Commit},_board_idx:string){
-            console.log("작동")
             axios({
                 url: rest.Feed.detailBoard(_board_idx),
                 headers: getters.authHeader,
@@ -353,7 +352,6 @@ export default {
                 // console.log("결과값:",res.data.data)
                 const data = {...getters.themeArticleListDetail}
                 data[_board_idx] = res.data.data
-                console.log(data)
                 commit('SET_THEME_ARTICLE_LIST_DETAIL',data)
             })
             .catch((err)=>{

@@ -77,7 +77,7 @@ export default {
         store.dispatch("scrapTheme", publicThemeIdx);
       }
       state.isMarked = !state.isMarked;
-      console.log(state.isMarked);
+      // console.log(state.isMarked);
     };
 
     const isBookmarked = () => {
@@ -85,7 +85,7 @@ export default {
     };
     setTimeout(() => isBookmarked(), 100);
 
-    console.log(state.isMarked);
+    // console.log(state.isMarked);
 
     // 초기화
     store.commit("SET_SELECTED_THEME_FOR_ARTICLE", {})
@@ -98,7 +98,7 @@ export default {
       //   name: "CreateArticle",
       // });
     };
-    console.log(themeDetail.value);
+    // console.log(themeDetail.value);
 
     return { themeDetail, state, clickBookmark, goCreateArticle, publicThemeIdx, articleList };
   },

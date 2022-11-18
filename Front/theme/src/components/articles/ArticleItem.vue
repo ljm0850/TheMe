@@ -28,7 +28,7 @@ export default {
     props:{
         article:Object,
         publicTheme:String,
-        idx:Number
+        idx:String
     },
     setup(props:any) {
         const store = useStore();

@@ -1,11 +1,10 @@
 <template>
   <div>
-    <!-- {{articleList}} -->
     <!-- <div>아티클 리스트 목록</div>-->
     <ArticleItemVue
       :publicTheme = "publicTheme"
       v-for="article,idx in articleList"
-      :key="article"
+      :key="article.boardIdx"
       :idx="idx"
       :article="article"
     />

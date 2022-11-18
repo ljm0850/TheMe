@@ -32,7 +32,7 @@ export default {
         article:Object,
         // articleName: String,
         // boardList:Object,
-        idx:Number
+        idx:String
     },
     setup(props:any) {
         // console.log(props.boardList);
