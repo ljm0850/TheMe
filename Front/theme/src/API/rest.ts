@@ -87,5 +87,7 @@ export default {
       HOST + FEED + MAP + `/userTheme/${_userTheme_idx}`,
     boardInfoByUserTheme: (_userThemeIdx: string) =>
       HOST + FEED + BOARD + `/themeList/${_userThemeIdx}`,
+    detailBoard: (_board_idx:string) =>
+      HOST + FEED + BOARD + '/detail' + `/${_board_idx}`
   },
 };

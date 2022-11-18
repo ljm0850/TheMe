@@ -69,7 +69,7 @@ export default {
             })
         },
         getPublicThemeList({ commit, getters, dispatch, state }: { commit: Commit, getters: any, dispatch: Dispatch, state: any }, _params: object) {
-            console.log(_params)
+            // console.log(_params)
             axios({
                 url: rest.Theme.getPublicThemeList(),
                 method: 'get',
@@ -77,13 +77,13 @@ export default {
                 params: _params
             })
                 .then((res) => {
-                    console.log()
+                    // console.log()
                     const newObj = { ...getters.publicThemeList }
                     const beforeLength = Object.keys(state.publicThemeList).length
                     for (let i = 0; i < res.data.themeList.length; i++){
                         newObj[beforeLength + i] = res.data.themeList[i]
                     }
-                    console.log("넣을 값 : ",newObj)
+                    // console.log("넣을 값 : ",newObj)
                     commit("SET_PUBLIC_THEME_LIST", newObj)
             })
         },
@@ -320,12 +320,12 @@ export default {
                 headers: getters.authHeader
             })
                 .then((res) => {
-                    console.log("선택 검색 결과: ", res.data.themeDtos)
+                    // console.log("선택 검색 결과: ", res.data.themeDtos)
                     for (const data of res.data.themeDtos) {
                         if (data.name == _name) {
                             dispatch('selectedThemeIdxForCreate',data.themeIdx)
                             dispatch('selectedThemeEmoticonForCreate', data.emoticon)
-                            console.log("정확한 데이터: ", data)
+                            // console.log("정확한 데이터: ", data)
                             break
                         }
                     }

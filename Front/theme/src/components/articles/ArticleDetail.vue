@@ -76,7 +76,7 @@ export default {
         const today = new Date();
         const timeValue = new Date(props.article.modifyTime);
 
-        const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+        const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60)-540;
 
         if (betweenTime < 1) state.changeTime =  '방금 전';
         else if (betweenTime < 60) {

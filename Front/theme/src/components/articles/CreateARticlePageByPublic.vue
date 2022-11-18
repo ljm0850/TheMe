@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog">
+  <div>
         <!-- <form action=""> -->
             <div class="create-page container"  style="background-color: #fbe9d2;">
                 <br>

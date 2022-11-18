@@ -64,7 +64,7 @@ export default {
       }
 
       state.isMarked = !state.isMarked;
-      console.log(state.isMarked);
+      // console.log(state.isMarked);
     };
 
     const isThemePage = () => {

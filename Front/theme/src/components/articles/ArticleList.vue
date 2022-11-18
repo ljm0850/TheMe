@@ -3,8 +3,9 @@
     <!-- <div>아티클 리스트 목록</div>-->
     <ArticleItemVue
       :publicTheme = "publicTheme"
-      v-for="article in articleList"
-      :key="article"
+      v-for="article,idx in articleList"
+      :key="article.boardIdx"
+      :idx="idx"
       :article="article"
     />
   </div>

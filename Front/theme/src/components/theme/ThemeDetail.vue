@@ -20,7 +20,10 @@
         <div class="theme-title-text">{{ themeDetail.name }}</div>
       </div>
     </div>
-    <KakaoMapVue class="kakao-map" :articleList="articleList"/>
+    <br>
+    <div>
+      <KakaoMapVue :articleList="articleList"/>
+    </div>
     <button @click="goCreateArticle()" class="theme-plus-button">+</button>
     <ArticleListVue
       class="article-list"
@@ -74,7 +77,7 @@ export default {
         store.dispatch("scrapTheme", publicThemeIdx);
       }
       state.isMarked = !state.isMarked;
-      console.log(state.isMarked);
+      // console.log(state.isMarked);
     };
 
     const isBookmarked = () => {
@@ -82,7 +85,7 @@ export default {
     };
     setTimeout(() => isBookmarked(), 100);
 
-    console.log(state.isMarked);
+    // console.log(state.isMarked);
 
     // 초기화
     store.commit("SET_SELECTED_THEME_FOR_ARTICLE", {})
@@ -95,7 +98,7 @@ export default {
       //   name: "CreateArticle",
       // });
     };
-    console.log(themeDetail.value);
+    // console.log(themeDetail.value);
 
     return { themeDetail, state, clickBookmark, goCreateArticle, publicThemeIdx, articleList };
   },
@@ -123,6 +126,7 @@ export default {
   text-align: center;
   padding-top: 20px;
   padding-left: 10px;
+  z-index: -1;
 }
 
 .emtpyBookmark {
