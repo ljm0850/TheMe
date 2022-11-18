@@ -24,10 +24,10 @@ public class BoardGroupListDto {
     Long boardCount; //게시글 갯수
     String latitude;
     String longitude;
-
+    int boardIdx;
     @Builder
     public BoardGroupListDto(int themeIdx,int userIdx, String city, String name, String place, Long boardCount
-                            ,String latitude, String longitude) {
+                            ,String latitude, String longitude, int boardIdx) {
         this.themeIdx = themeIdx;
         this.userIdx = userIdx;
         this.city = city;
@@ -36,5 +36,6 @@ public class BoardGroupListDto {
         this.boardCount = boardCount;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.boardIdx = boardIdx;
     }
 }

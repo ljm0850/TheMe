@@ -59,12 +59,14 @@ public class FeedServiceImpl implements FeedService {
             openUserList.add(theme.getUserIdx());
             List<BoardGroupListDto> boardGroupListDtos = boardRepository.getBoardGourpByListWithJPA(openUserList,theme.getUserThemeIdx(),pageable); //게시글 목록 리턴
             for(int i=0;i<boardGroupListDtos.size();i++){
+
                 BoardGroupShowListDto boardGroupShowListDto = BoardGroupShowListDto.builder()
                         .boardCount(boardGroupListDtos.get(i).getBoardCount())
                         .isBookMarked(isScrap(user_idx,theme_idx))
                         .isFollow(false)
                         .isMy(false)
                         .latitude(boardGroupListDtos.get(i).getLatitude())
+                        .boardIdx(boardGroupListDtos.get(i).getBoardIdx())
                         .longitude(boardGroupListDtos.get(i).getLongitude())
                         .themeIdx(boardGroupListDtos.get(i).getThemeIdx())
                         .city(boardGroupListDtos.get(i).getCity())
