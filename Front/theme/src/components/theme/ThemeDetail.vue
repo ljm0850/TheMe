@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="themeDetail-wrap">
     <div class="theme-header">
       <div class="theme-title-box">
         <div v-if="!state.isMarked" class="bookmark" @click="clickBookmark()">
@@ -20,13 +20,17 @@
         <div class="theme-title-text">{{ themeDetail.name }}</div>
       </div>
     </div>
-    <KakaoMapVue class="kakao-map" :articleList="articleList"/>
+    <br>
+    <div>
+      <KakaoMapVue :articleList="articleList"/>
+    </div>
     <button @click="goCreateArticle()" class="theme-plus-button">+</button>
     <ArticleListVue
       class="article-list"
       :publicThemeIdx="publicThemeIdx"
       :articleList="articleList"
     />
+    <br>
   </div>
 </template>
 
@@ -74,7 +78,7 @@ export default {
         store.dispatch("scrapTheme", publicThemeIdx);
       }
       state.isMarked = !state.isMarked;
-      console.log(state.isMarked);
+      // console.log(state.isMarked);
     };
 
     const isBookmarked = () => {
@@ -82,7 +86,7 @@ export default {
     };
     setTimeout(() => isBookmarked(), 100);
 
-    console.log(state.isMarked);
+    // console.log(state.isMarked);
 
     // 초기화
     store.commit("SET_SELECTED_THEME_FOR_ARTICLE", {})
@@ -95,19 +99,23 @@ export default {
       //   name: "CreateArticle",
       // });
     };
-    console.log(themeDetail.value);
+    // console.log(themeDetail.value);
 
     return { themeDetail, state, clickBookmark, goCreateArticle, publicThemeIdx, articleList };
   },
 };
 </script>
 
-<style>
+<style scoped>
+.themeDetail-wrap{
+  position: relative !important;
+  top: -20px !important;
+}
+
 .theme-header {
   position: relative;
   top: 25px;
   z-index: 1;
-  width: 200px;
   height: 60px;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
@@ -115,14 +123,17 @@ export default {
 }
 .theme-title-text {
   display: inline;
-  margin: 10px;
+  position:relative;
+  left:10px !important;
+  margin: 5px;
   font-size: 17px;
 }
 
 .theme-title-box {
-  text-align: center;
   padding-top: 20px;
   padding-left: 10px;
+  z-index: -1;
+  width: 380px;
 }
 
 .emtpyBookmark {
@@ -154,13 +165,12 @@ export default {
   font-weight: 400;
   font-size: 15px;
 }
-.kakao-map {
-  top: -30px;
+.article-list {
   position: relative;
-  z-index: -1;
+  top: -15px !important;
 }
 .theme-plus-button {
-  top: -85px;
+  top: -50px !important;
   left: 345px;
   position: relative;
   z-index: 1;

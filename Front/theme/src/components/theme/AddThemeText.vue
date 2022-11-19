@@ -1,11 +1,22 @@
 <template>
   <div class="hr">
-     <div class="d-flex theme-style justify-content-between" v-if="theme">
-      <div class="form-control form-custom col-8">{{theme.name}}</div>
-      <button v-if="!theme.my" type="button" class="btn btn-outline-secondary white-add-button col-3 add-button" data-bs-toggle="modal" data-bs-target="#createThemeModal" @click="selectTheme()">
+    <div class="d-flex theme-style justify-content-between" v-if="theme">
+      <div class="form-control form-custom col-8">{{ theme.name }}</div>
+      <button
+        v-if="!theme.my"
+        type="button"
+        class="btn btn-outline-secondary white-add-button col-3 add-button"
+        data-bs-toggle="modal"
+        data-bs-target="#createThemeModal"
+        @click="selectTheme()"
+      >
         추가
       </button>
-      <button v-if="theme.my" type="button" class="btn btn-outline-secondary can-not-select-button col-3 have-button" >
+      <button
+        v-if="theme.my"
+        type="button"
+        class="btn btn-outline-secondary can-not-select-button col-3 have-button"
+      >
         보유중
       </button>
     </div>
@@ -16,21 +27,20 @@
 import { useStore } from "vuex";
 export default {
   props: {
-    theme:Object,
+    theme: Object,
   },
-  components: {
-  },
-  setup(props:any) {
+  components: {},
+  setup(props: any) {
     const store = useStore();
     const selectTheme = () => {
-      store.dispatch("selectedThemeNameForCreate", props.theme.name)
+      store.dispatch("selectedThemeNameForCreate", props.theme.name);
       // store.dispatch("selectedThemeIdxForCreate", props.theme.themeIdx)
       // store.dispatch("selectedThemeEmoticonForCreate", props.theme.emoticon)
     };
 
-    return {selectTheme}
-  }
-}
+    return { selectTheme };
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -38,7 +48,7 @@ export default {
   .theme-style {
     margin: auto;
   }
-  .form-custom{
+  .form-custom {
     // outline-color: #CDCDCD;
     outline-color: black;
     border-color: #cdcdcd;
@@ -52,15 +62,17 @@ export default {
   //   border-color: #cdcdcd;
   //   margin-left: 1vw;
   // }
-  .hr{
+  .hr {
     margin-bottom: 2px;
   }
 }
-.have-button{
-  background-color: #cdcdcd !important; 
+.have-button {
+  background-color: #cdcdcd !important;
   color: grey !important;
+  width: 75px !important;
 }
-.add-button{
+.add-button {
   background-color: white;
+  width: 75px !important;
 }
 </style>

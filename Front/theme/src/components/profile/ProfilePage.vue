@@ -58,6 +58,7 @@ export default {
 .test{
   width: 200px;
   height: 200px;
+  border-radius: 200px;
 }
 .inroduce-margin{
   margin: 10px;
