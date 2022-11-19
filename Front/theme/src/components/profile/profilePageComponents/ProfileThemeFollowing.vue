@@ -72,7 +72,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .paddingZero {
   padding-left: 0;
 }
