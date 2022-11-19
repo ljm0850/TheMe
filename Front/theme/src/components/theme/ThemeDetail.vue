@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="themeDetail-wrap">
     <div class="theme-header">
       <div class="theme-title-box">
         <div v-if="!state.isMarked" class="bookmark" @click="clickBookmark()">
@@ -30,6 +30,7 @@
       :publicThemeIdx="publicThemeIdx"
       :articleList="articleList"
     />
+    <br>
   </div>
   <br>
 </template>
@@ -106,12 +107,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.themeDetail-wrap{
+  position: relative !important;
+  top: -20px !important;
+}
+
 .theme-header {
   position: relative;
   top: 25px;
   z-index: 1;
-  width: 200px;
   height: 60px;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
@@ -119,12 +124,13 @@ export default {
 }
 .theme-title-text {
   display: inline;
-  margin: 10px;
+  position:relative;
+  left:10px !important;
+  margin: 5px;
   font-size: 17px;
 }
 
 .theme-title-box {
-  text-align: center;
   padding-top: 20px;
   padding-left: 10px;
   z-index: -1;
@@ -160,13 +166,12 @@ export default {
   font-weight: 400;
   font-size: 15px;
 }
-.kakao-map {
-  top: -30px;
+.article-list {
   position: relative;
-  z-index: -1;
+  top: -15px !important;
 }
 .theme-plus-button {
-  top: -85px;
+  top: -50px !important;
   left: 345px;
   position: relative;
   z-index: 1;
