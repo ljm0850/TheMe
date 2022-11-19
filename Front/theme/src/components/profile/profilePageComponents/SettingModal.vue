@@ -133,11 +133,9 @@ export default {
     const updateDescription = (e: any) => {
       state.inputDescriptionText = e.target.value;
       state.isChanged = true;
-      console.log(state.isChanged);
     };
 
     const updateUserInfo = () => {
-      console.log(state.inputNicknameText);
       store.dispatch("updateUserInfo", {
         description: state.inputDescriptionText,
         nickname: state.inputNicknameText,
@@ -158,30 +156,59 @@ export default {
       });
     };
 
-    const fileChange = (e: any) => {
-      // console.log(e.target.files)
-      state.selectFile = e.target.files;
+    // 리사이징
+    const dataURLtoFile = (dataurl:any, fileName:any) => {
+      let arr = dataurl.split(','),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]), 
+          n = bstr.length, 
+          u8arr = new Uint8Array(n);   
+      while(n--){
+          u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new File([u8arr], fileName, {type:mime});
+    }
+    
+    // 리사이징
+    const getThumbFile = (_IMG:any,_name:string)=>{
+      const canvas = document.createElement("canvas")
+      canvas.width = 360;
+      canvas.height = 360;
+      canvas.getContext("2d")?.drawImage(_IMG,0,0,360,360)
+      const dataUrl = canvas.toDataURL("image/png");
+      const tmpThumbFile = dataURLtoFile(dataUrl,_name)
+      return {file:tmpThumbFile, url:dataUrl}
+    }
 
+    const fileChange = (e: any) => {
+      state.selectFile = e.target.files;
+      const tempList:any[] = [];
       for (let i = 0; i < state.selectFile.length; i++) {
         let reader = new FileReader();
-        reader.onload = (e: any) => {
-          createPreview(e.target?.result);
+        reader.onload = () => {
+          const img = new Image;
+          img.onload = () =>{
+            const thumbFileObj = getThumbFile(img,e.target.files[i].name);
+            const thumbFile = thumbFileObj.file
+            const url = thumbFileObj.url
+            createPreview(url);
+            state.url = profileImageUpload(e.target.files[0].name, thumbFile);
+            tempList.push(thumbFile)
+          }
+          if (typeof(reader.result)=="string"){
+            img.src = reader.result;
+          }
         };
         reader.readAsDataURL(state.selectFile[i]);
       }
-
-      state.url = profileImageUpload(e.target.files[0].name, e.target.files[0]);
-
-      state.selectFile = e.target.files;
+      state.selectFile = tempList;
       state.profileChanged = true;
       state.isChanged = true;
     };
 
     const createPreview = (_img: string) => {
-      console.log("여기옴?");
       let imageDiv = document.querySelector("#profileImage");
       while (imageDiv?.firstChild) {
-        console.log("?????");
         imageDiv.firstChild.remove();
       }
       const newImg = document.createElement("img");
