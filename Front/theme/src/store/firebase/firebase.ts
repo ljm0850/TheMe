@@ -32,7 +32,7 @@ const articleImageUpload = (_imageName:string,_image:File) => {
 }
 const profileImageUpload = (_imageName: string, _image: File) => {
   profileIdx ++
-  const profileImageRef = profileStorageRef.child(`${articleIdx}-${_imageName}`)
+  const profileImageRef = profileStorageRef.child(`${profileIdx}-${_imageName}`)
   profileImageRef.put(_image)
   const url = `https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/profile%2F${profileIdx}-${_imageName}?alt=media`
   return url
