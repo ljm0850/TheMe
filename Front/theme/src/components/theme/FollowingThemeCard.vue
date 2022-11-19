@@ -63,7 +63,7 @@
                 alt=""
                 class="more-img default-img"
               />
-              <div class="more-size">+{{ theme.pictures.length }}</div>
+              <div class="more-size">+{{ theme.pictures.length-4 }}</div>
             </span>
             <span v-else>
               <img
@@ -103,6 +103,7 @@ export default {
   },
   components: {},
   setup(props: any) {
+    
     const store = useStore();
     const router = useRouter();
 
@@ -126,7 +127,7 @@ export default {
 
       console.log(state.isFollow);
     };
-
+    
     const cancelFollow = () => {
       store.dispatch("cancelFollow", props.theme.userThemeIdx);
       state.isFollow = !state.isFollow;
@@ -166,6 +167,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.more-size {
+  margin-left: 34px;
+}
 .isSame {
   border: 3px solid #bddaff !important;
 }

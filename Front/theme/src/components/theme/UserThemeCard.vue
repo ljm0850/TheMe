@@ -63,7 +63,7 @@
                 alt=""
                 class="more-img default-img"
               />
-              <div class="more-size">+{{ theme.pictures.length }}</div>
+              <div class="more-size">+{{ theme.pictures.length - 4 }}</div>
             </span>
             <span v-else>
               <img
@@ -79,9 +79,7 @@
       <div class="view-info">
         <div class="default-img btn-type">
           <div class="view-info-img"><br /><br />💬</div>
-          <div class="view-info-text">
-            &nbsp;&nbsp;{{ boardInfoByUserTheme.boardCount }}
-          </div>
+          <div class="view-info-text">&nbsp;&nbsp;{{ theme.boardCount }}</div>
         </div>
       </div>
     </div>
@@ -115,7 +113,6 @@ export default {
       isSame: false,
       isFollow: false,
     });
-
     store.dispatch("getBoardInfoByUserTheme", props.theme.userThemeIdx);
     const boardInfoByUserTheme = computed(
       () => store.getters.boardInfoByUserTHeme
@@ -129,7 +126,7 @@ export default {
         themeIdx: props.theme.userThemeIdx,
       });
     };
-    console.log("here", boardInfoByUserTheme.value.boardCount);
+
     test();
 
     const selectedUser = computed(() => store.getters.selectedUser);
@@ -182,7 +179,9 @@ export default {
   padding: 0px;
   margin: 0px;
 }
-
+.more-size {
+  margin-left: 34px;
+}
 .follow-btn {
   z-index: 10;
 }
