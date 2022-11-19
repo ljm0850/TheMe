@@ -80,7 +80,10 @@
           >
             Update
           </button>
-          <a href="https://k7c2031.p.ssafy.io/theme.html" class="btn btn-secondary"
+          <a
+            href="https://k7c2031.p.ssafy.io/theme.html"
+            class="btn btn-secondary me-3"
+            target="_blank"
             >개인정보 처리방침</a
           >
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
