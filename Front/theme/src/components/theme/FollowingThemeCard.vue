@@ -165,7 +165,7 @@ export default {
 };
 </script>
 
-<style  lang="scss">
+<style lang="scss" scoped>
 .isSame {
   border: 3px solid #bddaff !important;
 }
@@ -175,11 +175,14 @@ export default {
   margin: 0px;
 }
 
+.follow-btn {
+  z-index: 10;
+}
+
 .card {
   border-radius: 12px !important;
   width: 360px;
   margin-top: 10px;
-  // margin-left: 16px;
   background: #fafafa;
   border: 1px solid #cdcdcd;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -244,11 +247,6 @@ export default {
   .view-info {
     width: 56px;
     height: 56px;
-  }
-
-  .themeCard {
-    z-index: 10;
-    position: absolute;
   }
 }
 </style>
