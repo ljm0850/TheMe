@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface LikeRepository extends JpaRepository<Likes,Integer> {
-    Likes findByUserIdxAndBoard(int userIdx, Board board);
+    List<Likes> findByUserIdxAndBoard(int userIdx, Board board);
 
     List<Likes> findByBoard(Board board);
 }

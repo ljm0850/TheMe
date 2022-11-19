@@ -157,8 +157,8 @@ class BoardApplicationTests {
         int userIdx = 1;
         int boardIdx = 1;
         Optional<Board> board = boardRepository.findById(boardIdx);
-        Likes likes = likeRepository.findByUserIdxAndBoard(userIdx, board.get());
-        likeRepository.deleteById(likes.getIdx());
+        List<Likes> likes = likeRepository.findByUserIdxAndBoard(userIdx, board.get());
+        likeRepository.deleteById(likes.get(0).getIdx());
     }
     @Test
     void 게시글신고(){

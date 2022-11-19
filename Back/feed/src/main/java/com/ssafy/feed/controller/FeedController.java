@@ -40,6 +40,7 @@ public class FeedController {
             result.put("message", OK);
             status = HttpStatus.OK;
         } catch (Exception e) {
+            System.out.println(e);
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             result.put("message", FAIL);
         }
