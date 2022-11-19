@@ -85,7 +85,7 @@ ul {
 .themeCard {
   margin-bottom: 10px;
   width: 360px;
-  margin-left: 16px;
+  
 }
 
 .type-button {

@@ -191,7 +191,6 @@ export default {
   border-radius: 12px !important;
   width: 360px;
   margin-top: 10px;
-  margin-left: 16px;
   background: #fafafa;
   border: 1px solid #cdcdcd;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -226,6 +225,7 @@ export default {
       margin-right: 3px;
       width: 64px;
       height: 64px;
+      margin-left: 20px;
     }
 
     .more-img {
