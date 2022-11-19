@@ -25,16 +25,16 @@ let articleIdx = 0
 let profileIdx = 0
 const articleImageUpload = (_imageName:string,_image:File) => {
   articleIdx ++
-  const articleImageRef = articleStorageRef.child(`${_imageName}${articleIdx}`)
+  const articleImageRef = articleStorageRef.child(`${articleIdx}-${_imageName}`)
   articleImageRef.put(_image)
-  const url = `https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2F${_imageName}${articleIdx}?alt=media`
+  const url = `https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/article%2F${articleIdx}-${_imageName}?alt=media`
   return url
 }
 const profileImageUpload = (_imageName: string, _image: File) => {
   profileIdx ++
-  const profileImageRef = profileStorageRef.child(`${_imageName}${profileIdx}`)
+  const profileImageRef = profileStorageRef.child(`${articleIdx}-${_imageName}`)
   profileImageRef.put(_image)
-  const url = `https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/profile%2F${_imageName}${profileIdx}?alt=media`
+  const url = `https://firebasestorage.googleapis.com/v0/b/theme-b8677.appspot.com/o/profile%2F${profileIdx}-${_imageName}?alt=media`
   return url
 }
 

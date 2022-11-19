@@ -57,7 +57,7 @@ export default {
             theme: { public: 0, user: 0 },
             coordinate_x: 0,
             coordinate_y: 0,
-            selectFile: {},
+            selectFile: [],
             previewImgUrl: null,
             searchValue: "",
             description: "",
@@ -84,23 +84,59 @@ export default {
         };
         store.dispatch("getMyThemeList");
         const themeList = computed(() => store.getters.selectedUserThemeList);
-        let body;
-        const fileChange = (e: any) => {
-            // console.log(e.target.files)
-            state.selectFile = e.target.files;
-            body = document.querySelector("#previewImg");
-            // 기존에 올린 이미지 제거
-            while (body?.firstChild) {
-                body.firstChild.remove();
-            }
-            for (let i = 0; i < state.selectFile.length; i++) {
-                let reader = new FileReader();
-                reader.onload = (e: any) => {
-                    createPreview(e.target?.result, i);
-                };
-                reader.readAsDataURL(state.selectFile[i]);
-            }
+
+        const dataURLtoFile = (dataurl:any, fileName:any) => {
+      let arr = dataurl.split(','),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]), 
+          n = bstr.length, 
+          u8arr = new Uint8Array(n);   
+      while(n--){
+          u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new File([u8arr], fileName, {type:mime});
+    }
+    
+    // 리사이징
+    const getThumbFile = (_IMG:any,_name:string)=>{
+      const canvas = document.createElement("canvas")
+      canvas.width = 360;
+      canvas.height = 360;
+      canvas.getContext("2d")?.drawImage(_IMG,0,0,360,360)
+      const dataUrl = canvas.toDataURL("image/png");
+      const tmpThumbFile = dataURLtoFile(dataUrl,_name)
+      return {file:tmpThumbFile, url:dataUrl}
+    }
+
+    let body;
+    const fileChange = (e: any) => {
+      const imageList = e.target.files
+      state.selectFile = e.target.files;
+      body = document.querySelector("#previewImg");
+      // 기존에 올린 이미지 제거
+      while (body?.firstChild) {
+        body.firstChild.remove();
+      }
+      const tempList:any[] = [];
+      for (let i = 0; i < imageList.length; i++) {
+        let reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image;
+          img.onload = () =>{
+            const thumbFileObj = getThumbFile(img,imageList[i].name);
+            const thumbFile = thumbFileObj.file
+            const url = thumbFileObj.url
+            createPreview(url, i);
+            tempList.push(thumbFile)
+          }
+          if (typeof(reader.result)=="string"){
+            img.src = reader.result;
+          }
         };
+        reader.readAsDataURL(imageList[i]);
+      }
+      state.selectFile = tempList
+    };
 
         const createPreview = (_img: string, idx: number) => {
             body = document.querySelector("#previewImg");
