@@ -28,11 +28,11 @@ public class BoardSimpleListDto {
     int commentCount;
 
     List<CommentListDto> commentListDtoList;
-
-
     boolean likeMy;
+    String description;
+
     @Builder
-    public BoardSimpleListDto(int boardIdx, int themeIdx, int userIdx, int alertCount, String themeName, String nickname, String name, LocalDateTime modifyTime, String profile, String city, String[] picture, boolean isWriter, int likeCount, int commentCount,boolean likeMy, List<CommentListDto> commentListDtoList) {
+    public BoardSimpleListDto(int boardIdx, int themeIdx, int userIdx, int alertCount, String themeName, String nickname, String name, LocalDateTime modifyTime, String profile, String city, String[] picture, boolean isWriter, int likeCount, int commentCount,boolean likeMy, List<CommentListDto> commentListDtoList, String description) {
         this.boardIdx = boardIdx;
         this.themeIdx = themeIdx;
         this.userIdx = userIdx;
@@ -49,5 +49,7 @@ public class BoardSimpleListDto {
         this.commentCount = commentCount;
         this.likeMy = likeMy;
         this.commentListDtoList = commentListDtoList;
+        this.description = description;
+
     }
 }

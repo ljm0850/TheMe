@@ -176,6 +176,7 @@ public class FeedServiceImpl implements FeedService {
                     }
                     isWriter = true;
                     if(boardList.get(j).getUserIdx()!=userIdx) isWriter = false;
+
                     BoardSimpleListDto boardSimpleListDto = BoardSimpleListDto.builder()
                             .boardIdx(boardList.get(j).getIdx())
                             .alertCount(boardList.get(j).getAlertCount())
@@ -187,6 +188,7 @@ public class FeedServiceImpl implements FeedService {
                             .name(boardList.get(j).getName())
                             .nickname(userInfo.getNickname())
                             .picture(pictures)
+                            .description(boardList.get(j).getDescription())
                             .themeIdx(boardList.get(j).getThemeIdx())
                             .themeName(themeClient.getUserThemeName(boardList.get(j).getThemeIdx()))
                             .profile(userInfo.getPicture())
@@ -270,6 +272,7 @@ public class FeedServiceImpl implements FeedService {
                     .nickname(userInfo.getNickname())
                     .picture(pictures)
                     .themeIdx(board.get().getThemeIdx())
+                    .description(board.get().getDescription())
                     .themeName(themeClient.getUserThemeName(board.get().getThemeIdx()))
                     .profile(userInfo.getPicture())
                     .userIdx(board.get().getUserIdx())
