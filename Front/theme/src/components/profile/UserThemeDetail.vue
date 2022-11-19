@@ -30,6 +30,7 @@
       page="user"
     />
   </div>
+  <br>
 </template>
 
 <script lang="ts">

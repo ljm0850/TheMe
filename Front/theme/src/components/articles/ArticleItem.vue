@@ -1,9 +1,10 @@
 <template>
+<div v-if="isArticle">
     <div class="article-wrap d-flex justify-content-between" data-bs-toggle="modal" :data-bs-target="`#articleListModal${idx}`">
         <div>
             <div class="article-name">{{article.name}}</div>
             <div>{{article.place}}</div>
-            <!-- <div>{{article.nickname}}</div> -->
+        <!-- <div>{{article.nickname}}</div> -->
         </div>
         <div class="article-count">
             <div class="">게시글</div>
@@ -13,8 +14,8 @@
     <hr>
     <!-- 모달 -->
     <!-- {{article}} -->
-    <ArticleListModalVue v-if="isArticle" :article="article" :boardList="boardList" :idx="idx"/>
-    
+    <ArticleListModalVue :article="article" :boardList="boardList" :idx="idx"/>
+</div>
 </template>
 
 <script lang="ts">

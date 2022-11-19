@@ -5,6 +5,7 @@ import { Commit, Dispatch } from 'vuex';
 
 import axios from "axios"
 import router from '@/router';
+import _ from 'lodash';
 export default {
     state: {
         feedArticleList: [{ themeName: "tttasdgfa" }, { themeName: "임시2" }],
@@ -37,6 +38,7 @@ export default {
         placeArtilceList: (state: { placeArtilceList: Array<Object> }) => state.placeArtilceList,
         boardInfoByUserTHeme : (state: {boardInfoByUserTheme : Object}) => state.boardInfoByUserTheme,
         detailArticle: (state: {detailArticle : Object}) => state.detailArticle,
+        isThemeArticleListDetail: (state:{ themeArticleListDetail:any},_boardIdx:string) => state.themeArticleListDetail[_boardIdx]
     },
     mutations: {
         SET_FEED_ARTICLE_LIST: (state: {feedArticleList : Array<object>}, _list:Array<object>) => state.feedArticleList = _list,
@@ -362,7 +364,6 @@ export default {
                 console.log("에러")
                 console.log(err)
             })
-        }
-
+        },
     }
 }
