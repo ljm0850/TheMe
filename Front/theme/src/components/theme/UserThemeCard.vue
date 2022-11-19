@@ -129,7 +129,7 @@ export default {
         themeIdx: props.theme.userThemeIdx,
       });
     };
-
+    console.log("here",boardInfoByUserTheme.value.boardCount);
     test();
 
     const selectedUser = computed(() => store.getters.selectedUser);
@@ -173,7 +173,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .isSame {
   border: 3px solid #bddaff !important;
 }

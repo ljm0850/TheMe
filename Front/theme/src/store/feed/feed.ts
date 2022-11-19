@@ -284,14 +284,12 @@ export default {
             }))
         },
         getBoardInfoByUserTheme({commit, getters} : { commit: Commit, getters: any }, userThemeIdx:string) {
-            
             axios({
                 url:rest.Feed.boardInfoByUserTheme(userThemeIdx),
                 method:'get',
                 headers:getters.authHeader,
             })
             .then((res => {
-                
                 commit("SET_BOARD_INFO_BY_USERTHEME", res.data)
             }))
         },

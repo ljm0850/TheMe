@@ -18,17 +18,16 @@
 
     <ul v-if="state.vueTarget" class="paddingZero">
       <li v-for="item in selectedUser.themeDtoList" :key="item">
-        <div><UserThemeCard :theme="item" class="themeCard" style="margin-left: 0" /></div>
+        <UserThemeCard :theme="item" class="themeCard" style="margin-left: 0" />
       </li>
     </ul>
     <ul v-if="!state.vueTarget" class="paddingZero">
       <li v-for="item in selectedUser.followingDtoList" :key="item">
-        <div><FollowingThemeCard
+        <FollowingThemeCard
           :theme="item"
           class="themeCard"
           style="margin-left: 0"
-        /></div>
-        
+        />
       </li>
     </ul>
     <br>
