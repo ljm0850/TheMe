@@ -30,7 +30,10 @@
             </div>
             <span @click="displayComment()" v-if="!state.commentFlag">더보기</span>
             <!-- 댓글 -->
-            <CommentListVue v-if="state.commentFlag" :article="article" :commentList ="article.commentListDtoList" />
+            <div v-if="state.commentFlag">
+                <div class="article-description">{{article.description}}</div>
+                <CommentListVue :article="article" :commentList ="article.commentListDtoList" />
+            </div>
             <!-- 댓글 끝 -->
         </div>
     </div>
@@ -143,5 +146,9 @@ export default {
     margin-top: -3px;
     margin-right: 2px;
     filter: invert(26%) sepia(48%) saturate(339%) hue-rotate(132deg) brightness(87%) contrast(88%);
+}
+
+.article-description{
+    font-weight: 1000;
 }
 </style>
