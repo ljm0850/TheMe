@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts">
+// import { reactive } from '@vue/reactivity'
 // import { useStore } from "vuex";
 export default {
   components: {

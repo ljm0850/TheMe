@@ -1,0 +1,33 @@
+spring:
+  datasource: # mysql
+    url: jdbc:mysql://k7c203.p.ssafy.io:9030/feed?serverTimezone=Asia/Seoul&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: themef1b4!
+  jpa: #JPA
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: none
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        format_sql: true
+  mvc: # emoji
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application: #MSA 아키텍처 등록
+    name: feed
+#logging:
+#  level:
+#    root: debug
+server:
+  port: 8030
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-uri :
+      defaultZone : http://127.0.0.1:8761/eureka

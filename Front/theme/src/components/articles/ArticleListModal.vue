@@ -1,18 +1,19 @@
 <template>
-<div class="modal fade" id="articleListModal" tabindex="-1" aria-labelledby="articleListModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="articleListModalLabel">리디파인</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <ArticleDetailVue/>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <div class="modal fade" :id="`articleListModal${idx}`" tabindex="-1" aria-labelled:by="`articleListModal${idx}`Label" aria-hidden="true">
+        <div class="modal-dialog modal-fullsize">
+            <div class="modal-content modal-fullsize">
+                <div class="modal-header">
+                    <h1 v-if="article" class="modal-title fs-5" :id="`articleListModal${idx}Label`">{{ article.name }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <ArticleDetailVue :article="article" class="article-detail"/> -->
+                    <ArticleDetailVue :article="newArticle"/>
+                </div>
+                <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
                 <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-            </div>
+            <!-- </div> -->
         </div>
     </div>
 </div>
@@ -20,17 +21,49 @@
 
 <script lang="ts">
 import ArticleDetailVue from './ArticleDetail.vue';
-// import { useStore } from "vuex";
+// import { reactive } from "vue";
+import { useStore } from "vuex";
+import { computed } from '@vue/runtime-core';
 export default {
     components: {
         ArticleDetailVue,
     },
-    setup() {
+    props: {
+        article:Object,
+        // articleName: String,
+        // boardList:Object,
+        idx:String
+    },
+    setup(props:any) {
+        // console.log(props.boardList);
+        // const article = reactive({
+        //     themeName:"코딩카페",
+        //     profile:"",
+        //     nickname:"joe",
+        //     picture:""
+        // });
+        const store = useStore();
+        const newArticle = computed(()=>store.getters.themeArticleListDetail[props.article.boardIdx])
+
+        return { newArticle }
     }
 }
 </script>
 
-<style lang="scss`">
-
+<style>
+.modal-dialog.modal-fullsize {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.modal-content.modal-fullsize {
+  height: auto;
+  min-height: 100%;
+  border-radius: 0; 
+}
+.modal-body{
+    padding: 0 !important;
+}
 
 </style>
