@@ -44,7 +44,8 @@
           ></textarea>
         </div>
         <div  style="text-align: center;" >
-        <button @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button"  style="margin-bottom: 10px;">등록</button>
+        <button v-if="checkCreate" @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button"  style="margin-bottom: 10px;">등록</button>
+        <div v-else class="btn btn-outline-secondary block-button"  style="margin-bottom: 10px;">등록</div>
         </div>
       </div>
     <!-- </form> -->
@@ -78,12 +79,17 @@ export default {
       previewImgUrl: null,
       searchValue: "",
       description: "",
+      createFlag: false
     });
     
     const isSelectFile = computed(() => !_.isEmpty(state.selectFile));
     const imageUrls: string[] = [];
     const store = useStore();
     const createArticle = async () => {
+      if (state.createFlag){
+        return
+      }
+      state.createFlag = true
       for (let i = 0; i < state.selectFile.length; i++) {
         const url = articleImageUpload(
           `${state.selectFile[i].name}`,
@@ -159,6 +165,7 @@ export default {
         };
         reader.readAsDataURL(imageList[i]);
       }
+      console.log("타이밍 궁굼")
       state.selectFile = tempList
     };
 
@@ -177,6 +184,8 @@ export default {
       body?.appendChild(newDiv);
     };
 
+    const checkCreate = computed(()=> state.description && !_.isEmpty(state.selectFile) && state.theme.user && state.theme.public)
+
     // 공용테마에서 글쓰러 왔을 때
     return {
       state,
@@ -185,6 +194,7 @@ export default {
       fileChange,
       createPreview,
       isSelectFile,
+      checkCreate
     };
   },
 };
