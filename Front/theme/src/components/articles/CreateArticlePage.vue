@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { computed, reactive } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import { useStore } from "vuex";
 import "firebase/compat/storage";
 import "firebase/compat/auth";
@@ -124,17 +124,23 @@ export default {
       const tmpThumbFile = dataURLtoFile(dataUrl,_name)
       return {file:tmpThumbFile, url:dataUrl}
     }
-
-
+    
     let body;
-    const fileChange = (e: any) => {
-      const imageList = e.target.files
-      state.selectFile = e.target.files;
+    const removeImg = ()=>{
       body = document.querySelector("#previewImg");
       // 기존에 올린 이미지 제거
       while (body?.firstChild) {
         body.firstChild.remove();
       }
+    }
+    onMounted(()=>{
+      removeImg()
+    })
+    const fileChange = (e: any) => {
+      const imageList = e.target.files
+      state.selectFile = e.target.files;
+      // 기존에 올린 이미지 제거
+      removeImg()
       const tempList:any[] = [];
       for (let i = 0; i < imageList.length; i++) {
         let reader = new FileReader();
