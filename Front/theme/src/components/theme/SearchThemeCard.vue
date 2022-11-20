@@ -127,7 +127,7 @@ export default {
       margin-right: 3px;
       width: 64px;
       height: 64px;
-
+      margin-left: 20px;
     }
 
     .more-img {
