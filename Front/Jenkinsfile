@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    stages {
+        stage("build"){
+            steps{
+                 script{
+                     try {
+                         sh 'docker stop frontend'
+                         sh 'docker rm frontend'
+                         sh 'docker rmi front-unit'
+                         
+                     } catch (e) {
+                         sh 'echo "fail remove test-images"'
+                     }
+                 }
+                 //sh 'sudo docker exec -it jenkins bash'
+                 sh 'cp /etc/nginx/sites-available/default ./Front/theme'
+                 sh 'docker build -t front-unit -f Front/DockFile ./Front/theme'
+                 sh 'docker run -d -p 8080:80 --name frontend front-unit'
+             }
+             post {
+                 success{
+                     sh 'echo unit 테스트 성공'
+                 }
+                 failure{
+                     sh 'echo unit 테스트 실패'
+                 }
+             }
+        }
+    }    
+}
