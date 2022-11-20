@@ -17,13 +17,10 @@
     </div>
     <br>
     <SettingThemeModalVue :themeDetail="themeDetail"/>
-    <br>
     <KakaoMapVue :articleList="articleList"/>
     <div class="d-flex justify-content-end">
       <span class="user-theme">{{selectedUser.nickname}}님의 테마</span>
     </div>
-    <br>
-    <br>
     <ArticleListVue
       class="article-list"
       :publicThemeIdx="publicThemeIdx"
