@@ -236,6 +236,7 @@ export default {
             })
                 .then((res) => {
                     commit("SET_FEED_THEME", res.data.data)
+                    dispatch("displayFeedTheme")
             })
         },
         
