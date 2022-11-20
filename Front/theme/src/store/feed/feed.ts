@@ -80,8 +80,9 @@ export default {
             })
                 .then((res) => {
                     // console.log(res.data)
-                    setTimeout(function(){},3000)
-                    router.push({name: 'UserTheme', params: { userThemeIdx:_data.themeIdx, publicThemeIdx:_data.publicThemeIdx }})
+                    setTimeout(function(){
+                        router.push({name: 'UserTheme', params: { userThemeIdx:_data.themeIdx, publicThemeIdx:_data.publicThemeIdx }})
+                    },3000)
             })
         },
 
