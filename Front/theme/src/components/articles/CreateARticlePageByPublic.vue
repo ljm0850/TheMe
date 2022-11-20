@@ -28,7 +28,8 @@
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
                         v-model="state.description"></textarea>
                 </div>
-                <button @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button">등록</button>
+                <button v-if="checkCreate" @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button">등록</button>
+                <div v-else class="btn btn-outline-secondary block-button"  style="margin-bottom: 10px;">등록</div>
             </div>
         <!-- </form> -->
         <br>
@@ -61,12 +62,16 @@ export default {
             previewImgUrl: null,
             searchValue: "",
             description: "",
+            createFlag: false
         });
 
         const isSelectFile = computed(() => !_.isEmpty(state.selectFile));
         const imageUrls: string[] = [];
         const store = useStore();
         const createArticle = async () => {
+            if (state.createFlag){
+                return
+            }
             for (let i = 0; i < state.selectFile.length; i++) {
                 const url = articleImageUpload(
                     `${state.selectFile[i].name}`,
@@ -170,7 +175,7 @@ export default {
         };
 
         setTheme();
-
+        const checkCreate = computed(()=> state.description && !_.isEmpty(state.selectFile) && state.theme.user && state.theme.public)
         // console.log(state.theme);
 
         return {
@@ -180,6 +185,7 @@ export default {
             fileChange,
             createPreview,
             isSelectFile,
+            checkCreate
         };
     },
 };
