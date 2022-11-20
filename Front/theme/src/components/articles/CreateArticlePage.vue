@@ -92,7 +92,6 @@ export default {
         imageUrls.push(url);
       }
       console.log("올라갈 사진 url",imageUrls)
-      setTimeout(function(){},1000)
       store.dispatch("createArticle", {
         description: state.description,
         pictures: imageUrls,
