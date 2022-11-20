@@ -18,6 +18,7 @@
                 <br />
                 <!-- 이미지 파일 첨부 -->
                 <input type="file" multiple accept="image/*" @change="fileChange" />
+                <br>
                 <PreviewImageVue />
                 <br />
                 <!-- 지도 -->
