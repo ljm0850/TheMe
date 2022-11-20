@@ -44,8 +44,9 @@
           ></textarea>
         </div>
         <div  style="text-align: center;" >
-        <button v-if="checkCreate" @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button"  style="margin-bottom: 10px;">등록</button>
-        <div v-else class="btn btn-outline-secondary block-button"  style="margin-bottom: 10px;">등록</div>
+        <button v-if="!state.createFlag && checkCreate" @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button"  style="margin-bottom: 10px;">등록</button>
+        <div v-if="!state.createFlag && !checkCreate" class="btn btn-outline-secondary block-button"  style="margin-bottom: 10px;">등록</div>
+        <img v-if="state.createFlag" src="@/assets/image/loading.gif" alt="">
         </div>
       </div>
     <!-- </form> -->

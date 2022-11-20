@@ -28,8 +28,11 @@
                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
                         v-model="state.description"></textarea>
                 </div>
-                <button v-if="checkCreate" @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button">등록</button>
-                <div v-else class="btn btn-outline-secondary block-button"  style="margin-bottom: 10px;">등록</div>
+                <div style="text-align: center;" >
+                    <button v-if="!state.createFlag && checkCreate" @click.prevent="createArticle()" class="btn btn-outline-secondary white-add-button"  style="margin-bottom: 10px;">등록</button>
+                    <div v-if="!state.createFlag && !checkCreate" class="btn btn-outline-secondary block-button"  style="margin-bottom: 10px;">등록</div>
+                    <img v-if="state.createFlag" src="@/assets/image/loading.gif" alt="">
+                </div>  
             </div>
         <!-- </form> -->
         <br>
@@ -72,6 +75,7 @@ export default {
             if (state.createFlag){
                 return
             }
+            state.createFlag = true
             for (let i = 0; i < state.selectFile.length; i++) {
                 const url = articleImageUpload(
                     `${state.selectFile[i].name}`,

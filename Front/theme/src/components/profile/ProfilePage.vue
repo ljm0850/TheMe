@@ -1,7 +1,10 @@
 <template>
 <div>
-  <IntroduceUserVue />
-  <ProfileThemeFollowingVue />
+  <IntroduceUserVue v-if="isUser"/>
+  <ProfileThemeFollowingVue v-if="isUser"/>
+  <div v-if="!isUser" class="d-flex justify-content-center loading-position">
+    <img src="@/assets/image/whiteLoading.gif" alt="">
+  </div>
 </div>
 </template>
 
@@ -11,9 +14,7 @@ import ProfileThemeFollowingVue from './profilePageComponents/ProfileThemeFollow
 import { useStore } from "vuex";
 import { useRoute} from "vue-router";
 import { reactive } from '@vue/reactivity'
-// import { useRouter } from 'vue-router' 
-// import { computed } from '@vue/runtime-core';
-// import { useStore } from "vuex";
+import { computed } from '@vue/runtime-core';
 
 export default {
   components: {
@@ -27,24 +28,19 @@ export default {
     const state = reactive({
       userNickname : route.params.nickname
     });
-    
-    // const reload = () => {
-    //   window.location.reload();
-    // }
-    
-    // const router = useRouter();
-    // router.push({
-    //             name: "Profile", 
-    //             params: { 
-    //                 nickname : userNickname,
-    //             } 
-    //         })
+
+    const resetUser = ()=>{
+      store.commit('SET_SELECTED_USER',{})
+      store.commit('SET_FOLLOWER_LIST',[])
+      store.commit('SET_FOLLOWING_LIST',[])
+    }
+    resetUser()
     store.dispatch("getUserInfoByNickname",route.params.nickname);
-    // const selectedUser = computed(()=>store.getters.selectedUser)
     const check = ()=>{
       store.dispatch("getUserInfoByNickname", route.params.nickname)
     }
-    return { state, check}
+    const isUser = computed(()=>store.getters.isSelectedUser)
+    return { state, check,isUser}
   },
   watch: {
    $route(to, form) {
@@ -64,5 +60,8 @@ export default {
   margin: 10px;
 
 }
-
+.loading-position{
+  position: relative;
+  margin-top: 40vh;
+}
 </style>
