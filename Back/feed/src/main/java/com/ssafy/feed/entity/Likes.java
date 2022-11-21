@@ -13,9 +13,10 @@ public class Likes {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idx;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "board_idx")
     private Board board; // 좋아요 하는 게시글 번호
+    @Column(name = "user_idx")
     private int userIdx; // 좋아요 누른 사용자
 
     @Builder

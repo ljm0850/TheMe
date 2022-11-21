@@ -9,7 +9,7 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      ddl-auto: none
+      ddl-auto: update
       use-new-id-generator-mappings: false
     properties:
       hibernate:
@@ -24,10 +24,14 @@ spring:
 #    root: debug
 server:
   port: 8020
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-type: PKCS12
+#    key-store-password: themef1b4!
 
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
-    service-uri :
-      defaultZone : http://127.0.0.1:8761/eureka
+#    service-uri :
+#      defaultZone : https://127.0.0.1:8761/eureka

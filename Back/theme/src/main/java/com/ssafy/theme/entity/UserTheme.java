@@ -16,10 +16,10 @@ public class UserTheme {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idx;
-
+    @Column(name = "user_idx")
     private int userIdx; // 테마 작성자
     @ManyToOne
-    @JoinColumn(name = "parent_theme_name")
+    @JoinColumn(name = "parent_theme_idx")
     private Theme theme; // 부모테마
     private int openType; // 공개여부 (0비공개,1친구공개,2검색허용)
     private LocalDateTime createTime; // 생성시간
@@ -38,4 +38,8 @@ public class UserTheme {
         this.challenge = challenge;
         this.description = description;
     }
+    public void updateOpenType(int openType) {
+        this.openType = openType;
+    }
+
 }
