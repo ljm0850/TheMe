@@ -1,4 +1,4 @@
-package com.ssafy.etc.config;
+package com.ssafy.user.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;

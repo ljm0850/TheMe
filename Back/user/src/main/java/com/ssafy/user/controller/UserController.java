@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +33,23 @@ public class UserController {
         Map<String,Object> result = new HashMap<>();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         try {
-            userService.loginUser(userLoginDto); // 예시로 만들어 놓은거라 void로 할게요
+//            userService.loginUser(userLoginDto); // 예시로 만들어 놓은거라 void로 할게요
+            response.addHeader("userIdx", "1");
+            result.put("message",OK);
+            status = HttpStatus.OK;
+        }catch (Exception e){
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            result.put("message",FAIL);
+        }
+        return new ResponseEntity<>(result,status);
+    }
+
+    @GetMapping("/user/check")
+    public ResponseEntity<?> check(HttpServletRequest request, HttpServletResponse response){
+        Map<String,Object> result = new HashMap<>();
+        System.out.println(request.getHeader("userIdx"));
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        try {
             result.put("message",OK);
             status = HttpStatus.OK;
         }catch (Exception e){
