@@ -12,14 +12,14 @@
 
 - 카카오 소셜 로그인을 활용하여 로그인 합니다.
 
-![login](.\readme_asset\login.gif)
+![login](./readme_asset/login.gif)
 
 ### 메인화면
 
 - 사람들에게 관심을 많이 받은 테마에서 랜덤으로 추천 테마를 추천해 줍니다.
 - 팔로우 한 개인 테마의 최신 게시글을 보여줍니다.
 
-![main](.\readme_asset\main.gif)
+![main](./readme_asset/main.gif)
 
 ### 게시글
 
@@ -34,7 +34,7 @@
 - 인기순,최신순으로 정렬 할 수 있습니다.
 - 클릭시 해당 테마의 게시글과 카카오 지도를 이용하여 위치가 표현됩니다.
 
-![allTheme](.\readme_asset\allTheme.gif)
+![allTheme](./readme_asset/allTheme.gif)
 
 ### 테마 작성
 
@@ -43,7 +43,7 @@
 - 검색을 통해 기존에 등록된 테마의 개인테마를 등록할 수 있습니다.
 - 검색을 통해 기존에 없는 테마일 경우 테마를 등록 할 수 있습니다.
 
-![createTheme](.\readme_asset\createTheme.gif)
+![createTheme](./readme_asset/createTheme.gif)
 
 ### 게시글 작성
 
@@ -52,7 +52,7 @@
 - 카카오 장소검색 api를 활용하여 해당 장소에 대한 정보를 등록 할 수 있습니다.
 - 내용 작성을 통해 해당 게시글의 본문을 작성할 수 있습니다.
 
-![createArticle](.\readme_asset\createArticle.gif)
+![createArticle](./readme_asset/createArticle.gif)
 
 ### 인물 검색
 
@@ -61,7 +61,7 @@
 - 검색시 정확한 인물이 최상단으로 표현되며, 해당 키워드를 가진 인물들이 나열됩니다.
 - 인물 클릭시 해당 인물의 프로필로 이동합니다.
 
-![searchUser](.\readme_asset\searchUser.gif)
+![searchUser](./readme_asset/searchUser.gif)
 
 ### 테마 검색
 
@@ -69,7 +69,7 @@
 - 검색시 정확한 테마가 최상단에 표현되며, 해당 키워드를 가진 테마 몰록이 나열됩니다.
 - 테마 클릭시 해당 테마로 작성된 게시글이 표현됩니다.
 
-![searchTheme](.\readme_asset\searchTheme.gif)
+![searchTheme](./readme_asset/searchTheme.gif)
 
 
 
@@ -81,9 +81,22 @@
 - 해당 유저가 팔로우 한 테마를 알 수 있습니다.
 - 해당 유저가 보유중인 개인 테마를 알 수 있습니다.
 
-![myProfile](C:\Users\multicampus\Desktop\project\S07P31C203\readme_asset\myProfile.gif)
+![myProfile](./readme_asset/myProfile.gif)
 
 
 
 ## 개발자 소개
+
+### 김세진
+
+### 김유완
+
+### 김지호
+
+### 이재민
+
+- 팀장
+- https://github.com/ljm0850
+
+## 최강
 
