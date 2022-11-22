@@ -85,6 +85,20 @@
 
 
 
+## 기술 스택
+
+### Front
+
+- Vue3
+- Axios
+- TypeScript
+
+### Back
+
+### Deployment
+
+
+
 ## 개발자 소개
 
 ### 김세진
