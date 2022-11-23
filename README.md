@@ -95,9 +95,17 @@
 
 ### Back
 
+- Spring Boot
+- Spring Data JPA
+- Spring Cloud
+- MySQL
+- Microservice Architecture
+
 ### Deployment
 
-
+- Jenkins
+- Docker
+- Nginx
 
 ## 개발자 소개
 
