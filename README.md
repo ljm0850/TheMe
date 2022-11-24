@@ -1,7 +1,7 @@
 # TheMe
 <div align="center">
 <br />
-    <img src ="/uploads/1ae80a77d2f7990c211badbc0e5ca6f6/logo-removebg-preview__1_.png" width="300px" />
+    <img src ="https://velog.velcdn.com/images/aammaa/post/5ed51d64-0366-4f26-8089-79ef4949cdf3/image.png" width="300px" />
     <h3></h3>
     <h3> 장소 기반 취향을 공유하는 SNS </h3>
     <p align="center">
@@ -16,7 +16,7 @@
 
 |                                             [이재민](https://github.com/)                                             |                                              [김세진](https://github.com/kimsezin)                                              |                                           [김유완](https://github.com/)                                           |                                       [김지호](https://github.com/ammajoe)                                        |                                                          [최강](https://github.com/)                                                           | 
 | :----------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | 
-| <img src="/uploads/08168d97217e5874dcdf560bfb8af617/재민1.jpg" width="100" height="100"/> | <img src="/uploads/4c807a39ced265ac0f7216316663f3bc/세진.jpg" width ="100"/> | <img src="/uploads/f21eddfbe5c4235dff8695752c7d536b/유완.jpg" width ="100"/> | <img src="/uploads/3cb291d0bc69efa7e626d6bb7c9739fd/지호.jpg" width ="100"/> | <img src="/uploads/0331356e606611bb955b053bc650cb77/강.jpg" width="100"> | 
+| <img src="https://velog.velcdn.com/images/aammaa/post/e315c838-4006-481d-aa12-f14fdcf15c7d/image.jpg" width="100" height="100"/> | <img src="https://velog.velcdn.com/images/aammaa/post/3a5c1532-c0bb-4b9d-984b-82968f8cb2b1/image.jpg" width ="100"/> | <img src="https://velog.velcdn.com/images/aammaa/post/aa69f950-e5e8-4096-99dc-a16a2ade730a/image.jpg" width ="100"/> | <img src="https://velog.velcdn.com/images/aammaa/post/0c823167-c041-4c26-b937-3e5b87c2cf8a/image.jpg" width ="100"/> | <img src="https://velog.velcdn.com/images/aammaa/post/217f80d8-426a-4038-9c0a-777cff98f10f/image.jpg" width="100"> | 
 |                                                               팀장, FE                                                               |                                                               BE, FE                                                                |                                                            BE, FE                                                            |                                                            BE, FE                                                            |                                                              BE, FE                                                               |                                                               
 
 <br />
@@ -143,7 +143,7 @@
 
 ### 1) 아키텍처 구조
 
-<img src="/uploads/6f334463d7eacb704a18f88be9bc07ed/image.png" width ="1000"/>
+<img src="https://velog.velcdn.com/images/aammaa/post/18e2d62b-4a69-4a0b-96b1-96a466ddbba0/imag" width ="1000"/>
 
 <br />
 
