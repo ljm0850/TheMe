@@ -1,14 +1,22 @@
 # TheMe
+<div align="center">
+<br />
+    <img src ="/uploads/1ae80a77d2f7990c211badbc0e5ca6f6/logo-removebg-preview__1_.png" width="300px" />
+    <h3></h3>
+    <h3> 장소 기반 취향을 공유하는 SNS </h3>
+    <p align="center">
+<br />
+</div>
 
-## 🎈 팀원 소개
+## 🎈팀원 소개
 
 ```
 삼성 청년 SW 7기 광주 2반 자율 프로젝트 C203 - F1B4
 ```
 
-|                                             [이재민](https://github.com/jmlee9707)                                             |                                              [김세진](https://github.com/4d656f77)                                              |                                           [김유완](https://github.com/Hanpark04)                                           |                                       [김지호](https://github.com/Dongmyeongleee)                                        |                                                          [최강]()                                                           | 
+|                                             [이재민](https://github.com/)                                             |                                              [김세진](https://github.com/kimsezin)                                              |                                           [김유완](https://github.com/)                                           |                                       [김지호](https://github.com/ammajoe)                                        |                                                          [최강](https://github.com/)                                                           | 
 | :----------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | 
-| <img src="" width="100"/> | <img src="" width ="100"/> | <img src="" width ="100"/> | <img src="" width ="100"/> | <img src="" width="100"> | 
+| <img src="/uploads/08168d97217e5874dcdf560bfb8af617/재민1.jpg" width="100" height="100"/> | <img src="/uploads/4c807a39ced265ac0f7216316663f3bc/세진.jpg" width ="100"/> | <img src="/uploads/f21eddfbe5c4235dff8695752c7d536b/유완.jpg" width ="100"/> | <img src="/uploads/3cb291d0bc69efa7e626d6bb7c9739fd/지호.jpg" width ="100"/> | <img src="/uploads/0331356e606611bb955b053bc650cb77/강.jpg" width="100"> | 
 |                                                               팀장, FE                                                               |                                                               BE, FE                                                                |                                                            BE, FE                                                            |                                                            BE, FE                                                            |                                                              BE, FE                                                               |                                                               
 
 <br />
@@ -135,6 +143,8 @@
 
 ### 1) 아키텍처 구조
 
+<img src="/uploads/6f334463d7eacb704a18f88be9bc07ed/image.png" width ="1000"/>
+
 <br />
 
 ### 2) 프론트 파일 구조
@@ -145,19 +155,14 @@
   root
     ├── public
     ├── src
-    │     ├── apis                    # API 관련
+    │     ├── API                   # API 관련
     │     ├── assets                  # 미디어 파일들
-    │     │      ├── images           # 이미지 파일 관련
-    │     │      └── styles           # 폰트,색상
-    │     │             └── fonts
     │     ├── components              # 컴포넌트
-    │     │      └── common           # (공통,페이지별)
-    │     ├── routers                 # 라우팅
-    │     ├── utils                   # 유틸함수
-    │     ├── screens                 # 페이지별
+    │     ├── router                  # 라우팅
     │     └── store                   # 상태관리
-    └── dist                          # 빌드 파일
-          └── ...
+    │
+    ├── vue.config.js                 # 빌드 파일
+    └── ...
 ```
 
 <br />
@@ -166,7 +171,7 @@
 
 <br />
 
-- USER
+- USER, THEME, FEED
 
 ```text
 .
@@ -174,22 +179,21 @@
     └─main
          ├─java
          │  └─com
-         │      └─web
-         │          └─curation
+         │      └─ssafy
+         │          └─ user, theme, feed   # user, theme, feed 
+         │              ├─client           # msa간 통신 feign client
          │              ├─config           # Spring Config 파일
          │              ├─controller       # Http 요청과 응답을 위한 클래스
-         |	            ├─data
-         |              |   ├─dto          # 데이터 전송 객체
-         |              |   ├─entity       # JPA에서 사용할 엔티티
-         |              |   └─repository   # DB에 접근하는 Interface
-         │              ├─exception        # 예외처리
+         |              ├─dto              # 데이터 전송 객체
+         |              ├─entity           # JPA에서 사용할 엔티티
+         |              ├─ repository      # DB에 접근하는 Interface
          │              └─service          # Repository와 DTO를 통해 DB와 controller 연결
          |
          └─resources                       # application 필요한 옵션 지정
 
 ```
 
-- THEME
+- spring cloud Eureka
 
 ```text
 .
@@ -197,21 +201,14 @@
     └─main
          ├─java
          │  └─com
-         │      └─web
-         │          └─curation
-         │              ├─config           # Spring Config 파일
-         │              ├─controller       # Http 요청과 응답을 위한 클래스
-         |	            ├─data
-         |              |   ├─dto          # 데이터 전송 객체
-         |              |   ├─entity       # JPA에서 사용할 엔티티
-         |              |   └─repository   # DB에 접근하는 Interface
-         │              ├─exception        # 예외처리
-         │              └─service          # Repository와 DTO를 통해 DB와 controller 연결
+         │      └─ ssafy
+         │          └─ eureka
+         │              └─ EurekaApplication.java     # eureka 서버 실행 파일
          |
-         └─resources                       # application 필요한 옵션 지정
+         └─resources                                  # msa 필요한 옵션 지정
 
 ```
-- FEED
+- spring cloud apigateway
 
 ```text
 .
@@ -219,18 +216,12 @@
     └─main
          ├─java
          │  └─com
-         │      └─web
-         │          └─curation
-         │              ├─config           # Spring Config 파일
-         │              ├─controller       # Http 요청과 응답을 위한 클래스
-         |	            ├─data
-         |              |   ├─dto          # 데이터 전송 객체
-         |              |   ├─entity       # JPA에서 사용할 엔티티
-         |              |   └─repository   # DB에 접근하는 Interface
-         │              ├─exception        # 예외처리
-         │              └─service          # Repository와 DTO를 통해 DB와 controller 연결
+         │      └─ssafy
+         │          └─apigateway
+         │              └─ filter          # 로그인 인증, 인가 처리
          |
-         └─resources                       # application 필요한 옵션 지정
+         └─resources                       # https, filter 필요한 옵션 지정
+                                           # eureka client 등록
 
 ```
 
@@ -238,12 +229,13 @@
 <br />
 
 ## 📂 5. 프로젝트 관련 문서
-[🎨 프로토타입, 디자인 ](https://scratch-octopus-16f.notion.site/UI-3412085ccd92446eb123a0db28ba86d2)
+[🎨 프로토타입, 디자인 ](https://www.figma.com/file/Q1E8F6BvE7a60iaF35HY50/%EC%9E%90%EC%9C%A8-Prototype)
 
-[📃 회의록 & 스크럼](https://scratch-octopus-16f.notion.site/09c08675b93242c28e174a6aba5261e4?v=dea8006efd4940c2a38a8c4de45d9768)
+[📃 회의록 & 스크럼](https://selective-spectrum-c0a.notion.site/fd4ef6cf83b94a6cb72d0caf9d67ad07?v=92e00d2eea5146a4b6739e3e082d0908)
 
-[📡 요구사항 명세서](https://scratch-octopus-16f.notion.site/3bd0fbca4e6b4e5e92b4495b8826553d)
+[📡 요구사항 명세서](https://selective-spectrum-c0a.notion.site/d485b5b525aa4e2c83889d2275431ef0)
 
-[📋 API 명세서](https://scratch-octopus-16f.notion.site/API-fbee3ab9f0d046fbb18d67d84e961731)
+[📋 API 명세서](https://selective-spectrum-c0a.notion.site/API-8e070efcd9f14488a6af376bb25b2434)
 
+[📄 ERD & useCase](https://selective-spectrum-c0a.notion.site/ERD-useCase-f92e5d4dc8dc4ce19e7820ce46b36335)
 
