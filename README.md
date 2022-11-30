@@ -239,3 +239,6 @@
 
 [📄 ERD & useCase](https://selective-spectrum-c0a.notion.site/ERD-useCase-f92e5d4dc8dc4ce19e7820ce46b36335)
 
+## 6. 발생한 문제
+
+-  [파이어 베이스 이미지 조회.md](readme_asset/파이어 베이스 이미지 조회.md) 
