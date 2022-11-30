@@ -241,4 +241,5 @@
 
 ## 6. 발생한 문제
 
--  [파이어 베이스 이미지 조회.md](readme_asset/파이어 베이스 이미지 조회.md) 
+-  [파이어 베이스 이미지 조회.md](readme_asset/firebase_problem.md) 
+
