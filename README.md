@@ -243,3 +243,10 @@
 
 -  [파이어 베이스 이미지 조회.md](readme_asset/firebase_problem.md) 
 
+
+
+## 7. 기타
+
+- Jira 누적 흐름 다이어그램
+
+![image-20221221185010814](./readme_asset/image-20221221185010814.png)
