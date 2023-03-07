@@ -154,7 +154,7 @@
 
 <br />
 
-## 📂 4. 아키텍처
+## 4. 아키텍처
 
 <br />
 
@@ -245,7 +245,7 @@
 <br />
 <br />
 
-## 📂 5. 프로젝트 관련 문서
+## 5. 프로젝트 관련 문서
 [🎨 프로토타입, 디자인 ](https://www.figma.com/file/Q1E8F6BvE7a60iaF35HY50/%EC%9E%90%EC%9C%A8-Prototype)
 
 [📃 회의록 & 스크럼](https://selective-spectrum-c0a.notion.site/fd4ef6cf83b94a6cb72d0caf9d67ad07?v=92e00d2eea5146a4b6739e3e082d0908)
